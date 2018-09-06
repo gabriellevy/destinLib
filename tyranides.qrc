@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Aventures/Warhammer 40000/Tyranides/GenestealerPortrait.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/EspritDeLaRuche.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/genestealer_attaque.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/Genestealers_atterissage.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/GenestealerSpaceHulk.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/icone_logements_détruits.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/Incursions_Tyranides.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/logements_détruits.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/MagusPortrait.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/Patriarche.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/PrimusPortrait.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteCultiste.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteGenestealer.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteHybride1.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteHybride2.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteHybride3.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteHybride4.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteInséminé.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteCitoyen.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/entrepot.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/ruche_lamos.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/PatrouilleHumaine.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/ichar4.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/Miral.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/devlan_system.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/Salem.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteHormagaunt.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/TeteLictor.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/DroneAvantGarde.jpg</file>
+        <file>Aventures/Warhammer 40000/Tyranides/larnarno.jpg</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,80 @@
+#include "setcarac.h"
+#include "perso.h"
+#include <QDebug>
+
+SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeur)
+{
+    m_CaracId = caracId;
+    m_ModifCaracType = modifCaracType;
+    m_Valeur = valeur;
+}
+
+SetCarac::SetCarac(QJsonObject obj, ModifCaracType modifCaracType, QString valeur)
+{
+    m_ModifCaracType = modifCaracType;
+
+    if ( obj.contains("carac_id") && obj["carac_id"].isString())
+    {
+        m_CaracId = obj["carac_id"].toString();
+    }
+    else qDebug()<<"Pas de carac id pour le set carac";
+
+    if ( obj.contains("valeur") && obj["valeur"].isString())
+    {
+        m_Valeur = obj["valeur"].toString();
+    }
+    else if ( obj.contains("valeur_random") && obj["valeur_random"].isString() )
+    {
+        m_ValeurRandom = obj["valeur_random"].toString();
+    }
+    else if ( obj.contains("valeur_carac") && obj["valeur_carac"].isString() )
+    {
+        m_ValeurCarac = obj["valeur_carac"].toString();
+    }
+    else if ( obj.contains("valeur_min") && obj["valeur_min"].isString() &&
+              obj.contains("valeur_max") && obj["valeur_max"].isString())
+    {
+        m_ValeurMin = obj["valeur_min"].toString();
+        m_ValeurMax = obj["valeur_max"].toString();
+    }
+    else if ( valeur != nullptr)
+    {
+        m_Valeur = valeur;
+    }
+    else
+        qDebug()<<"Pas de valeur pour le set carac. m_CaracId : "<<m_CaracId << " id : "<<obj["id"];
+
+    if ( obj.contains("intitule") && obj["intitule"].isString())
+    {
+        m_Intitule = obj["intitule"].toString();
+    }
+
+}
+
+QString SetCarac::GetValeur()
+{
+    if ( m_Valeur != "nexistepas*µ£$")
+        return m_Valeur;
+    else if ( m_ValeurRandom != "nexistepas*µ£$" )
+    {
+        int valeur = qrand()%m_ValeurRandom.toInt();
+        return QString::number(valeur);
+    }
+    else if ( m_ValeurMin != "nexistepas*µ£$" && m_ValeurMax != "nexistepas*µ£$")
+    {
+        Q_ASSERT_X( m_ValeurMax.toInt() > m_ValeurMin.toInt(), "GetValeur", "Valeur max doit être supérieur à valeur min !!");
+        int valeur = m_ValeurMin.toInt() + qrand()%(m_ValeurMax.toInt() - m_ValeurMin.toInt());
+        return QString::number(valeur);
+    }
+    else if ( m_ValeurCarac != "nexistepas*µ£$" )
+    {
+        QString valeurStr = IPerso::GetPersoInterface()->GetCaracValue(m_ValeurCarac);
+        if ( valeurStr == "" )
+            valeurStr = "0";
+        int valeur =  valeurStr.toInt();
+        return QString::number(valeur);
+    }
+    QString msg = "Pas de valeur pour ce set carac d'id :  " + m_CaracId ;
+    Q_ASSERT_X(false, "SetCarac", msg.toStdString().c_str() );
+    return "";
+}

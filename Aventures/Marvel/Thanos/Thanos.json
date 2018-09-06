@@ -1,0 +1,152 @@
+{
+  "titre" : "Thanos le conquérant",
+  "heros" : {
+    "nom" : "Thanos",
+    "caracs_a_afficher" : [
+      {
+        "id" : "gemme_espace",
+        "intitule" : "Gemme de l'Espace",
+		"description": "La gemme de l'Espace donne la possibilité de se téléporter soi-même ou de téléporter des objets voire d'autres êtres vivants.",
+		"valeur" : "1",
+        "img": "Gemme de l'Espace.jpg"
+      },
+      {
+        "id" : "gemme_esprit",
+        "intitule" : "Gemme de l'Esprit",
+		"valeur" : "1",
+		"description": "La gemme de l'Esprit donne une conscience des pensées et des rêves des personnes aux alentours. Elle accroît aussi les pouvoirs mentaux de son porteur.",
+        "img": "Gemme de l'Esprit.jpg"
+      },
+      {
+        "id" : "gemme_realite",
+        "intitule" : "Gemme de la Réalité",
+		"description": "La gemme de la Réalité permet de matérialiser ses pensées et d'abolir les lois physiques et naturelles.",
+		"valeur" : "1",
+        "img": "Gemme de la Réalité.jpg"
+      },
+      {
+        "id" : "gemme_pouvoir",
+        "intitule" : "Gemme du Pouvoir",
+		"description": "La gemme du Pouvoir, outre le fait d'accorder une force surhumaine et l'invincibilité à son détenteur, renforce le pouvoir des autres gemmes.",
+		"valeur" : "1",
+        "img": "Gemme du Pouvoir.jpg"
+      },
+      {
+        "id" : "gemme_temps",
+        "intitule" : "Gemme du Temps",
+		"description": "La gemme du Temps donne le pouvoir de se déplacer dans le temps ou d'observer une période précise sans s'y rendre, le risque étant de créer des boucles temporelles.",
+		"valeur" : "1",
+        "img": "Gemme du Temps.jpg"
+      },
+      {
+        "id" : "gemme_ame",
+        "intitule" : "Gemme de l'Âme",
+		"description": "La gemme de l'Âme accorde la capacité de voler et manipuler les âmes des vivants, aussi bien que des morts. Elle a une conscience propre et a besoin sans cesse de nouvelles âmes.",
+		"valeur" : "1",
+        "img": "Gemme de l'Âme.jpg"
+      },
+      {
+        "id" : "contemplation_du_puit",
+        "intitule" : "A contemplé le puit de l'âme"
+      },
+      {
+        "id" : "servant_de_la_mort",
+        "intitule" : "Est au service de la mort",
+		"valeur" : "1"
+      }
+    ],
+    "portrait" : "Thanos.jpg"
+  },
+  "themes" : [
+    {"valeur" : "marvel"},
+    {"valeur" : "malefique"},
+    {"valeur" : "cosmique"}
+  ],
+  "evts" : [
+    {
+      "id" : "Debut",
+      "nom" : "Présentation",
+      "effets" : [
+        {          "text" : "p1.png"        },
+        {          "text" : "p2.png"        },
+		{	"go_to_evt" : "prise_de_decision" }
+      ]
+    },
+	{
+      "id" : "prise_de_decision",
+      "nom" : "Choix de la prochaine action",
+      "effets" : [
+        { 
+			"text" : "Il est temps que Thanos décide de quel sera sa prochaine action.",
+			"choix" : [
+            {
+              "text" : "Aller à la recherche des joyaux de l'âme",
+              "if_true" : [{ "carac_id" : "contemplation_du_puit"}],
+              "go_to_evt" : "quete_gemme_ame"
+            },
+			{
+				"text" : "Contempler le puits de l'infini",
+              "if_true" : [{ "carac_id" : "servant_de_la_mort"}],
+              "go_to_evt" : "contemplation_du_puit"
+			}
+			]
+		}
+      ]
+    },
+	{
+      "id" : "contemplation_du_puit",
+      "nom" : "Contemplation du puits de l'infini",
+      "effets" : [
+        { "text" : "Découverte de la nature des gemmes de l'infini" }
+      ]
+    },
+	{
+      "id" : "quete_gemme_ame",
+      "nom" : "Quête de la gemme de l'Âme",
+      "effets" : [
+        { "text" : "Début de la quête de la gemme de l'Âme" }
+      ]
+    },
+	{
+      "id" : "quete_gemme_espace",
+      "nom" : "Quête de la gemme de l'Espace",
+      "effets" : [
+        { "text" : "Début de la quête de la gemme de l'Espace" }
+      ]
+    },
+	{
+      "id" : "quete_gemme_esprit",
+      "nom" : "Quête de la gemme de l'Esprit",
+      "effets" : [
+        { "text" : "Début de la quête de la gemme de l'Esprit" }
+      ]
+    },
+	{
+      "id" : "quete_gemme_realite",
+      "nom" : "Quête de la gemme de la Réalité",
+      "effets" : [
+        { "text" : "Début de la quête de la gemme de la Réalité" }
+      ]
+    },
+	{
+      "id" : "quete_gemme_pouvoir",
+      "nom" : "Quête de la gemme du Pouvoir",
+      "effets" : [
+        { "text" : "Début de la quête de la gemme du Pouvoir" }
+      ]
+    },
+	{
+      "id" : "quete_gemme_temps",
+      "nom" : "Quête de la gemme du Temps",
+      "effets" : [
+        { "text" : "Début de la quête de la gemme du Temps" }
+      ]
+    }
+  ],
+  "evts_conditionnels" : [
+  
+  ],
+  "evts_aleatoires" : [
+    
+  ]
+}

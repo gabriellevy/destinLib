@@ -1,0 +1,1233 @@
+{
+  "titre" : "L'invasion de la flotte ruche Kraken",
+  "heros" : [
+  {
+	"nom" : "Genestealer",
+	"id" : "genestealer",
+    "caracs_a_afficher" : [
+	{
+		"id" : "nombre_insemines",
+		"img" : "TeteInséminé.jpg",
+		"intitule" : "Humains inséminés",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen1",
+		"img" : "TeteHybride1.jpg",
+		"intitule" : "Hybrides 1ère génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen2",
+		"img" : "TeteHybride2.jpg",
+		"intitule" : "Hybrides 2ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen3",
+		"img" : "TeteHybride3.jpg",
+		"intitule" : "Hybrides 3ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "pourcentage_culte_repéré",
+		"intitule" : "Repérage du culte par les impériaux",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_genestealers",
+		"img" : "TeteGenestealer.jpg",
+		"intitule" : "Nombre de genestealers",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "population_humaine",
+		"img" : "TeteCitoyen.jpg",
+		"intitule" : "Population Ichar IV",
+		"mode_affichage" : "nombre",
+		"valeur" : "500000000000"
+	},
+	{
+		"id" : "nid",
+		"img" : "icone_logements_détruits.jpg",
+		"intitule" : "Nid",
+		"mode_affichage" : "img",
+		"valeur" : ""
+	},
+	{
+		"id" : "age_confrérie",
+		"intitulé" : "Âge de la confrérie (jours)",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	}
+	],
+	"portrait" : "GenestealerPortrait.jpg"
+  },  
+  {
+	"nom" : "Patriarche",
+	"id" : "patriarche_genestealer",
+    "caracs_a_afficher" : [
+	{
+		"id" : "nombre_insemines",
+		"img" : "TeteInséminé.jpg",
+		"intitule" : "Humains inséminés",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen1",
+		"img" : "TeteHybride1.jpg",
+		"intitule" : "Hybrides 1ère génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen2",
+		"img" : "TeteHybride2.jpg",
+		"intitule" : "Hybrides 2ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen3",
+		"img" : "TeteHybride3.jpg",
+		"intitule" : "Hybrides 3ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen4",
+		"img" : "TeteHybride4.jpg",
+		"intitule" : "Hybrides 4ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_convertis",
+		"img" : "TeteCultiste.jpg",
+		"intitule" : "Frères de sang convertis",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_genestealers",
+		"img" : "TeteGenestealer.jpg",
+		"intitule" : "Nombre de genestealers",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "population_humaine",
+		"img" : "TeteCitoyen.jpg",
+		"intitule" : "Population Ichar IV",
+		"mode_affichage" : "nombre",
+		"valeur" : "500000000000"
+	},
+	{
+		"id" : "pourcentage_culte_repéré",
+		"intitule" : "Repérage du culte par les impériaux",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	}
+	],
+	"portrait" : "Patriarche.jpg"
+  },  
+  {
+	"nom" : "Magus",
+	"id" : "magus",
+	"portrait" : "MagusPortrait.jpg",
+    "caracs_a_afficher" : [
+	{
+		"id" : "nombre_insemines",
+		"img" : "TeteInséminé.jpg",
+		"intitule" : "Humains inséminés",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen1",
+		"img" : "TeteHybride1.jpg",
+		"intitule" : "Hybrides 1ère génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen2",
+		"img" : "TeteHybride2.jpg",
+		"intitule" : "Hybrides 2ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen3",
+		"img" : "TeteHybride3.jpg",
+		"intitule" : "Hybrides 3ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen4",
+		"img" : "TeteHybride4.jpg",
+		"intitule" : "Hybrides 4ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_convertis",
+		"img" : "TeteCultiste.jpg",
+		"intitule" : "Frères de sang convertis",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_genestealers",
+		"img" : "TeteGenestealer.jpg",
+		"intitule" : "Nombre de genestealers",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "population_humaine",
+		"img" : "TeteCitoyen.jpg",
+		"intitule" : "Population Ichar IV",
+		"mode_affichage" : "nombre",
+		"valeur" : "500000000000"
+	},
+	{
+		"id" : "pourcentage_culte_repéré",
+		"intitule" : "Repérage du culte par les impériaux",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	}
+	]
+  },  
+  {
+	"nom" : "Primus",
+	"id" : "primus",
+	"portrait" : "PrimusPortrait.jpg",
+    "caracs_a_afficher" : [
+	{
+		"id" : "nombre_insemines",
+		"img" : "TeteInséminé.jpg",
+		"intitule" : "Humains inséminés",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen1",
+		"img" : "TeteHybride1.jpg",
+		"intitule" : "Hybrides 1ère génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen2",
+		"img" : "TeteHybride2.jpg",
+		"intitule" : "Hybrides 2ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen3",
+		"img" : "TeteHybride3.jpg",
+		"intitule" : "Hybrides 3ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_hybrides_gen4",
+		"img" : "TeteHybride4.jpg",
+		"intitule" : "Hybrides 4ème génération",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_convertis",
+		"img" : "TeteCultiste.jpg",
+		"intitule" : "Frères de sang convertis",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "nombre_genestealers",
+		"img" : "TeteGenestealer.jpg",
+		"intitule" : "Nombre de genestealers",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	},
+	{
+		"id" : "population_humaine",
+		"img" : "TeteCitoyen.jpg",
+		"intitule" : "Population Ichar IV",
+		"mode_affichage" : "nombre",
+		"valeur" : "500000000000"
+	},
+	{
+		"id" : "pourcentage_culte_repéré",
+		"intitule" : "Repérage du culte par les impériaux",
+		"mode_affichage" : "nombre",
+		"valeur" : "0"
+	}
+	]
+  },  
+  {
+    "nom" : "Reine norne",
+	"id" : "reine_norne",
+    "caracs_a_afficher" : [
+      {
+        "id" : "biomasse",
+        "intitule" : "Biomasse",
+		"mode_affichage" : "nombre",
+		"description": "La somme totale de la biomasse de votre flotte, en milliards de tonnes.",
+		"valeur" : "1000000"
+      },
+      {
+        "id" : "icharIV",
+		"img" : "ichar4.jpg",
+		"mode_affichage" : "texte",
+        "intitule" : "Ichar IV",
+		"description": "État d'Ichar IV",
+		"valeur" : "Pure"
+      },
+      {
+        "id" : "miral",
+		"img" : "Miral.jpg",
+		"mode_affichage" : "texte",
+        "intitule" : "Miral",
+		"description": "État de Miral",
+		"valeur" : ""
+      },
+      {
+        "id" : "larnarno",
+		"img" : "larnarno.jpg",
+		"mode_affichage" : "texte",
+        "intitule" : "Larnarno",
+		"description": "État de Larnarno",
+		"valeur" : ""
+      },
+      {
+        "id" : "salem",
+		"img" : "Salem.jpg",
+		"mode_affichage" : "texte",
+        "intitule" : "Salem",
+		"description": "État de Salem",
+		"valeur" : ""
+      },
+      {
+        "id" : "devlan_system",
+		"img" : "devlan_system.jpg",
+		"mode_affichage" : "texte",
+        "intitule" : "Système Devlan",
+		"description": "Système Devlan",
+		"valeur" : ""
+      },
+      {
+        "id" : "genestealers_exploration",
+		"img" : "TeteGenestealer.jpg",
+        "intitule" : "Exploration de genestealers"
+      },
+      {
+        "id" : "biomasse_exploration",
+		"mode_affichage" : "nombre",
+		"description": "Biomasse dédiée à l'exploration de la galaxie.",
+        "intitule" : "Biomasse d'exploration"
+      },
+      {
+        "id" : "lictors_exploration",
+		"img" : "TeteLictor.jpg",
+        "intitule" : "Exploration de lictors"
+      },
+      {
+        "id" : "exploration_capture",
+        "intitule" : "Capture pendant l'exploration"
+      },
+      {
+        "id" : "exploration_massacre",
+        "intitule" : "Massacre pendant l'exploration"
+      }, 
+      {
+        "id" : "gaunts_exploration",
+        "intitule" : "Exploration de gaunts",
+		"img" : "TeteGaunt.jpg"
+      }
+    ],
+    "portrait" : "EspritDeLaRuche.jpg"
+  }
+  ],
+  "themes" : [
+    {"valeur" : "warhammer 40000"},
+    {"valeur" : "malefique"},
+    {"valeur" : "cosmique"}
+  ],
+  "evts" : [
+    {
+      "id" : "Debut",
+      "nom" : "Arrivée d'un genestealer sur Ichar IV",
+	  "effets" : [
+			{			
+				"text" : "Vous êtes un genestealer. Une terrifiante créature Xenos assoifée de sang.",
+				"set_carac" : [{
+				  "carac_id" : "phase_infestation_genestealer",
+				  "valeur" : "arrivee_genestealer"
+				}]
+			},
+			{			
+				"text" : "Le vaisseau où vous étiez en hibernation depuis un temps indéterminé, des siècles peut-être, vient enfin de s'écraser sur une planête inconnue. Votre organisme sort de l'hibernation, vos muscles s'étirent, il est temps de se mettre en chasse. La faim vous taraude déjà. Mais un autre instinct s'y mélange, presque aussi fort : celui de créer un nid, de s'y réfugier et de s'y reproduire. \nPour l'heure une seule pensée vous obséde : que ce soit pour l'un ou l'autre de ces buts il vous faut découvrir si cette planète est habitée par des êtres vivants, qui pourront satisfaire tous vos instincts primitifs.",
+				"img" : "Genestealers_atterissage.jpg",
+				"choix" : [
+					{
+						"text" : "Chercher une proie aux alentours",
+						"go_to_effet" : "chasse_genestealer"
+					},
+					{
+						"text" : "Essayer de s'approcher de la montagne de métal visible à l'horizon",
+						"go_to_effet" : "approche_ruche_lamos"
+					},
+					{
+						"text" : "Chercher dans l'épave si il y d'autres genestealers",
+						"go_to_effet" : "fouille_epave_genestealers"
+					}
+				]			
+			},
+			{
+				"id" : "fouille_epave_genestealers",
+				"img" : "Genestealers_atterissage.jpg",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_genestealers",
+					"valeur" : "4"
+			  },
+			  {
+					"carac_id" : "pourcentage_culte_repéré",
+					"valeur" : "6"
+			  }],
+				"text" : "Vous sentez confusément via le lien télépathique que partagent les genestealers qu'il y a plusieurs de vos semblables qui se trouvaient aussi en hibernation dans le vaisseau et qui n'ont pas été tués à l'impact. Après moins d'une heure vous parvenez à en trouver et dégager quatre. Certais sont blessés mais la pgrande résistance de votre race leur permettra sans nul doute de récupérer rapidement. Pas de remerciement entre genestalers. Même si vous avez votre individualité jusqu'à un certain point, l'esprit de la ruche tyranide est en tous ses enfants et vous pousse à un travail en commun sans hésitation. \n Il n'empêche, pour maximiser vos chances de propager votre espèce, il vaut mieux se disperser et chercher chacun de votre côté ce que ce monde a à vous offrir.",
+				"choix" : [
+					{
+						"text" : "Chercher une proie aux alentours",
+						"go_to_effet" : "chasse_genestealer"
+					},
+					{
+						"text" : "Essayer de s'approcher de la montagne de métal visible à l'horizon",
+						"go_to_effet" : "approche_ruche_lamos"
+					}
+				]
+			},
+			{
+				"id" : "chasse_genestealer",
+				"img" : "genestealer_attaque.jpg",
+				"set_carac_true" : [{  "carac_id" : "genestealer_rassasie"}],
+				"text" : "Cette planète ne semble pas avoir une faune très développée. Et en tout cas les paisibles herbivores que vous y avez découvert n'ont pas l'habitude de croiser un prédateur alpha tel que vous. En fait ils ont été si lents à se mettre à vous fuir qu'ils semblent ne jamais avoir à fuir de chasseur carnivore. Cela va changer. Bien sûr à voir vos pinces monstrueuses ils ont tout de même fini par déguerpir mais trop tard. Une petite pointe de vitesse et vous en attrapiez un pour couper son long coup élégant d'un seul coup de griffe.\n Un bon repas plus tard, les sens vous reviennent : la nourriture sera facile à trouver sur ce monde, c'est une bonne chose. Mais le destin d'un genestealer solitaire est plus grand : vous avez besoin de créature intelligente à parasiter pour vous reproduire et revendiquer ce monde. Or ces herbivores délicieux que vous avez tués ne sont assurément pas intelligents, les parasiter est sans intérêt. La gigantesque structure métallique que vous voyez à l'horizon est prometteuse par contre.",
+				"go_to_effet" : "approche_ruche_lamos"
+			},
+			{
+				"id" : "approche_ruche_lamos",
+				"img" : "ruche_lamos.png",
+				"text" : "Pas de doute possible. Cette structure gigantesque de métal a forcément été bâtie par une créature intelligente. Elle semble habitée et en plus elle vous rappelle vaguement le vaisseau dans lequel vous avez atteint la planète. Un vaisseau humain. Ce serait vraiment l'idéal. Les humais sont non seulement facile à attraper mais aussi délicieux et idéaux pour porter des enfants genestealers."
+			},
+			{
+				"id" : "approche_ruche_lamos2",
+				"text" : "En approchant l'édifice vous appercevez une créature bipède à peu près de votre taille affairée sur un des énormes tuyaux de métal qui se dirigent vers la ruche. Il s'agit bel et bien d'un humain. L'atteindre et le tuer serait à coup sûr facile. Le contaminer avec votre adn le serait presque autant. Mais votre instinct alien vous recommande la prudence. Le but ultime tout genestealer est d'infester la planète entière. Si vous vous faites repérer aussi vite vous risquez de tout comprommettre.",
+				"choix" : [
+				{
+					"text" : "attaquer tout de même, il n'y de toute façon pas d'autres humains à des centaines de mètres à la ronde.",
+					"go_to_effet" : "chasse_humain_chemin_lamos"
+				},
+				{
+					"text" : "L'éviter et tenter d'atteindre la ruche",
+					"go_to_effet" : "arrivee_lamos"
+				}
+				]
+			},
+			{
+				"id" : "chasse_humain_chemin_lamos",
+				"text" : "C'est en effet un jeu d'enfant de l'approcher tant il est occupé à faire dieu sait quoi. Sa vie est entre vos mains",
+				"choix" : [
+				{
+					"text" : "Le tuer et le dévorer",
+					"go_to_effet" : "meurtre_chemin_lamos"
+				},
+				{
+					"text" : "L'inséminer avec votre ADN",
+					"go_to_effet" : "insemination_chemin_lamos"
+				}
+				]
+			},
+			{
+				"id" : "meurtre_chemin_lamos",
+				"text" : "Saisissant le chétif humain par les bras vous tirez brutalement tout en frappant de vos pinces tranchantes. La créature est littéralement coupée en quatre morceaux tant même sa colonne vertébrale est fragile. Ce sera un jeu d'anfant de s'installer ici et de chasser régulièrement. C4est une très bonne chose. Il va cependant falloir être prudent. Nul doute que la structure de métal contient une quantité énorme de ces êtres qui ont sans doute la capacité à devenir dangereux en grand nombre. En attendant il n'y en a aps un seul à l'horizon. C'est l'heure du festin. Une fois celui ci terminé vous enterrez les restes discrètement à quelque distance. Peut-être d'autres humains le chercheront-t'ils mais il auront bien du mal à retrouver ses restes.",
+				"set_carac_true" : [{  "carac_id" : "genestealer_rassasie"}],
+				"add_to_carac" :[
+			  {
+					"carac_id" : "pourcentage_culte_repéré",
+					"valeur" : "2"
+			  },
+			  {
+					"carac_id" : "population_humaine",
+					"valeur" : "-1"
+			  }],
+			  "go_to_effet" : "arrivee_lamos"
+			},
+			{
+				"id" : "insemination_chemin_lamos",
+				"text" : "Vous saisissez la pitoyable créature avec vos mains en prenant garde de ne pas arracher ses fragiles membres. Puis vous la mordez légèrement au bras, permettant ainsi à votre Ovipositor, via votre langue, de déposer votre ADN dans le corps de l'humain chétif. Le choc suffit à lui faire perdre connaissance. À son réveil il ne se rappellera de rien et sa blessure sera presque résorbée. Mais son corps aura déjà commencé à changer en profondeur. Bientôt il souhaitera ardemment se reproduire et son enfant sera un hybride genestealer.",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "1"
+			  },
+			  {
+					"carac_id" : "pourcentage_culte_repéré",
+					"valeur" : "4"
+			  }],
+			  "go_to_effet" : "arrivee_lamos"
+			},
+			{
+				"id" : "arrivee_lamos",
+				"text" : "Vous atteignez enfin les abords de la structure et tous vos soupçons se confirment. C'est définitivement une construction humaine très ancienne. Ses proportions sont colossales. Peut-être 10 kilomètres de hauteur. Et sa population est innombrable. Il va être difficile de pénétrer à l'intérieur sans être remarqué. Pas qu'elle soit réellement gardée mais les humains finiront tôt ou tard par vous appercevoir et même si vous passiez en force ils lanceraient une chasse dans tous les environs pour vous retrouver.",
+				"choix" : [
+				{
+					"text" : "Peu importe la discrétion, je passe en force",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Passer prudemment et discrètement",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Attendre la nuit en restant à bonne distance",
+					"go_to_effet" : "entree_lamos_nuit"
+				}
+				]
+			},
+			{
+				"id" : "entree_lamos_nuit",
+				"text" : "À la nuit tombée la plupart des humains rentrent chez eux se coucher. Ceux qui restent voient manifestement très mal malgré les lumières qu'ils allument, tands que vous voyez comme en plein jour. Vous pénétrez facilement dans la ruche.",
+				"go_to_effet" : "arrivée_intérieur_lamos"
+			},
+			{
+				"id" : "arrivée_intérieur_lamos",
+				"text" : "Vous êtes parvenu à vous introduire dans la ruche. Qu'allez vous faire ?",
+				"choix" : [
+				{
+					"text" : "Chercher un repaire sûr pour créer votre nid",
+					"go_to_effet" : "recherche_nid"
+				},
+				{
+					"text" : "Commencer à vous introduire chez des humains pour les inséminer",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Tenter de tuer le maximum d'humains pendant leur sommeil.",
+					"go_to_effet" : "pas_fait"
+				}
+				]
+			},
+			{
+				"id" : "recherche_nid",
+				"img":"entrepot.jpg",
+				"text" : "Après quelques heures à vous éloigner des zones trop fréquentées vous découvrez un vieil entrepôt de bonne taille manifestement abandonné depuis des années.",
+				"choix" : [
+				{
+					"text" : "S'installer ici",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Chercher un autre endroit",
+					"go_to_effet" : "recherche_nid_vieux_logements"
+				},
+				{
+					"text" : "Attendre une journée complète de voir si le lieu est sûr.",
+					"go_to_effet" : "recherche_nid_entrepot"
+				}
+				]
+			},
+			{
+				"id" : "recherche_nid_entrepot",
+				"img":"entrepot.jpg",
+				"text" : "En une journée complète non seulement personne n'est entré dans l'entrepôt mais personne ne s'en est même approché à moins de 300 mètres. De plus en dessous de lui se trouve un système d'égoût assez étendu et tout aussi désert. Le seul défaut est le manque de chaleur de l'endroit pour élever des petits.",
+				"choix" : [
+				{
+					"text" : "S'installer ici",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Chercher un autre endroit",
+					"go_to_effet" : "recherche_nid_vieux_logements"
+				},
+				{
+					"text" : "Attendre six mois de plus.",
+					"go_to_effet" : "recherche_nid_entrepot2"
+				}
+				]
+			},
+			{
+				"id" : "recherche_nid_entrepot2",
+				"img":"entrepot.jpg",
+				"text" : "Malheureusement au bout de deux mois où vous avez attendu avec la patience sans fond du tyranide que vous êtes, des humains sont venus plusieurs fois. Vous ignorez ce qu'ils cherchent mais c'est une raison suffisante pour fuir cet endroit et en trouver un autre. De plus vous êtes maintenant à nouveau affamé.",
+				"choix" : [
+				{
+					"text" : "Les tuer et les manger",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Les tuer et s'installer ici",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Chercher un autre endroit",
+					"go_to_effet" : "recherche_nid_vieux_logements"
+				}
+				]
+			},
+			{
+				"id" : "recherche_nid_vieux_logements",
+				"img":"logements_détruits.jpg",
+				"text" : "Après plusieurs jours passés à chercher un terrain plus favorables en pénétrant dans les profondeurs de la ruche vous finissez par atteindre un secteur qui semble avoir éé un système de logement. Il est dans un état déplorable. Sans doute à l'abandon depuis un siècle, ce qui est très bon signe. Les humains sont très peu nombreux dans les environs et évitent sans doute ces ruines dangereuses.",
+				"choix" : [
+				{
+					"text" : "S'installer ici",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Chercher un autre endroit",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Attendre un mois pour voir si des humains passent par ici.",
+					"go_to_effet" : "essaye_attente_nid_vieux_logements"
+				}
+				]
+			},
+			{
+				"id" : "essaye_attente_nid_vieux_logements",
+				"if_true" : [{ "carac_id" : "genestealer_rassasie" }],
+				"go_to_effet" : "attente_nid_vieux_logements",
+				"else" : {
+					"text" : "Impossible d'attendre plus longtemps. Malgré votre organisme en quasi hibernation la faim vous taraude trop. Vous devez entrer en chasse.",
+					"go_to_effet" : "chasse_ruche"
+				  }
+			},
+			{
+				"id" : "chasse_ruche",
+				"img" : "genestealer_attaque.jpg",
+				"set_carac_true" : [{  "carac_id" : "genestealer_rassasie"}],
+				"text" : "Heureusement il n'est pas trop difficile dans ces tunnels de trouver une proie facile et de cacher ses restes. Un habitant de la ruche ne rentrera pas chez lui ce soir. Une fois rassasié vous retournez aux logements désaffectés.",
+				"go_to_effet" : "attente_nid_vieux_logements",
+				"add_to_carac" :[
+				  {
+						"carac_id" : "pourcentage_culte_repéré",
+						"valeur" : "1"
+				  },
+				  {
+						"carac_id" : "population_humaine",
+						"valeur" : "-1"
+				  }]
+			},
+			{
+				"id" : "attente_nid_vieux_logements",
+				"img":"logements_détruits.jpg",
+				"text" : "Toujours rien un mois plus tard. Pour un humain cette attente aurait déjà parue interminable. Et pour vous ?",
+				"choix" : [
+				{
+					"text" : "S'installer ici",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Chercher un autre endroit",
+					"go_to_effet" : "pas_fait"
+				},
+				{
+					"text" : "Attendre deux ans de plus.",
+					"go_to_effet" : "attente_nid_vieux_logements_deux_ans"
+				}
+				]
+			},
+			{
+				"id" : "attente_nid_vieux_logements_deux_ans",
+				"img":"logements_détruits.jpg",
+				"text" : "Deux ans plus tard vous êtes très satisfait : vous avez trouvé un nid relativement chaud et surtout où aucun humain n'a mis le pied. Mis à part bien sûr les quelques victmes que vous avez enlevées et enterrées dans les environs pour satisfaire votre faim. ",
+				"add_to_carac" :[
+				  {
+						"carac_id" : "pourcentage_culte_repéré",
+						"valeur" : "3"
+				  },
+				  {
+						"carac_id" : "population_humaine",
+						"valeur" : "-6"
+				  }],
+				"choix" : [
+				{
+					"text" : "S'installer ici",
+					"go_to_effet" : "installation_vieux_logements"
+				},
+				{
+					"text" : "Chercher un autre endroit",
+					"go_to_effet" : "pas_fait"
+				}
+				]
+			},
+			{
+				"id" : "installation_vieux_logements",
+				"img":"logements_détruits.jpg",
+				"text" : "Vous avez choisi votre repaire et en connaissez les environs par coeur. Vous êtes maintenant chez vous. L'établissement du culte peut commencer. ",
+				"set_carac" : [{
+				  "carac_id" : "nid",
+				  "valeur" : "vieux_logements"
+				}],
+				"go_to_evt" : "Debut_Reproduction_Genestealer"
+			}
+			]
+	},
+    {
+      "id" : "Debut_Reproduction_Genestealer",
+      "nom" : "Début de la reproduction",
+	  "effets" : [
+			{			
+				"text" : "Vous êtes enfin installé et en sécurité relative. Votre instinct vous commande maintenant avec insistance de vous multiplier pour assurer la suprémacie de votre race sur cette planète. L'insémination des humains est facile si vous êtes un peu prudent, c'est la naissance et l'élevage qui sont dangreux. Une fois inséminé les humains sont soumis au pouvoir psychique de la ruche tyranide et s'occuperont fanatiquement de leurs enfants même si ceux ci sont à moitié extra-terrestres et pouvus de trois bras. Le danger est si vous ou leurs enfants sont vus par des humains.",
+				"set_carac" : [{
+				  "carac_id" : "phase_infestation_genestealer",
+				  "valeur" : "nid_genestealer"
+				}]
+			},
+			{
+				"id" : "debut_phase_insémination",
+				"text" : "Dans les prochaines nuits allez-vous : ",
+				"choix" : [
+					{
+						"text" : "Inséminer le maximum d'humains",
+						"go_to_effet" : "insémination1"
+					},
+					{
+						"text" : "Inséminer des humains prudemment et seulement très loin de votre nid",
+						"go_to_effet" : "insémination4"
+					},
+					{
+						"text" : "Inséminer des humains et les kidnapper pour qu'ils vivent dans votre nid",
+						"go_to_effet" : "pas_fait"
+					}
+				]	
+			},
+			{
+				"id" : "insémination1",
+				"if_proba" : "0.3",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "2"
+				  }]
+			},
+			{
+				"id" : "insémination2",
+				"if_proba" : "0.3",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "2"
+				  }]
+			},
+			{
+				"id" : "insémination3+repéré",
+				"if_proba" : "0.3",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "2"
+				  },
+				  {
+						"carac_id" : "pourcentage_culte_repéré",
+						"valeur" : "4"
+				  }]
+			},
+			{
+				"id" : "insémination4",
+				"if_proba" : "0.6",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "1"
+				  }]
+			},
+			{
+				"id" : "insémination5",
+				"if_proba" : "0.8",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "1"
+				  }]
+			},
+			{
+				"id" : "insémination6+repéré",
+				"if_proba" : "0.3",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_insemines",
+					"valeur" : "2"
+				  },
+				  {
+						"carac_id" : "pourcentage_culte_repéré",
+						"valeur" : "4"
+				  }]
+			},
+			{
+				"id" : "reproduction hybrides gen1",
+				"add_to_carac" :[{
+					"carac_id" : "nombre_hybrides_gen1",
+					"valeur" : "nombre_insemines" 
+				  },
+				  {
+						"carac_id" : "pourcentage_culte_repéré",
+						"valeur" : "4"
+				  }]
+			},
+			{
+				"add_to_carac" : [
+				{
+					"carac_id" : "age_confrérie",
+					"valeur" : "7"
+				}]
+			},
+			{
+			"id" : "test_fin_cycle_insemination",
+			  "if" : [{
+				"carac_id" : "nombre_hybrides_gen3",
+				"valeur" : "1",
+				"signe" : "<"
+			  }],
+			  "go_to_effet" : "debut_phase_insémination"
+			},
+			{
+				"go_to_evt" : "Debut_Patriarche"
+			}
+			]
+	},
+    {
+      "id" : "Debut_Patriarche",
+      "nom" : "Ascension du patriarche",
+	  "effets" : [
+			{			
+				"text" : "Vous avez longuement et patiemment tissé votre toile. Votre culte se répand dans la ruche Lamos, bientôt sur toute la planète. Vos sens se développent, vous percevez le flux du warp. Vous changez pour pouvoir vous occuper de votre confrérie nouvelle, de votre grande famille. Vous êtes différent.",
+				"change_perso" : "patriarche_genestealer",
+				"set_carac" : [{
+				  "carac_id" : "phase_infestation_genestealer",
+				  "valeur" : "domination_patriarche"
+				}]
+			},
+			{			
+				"text" : "Vous êtes maintenant un patriarche, un énorme genestaler doué de pouvoirs psychique redoutables. Un maître de la manipulation. Votre contrôle sur les hybrides auxquels vous avez donné naissance est total. Ils mourront plutôt que de trahir votre présence dans les profondeurs de la ruche. \n Vous devez continuer à vous reproduire discrètement, à multiplier vos adeptes. Bientôt apparaîtront de nouvelles générations d'hybrides qui pourront se mêler sans risques aux humains et la vraie prise de contrôle commencera."
+			},
+			{			
+				"text" : "Fin de la phase patriarche.",
+				"go_to_evt" : "Debut_Politique_Genestealer"
+			}
+		]
+	},
+    {
+      "id" : "Debut_Politique_Genestealer",
+      "nom" : "Infiltration politique du culte",
+	  "effets" : [
+			{			
+				"text" : "C'est parti pour la phase politique.",
+				"change_perso" : "magus",
+				"set_carac" : [{
+				  "carac_id" : "phase_infestation_genestealer",
+				  "valeur" : "nid_genestealer"
+				}]
+			},
+			{			
+				"text" : "Fin de la phase politique.",
+				"go_to_evt" : "Rébellion_Genestealer"
+			}
+		]
+	},
+    {
+      "id" : "Rébellion_Genestealer",
+      "nom" : "Rébellion",
+	  "effets" : [
+			{			
+				"text" : "C'est parti pour la rébellion.",
+				"change_perso" : "primus"
+			}
+		]
+	},
+	{
+      "id" : "DebutExploration",
+      "nom" : "Présentation de l'exploration",
+      "effets" : [
+        {          
+			"text" : "Vous êtes l'esprit de la ruche. Le dominant d'une gigantesque flotte ruche de tyranides appelée à anéantir toutes les espèces vivantes de cette galaxie dans laquelle vous venez de pénétrer après avoir assimilé toute la vôtre.",
+			"change_perso" : "reine_norne"
+		},
+        {          "text" : "Cette galaxie est riche en vie et nous allons la dévorer toute entière pour la plus grande puissance de la ruche."        },
+        {          "img" : "Incursions_Tyranides.jpg",
+					"text": "Vous êtes la flotte ruche Kraken, la plus puissante des flottes ayant lancé l'invasion de la bordure orientale de la galaxie."
+		},
+		{	
+			"id" : "exploration_repartition",
+			"img" : "DroneAvantGarde.jpg",
+			"text" : "Il est temps de lancer l'exploration de cette galaxie pleine de proies qui viendront agrandir la taille de votre gigantesque flotte encore plus. Plus vous enverrez de vaisseaux en exploration plus vous aurez d'informations sur les planètes du secteur. Leur position, leur richesse en biosphère, et leur capacité défensive. Mais plus vous affaiblirez la puissance totale de votre flotte.",
+			"glisseur" : 
+			{
+				"valeur_min" : "0",
+				"valeur_max" : "100000",
+				"valeur_depart" : "500",
+				"carac_id" : "biomasse_exploration"
+			}
+		},
+		{
+			"id" : "effet_exploration1",
+			"retire_de_carac" : [{
+              "carac_id" : "biomasse",
+              "valeur_carac" : "biomasse_exploration"
+            }]
+		},
+		{
+			"id" : "effet_exploration_larnarno",
+			"text" : "Vous avez découvert le monde féral de Larnarno.",
+			"if" : [{
+			  "carac_id" : "biomasse_exploration",
+			  "signe" : ">",
+			  "valeur": "5000"
+			}],
+			"set_carac" : [{
+              "carac_id" : "larnarno",
+              "valeur" : "Pure"
+            }]
+		},
+		{
+			"id" : "effet_exploration_salem",
+			"text" : "Vous avez découvert l'astéroïde monastère de Salem.",
+			"if" : [{
+			  "carac_id" : "biomasse_exploration",
+			  "signe" : ">",
+			  "valeur": "60000"
+			}],
+			"set_carac" : [{
+              "carac_id" : "salem",
+              "valeur" : "Pure"
+            }]
+		},
+		{
+			"id" : "effet_exploration_devlan_system",
+			"text" : "Vous avez découvert le système de Devlan.",
+			"if" : [{
+			  "carac_id" : "biomasse_exploration",
+			  "signe" : ">",
+			  "valeur": "1200"
+			}],
+			"set_carac" : [{
+              "carac_id" : "devlan_system",
+              "valeur" : "Pure"
+            }]
+		},
+		{
+			"id" : "effet_exploration_miral",
+			"text" : "Vous avez découvert la planète quasi morte de Miral. Une proie médiocre mais facile.",
+			"if" : [{
+			  "carac_id" : "biomasse_exploration",
+			  "signe" : ">",
+			  "valeur": "50000"
+			}],
+			"set_carac" : [{
+              "carac_id" : "miral",
+              "valeur" : "Pure"
+            }]
+		},
+		{
+			"id" : "effet_exploration_fin",
+			"text" : "Exploration terminée."
+		}
+      ]
+    },
+	{
+      "id" : "exploration1",
+      "nom" : "Exploration du cosmos",
+      "effets" : [
+        { 
+			"text" : "Des spores mycétiques largués depuis vos drones d'avant-gardes envoyés en éclaireurs ont atterri sur plusieurs planètes. Il est temps pour vous de les explorer et analyser pour répartir vos forces d'invasion au mieux. Commencez-vous par : ",
+			"img" : "DroneAvantGarde.jpg",
+			"choix" : [
+            {
+				"text" : "Planète de jungle",
+				"if_false" : [{ "carac_id" : "planete_jungle1_exploree"}],
+				"go_to_evt" : "exploration_planete_jungle"
+            },
+			{
+				"text" : "Planète ruche",
+				"if_false" : [{ "carac_id" : "planete_IcharIV1_exploree"}],
+				"go_to_evt" : "exploration_planete_IcharIV"
+			},
+			{
+				"text" : "Infester un space hulk",
+				"go_to_evt" : "infestation_space_hulk"
+			}
+			]
+		}
+      ]
+    },
+	{
+      "id" : "exploration_planete_jungle",
+      "nom" : "Exploration d'une planète de jungle",
+      "effets" : [
+        {          
+			"text" : "Vous atterissez sur une planète de jungle luxuriante. Il va falloir l'explorer avec vos troupes pour déterminer quel intérêt et quel danger elle représente pour l'esprit de la ruche. Quelle type de créature allez vous générer avec votre biomasse ?",
+			"choix" : [
+            {
+				"text" : "Des lictors, leur discrétion évitera de donner l'alerte",
+				"set_carac_true" : [{"carac_id" : "lictors_exploration"}],
+				"go_to_effet" : "exploration_planete_jungle_1"
+            },
+			{
+				"text" : "Des gaunts par milliers, pour couvrir le maximum de terrain",
+				"set_carac_true" : [{"carac_id" : "gaunts_exploration"}],
+				"go_to_effet" : "exploration_planete_jungle_1"
+			},
+			{
+				"text" : "Des genestealers pour infiltrer les formes de vie intelligentes.",
+				"set_carac_true" : [{"carac_id" : "genestealers_exploration"}],
+				"go_to_effet" : "exploration_planete_jungle_1"
+			}
+			]
+		},
+		{
+			"id" : "exploration_planete_jungle_1",
+			"text" : "Quelle type d'armes et de tactiques allez-vous privilégier ?",
+			"choix" : [
+            {
+				"text" : "La capture de specimen, via des armes constrictors",
+				"set_carac_true" : [{"carac_id" : "exploration_capture"}],
+				"img" : "Constrictor.jpg",
+				"go_to_effet" : "exploration_planete_jungle_2"
+            },
+			{
+				"text" : "Léthales. Il ne faut pas de témoins.",
+				"set_carac_true" : [{"carac_id" : "exploration_massacre"}],
+				"img" : "Dévoreur.jpg",
+				"go_to_effet" : "exploration_planete_jungle_2"
+			}
+			]
+		},
+		{
+			"id" : "embuscade_lictor",
+			"img" : "Lictor_embuscade.jpg"
+		},
+		{
+			"id" : "elimination_explorateurs",
+			"text" : "Votre vague d'explorateurs a été massacrée par les forces ennemies. Vous avez néanmoins recueilli de nombreuses informations qui seront précieuses pour l'invasaion par la flotte ruche."
+		},
+		{
+			"id" : "elimination_explorateurs2",
+			"if_true": [{"carac_id" : "gaunts_exploration"}],
+			"text" : "Vous avez de plus l'avantages que vos gaunts ont planté des oeufs par milliers dans ce monde et qu'ils vont se reproduire et grandement compliquer l'organisation de la défense de cette planète."
+		}
+      ]
+    },
+	{
+      "id" : "infestation_space_hulk",
+      "nom" : "Infestation de space hulk",
+      "effets" : [
+        {          
+			"text" : "pasfait",
+			"img" : "GenestealerSpaceHulk.jpg"
+		}
+      ]
+    },
+	{
+      "id" : "exploration_planete_IcharIV",
+      "nom" : "Exploration d'une planète ruche de l'imperium",
+      "effets" : [
+        {          
+			"text" : "pasfait"
+		}
+      ]
+    },
+	{
+		"id": "repartition_des_forces",
+		"nom" : "Répartition de la biomasse disponible entre toutes les cibles de la flotte",
+		"effets": [
+		{
+			"text" : "pasfait car il faudrait un nouveau type d'interface pour permettre ce genre de choix"
+		}
+		]
+	},
+	{
+      "id" : "combat_spatial_planete_IcharIV",
+      "nom" : "Combat spatial",
+      "effets" : [
+        {          
+			"text" : "Avant de pouvoir attaquer la planète elle-même il va falloir anéantir la floot de vaisseaux impériaux qui la défend.",
+			"img" : "VaisseauRuche.jpg"
+		},
+        {          
+			"text" : "Il y a là 2 croiseurs impériaux et quelques frégates. Quelle va être votre stratégie principale pour les éliminer ?",
+			"choix" : [
+            {
+				"text" : "Envoi de nuées de petites créatures volantes",
+				"go_to_effet" : "combat_spatial_planete_IcharIV_nuees"
+            },
+			{
+				"text" : "Charger et avaler leurs vasseaux les plus petits en premier",
+				"go_to_effet" : "combat_spatial_planete_IcharIV_avaler"
+			},
+			{
+				"text" : "lancer des abordages de genestealers via des tentacules géants.",
+				"go_to_effet" : "combat_spatial_planete_IcharIV_genestealers"
+			}
+			]
+		},
+		{
+			"id" : "combat_spatial_planete_IcharIV_nuees",
+			"test" : "pasfait"
+		},
+		{
+			"id" : "combat_spatial_planete_IcharIV_avaler",
+			"test" : "pasfait"
+		},
+		{
+			"id" : "combat_spatial_planete_IcharIV_genestealers",
+			"test" : "pasfait"
+		}
+      ]
+    },
+	{
+      "id" : "attaque_IcharIV",
+      "nom" : "Première attaque d'une planète ruche",
+      "effets" :   [
+		{
+			"text" : "La flotte est en orbite devant la planète cible. L'ombre de son esprit s'étend sur le warp et brise toutes les communications que les mondes du secteurs peuvent envoyer via le warp. Les renforts ne pourront pas non plus voyager via le warp ou en prenant des risques énormes. L'invasion peut commencer."
+		},
+		{
+			"id" : "bombardement_planete_IcharIV",
+			"text" : "Il est temps de bombarder massivement la planète pour préparer l'invasion. Les purtabateurs climatiques et agents fertilisants sont déjà à l'oeuvre et préparent le tarrain idéal pour le débarquement. Quel type de bombardement à privilégier ?",
+			"choix" : [
+			{
+				"text" : "Des charges empoisonnées pour exterminer la population",
+				"go_to_effet" : "bombardement_empoisonnement"
+			},
+			{
+				"text" : "Des charges explosives et corrosives",
+				"go_to_effet" : "bombardement_explosif"
+			},
+            {
+				"text" : "Des parasites pour prendre le contrôle des annemis",
+				"go_to_effet" : "bombardement_parasites"
+            },
+			{
+				"text": "Plus de spores déréglant l'atmosphère et le climat"
+			},
+            {
+				"text" : "Des troupes d'assaut immédiatement",
+				"go_to_effet" : "assaut_planete"
+            }
+			]
+		},
+		{
+			"id" : "bombardement_parasites",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "bombardement_empoisonnement",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "bombardement_explosif",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "assaut_planete",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "plan_au_sol",
+			"text" : "Vous avez réussi à faire atterir une grande quantité de créatures au sol. Quelle va être votre priorité dans la destruction des forces ennemies ?",
+			"img" : "bataille1.jpg",
+			"choix" : [
+			{
+				"text" : "Une attaque aérienne massive pour avoir la suprémacie des airs",
+				"go_to_effet" : "supremacie_aérienne"
+			}
+			]
+		},
+		{
+			"id" : "supremacie_aérienne",
+			"img" : "Harridan.jpg",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "difficulte_combat",
+			"text" : "Votre assaut a été brisé au sol par une solide défense de la garde impériale et des space marines. Il faut changer de stratégie. Allez-vous :",
+			"choix" : [
+			{
+				"text" : "Réincarner le maître des essaims pour qu'il change votre stratégie.",
+				"go_to_effet" : "attaque_maite_des_essaims"
+			},
+			{
+				"text" : "Envoyer une multitude de hormagaunts pour leur faire gaspiller leurs munitions.",
+				"go_to_effet" : "attaque_hormagaunts"
+			},
+			{
+				"text" : "Faire venir des batteries de biovores pour bombarder leurs positions.",
+				"go_to_effet" : "attaque_biovore"
+			},
+			{
+				"text" : "Envoyer un essaim de rôdeurs par des tunnels sous leurs pieds pour les désorganiser puis redonner l'assaut.",
+				"go_to_effet" : "attaque_rodeurs"
+			},
+			{
+				"text" : "Forcer le passage en envoyant des titans hiérophantes en première ligne.",
+				"go_to_effet" : "attaque_hierophantes"
+			}
+			]
+		},
+		{
+			"id" : "attaque_hierophantes",
+			"img": "Hierophant.jpg",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "attaque_biovore",
+			"img": "biovore_art.jpg",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "attaque_rodeurs",
+			"img": "Rôdeur.jpg",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "attaque_hormagaunts",
+			"img": "Hormagaunt2.jpg",
+			"text" : "pasfait"
+		},
+		{
+			"id" : "attaque_maite_des_essaims",
+			"img": "Maître_des_essaims.jpg",
+			"text" : "pasfait"
+		},
+        {          
+			"text" : "Il est temps de lâcher les voraces en masse. Ils vont absorber toutes les ressources de cette planète ; Toute sa biomasse, toute son eau, même sa plus infoime particule d'oxygène. Tout doit être dévoré. Une fois celà fait les voraces se jettreont par milliards dans les grandes cuves de digestion pour être transformés en biomasse réutilisable par la flotte ruche.",
+			"img":"RipperSwarm.png",
+			"add_to_carac" :[{
+				"carac_id" : "biomasse",
+				"valeur_min" : "8000",
+				"valeur_max" : "100000"
+			  }]
+		}
+      ]
+    },
+	{
+		"id":"attaque_Iyanden",
+		"nom" : "Attaque du vaissseau-monde Iyanden",
+		"effets" : [
+			{
+			"text" : "pasfait"
+			}
+		]
+	}
+  ],
+  "evts_conditionnels" : [
+  
+  ],
+  "evts_aleatoires" : [
+    
+  ]
+}

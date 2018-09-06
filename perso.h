@@ -1,0 +1,69 @@
+#ifndef PERSO_H
+#define PERSO_H
+
+#include <QWidget>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QString>
+#include "carac.h"
+#include "aspectratiolabel.h"
+#include <QPixmap>
+
+namespace Ui {
+class Perso;
+}
+
+class SetCarac;
+
+struct DPerso
+{
+    QString m_Id;
+    QString m_Nom;
+    QPixmap m_ImagePortrait;
+    QVector<QString> m_CaracsAAfficher;
+};
+
+/**
+ * @brief Class permettant d'afficher le persos mais contenant aussi toutes les données et caractéristiques de tous les personnages affichables
+ */
+class IPerso : public QWidget
+{
+    Q_OBJECT
+    AspectRatioLabel* myImageLabel = nullptr;
+    static IPerso* s_PersosInterface; // singleton
+    static int s_IndexPersoActif;
+
+protected:
+    QVector<DPerso> m_Persos;
+    bool CetteCaracExisteDeja(QString id);
+
+public:
+    explicit IPerso(QWidget *parent = nullptr);
+    ~IPerso();
+
+    void Rafraichir(QJsonArray persos);
+    void ChangerPersoCourant(QString changePerso);
+    void RafraichirAffichage();
+
+    QVector<Carac*> m_Caracs;
+
+    void AppliquerCarac(SetCarac setCarac);
+
+    /**
+     * @brief GetCaracValue
+     * @return valeur de cette carac pour le perso. "" si cette carac n'existe pas
+     */
+    QString GetCaracValue(QString caracId);
+
+    // accesseur vers le perso courant (qui est toujours unique)
+    DPerso GetPersoCourant();
+    static IPerso* GetPersoInterface();
+
+    // pour les aventures qui n'utilisent pas le json mais du code :surclasser IPerso et développer cette fonction
+    virtual void GenererPersos() = 0;
+
+private:
+    Ui::Perso *ui;
+};
+
+#endif // PERSO_H

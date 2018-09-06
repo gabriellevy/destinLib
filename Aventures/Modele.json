@@ -1,0 +1,68 @@
+{
+  "titre" : "Thanos le conquérant",
+  "heros" : {
+    "nom" : "Thanos",
+    "caracs_a_afficher" : [
+      {
+        "id" : "gemme_espace",
+        "intitule" : "Gemme de l'Espace",
+		"valeur" : "1",
+        "img": "Gemme de l'Espace.jpg"
+      },
+      {
+        "id" : "gemme_esprit",
+        "intitule" : "Gemme de l'Esprit",
+		"valeur" : "1",
+        "img": "Gemme de l'Esprit.jpg"
+      },
+      {
+        "id" : "gemme_realite",
+        "intitule" : "Gemme de la Réalité",
+		"valeur" : "1",
+        "img": "Gemme de la Réalité.jpg"
+      },
+      {
+        "id" : "gemme_pouvoir",
+        "intitule" : "Gemme du Pouvoir",
+		"valeur" : "1",
+        "img": "Gemme du Pouvoir.jpg"
+      },
+      {
+        "id" : "gemme_temps",
+        "intitule" : "Gemme du Temps",
+		"valeur" : "1",
+        "img": "Gemme du Temps.jpg"
+      },
+      {
+        "id" : "gemme_ame",
+        "intitule" : "Gemme de l'Âme",
+		"valeur" : "1",
+        "img": "Gemme de l'Âme.jpg"
+      }
+    ],
+    "portrait" : "Thanos.jpg"
+  },
+  "themes" : [
+    {"valeur" : "marvel"},
+    {"valeur" : "malefique"},
+    {"valeur" : "cosmique"}
+  ],
+  "evts" : [
+    {
+      "id" : "Debut",
+      "nom" : "Présentation",
+      "effets" : [
+        {          "text" : "p1.png"        },
+        {
+          "text" : "p2.png"
+        }
+      ]
+    }
+  ],
+  "evts_conditionnels" : [
+  
+  ],
+  "evts_aleatoires" : [
+    
+  ]
+}

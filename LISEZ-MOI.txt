@@ -1,0 +1,1 @@
+Ce projet doit être une lib à terme avec Tyranides qui sera dans un projet séparé mais pour l'heure je fusionne tout pour travailler plus simplement et efficacement

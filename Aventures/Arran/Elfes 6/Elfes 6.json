@@ -1,0 +1,1715 @@
+{
+  "titre" : "La mission des elfes bleus",
+  "heros" : {
+    "nom" : "Lanawyn",
+    "sexe" : "feminin",
+    "caracs_a_afficher" : [
+      {
+        "id" : "turin",
+        "intitule" : "Turin",
+        "img": "Turin.jpg"
+      },
+      {
+        "id" : "soeur_des_sens",
+        "intitule" : "Soeur des sens",
+        "img": "soeur_des_sens.png"
+      },
+      {
+        "id" : "chouette_harfang",
+        "intitule" : "Chouette Harfang",
+        "img" : "chouette_harfang.png"
+      },
+      {
+        "id" : "athenon",
+        "intitule" : "Ath'énon",
+        "img": "athenon.png"
+      },
+      {
+        "id" : "valamen",
+        "intitule" : "Valamen",
+        "img": "valamen.png"
+      },
+      {
+        "id" : "oriann",
+        "intitule" : "Oriann",
+        "img": "oriann.png"
+      },
+      {
+        "id" : "nerrom",
+        "intitule" : "Nerrom le nécromancien",
+        "img": "nerrom.png"
+      },
+      {
+        "id" : "tunnga",
+        "intitule" : "Tunnga",
+        "img": "tunnga.png"
+      }
+    ],
+    "portrait" : "Lanawyn.png"
+  },
+  "themes" : [
+    {"valeur" : "elfes_bleus_arran"},
+    {"valeur" : "arran"}
+  ],
+  "evts" : [
+    {
+      "id" : "Debut",
+      "nom" : "Présentation",
+      "effets" : [
+        {          "img" : "p1.png"        },
+        {
+          "img" : "p2.png",
+          "go_to_evt" : "recrutement"
+        }
+      ]
+    },
+    {
+      "id" : "recrutement",
+      "nom" : "Préparation de l'expédition",
+      "text" : "Vous allez avoir besoin de compagnons pour remplir cette mission. Mais plus vous serez nombreux moins vous serez discrets.",
+      "effets" : [
+        {
+          "text" : "Turin est non seulement un homme d'expérience connaissant le terrain mais en plus un ami très cher.",
+          "img" : "Turin.jpg",
+          "choix" : [
+            {
+              "text" : "L'engager",
+              "set_carac" : [
+                {
+                  "carac_id" : "turin",
+                  "valeur":"1"
+                }
+              ],
+              "go_to_effet" : "choix_communication"
+            },
+            {
+              "text" : "Pas besoin de lui",
+              "go_to_effet" : "choix_communication"
+            }
+          ]
+        },
+        {
+          "id": "choix_communication",
+          "img" : "soeur_des_sens.png",
+          "text": "Mieux vaut avoir un moyen de communiquer avec Amnon.",
+          "choix": [
+            {
+              "text": "Une chouette Harfang fera l'affaire",
+              "go_to_effet" : "choix_chasseurs",
+              "set_carac": [
+                {
+                  "carac_id" : "chouette_harfang",
+                  "valeur":"true",
+                  "intitule" : "Chouette Harfang"
+                }
+              ]
+            },
+            {
+              "text": "Une soeur des sens",
+              "go_to_effet" : "choix_chasseurs",
+              "set_carac": [
+                {
+                  "carac_id" : "soeur_des_sens",
+                  "valeur":"1"
+                }
+              ]
+            },
+            {
+              "text": "Pas besoin",
+              "go_to_effet" : "choix_chasseurs"
+            }
+          ]
+        },
+        {
+          "id": "choix_chasseurs",
+          "img" : "valamen.png",
+          "text": "Ce qui tuait les hommes de Borduria restait à ce jour un mystère, j'estimais possible qu'il s'agisse d'un animal. Dans ce cas Athé'non et Valamen, deux grand chasseurs à l'irréfutale réputation, seraient précieux.",
+          "choix": [
+            {
+              "text": "Les engager",
+              "go_to_effet" : "choix_guerrier",
+              "set_carac": [
+                {
+                  "carac_id" : "athenon",
+                  "valeur":"1"
+                },
+                {
+                  "carac_id" : "valamen",
+                  "valeur":"1"
+                }
+              ]
+            },
+            {
+              "go_to_effet" : "choix_guerrier",
+              "text": "Pas besoin"
+            }
+          ]
+        },
+        {
+          "id": "choix_guerrier",
+          "img" : "oriann.png",
+          "text": "Nous pouvons aussi avoir affaire à un ou plusieurs tueurs. Dans ce cas Oriann s'avérerait plus adapté. De loin, le meilleur dans tous les arts de la guerre.",
+          "choix": [
+            {
+              "text": "L'engager",
+              "go_to_effet" : "choix_necromancien",
+              "set_carac": [
+                {
+                  "carac_id" : "oriann",
+                  "valeur":"1"
+                }
+              ]
+            },
+            {
+              "go_to_effet" : "choix_necromancien",
+              "text": "Pas besoin"
+            }
+          ]
+        },
+        {
+          "id": "choix_necromancien",
+          "img" : "nerrom.png",
+          "text": "Reste une hypothèse que vous ne pouvez écarter. Le fait que la magie noire soit liée à cette aventure. Pour cela... même si ça ne vous réjouissait pas, il faut avouer que l'ork nécromancien nerrom vous serait fort utile.",
+          "choix": [
+            {
+              "text": "L'engager",
+              "go_to_effet" : "choix_navigateur",
+              "set_carac": [
+                {
+                  "carac_id" : "nerrom",
+                  "valeur":"1"
+                }
+              ]
+            },
+            {
+              "go_to_effet" : "choix_navigateur",
+              "text": "Pas besoin"
+            }
+          ]
+        },
+        {
+          "id": "choix_navigateur",
+          "img" : "tunnga.png",
+          "text": "Pour vous mener à bon port il faut quelqu'un de confiance. Un elfe bleu des mers du sud. Tunnga.",
+          "choix": [
+            {
+              "text": "L'engager",
+              "go_to_evt" : "voyage_aspen",
+              "set_carac": [
+                {
+                  "carac_id" : "tunnga",
+                  "valeur":"1"
+                }
+              ]
+            },
+            {
+              "go_to_evt" : "voyage_aspen",
+              "text": "Pas besoin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "voyage_aspen",
+      "nom": "Voyage vers Aspen",
+      "effets" : [
+        {
+          "img" : "p7-1.png"
+        },
+        {
+          "id" : "p7-2",
+          "img" : "p7-2.png"
+        },
+        {
+          "if_false": [            {             "carac_id": "soeur_des_sens"            }          ],
+          "choix" : [
+            {
+              "text" : "Se rendormir",
+              "go_to_evt" : "cadanla"
+            },
+            {
+              "text" : "Aller se promener sur le pont",
+              "go_to_effet" : "test_flirte_turin"
+            }
+          ]
+        },
+        {
+          "id" : "p7-3",
+          "img" : "p7-3.png"
+        },
+        {
+          "id" : "p8-1",
+          "img" : "p8-1.png",
+          "go_to_effet" : "test_flirte_turin"
+        },
+        {
+          "id": "test_flirte_turin",
+          "if_true":             [{              "carac_id": "turin"            }],
+          "go_to_evt": "flirte_turin"
+        },
+        {
+          "text" : "rien ne se passe cette nuit là."
+        },
+        {
+          "go_to_evt": "cadanla"
+        }
+      ]
+    },
+    {
+      "id" : "flirte_turin",
+      "nom" : "Discussion sur le pont",
+      "effets" : [
+        {          "img" : "p8-2.png"        },
+        {          "img" : "p9-1.png"        },
+        { 
+          "if_false": [            {              "carac_id": "nerrom"            }          ],
+          "go_to_evt": "cadanla"
+        },
+        {
+          "img" : "p9-2.png",
+          "go_to_evt": "cadanla"
+        }
+      ]
+    },
+    {
+      "id": "cadanla",
+      "nom": "Escale à Cadanla",
+      "effets" : [
+        {
+          "img" : "p10-1.png"
+        },
+        {
+          "if_false": [            {              "carac_id": "nerrom"            }          ],
+          "go_to_effet": "rapport_chef_candala"
+        },
+        {
+          "img": "p10-2.png"
+        },
+        {
+          "img" : "p11-1.png",
+          "choix": [
+            {
+              "text" : "Insister poliment que Nerrom puisse entrer dans la ville",
+              "go_to_effet" : "acceptation_nerrom"
+            },
+            {
+              "text" : "Laisser Nerrom sur le bâteau",
+              "go_to_effet" : "rapport_chef_candala"
+            }
+
+          ]
+        },
+        {
+          "id" : "acceptation_nerrom",
+          "img" : "p11-2.png",
+          "set_carac" : [
+            {
+              "carac_id" : "nerrom_a_candala",
+              "valeur":"1"
+            }
+          ]
+        },
+        {
+          "id" : "rapport_chef_candala",
+          "img" : "p11-3.png"
+        },
+        {
+          "id" : "test_taverne",
+          "if_true" : [{              "carac_id": "nerrom_a_candala"            },
+            {              "carac_id": "turin"            },
+            {              "carac_id": "soeur_des_sens"            },
+            {              "carac_id": "athenon"            },
+            {              "carac_id": "oriann"            },
+            {              "carac_id": "tunnga"            }],
+          "else" : {
+            "go_to_effet" : "enquete_survivant_nuit"
+          },
+          "go_to_effet": "discussion_taverne"
+        },
+        {
+          "id" : "discussion_taverne",
+          "img" : "p12.png"
+        },
+        {          "img" : "p13.png"        },
+        {
+          "id" : "enquete_survivant_nuit",
+          "img" : "p14-2.png"
+        },
+        {
+          "if" : [
+            {
+              "carac_id": "turin",
+              "valeur": "1"
+            }
+          ],
+          "go_to_effet": "enquete_survivant_nuit_turin",
+          "else" : {
+            "choix" : [
+              {
+                "text" : "Aller voir la silhouette",
+                "go_to_effet" : "lanawyn_parler_silhouette"
+              },
+              {
+                "text" : "Attendre le matin",
+                "go_to_effet" : "attendre_le_matin"
+              }
+            ]
+          }
+        },
+        {
+          "id" : "lanawyn_parler_silhouette",
+          "text" : "C'est un survivant épuisé d'Aspen. Le roi l'acceuille dans la ville pour l'interroger",
+          "go_to_effet" : "interrogatoire_survivant"
+        },
+        {
+          "id" : "attendre_le_matin",
+          "text" : "La silhouette était apparemment un survivant d'Aspen. Il est maintenant mort de froid...",
+          "go_to_effet" : "quitter_candala"
+        },
+        {
+          "id" : "enquete_survivant_nuit_turin",
+          "img" : "p15.png"
+        },
+        {          "img" : "p16.png"        },
+        {
+          "id" : "interrogatoire_survivant",
+          "img" : "p17.png",
+          "set_carac" : [
+            {
+              "carac_id" : "dann_interroge",
+              "valeur" : "1"
+            }
+          ]
+        },
+        {          "img" : "p18.png"        },
+        {
+          "id" : "quitter_candala",
+          "text" : "Vous quittez Candala, en direction d'Aspen."
+        },
+        {          "go_to_evt" : "voyage_aspen2"        }
+      ]
+    },
+    {
+      "id" : "voyage_aspen2",
+      "nom" : "Voyage entre Candala et Aspen",
+      "effets" : [
+        {          "img" : "p19-1.png"        },
+        {
+          "img" : "p19-2.png",
+          "if_true" :  [{ "carac_id": "soeur_des_sens"}]
+        },
+        {
+          "img" : "p20.png",
+          "if_true" :  [{ "carac_id": "soeur_des_sens"}]
+        },
+        {
+          "img" : "p21-1.png",
+          "if_true" :  [{ "carac_id": "soeur_des_sens"}]
+        },
+        {
+          "img" : "p21-2.png",
+          "if_true" :  [{ "carac_id": "soeur_des_sens"},
+            { "carac_id": "nerrom"}]
+        },
+        {
+          "img" : "p22-1.png",
+          "if_true" :  [{ "carac_id": "soeur_des_sens"},
+            { "carac_id": "nerrom"}]
+        },
+        {          "img" : "p22-2.png"        },
+        {
+          "img" : "p22-3.png",
+          "if_true" : [{ "carac_id": "turin"},
+          { "carac_id": "tunnga"}]
+        },
+        {
+          "img" : "p22-4.png",
+          "if_true" : [{ "carac_id": "tunnga"}]
+        },
+        {          "img" : "p23-1.png"        },
+        {
+          "img" : "p23-2.png",
+          "if_true" : [{ "carac_id": "turin"},
+            { "carac_id": "tunnga"}]
+        },
+        {
+          "choix" : [
+            {
+              "text" : "Continuer à pied",
+              "go_to_effet" : "continuer_a_pied"
+            },
+            {
+              "text" : "Abandonner l'expédition",
+              "go_to_evt" : "abandon"
+            }
+          ]
+        },
+        {
+          "id" : "continuer_a_pied",
+          "img" : "p23-3.png"
+        },
+        {
+          "img" : "p23-4.png",
+          "if_true" :         [{"carac_id": "turin"},
+            {"carac_id": "athenon"},
+            {"carac_id": "valamen"},
+            {"carac_id": "oriann"},
+            {"carac_id": "soeur_des_sens"},
+            {"carac_id": "tunnga"}]
+        },
+        {
+          "img" : "p24.png",
+          "if_true" :         [{"carac_id": "turin"},
+          {"carac_id": "athenon"},
+          {"carac_id": "valamen"},
+          {"carac_id": "oriann"},
+          {"carac_id": "soeur_des_sens"},
+          {"carac_id": "tunnga"}]
+        },
+        {
+          "img" : "p25.png",
+          "if_true" :         [{"carac_id": "turin"},
+            {"carac_id": "athenon"},
+            {"carac_id": "valamen"},
+            {"carac_id": "oriann"},
+            {"carac_id": "soeur_des_sens"},
+            {"carac_id": "tunnga"}]
+        },
+        {
+          "go_to_evt" : "arrivee_a_aspen"
+        }
+      ]
+    },
+    {
+      "id" : "abandon",
+      "nom" : "Abandon",
+      "text" : "Vous abandonnez la mission et parvenez à rentrer à bon port. Amnon est furieux contre vous mais il a au moins quelques informations supplémentaires. Et puis vous êtes vivant, c'est l'essentiel."
+    },
+    {
+      "id" : "arrivee_a_aspen",
+      "nom" : "Arrivée à Aspen",
+      "effets" : [
+        {"img" : "p26-1.png"},
+        {
+          "img" : "p26-2.png",
+          "if_true" :         [{"carac_id": "turin"},
+            {"carac_id": "athenon"},
+            {"carac_id": "valamen"},
+            {"carac_id": "oriann"},
+            {"carac_id": "soeur_des_sens"},
+            {"carac_id": "tunnga"}]
+        },
+        {
+          "img" : "p27-1.png",
+          "choix" : [
+            {
+              "text" : "Aller inspecter les quartiers du régent",
+              "go_to_evt" : "quartiers_du_regent"
+            },
+            {
+              "text" : "Aller au donjon de Dann",
+              "go_to_evt" : "donjon_de_dann",
+              "if_true" : [{"carac_id" : "dann_interroge"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id" : "quartiers_du_regent",
+      "effets" : [
+        {"img" : "p27-2.png"},
+        {
+          "img" : "p28.png",
+          "set_carac":[   {
+            "carac_id" : "livre_helyas",
+            "valeur" : "1"
+          }
+        ]
+
+        },
+        {
+          "img" : "p29-1.png",
+          "if_true" : [{"carac_id" : "soeur_des_sens"}]
+        },
+        {
+          "img" : "p29-2.png",
+          "if_true" : [{"carac_id" : "oriann"}]
+        },
+        {
+          "img" : "p29-3.png",
+          "if_true" : [{"carac_id" : "nerrom"}]
+        },
+        {
+          "img" : "p29-5.png",
+          "if_true" : [{"carac_id" : "nerrom"},
+          {"carac_id" : "turin"}]
+        },
+        {"img" : "p29-6.png"},
+        {
+          "img" : "p29-7.png",
+          "if_true" : [{"carac_id" : "nerrom"},
+          {"carac_id" : "turin"}]
+        },
+        {
+          "choix" : [
+            {
+              "text" : "éteindre la torche",
+              "img" : "p29-4.png",
+              "set_carac":[
+                {
+                  "carac_id" : "torche_eteinte",
+                  "valeur" : "1"
+                }
+              ]
+            },
+            {
+              "text" : "barricader la porte",
+              "go_to_effet" : "barricader"
+            },
+            {
+              "text" : "sortir en force et foncer au donjon",
+              "go_to_evt" : "foncer_au_donjon"
+            },
+            {
+              "text" : "attendre sans bruit",
+              "go_to_evt" : "attaque_goules_helyas"
+            }
+          ]
+        },
+        {
+          "id" : "barricader",
+          "if_true" : [{     "carac_id" : "oriann"},
+            {     "carac_id" : "athenon"}],
+          "else" : {
+            "text" : "Vous tentez de déplacer quelques meubles mais très rapidement des bruits se rapprochent.",
+            "go_to_evt" : "attaque_goules_helyas"
+          },
+          "go_to_effet" : "barricader_oriann_athenon"
+        },
+        {
+          "id" : "barricader_oriann_athenon",
+          "img" : "p29-8.png"
+        },
+        { "img" : "p30.png"        },
+        {
+          "img" : "p31-1.png",
+          "set_carac" : [
+            {
+              "carac_id" : "oriann_mordu",
+              "valeur" : "1"
+            },
+            {
+              "carac_id" : "oriann",
+              "valeur" : "0"
+            }
+          ]
+        },
+        { "go_to_evt" : "attaque_goules_helyas"        }
+      ]
+    },
+    {
+      "id" : "attaque_goules_helyas",
+      "effets" : [
+        {
+          "id" : "p31-2",
+          "img" : "p31-2.png"
+        },
+        {
+          "img" : "p32-1.png",
+          "if_true" : [{ "carac_id" : "turin" }],
+          "go_to_effet" : "turin_combat_goule",
+          "else" : { "go_to_effet" : "combat_contre_goules1" }
+        },
+        {
+          "id": "combat_contre_goules1",
+          "text" : "Plusieurs goules pénètrent dans la maison.",
+          "set_carac": [ {
+              "carac_id": "goules_tuees",
+              "valeur": "0"
+            }
+          ]
+        },
+        {
+          "id": "combat_contre_goules1_tunnga",
+          "if_true" : [{ "carac_id" : "tunnga" }],
+          "if_proba" : "0.3",
+          "text" : "Tunnga est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "tunnga",
+            "valeur" : ""
+          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "2"
+            }]
+          }
+        },
+        {
+          "id": "combat_contre_goules1_soeur_des_sens",
+          "if_true" : [{ "carac_id" : "soeur_des_sens" }],
+          "if_proba" : "0.3",
+          "text" : "La soeur des sens est dévorée par les goules.",
+          "set_carac" : [{
+            "carac_id" : "soeur_des_sens",
+            "valeur" : ""
+          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "1"
+            }]
+          }
+        },
+        {
+          "id": "combat_contre_goules1_athenon",
+          "if_true" : [{ "carac_id" : "athenon" }],
+          "if_proba" : "0.15",
+          "text" : "Ath'énon est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "athenon",
+            "valeur" : ""
+          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "4"
+            }]
+          }
+        },
+        {
+          "id": "combat_contre_goules1_valamen",
+          "if_true" : [{ "carac_id" : "valamen" }],
+          "if_proba" : "0.15",
+          "text" : "Valamen est dévorée par les goules.",
+          "set_carac" : [{
+            "carac_id" : "valamen",
+            "valeur" : ""
+          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "4"
+            }]
+          }
+        },
+        {
+          "id": "combat_contre_goules1_oriann",
+          "if_true" : [{ "carac_id" : "oriann" }],
+          "if_proba" : "0.1",
+          "text" : "Oriann est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "oriann",
+            "valeur" : ""
+          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "5"
+            }]
+          }
+        },
+        {
+          "id": "combat_contre_goules1_nerrom",
+          "if_true" : [{ "carac_id" : "nerrom" }],
+          "if_proba" : "0.3",
+          "text" : "Nerrom est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "nerrom",
+            "valeur" : ""
+          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "1"
+            }]
+          }
+        },
+        {
+          "id": "combat_contre_goules1_lanawyn",
+          "if_proba" : "0.01",
+          "text" : "Vous êtes tuée par une marée de goules assoiffées de sang. Votre aventure s'arrête ici.",
+          "go_to_evt" : "defaite",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "tunnga" }],
+              "valeur" : "0.05"
+            },
+            {
+              "if_false" : [{ "carac_id" : "soeur_des_sens" }],
+              "valeur" : "0.05"
+            },
+            {
+              "if_false" : [{ "carac_id" : "athenon" }],
+              "valeur" : "0.1"
+            },
+            {
+              "if_false" : [{ "carac_id" : "valamen" }],
+              "valeur" : "0.1"
+            },
+            {
+              "if_false" : [{ "carac_id" : "oriann" }],
+              "valeur" : "0.15"
+            },
+            {
+              "if_false" : [{ "carac_id" : "nerrom" }],
+              "valeur" : "0.05"
+            }
+          ],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "4"
+            }]
+          }
+        },
+        {
+          "id": "fin_round_combat_contre_goules1",
+          "text" : "Vous avez tué %%%goules_tuees%%% goules, mais elles semblent innombrables. Voulez vous :",
+          "choix" : [
+            {
+              "text" : "Continuer à combattre",
+              "go_to_effet" : "combat_contre_goules1_tunnga"
+            },
+            {
+              "text" : "Fuir vers les étages supérieurs",
+              "go_to_effet" : "invasion_des_goules"
+            }
+          ]
+        },
+        {
+          "id" : "turin_combat_goule",
+          "img" : "p32-2.png",
+          "if_true" : [{ "carac_id" : "athenon" }]
+        },
+        {
+          "img" : "p32-3.png",
+          "if_true" : [{ "carac_id" : "turin" }]
+        },
+        {
+          "img" : "p33.png",
+          "id" : "invasion_des_goules"
+        },
+        {
+          "img" : "p34.png",
+          "if_true" : [{ "carac_id" : "oriann" },
+            { "carac_id" : "livre_helyas" }]
+        },
+        {
+          "img" : "p35-1.png",
+          "if_true" : [{ "carac_id" : "oriann" },
+            { "carac_id" : "livre_helyas" }]
+        },
+        {
+          "img" : "p35-1.png",
+          "if_true" : [{ "carac_id" : "oriann" },
+            { "carac_id" : "livre_helyas" }],
+          "set_carac" : [{
+            "carac_id" : "livre_helyas",
+            "valeur" : ""
+          }]
+        },
+        {
+          "img": "p35-2.png",
+          "if_true": [{
+            "carac_id": "nerrom"
+          }],
+          "else": {
+            "text": "Vous êtes retranchés derrière une lourde porte mais les goules vont en venir à bout. Le seul moyen de fuir serait de sauter sur le toi d'en face, à plusieurs mètres de distance."
+          }
+        },
+        {
+          "choix" : [
+            {
+              "text" : "Sauter sur le toit d'en face",
+              "go_to_effet" : "sauter_toit_en_face"
+            },
+            {
+              "text" : "Combattre les goules",
+              "go_to_effet" : "combat_contre_goules1",
+              "add_to_carac" : [{
+                "carac_id" : "goules_tuees",
+                "valeur_random" : "100"
+              }]
+            }
+          ]
+        },
+        {
+          "id" : "sauter_toit_en_face",
+          "img" : "p36-1.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "nerrom"},
+            { "carac_id" : "turin"}],
+          "img" : "p36-2.png",
+          "else" : {
+            "text" : "seules les elfes sont assez agiles pour franchir la rue d'un bond, les autres n'osent sauter ou s'écrasent au sol parmi la marée de goules.",
+            "set_carac" :  [{
+              "carac_id" : "nerrom",
+              "valeur" : ""
+            },
+            {
+              "carac_id" : "soeur_des_sens",
+              "valeur" : ""
+            }]
+          }
+        },
+        {
+          "if_true": [{           "carac_id": "nerrom"          }],
+          "img": "p37-1.png"
+        },
+        {
+          "img": "p37-2.png"
+        },
+        {
+          "if_true": [{           "carac_id": "athenon"          },
+            {           "carac_id": "turin"          }],
+          "img": "p37-3.png"
+        },
+        {
+          "if_true": [{           "carac_id": "athenon"          },
+            {           "carac_id": "valamen"          }],
+          "img": "p38-1.png"
+        },
+        {
+          "id" : "autre_cote_rue",
+          "text" : "Vous êtes sauf mais toujours au début de la nuit et la maison est cernée de goules. Allez vous : ",
+          "choix" : [
+            {
+              "text" : "Tenter de rejoindre le donjon de la ville pour vous y abriter.",
+              "go_to_evt" : "recherche_du_donjon"
+            }   ,
+            {
+              "text" : "Passer la nuit sur ce toit le plus silencieusement possible.",
+              "go_to_evt" : "passer_nuit_sur_toit"
+            }
+          ]
+        }
+    ]
+    },
+    {
+      "id" : "recherche_du_donjon",
+      "effets" : [
+        {          "img" : "p38-2.png"        },
+        {
+          "if_false" : [{ "carac_id" : "turin"}],
+          "text" : "Personne ne connaît le terrain, il va être très dur de trouver ce donjon en pleine nuit sans alerter les goules."
+        },
+        {
+          "if_true" : [{ "carac_id" : "oriann" }],
+          "if_proba" : "0.02",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.15"
+            }
+          ],
+          "text" : "Oriann tombe du toit durant le trajet. Après une résistance héroïque il est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "oriann",
+            "valeur" : ""
+          }],
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "10"
+          }]
+        },
+        {
+          "if_true" : [{ "carac_id" : "athenon" }],
+          "if_proba" : "0.01",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.1"
+            }
+          ],
+          "text" : "Athenon tombe du toit durant le trajet. Après une résistance héroïque il est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "athenon",
+            "valeur" : ""
+          }],
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "10"
+          }]
+        },
+        {
+          "if_true" : [{ "carac_id" : "valamen" }],
+          "if_proba" : "0.01",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.1"
+            }
+          ],
+          "text" : "Valamen tombe du toit durant le trajet. Après une résistance héroïque elle est dévorée par les goules.",
+          "set_carac" : [{
+            "carac_id" : "valamen",
+            "valeur" : ""
+          }],
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "10"
+          }]
+        },
+        {
+          "if_true" : [{ "carac_id" : "soeur_des_sens" }],
+          "if_proba" : "0.1",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.15"
+            }
+          ],
+          "text" : "La soeur des sens tombe du toit durant le trajet. Elle est dévorée par les goules.",
+          "set_carac" : [{
+            "carac_id" : "soeur_des_sens",
+            "valeur" : ""
+          }]
+        },
+        {
+          "if_true" : [{ "carac_id" : "tunnga" }],
+          "if_proba" : "0.01",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.15"
+            }
+          ],
+          "text" : "Tunnga tombe du toit durant le trajet. Elle est dévorée par les goules.",
+          "set_carac" : [{
+            "carac_id" : "tunnga",
+            "valeur" : ""
+          }]
+        },
+        {
+          "if_true" : [{ "carac_id" : "nerrom" }],
+          "if_proba" : "0.02",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.35"
+            }
+          ],
+          "text" : "Nerrom tombe du toit durant le trajet. Il est dévoré par les goules.",
+          "set_carac" : [{
+            "carac_id" : "nerrom",
+            "valeur" : ""
+          }]
+        },
+        {
+          "if_proba" : "0.005",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "turin"}],
+              "valeur" : "0.05"
+            }
+          ],
+          "text" : "Vous tombez du toit durant le trajet et vous retrouvez au sol encerclé par les goules. Vos alliés viennent vous soutenir mais les goules sont innombrables et vous n'avez aucune échappatoire. C'est l'heure du baroud d'honneur.",
+          "go_to_evt" : "baroud_d_honneur"
+        },
+        {
+          "go_to_evt" : "donjon_de_dann"
+        }
+      ]
+    },
+    {
+      "id" : "donjon_de_dann",
+      "nom" : "Donjon de Dann",
+      "effets" : [
+        {          "img" : "p39-1.png"        },
+        {
+          "img" : "p39-2.png",
+          "if_true": [{  "carac_id": "turin" },
+            {  "carac_id": "nerrom" }]
+        },
+        {
+          "img" : "p39-3.png",
+          "if_true": [{  "carac_id": "oriann_mordu" },
+            {  "carac_id": "turin" },
+            {  "carac_id": "nerrom" }]
+        },
+        {
+          "img" : "p40-1.png",
+          "if_true": [{  "carac_id": "turin" }]
+        },
+        {          "img" : "p40-2.png"        },
+        {
+          "text" : "Pour atteindre le donjon il va falloir que quelqu'un attire l'attention des goules pour les éloigner. Mais qui ?",
+          "choix" : [
+            {
+              "text" : "Athénon et Valamen sont volontaires et ce sont les plus agiles",
+              "if_true" : [{ "carac_id" : "athenon"},
+                { "carac_id" : "valamen"}],
+              "set_carac_false" : [{"carac_id" : "athenon"},
+                {"carac_id" : "valamen"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{        "carac_id" : "distraction_goules_athenon_valamen"}]
+            },
+            {
+              "text" : "Athénon seul",
+              "if_true" : [{ "carac_id" : "athenon"}],
+              "set_carac_false" : [{"carac_id" : "athenon"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{                "carac_id" : "distraction_goules_athenon"}]
+            },
+            {
+              "text" : "Valamen seule",
+              "if_true" : [{ "carac_id" : "valamen"}],
+              "set_carac_false" : [{"carac_id" : "valamen"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{                "carac_id" : "distraction_goules_valamen"}]
+            },
+            {
+              "text" : "Turin",
+              "if_true" : [{ "carac_id" : "turin"}],
+              "set_carac_false" : [{"carac_id" : "turin"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{"carac_id" : "distraction_goules_turin"}]
+            },
+            {
+              "text" : "Oriann",
+              "if_true" : [{ "carac_id" : "oriann"}],
+              "set_carac_false" : [{"carac_id" : "oriann"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{                "carac_id" : "distraction_goules_oriann"}]
+            },
+            {
+              "text" : "Soeur des sens",
+              "if_true" : [{ "carac_id" : "soeur_des_sens"}],
+              "set_carac_false" : [{"carac_id" : "soeur_des_sens"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{                "carac_id" : "distraction_goules_soeur_des_sens"}]
+            },
+            {
+              "text" : "Nerrom",
+              "if_true" : [{ "carac_id" : "nerrom"}],
+              "set_carac_false" : [{"carac_id" : "nerrom"}],
+              "go_to_effet" : "distraction_goules",
+              "set_carac_true" : [{ "carac_id" : "distraction_goules_nerrom"}]
+            },
+            {
+              "text" : "C'est trop dangereux, mieux vaut rester sur place pour la nuit.",
+              "go_to_evt" : "passer_nuit_sur_toit"
+            }
+          ]
+        },
+        {
+          "id" : "distraction_goules",
+          "if_true" : [{ "carac_id" : "distraction_goules_athenon_valamen"}],
+          "img" : "p40-3.png"
+        },
+        { "text" : "L'appât a joué son rôle. Espérons qu'il s'en sorte."},
+        {
+          "if_true" : [{ "carac_id" : "turin"},
+            { "carac_id" : "tunnga"}],
+          "img" : "p41-2.png",
+          "else" : {
+            "img" : "p41-1.png"
+          }
+        },
+        {          "img" : "p42-1.png"        },
+        {
+          "if_true" : [{ "carac_id" : "turin"},
+          { "carac_id" : "tunnga"},
+          { "carac_id" : "nerrom"}],
+          "img" : "p42-2.png",
+          "set_carac_true" : [{"carac_id" : "goule_capturee"}]
+        },
+        {
+          "if_true" : [{ "carac_id" : "distraction_goules_athenon_valamen"}],
+          "img" : "p42-3.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "distraction_goules_athenon_valamen"}],
+          "img" : "p43.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "distraction_goules_athenon_valamen"}],
+          "img" : "p44.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "distraction_goules_athenon_valamen"}],
+          "img" : "p45-1.png"
+        },
+        {          "img" : "p45-2.png"       },
+        {          "img" : "p46-1.png"       },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p46-2.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "soeur_des_sens"}],
+          "set_to_true" : [{"carac_id" : "aamnon_averti"}],
+          "img" : "p46-3.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p46-4.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p47-1.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "soeur_des_sens"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p47-2.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "soeur_des_sens"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p48-1.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p48-2.png"
+        },
+        {
+          "if_true" : [{ "carac_id" : "goule_capturee"},
+            { "carac_id" : "nerrom"}],
+          "img" : "p49-1.png"
+        },
+        {          "img" : "p49-2.png"        },
+        {          "img" : "p50.png"        },
+        {          "go_to_evt" : "fuite_d_aspen"        }
+      ]
+    },
+    {
+      "id" : "fuite_d_aspen",
+      "effets" : [
+        {          "img" : "p51-1.png"        },
+        {
+          "img" : "p51-2.png",
+          "if_true" : [{"carac_id" : "turin"}]
+        },
+        {
+          "if_true" : [{"carac_id" : "soeur_des_sens"}],
+          "go_to_effet" : "soeur_des_sens_tue_troll"
+        },
+        {
+          "if_true" : [{"carac_id" : "athenon"}],
+          "if_proba" : "0.2",
+          "text" : "Athénon est tué par le troll",
+          "set_carac_false" : [{"carac_id" : "athenon"}]
+        },
+        {
+          "if_true" : [{"carac_id" : "tunnga"}],
+          "if_proba" : "0.4",
+          "text" : "Tunnga est tué par le troll",
+          "set_carac_false" : [{"carac_id" : "tunnga"}]
+        },
+        {
+          "if_true" : [{"carac_id" : "valamen"}],
+          "if_proba" : "0.2",
+          "text" : "Valamen est tuée par le troll",
+          "set_carac_false" : [{"carac_id" : "valamen"}]
+        },
+        {
+          "if_true" : [{"carac_id" : "oriann"}],
+          "if_proba" : "0.1",
+          "text" : "Oriann est tué par le troll",
+          "set_carac_false" : [{"carac_id" : "oriann"}]
+        },
+        {
+          "if_proba" : "0.4",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "tunnga" }],
+              "valeur" : "0.05"
+            },
+            {
+              "if_false" : [{ "carac_id" : "oriann" }],
+              "valeur" : "0.2"
+            }, 
+            {
+              "if_false" : [{ "carac_id" : "valamen" }],
+              "valeur" : "0.1"
+            },
+            {
+              "if_false" : [{ "carac_id" : "athenon" }],
+              "valeur" : "0.1"
+            }
+          ],
+          "text" : "Vous êtes tuée par le troll.",
+          "go_to_evt" : "defaite"
+        },
+        {
+          "text" : "Vous parvenez par miracle à tuer le troll et la première vague de goules.",
+          "go_to_effet" : "troll_vaincu"
+        },
+        {
+          "id" : "soeur_des_sens_tue_troll",
+          "img" : "p52.png"
+        },
+        {
+          "id" : "troll_vaincu",
+          "add_to_carac" :[{
+            "carac_id" : "goules_tuees",
+            "valeur_min" : "30",
+            "valeur_max" : "200"
+          }]
+        },
+        {          "img" : "p53-1.png"        },
+        {
+          "if_true" : [{"carac_id" : "distraction_goules_athenon_valamen"}],
+          "go_to_effet" : "helyas_abattu",
+          "set_carac_true" : [{"carac_id" : "helyas_abattu"}],
+          "img" : "p53-2.png"
+        },
+        {
+          "if_true" : [{"carac_id" : "distraction_goules_athenon"}],
+          "go_to_effet" : "helyas_abattu",
+          "set_carac_true" : [{"carac_id" : "helyas_abattu"}],
+          "text" : "Athenon parvient à abattre d'une flèche Helyas, le maître des goules."
+        },
+        {
+          "if_true" : [{"carac_id" : "distraction_goules_valamen"}],
+          "go_to_effet" : "helyas_abattu",
+          "set_carac_true" : [{"carac_id" : "helyas_abattu"}],
+          "text" : "Valamen parvient à abattre d'une flèche Helyas, le maître des goules."
+        },
+        {
+          "text" : "Impossible de sortir de la tour, il va falloir se battre jusqu'à la mort",
+          "go_to_evt" : "baroud_d_honneur"
+        },
+        {
+          "id" : "helyas_abattu",
+          "img" : "p53-3.png"
+        },
+        {          "img" : "p54-1.png"        },
+        {
+          "if_true" : [
+            {"carac_id" : "helyas_abattu"},
+            {"carac_id" : "distraction_goules_athenon_valamen"}
+          ],
+          "img" : "p54-2.png"
+        },
+        {          "img" : "p54-3.png"        },
+        {
+          "id" : "choix_final",
+          "choix" : [
+            {
+              "text" : "Fuir la ville",
+              "go_to_evt" : "fuir_la_ville"
+            },
+            {
+              "text" : "Tenter de massacrer les goules tant qu'elles sont à terre",
+              "go_to_effet" : "massacrer_goules_au_sol"
+            },
+            {
+              "text" : "Tenter de trouver la relique de Lahsaa et la détruire",
+              "if_true" : [{"carac_id" : "goule_capturee"}],
+              "go_to_evt" : "fouiller_la_ville"
+            }
+          ]
+        },
+        {
+          "id" : "massacrer_goules_au_sol",
+          "add_to_carac" : [{
+        "carac_id" : "goules_tuees",
+        "valeur_min" : "70",
+        "valeur_max" : "800"
+        }]
+        },
+        {
+          "text" : "Vous êtes parvenus à massacrer %%%goules_tuees%%% goules. Mais elles semblent se réveiller et vous en encerclent. Il va falloir se battre jusqu'à la mort. ",
+          "go_to_evt" : "baroud_d_honneur"
+        }
+      ]
+    },
+    {
+      "id" : "fuir_la_ville",
+      "effets" : [
+        {          "img" : "p54-4.png"        },
+        {          "img" : "p55.png"        },
+        {          "img" : "p56.png"        },
+        {          "img" : "p57.png"        },
+        {          "img" : "p58.png"        },
+        {
+             "img" : "p60.png",
+             "etat_partie" : "fin_de_partie"
+        }
+      ]
+    },
+    {
+      "id" : "fouiller_la_ville",
+      "effets" : [
+        {
+          "if_proba" : "0.02",
+          "text" : "Par miracle vous parvenez à trouver et à détruire le sarcophage de Lah'Saa. Le monde d'Arran est sauf, les elfes comme les hommes vous doivent une fière chandelle.",
+          "else" : {
+            "text" : "Vous ne parvenez pas à trouver les reliques de Lah'Saa. Vous êtes au fond d'un manoir quand les goules se relèvent et vous encerclent. Il va falloir les affronter jusqu'à la mort.",
+            "go_to_evt" : "baroud_d_honneur"
+          },
+          "etat_partie" : "fin_de_partie"
+        }
+      ]
+    },
+    {
+      "id" : "foncer_au_donjon",
+      "text" : "Vous tentez de forcer le passage pour atteindre le donjon.",
+      "themes" : [
+        {"valeur" : "repere_par_goules_aspen"}
+      ],
+      "effets" : [
+        {
+          "repeat_while" : [{
+            "carac_id" : "§duree_effet_histoire",
+            "valeur" : "120",
+            "signe" : "<"
+          }],
+          "go_to_effet" : "§aleatoire"
+        },
+        {
+          "text" : "Par miracle vous parvenez à semer les goules qui vous poursuivaient et vous finissez par trouver le donjon.",
+          "go_to_evt" : "donjon_de_dann"
+        }
+      ]
+    },
+    {
+      "id" : "passer_nuit_sur_toit",
+      "themes" : [
+        {"valeur" : "cache_des_goules_aspen"}
+      ],
+      "effets" : [
+        {
+          "repeat_while" : [{
+            "carac_id" : "§duree_effet_histoire",
+            "valeur" : "720",
+            "signe" : "<"
+          }],
+          "go_to_effet" : "§aleatoire"
+        },
+        {
+          "text" : "Heu désolé je n'ai pas fait cette partie. Bon tant pis allez au donjon tiens, on va faire comme si c'était encore la nuit ok ? ",
+          "go_to_evt" : "donjon_de_dann"
+        }
+      ]
+    },
+    {
+      "id" : "baroud_d_honneur",
+      "nom" : "Jusqu'à la mort ! ! ",
+      "effets" : [
+      {
+        "id": "baroud_d_honneur_tunnga",
+        "if_true" : [{ "carac_id" : "tunnga" }],
+        "if_proba" : "0.3",
+        "text" : "Tunnga est dévoré par les goules.",
+        "set_carac" : [{
+          "carac_id" : "tunnga",
+          "valeur" : ""
+        }],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "2"
+          }]
+        }
+      },
+      {
+        "id": "baroud_d_honneur_soeur_des_sens",
+        "if_true" : [{ "carac_id" : "soeur_des_sens" }],
+        "if_proba" : "0.3",
+        "text" : "La soeur des sens est dévorée par les goules.",
+        "set_carac" : [{
+          "carac_id" : "soeur_des_sens",
+          "valeur" : ""
+        }],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "1"
+          }]
+        }
+      },
+      {
+        "id": "baroud_d_honneur_athenon",
+        "if_true" : [{ "carac_id" : "athenon" }],
+        "if_proba" : "0.15",
+        "text" : "Ath'énon est dévoré par les goules.",
+        "set_carac" : [{
+          "carac_id" : "athenon",
+          "valeur" : ""
+        }],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "4"
+          }]
+        }
+      },
+      {
+        "id": "baroud_d_honneur_valamen",
+        "if_true" : [{ "carac_id" : "valamen" }],
+        "if_proba" : "0.15",
+        "text" : "Valamen est dévorée par les goules.",
+        "set_carac" : [{
+          "carac_id" : "valamen",
+          "valeur" : ""
+        }],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "4"
+          }]
+        }
+      },
+      {
+        "id": "baroud_d_honneur_oriann",
+        "if_true" : [{ "carac_id" : "oriann" }],
+        "if_proba" : "0.1",
+        "text" : "Oriann est dévoré par les goules.",
+        "set_carac" : [{
+          "carac_id" : "oriann",
+          "valeur" : ""
+        }],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "5"
+          }]
+        }
+      },
+      {
+        "id": "baroud_d_honneur_nerrom",
+        "if_true" : [{ "carac_id" : "nerrom" }],
+        "if_proba" : "0.3",
+        "text" : "Nerrom est dévoré par les goules.",
+        "set_carac" : [{
+          "carac_id" : "nerrom",
+          "valeur" : ""
+        }],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "1"
+          }]
+        }
+      },
+      {
+        "id": "baroud_d_honneur_lanawyn",
+        "if_proba" : "0.01",
+        "text" : "Vous êtes tuée par une marée de goules assoiffées de sang. Votre aventure s'arrête ici.",
+        "go_to_evt" : "defaite",
+        "modif_proba" : [
+          {
+            "if_false" : [{ "carac_id" : "tunnga" }],
+            "valeur" : "0.05"
+          },
+          {
+            "if_false" : [{ "carac_id" : "soeur_des_sens" }],
+            "valeur" : "0.05"
+          },
+          {
+            "if_false" : [{ "carac_id" : "athenon" }],
+            "valeur" : "0.1"
+          },
+          {
+            "if_false" : [{ "carac_id" : "valamen" }],
+            "valeur" : "0.1"
+          },
+          {
+            "if_false" : [{ "carac_id" : "oriann" }],
+            "valeur" : "0.15"
+          },
+          {
+            "if_false" : [{ "carac_id" : "nerrom" }],
+            "valeur" : "0.05"
+          }
+        ],
+        "else" : {
+          "add_to_carac" : [{
+            "carac_id" : "goules_tuees",
+            "valeur_random" : "4"
+          }]
+        }
+      },
+      {
+        "id": "fin_round_baroud_d_honneur",
+        "text" : "Vous avez tué %%%goules_tuees%%% goules, mais le combat est loin d'être fini.",
+        "go_to_effet" : "baroud_d_honneur_tunnga"
+      }
+    ]
+    },
+    {
+      "id" : "defaite",
+      "nom" : "Défaite",
+      "effets" : [
+        {
+          "text" : "Aamnon ne saura jamais ce qui est arrivé...",
+          "if_false" : [{"carac_id" : "aamnon_averti"}],
+          "else" : {
+            "text" : "Au moins Aamnon a été averti de la menace et la défense du monde d'Arran doit déjà se mettre en place. Mais pour vous l'aventure s'arrête ici..."
+          },
+        "etat_partie" : "fin_de_partie"
+        }
+      ]
+    }
+  ],
+  "evts_conditionnels" : [
+  {
+    "id" : "extermination_des_goules",
+    "nom" : "Victoire par extermination",
+    "if" : [{
+      "carac_id" : "goules_tuees",
+      "signe" : ">",
+      "valeur": "5000"
+    }],
+    "effets" : [
+      { "text" : "Qui aurait cru qu'avec une si petite équipe vous seriez parvenu à exterminer toutes ces goules ? Vous allez rentrer en héros.",
+        "etat_partie" : "fin_de_partie"}
+    ]
+  }
+  ],
+  "evts_aleatoires" : [
+    {
+      "id" : "combat_de_rue_contre_les_goules",
+      "text" : "Vous devez affronter un groupe de goules.",
+        "themes" : [
+          {"valeur" : "repere_par_goules_aspen"}
+        ],
+      "if_proba" : "1",
+      "duree" : "45",
+      "effets" : [
+        {
+          "id": "combat_de_rue_contre_les_goules_tunnga",
+          "if_true" : [{ "carac_id" : "tunnga" }],
+          "if_proba" : "0.3",
+          "text" : "Tunnga est dévoré par les goules.",
+          "set_carac_false" : [{            "carac_id" : "tunnga"          }],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "2"
+            }]
+          }
+        },
+        {
+          "id": "combat_de_rue_contre_les_goules_soeur_des_sens",
+          "if_true" : [{ "carac_id" : "soeur_des_sens" }],
+          "if_proba" : "0.3",
+          "text" : "La soeur des sens est dévorée par les goules.",
+          "set_carac_false" : [{            "carac_id" : "soeur_des_sens"}],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "1"
+            }]
+          }
+        },
+        {
+          "id": "combat_de_rue_contre_les_goules_athenon",
+          "if_true" : [{ "carac_id" : "athenon" }],
+          "if_proba" : "0.15",
+          "text" : "Ath'énon est dévoré par les goules.",
+          "set_carac_false" : [{"carac_id" : "athenon"}],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "4"
+            }]
+          }
+        },
+        {
+          "id": "combat_de_rue_contre_les_goules_valamen",
+          "if_true" : [{ "carac_id" : "valamen" }],
+          "if_proba" : "0.15",
+          "text" : "Valamen est dévorée par les goules.",
+          "set_carac_false" : [{"carac_id" : "valamen"}],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "4"
+            }]
+          }
+        },
+        {
+          "id": "combat_de_rue_contre_les_goules_oriann",
+          "if_true" : [{ "carac_id" : "oriann" }],
+          "if_proba" : "0.1",
+          "text" : "Oriann est dévoré par les goules.",
+          "set_carac_false" : [{            "carac_id" : "oriann"}],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "5"
+            }]
+          }
+        },
+        {
+          "id": "combat_de_rue_contre_les_goules_nerrom",
+          "if_true" : [{ "carac_id" : "nerrom" }],
+          "if_proba" : "0.3",
+          "text" : "Nerrom est dévoré par les goules.",
+          "set_carac_false" : [{            "carac_id" : "nerrom"}],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "1"
+            }]
+          }
+        },
+        {
+          "id": "combat_de_rue_contre_les_goules_lanawyn",
+          "if_proba" : "0.01",
+          "text" : "Vous êtes tuée par une marée de goules assoiffées de sang. Votre aventure s'arrête ici.",
+          "go_to_evt" : "defaite",
+          "modif_proba" : [
+            {
+              "if_false" : [{ "carac_id" : "tunnga" }],
+              "valeur" : "0.05"
+            },
+            {
+              "if_false" : [{ "carac_id" : "soeur_des_sens" }],
+              "valeur" : "0.05"
+            },
+            {
+              "if_false" : [{ "carac_id" : "athenon" }],
+              "valeur" : "0.1"
+            },
+            {
+              "if_false" : [{ "carac_id" : "valamen" }],
+              "valeur" : "0.1"
+            },
+            {
+              "if_false" : [{ "carac_id" : "oriann" }],
+              "valeur" : "0.15"
+            },
+            {
+              "if_false" : [{ "carac_id" : "nerrom" }],
+              "valeur" : "0.05"
+            }
+          ],
+          "else" : {
+            "add_to_carac" : [{
+              "carac_id" : "goules_tuees",
+              "valeur_random" : "4"
+            }]
+          }
+        },
+        {
+          "id": "fin_round_combat_de_rue_contre_les_goules",
+          "text" : "Vous avez tué %%%goules_tuees%%% goules, mais elles semblent innombrables."
+        }
+      ]
+    },
+    {
+      "id" : "peinard_a_aspen",
+    "themes" : [
+      {"valeur" : "cache_des_goules_aspen"}
+    ],
+      "if_proba" : "1",
+      "duree" : "400",
+      "effets" : [{"text" : "Difficile voire impossible de dormir. Vous parvenez néanmoins à passer innaperçu."}]
+    }
+  ]
+}
