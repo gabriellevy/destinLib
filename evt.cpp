@@ -51,7 +51,7 @@ Evt::Evt(QString id,
 void Evt::AfficherNoeud()
 {
     ui->titreEvt->setText(m_Nom);
-    if ( m_Nom != "")
+    if ( Aventure::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
     {
         ui->titreEvt->show();
         ui->titreEvt->setFont( *Aventure::TITRE_FONT);

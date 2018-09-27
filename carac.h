@@ -2,6 +2,7 @@
 #define CARAC_H
 
 #include <QWidget>
+#include "glisseur.h"
 
 namespace Ui {
 class Carac;
@@ -35,6 +36,7 @@ public:
     QString m_Description;
     MODE_AFFICHAGE m_ModeAffichage; // de quelle manière est affichée cette carac dans l'interface personnage
 
+    void SetValeursJauge(double Minimum, double Maximum);
 
     void DeterminerModeAffichage(QString modeAffichage);
     void Afficher();
@@ -45,6 +47,7 @@ private:
     bool AfficherValeur();
     bool AfficherImage();
     bool AfficherIntitule();
+    Glisseur m_ValeursJauge;
 };
 
 #endif // CARAC_H

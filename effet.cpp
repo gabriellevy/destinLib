@@ -65,12 +65,32 @@ Effet::Effet(QJsonObject effetJson, QWidget *parent) :
 
         m_Glisseur = new Glisseur(jsonGlisseur);
 
-        ui->glisseur->setMinimum(m_Glisseur->m_Minimum);
-        ui->glisseur->setMaximum(m_Glisseur->m_Maximum);
-        ui->glisseur->setSliderPosition(m_Glisseur->m_ValeurDepart);
+        ui->glisseur->setMinimum(static_cast<int>(m_Glisseur->m_Minimum));
+        ui->glisseur->setMaximum(static_cast<int>(m_Glisseur->m_Maximum));
+        ui->glisseur->setSliderPosition(static_cast<int>(m_Glisseur->m_ValeurDepart));
         ui->labelGlisseur->setNum(m_Glisseur->m_ValeurDepart);
         connect(ui->glisseur,SIGNAL(valueChanged(int)),this,SLOT(valeurGlisseurAChange(int)));
     }
+
+
+    if ( effetJson.contains("else") && effetJson["else"].isObject())
+    {
+        m_ElseNoeud = new Effet(effetJson["else"].toObject());
+        m_ElseNoeud->ui = ui;
+    }
+}
+
+Effet* Effet::AjouterElse(QString text)
+{
+    m_ElseNoeud = new Effet();
+    m_ElseNoeud->m_Text = text;
+    m_ElseNoeud->ui = ui;
+    return m_ElseNoeud;
+}
+
+Effet* Effet::GetElse()
+{
+    return m_ElseNoeud;
 }
 
 void Effet::valeurGlisseurAChange()
@@ -83,7 +103,7 @@ void Effet::AfficherNoeud()
 {
     // cette fonction peut être appelée pour rafraichir un affichage donc on cache tout avant de le réafficher éventuellement
     ui->titreEffet->hide();
-    if ( m_Nom != "")
+    if ( Aventure::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
     {
         ui->titreEffet->show();
         ui->titreEffet->setFont( *Aventure::TITRE_FONT);
@@ -117,6 +137,14 @@ void Effet::AfficherNoeud()
         }
     }
 
+}
+
+void Effet::FinExecutionNoeud()
+{
+    Noeud::FinExecutionNoeud();
+
+    if ( m_ElseNoeud != nullptr)
+        m_ElseNoeud->FinExecutionNoeud();
 }
 
 bool Effet::GestionTransition()
@@ -179,10 +207,10 @@ Glisseur* Effet::AjouterGlisseur(QString valeur_min, QString valeur_max, QString
 
     m_Glisseur = new Glisseur(valeur_min, valeur_max, valeur_depart, carac_id);
 
-    ui->glisseur->setMinimum(m_Glisseur->m_Minimum);
-    ui->glisseur->setMaximum(m_Glisseur->m_Maximum);
-    ui->glisseur->setSliderPosition(m_Glisseur->m_ValeurDepart);
-    ui->labelGlisseur->setNum(m_Glisseur->m_ValeurDepart);
+    ui->glisseur->setMinimum(static_cast<int>(m_Glisseur->m_Minimum));
+    ui->glisseur->setMaximum(static_cast<int>(m_Glisseur->m_Maximum));
+    ui->glisseur->setSliderPosition(static_cast<int>(m_Glisseur->m_ValeurDepart));
+    ui->labelGlisseur->setNum(static_cast<int>(m_Glisseur->m_ValeurDepart));
     connect(ui->glisseur,SIGNAL(valueChanged(int)),this,SLOT(valeurGlisseurAChange(int)));
 
     return m_Glisseur;

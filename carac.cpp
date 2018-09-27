@@ -63,6 +63,14 @@ void Carac::DeterminerModeAffichage(QString modeAffichage)
     }
 }
 
+void Carac::SetValeursJauge(double Minimum, double Maximum)
+{
+    m_ValeursJauge.m_Minimum = Minimum;
+    m_ValeursJauge.m_Maximum = Maximum;
+    m_ValeursJauge.m_ValeurDepart = m_Valeur.toDouble();
+    m_ValeursJauge.m_IdCaracAssociee = m_Id;
+}
+
 void Carac::Afficher()
 {
     // A FAIRE gérer ici les valeurs qui utilisent la jauge...
@@ -88,9 +96,17 @@ void Carac::Afficher()
 
         }break;
         case MODE_AFFICHAGE::ma_Jauge :{
-            AfficherImage();
+            bool afficheImage = AfficherImage();
             AfficherIntitule();
-                qDebug()<<"A FAIRE ";
+
+            ui->jaugeCarac->show();
+            ui->jaugeCarac->setRange(static_cast<int>(m_ValeursJauge.m_Minimum), static_cast<int>(m_ValeursJauge.m_Maximum));
+            ui->jaugeCarac->setValue(m_Valeur.toInt());
+            if ( !afficheImage)
+            {
+                ui->jaugeCarac->update();
+            }
+
         }break;
         case MODE_AFFICHAGE::ma_Nombre:{
         if (AfficherIntitule())
@@ -173,12 +189,20 @@ bool Carac::AfficherImage()
         return true;
     }
     else {
+        ui->imageCarac->hide();
+        QSize AdjustSize = QSize(0, 0);
+        ui->imageCarac->setMinimumSize(AdjustSize);
+        ui->imageCarac->setMaximumSize(AdjustSize);
         return false;
     }
 }
 
 bool Carac::bAffichable()
 {
+    // en mode "détail" on affiche toutes les caracs de toute façon :
+    if ( Aventure::ME->m_ModeAffichage == ModeAffichage::ema_Details )
+        return true;
+
     // est-ce qu'elle fait partie des caracs affichables par le perso actif ?
     for ( int i=0; i < IPerso::GetPersoInterface()->GetPersoCourant().m_CaracsAAfficher.size() ; i++)
     {

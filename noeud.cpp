@@ -163,12 +163,6 @@ Noeud::Noeud(QJsonObject objJson/*, QWidget *parent*/) /*:
 
         m_Conditions.append(conditionProba);
     }
-
-
-    if ( objJson.contains("else") && objJson["else"].isObject())
-    {
-        m_ElseNoeud = new Noeud(objJson["else"].toObject());
-    }
 }
 
 void Noeud::AjouterRetireurACarac(QString id, QString valeur)
@@ -195,6 +189,15 @@ void Noeud::AjouterSetCaracTrue(QString id)
     m_SetCaracs.append(set_carac);
 }
 
+Condition* Noeud::AjouterCondition( QString caracId, Comparateur comparateur, QString valeur)
+{
+    Condition* condition = new Condition(caracId, valeur, comparateur );
+
+    m_Conditions.append(condition);
+
+    return condition;
+}
+
 Condition* Noeud::AjouterConditionProba( double proba)
 {
     Condition* conditionProba = new Condition( proba );
@@ -216,7 +219,7 @@ bool Noeud::AUnDeCesThemes(QList<QString> themes)
     return false;
 }
 
-float Noeud::GetTempEcoule()
+double Noeud::GetTempEcoule()
 {
     return m_TempEcoule;
 }
@@ -281,13 +284,27 @@ Noeud::~Noeud()
      if ( this->AQuelqueChoseAAfficher() )
          this->AfficherNoeud();
 
+     if ( m_Son != "" )
+     {
+        Aventure::ME->m_Lecteur->stop();
+        Aventure::ME->m_Lecteur->setMedia(QUrl(m_Son));
+        Aventure::ME->m_Lecteur->setVolume(50);
+        Aventure::ME->m_Lecteur->play();
+     }
+
      this->ExecuterActionsNoeud();
 
      bool transition_auto = this->GestionTransition( );
 
      if (!transition_auto || Aventure::ME->GetEtatPartie() == EP_FinPartie)
          Aventure::ME->GetHistoire()->RafraichirAffichageEvtEtOuEffet( nullptr, nullptr );
- }
+}
+
+void Noeud::FinExecutionNoeud()
+{
+    // l'exécution de ce noeud est erminé. Lors de la prochaine itération il faudra refaire le test avec les nouvelles valeurs
+    m_EtatCondition = ec_NonTeste;
+}
 
 void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)
 {
@@ -339,13 +356,6 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
     }*/
 }
 
-Noeud* Noeud::AjouterElse(QString text)
-{
-    m_ElseNoeud = new Noeud();
-    m_ElseNoeud->m_Text = text;
-    return m_ElseNoeud;
-}
-
 bool Noeud::AQuelqueChoseAAfficher()
 {
     return (m_Text != "" || !m_Img.isNull() || m_Nom != "");
@@ -353,13 +363,25 @@ bool Noeud::AQuelqueChoseAAfficher()
 
 bool Noeud::TesterConditions()
 {
+    if ( m_EtatCondition != ec_NonTeste)
+    {
+        // cette condition a déjà été testé une fois : on ne la reteste aps car la proba aléatoire pourrait donner des résultat différents cette fois
+        return ( m_EtatCondition == ec_True);
+    }
+
     bool resultatCallback = true;
     if ( m_CallbackTest != nullptr)
         resultatCallback = m_CallbackTest(m_CallbackArgumentTest );
 
-    return resultatCallback &&
+    bool res = ( resultatCallback &&
         Condition::TesterTableauDeConditions(m_Conditions) &&
-        Condition::TesterTableauDeConditions(this->m_RepeatWhileConditions);
+        Condition::TesterTableauDeConditions(this->m_RepeatWhileConditions));
+
+    if ( res )
+        m_EtatCondition = ec_True;
+    else m_EtatCondition = ec_False;
+
+    return res;
 }
 
 
@@ -376,7 +398,7 @@ void Noeud::AjouterCallbackDeTest(std::function<bool(QString)> callback, QString
     m_CallbackArgumentTest = arg;
 }
 
-float Noeud::GetProba()
+double Noeud::GetProba()
 {
     float proba = 0;
 
@@ -391,9 +413,4 @@ float Noeud::GetProba()
     }
 
     return proba;
-}
-
-Noeud* Noeud::GetElse()
-{
-    return m_ElseNoeud;
 }

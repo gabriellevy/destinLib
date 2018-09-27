@@ -5,6 +5,7 @@
 #include <QFont>
 #include "perso.h"
 #include "histoire.h"
+#include <QMediaPlayer>
 
 namespace Ui {
 class Aventure;
@@ -14,6 +15,11 @@ enum EtatPartie {
     EP_Chargement,
     EP_Deroulement,
     EP_FinPartie
+};
+
+enum ModeAffichage {
+    ema_Jeu, // mode de base
+    ema_Details // un genre de mode debug visual avec les titres visibles et toutes les caracs affichées
 };
 
 /**
@@ -42,8 +48,8 @@ protected:
     virtual void GenererCaracs() = 0;
 
 public:
-    explicit Aventure(QWidget *parent = nullptr);
-    explicit Aventure(QString cheminAventure, QString firstEvt = "", QString premierEffet = "", QWidget *parent = 0);
+    explicit Aventure(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
+    explicit Aventure(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
     ~Aventure();
 
     bool LancerEvtEtOuEffetCourant();
@@ -52,6 +58,7 @@ public:
     const static QFont* TITRE_FONT;
     static QString CHEMIN;
     static Aventure* ME;
+    ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;
 
     Histoire* GetHistoire();
     IPerso* GetPersoInterface();
@@ -63,6 +70,8 @@ public:
     bool EstEnModeHistoire();
 
     EtatPartie ChangerEtatPartie(QString nouvelEtatPartie);
+
+    QMediaPlayer* m_Lecteur;
 
 public slots:
     // déclenche l'effet de base si aucun n'a été spécifiquement choisi par l'utilisateur (si n'y avait qu'un suivant potentiel)

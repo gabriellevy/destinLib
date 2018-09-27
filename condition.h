@@ -14,15 +14,21 @@ enum Comparateur {
     c_Aucun
 };
 
+enum EtatCondition {
+    ec_NonTeste, // cette condition n'a pas encore été testée durant cette itération
+    ec_True,
+    ec_False
+};
+
 class Condition;
 
 class ModifProba
 {
 public:
-    float m_Valeur = 0.0f;
+    double m_Valeur = 0.0;
     QList<Condition*> m_Conditions;
 
-    ModifProba(float valeur);
+    ModifProba(double valeur);
     ModifProba();
 };
 
@@ -30,15 +36,15 @@ class Condition
 {
     QString m_CaracId;
     //double m_ValeurNombre; // valeur à comparer si il s'agit d'un nombre
-    QString m_Valeur = ""; // valeur à comparer si il s'agit d'une chaîne de caractères
+    QString m_Valeur = "0"; // valeur à comparer si il s'agit d'une chaîne de caractères
     Comparateur m_Comparateur = c_Aucun;
     // proba (sur 1) que cette condition soit vérifiée
-    float m_Proba = -1.0f;
+    double m_Proba = -1.0;
 
 public:
     Condition();
     Condition(QString caracId, QString valeur, Comparateur comparateur);
-    Condition(float proba);
+    Condition(double proba);
 
     QList<ModifProba*> m_ModifsProba;
 
@@ -48,7 +54,7 @@ public:
      */
     bool Tester();
 
-    float CalculerProbaFinale();
+    double CalculerProbaFinale();
 
     /**
      * @brief Récupère toutes les conditions du noeud json et les ajoute dans la liste de conditions passée en référence
@@ -60,7 +66,7 @@ public:
 
     static bool TesterTableauDeConditions(QList<Condition*> &conditions);
 
-    ModifProba* AjouterModifProba(float valeur, QList<Condition*> conditions);
+    ModifProba* AjouterModifProba(double valeur, QList<Condition*> conditions);
 };
 
 #endif // CONDITION_H

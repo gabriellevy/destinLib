@@ -12,6 +12,7 @@ class Effet;
 class Effet : public QWidget, public Noeud
 {
     Q_OBJECT
+    Effet* m_ElseNoeud = nullptr;
 
 public:
     explicit Effet(QWidget *parent = nullptr);
@@ -24,6 +25,7 @@ public:
 
     QList<Choix*> m_Choix;
 
+    Effet* GetElse();
     void AfficherNoeud();
 
     void AfficherBoutonSuivant();
@@ -32,7 +34,10 @@ public:
 
     Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur);
     Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id);
+    Effet* AjouterElse(QString text);
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
+
+    virtual void FinExecutionNoeud();
 
 private:
     Ui::Effet *ui;

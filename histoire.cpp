@@ -183,7 +183,8 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
         return EvtActuel(forceHistoireMode)->m_Effets[m_EffetIndex];
     }
 
-    Q_ASSERT_X(m_EffetIndex < EvtActuel()->m_Effets.size(), "Histoire::EffetActuel", "m_EffetIndex actuel ne fait pas partie de l'événement actuel => ratage de passage à l'événement suivant à priori...");
+    Evt* evt = EvtActuel();
+    Q_ASSERT_X(m_EffetIndex < evt->m_Effets.size(), "Histoire::EffetActuel", "m_EffetIndex actuel ne fait pas partie de l'événement actuel => ratage de passage à l'événement suivant à priori...");
 
     return EvtActuel()->m_Effets[m_EffetIndex];
 
@@ -284,6 +285,8 @@ Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
 
 Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
 {
+    EffetActuel()->FinExecutionNoeud();// le faire aussi pour l'évt ?
+
     bool effet_suivant_trouve = false;
 
     // il n'y a pas d'effet suivant si on n'est pas en état de partie "Histoire"
@@ -291,9 +294,16 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
         return nullptr;
 
 
-    // déjà déterminer si l'effet actuel contenait des 'go to' qui conditionnent le prochain événement ou effet :
     if ( noeudActuel == nullptr)
+    {
         noeudActuel = EffetActuel();
+        if ( !noeudActuel->TesterConditions() &&
+             dynamic_cast<Effet*>(noeudActuel) != nullptr)
+        {
+            noeudActuel = static_cast<Effet*>(noeudActuel)->GetElse();
+        }
+    }
+
     Evt* evtActuel = EvtActuel();
     Evt* oldEvtActuel = EvtActuel();
 
@@ -313,6 +323,7 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
     bool repeter = ( noeudActuel->m_RepeatWhileConditions.size() > 0 &&
                Condition::TesterTableauDeConditions(noeudActuel->m_RepeatWhileConditions) );
 
+    // déterminer si l'effet actuel contenait des 'go to' qui conditionnent le prochain événement ou effet :
     if ( !effet_suivant_trouve )
     {
          if ( noeudActuel != nullptr

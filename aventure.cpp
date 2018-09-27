@@ -9,10 +9,12 @@ const QFont* Aventure::TITRE_FONT = new QFont("Verdana", 20);
 QString Aventure::CHEMIN = "";
 Aventure* Aventure::ME;
 
-Aventure::Aventure(QWidget *parent):QMainWindow(parent),
-    ui(new Ui::Aventure)
+Aventure::Aventure(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(parent),
+    ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
+
+    m_Lecteur = new QMediaPlayer;
 
     // positionner l'interface
     /*m_Perso = new IPerso(ui->persoWidget);
@@ -24,11 +26,13 @@ Aventure::Aventure(QWidget *parent):QMainWindow(parent),
     //LancerAventure();
 }
 
-Aventure::Aventure(QString cheminAventure, QString firstEvt, QString premierEffet, QWidget *parent) :
+Aventure::Aventure(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Aventure)
+    ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
+
+    m_Lecteur = new QMediaPlayer;
 
     // lance réellement l'aventure
     if ( ExtraireAventure(cheminAventure))

@@ -12,15 +12,15 @@ Condition::Condition(QString caracId, QString valeur, Comparateur comparateur):m
 
 }
 
-Condition::Condition(float proba):m_Proba(proba)
+Condition::Condition(double proba):m_Proba(proba)
 {
 
 }
 
-float Condition::CalculerProbaFinale()
+double Condition::CalculerProbaFinale()
 {
     //On calcule la valeur réelle de la probabilité en fonction des modificateurs de prob :
-    float probaFinale = m_Proba;
+    double probaFinale = m_Proba;
     for ( int j = 0 ; j < m_ModifsProba.size() ; j++)
     {
         if ( Condition::TesterTableauDeConditions(m_ModifsProba[j]->m_Conditions))
@@ -32,10 +32,10 @@ float Condition::CalculerProbaFinale()
 bool Condition::Tester()
 {
     // une condition doit soit reposer sur les proba soit sur une valeur fixe
-    if ( m_Proba != -1.0f)
+    if ( m_Proba != -1.0)
+    //if ( fabs(m_Proba + 1) <= 0.0001)
     {
-
-        float resProba = (double(qrand()%1000))/1000;
+        double resProba = (double(qrand()%1000))/1000;
 
         return resProba <= CalculerProbaFinale();
     }
@@ -60,8 +60,18 @@ bool Condition::Tester()
             return (valeurCarac.toDouble() > m_Valeur.toDouble() );
             break;
         case c_SuperieurEgal:
-            return (valeurCarac.toDouble() >= m_Valeur.toDouble() );
+        {
+
+            //QString str = "1234.56";
+            //double valTmp = str.toDouble();
+            double val1 = valeurCarac.toDouble();
+
+            bool ok;
+            double val2 = m_Valeur.toDouble(&ok);
+            Q_ASSERT_X(ok, " Condition::Tester", (QString("Conversion de m_Valeur : "  + m_Valeur + " impossible")).toStdString().c_str());
+            return ( val1 >= val2 );
             break;
+        }
         case c_Inferieur:
             return (valeurCarac.toDouble() < m_Valeur.toDouble() );
             break;
@@ -110,7 +120,7 @@ void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &c
     }
 }
 
-ModifProba* Condition::AjouterModifProba(float valeur, QList<Condition*> conditions)
+ModifProba* Condition::AjouterModifProba(double valeur, QList<Condition*> conditions)
 {
     // les modificateurs de proba sont des conditions dans la condition qui affectent le probabilité de cette dernière :
     ModifProba* modifproba = new ModifProba( valeur);
@@ -215,7 +225,7 @@ bool Condition::TesterTableauDeConditions(QList<Condition*> &conditions)
     ModifProba
     */
 
-ModifProba::ModifProba(float valeur):m_Valeur(valeur)
+ModifProba::ModifProba(double valeur):m_Valeur(valeur)
 {
 
 }

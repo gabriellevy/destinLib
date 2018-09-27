@@ -7,13 +7,13 @@ class Glisseur
 {
 
 public:
-    int m_Minimum;
-    int m_Maximum;
-    int m_ValeurDepart;
+    double m_Minimum;
+    double m_Maximum;
+    double m_ValeurDepart;
     QString m_IdCaracAssociee;
 
     Glisseur(QJsonObject json);
-    Glisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
+    Glisseur(QString valeur_min = "0", QString valeur_max = "1", QString valeur_depart = "0", QString carac_id = "");
 };
 
 #endif // GLISSEUR_H

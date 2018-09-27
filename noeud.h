@@ -23,11 +23,12 @@ public:
     explicit Noeud(QJsonObject evtJson/*, QWidget *parent = 0*/);
     explicit Noeud(QString id, QString nom, QString text);
     explicit Noeud();
-    ~Noeud();
+    virtual ~Noeud();
 
     QString m_ChangePerso = ""; // à l'exécution de ce noeud on change de personnage principal joué par le joueur pour le remplacer par celui qui a cet id
     QString m_Id = "";
     QString m_Nom = "";
+    QString m_Son = "";
     //QString m_ImgPath = "";
     QString m_GoToEvtId = "";
     QString m_GoToEffetId = "";
@@ -39,16 +40,14 @@ public:
     // si il n'y a pas de condition de répétition, on passe à l'effet suivant normalement
     QList<Condition*> m_RepeatWhileConditions;
 
-    Noeud* GetElse();
-    float GetTempEcoule();
+    double GetTempEcoule();
     void AjouterDuree(float duree);
 
     // condition à respecter pour exécuter ce noeud (si il y en a une)
     QList<Condition*> m_Conditions;
-    Noeud* m_ElseNoeud = nullptr;
 
     // renvoit la proba asscié au noeud (via if_proba et les modif_proba) si il y en a une
-    float GetProba();
+    double GetProba();
 
     /**
      * @brief TexteAAfficher
@@ -56,6 +55,7 @@ public:
      */
     QString TexteAAfficher();
 
+    EtatCondition m_EtatCondition = ec_NonTeste;
     bool TesterConditions();
     /**
      * @brief AQuelqueChoseAAfficher
@@ -95,6 +95,7 @@ public:
     void AjouterAjouteurACarac(QString id, QString valeur);
     void AjouterChangeurDeCarac(QString id, QString valeur);
     void AjouterSetCaracTrue(QString id);
+    Condition* AjouterCondition( QString caracId, Comparateur comparateur, QString valeur);
     Condition* AjouterConditionProba( double proba);
     Noeud* AjouterElse(QString text = "");
 
@@ -109,6 +110,8 @@ public:
     QString m_CallbackArgument;
     std::function<bool(QString)> m_CallbackTest = nullptr;// PREMIER ESSAI tmp?
     QString m_CallbackArgumentTest;
+
+    virtual void FinExecutionNoeud();
 
 private:
     //Ui::Noeud *ui;
