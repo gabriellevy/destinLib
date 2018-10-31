@@ -26,19 +26,6 @@ DPerso IPerso::GetPersoCourant()
     return m_Persos[IPerso::s_IndexPersoActif];
 }
 
-QString IPerso::GetCaracValue(QString caracId)
-{
-    QString val = "";
-
-    for ( int i = 0; i < m_Caracs.size() ; i++)
-    {
-        if ( m_Caracs[i]->m_Id == caracId)
-            return m_Caracs[i]->m_Valeur;
-    }
-
-    return val;
-}
-
 void IPerso::Rafraichir(QJsonArray persos)
 {
     for (int i = 0 ; i < persos.size() ; i++)
@@ -81,7 +68,7 @@ void IPerso::Rafraichir(QJsonArray persos)
                     QString id = caracJsonObject["id"].toString();
                     donneePerso.m_CaracsAAfficher.push_back( id );
 
-                    if (CetteCaracExisteDeja(id))
+                    if (Aventure::ME->GetHistoire()->CetteCaracExisteDeja(id))
                         continue;
                     carac->m_Id = id;
                 }
@@ -115,7 +102,7 @@ void IPerso::Rafraichir(QJsonArray persos)
                 }
 
                 carac->DeterminerModeAffichage(m_TypeAffichage);
-                m_Caracs.append(carac);
+                Aventure::ME->GetHistoire()->m_Caracs.append(carac);
             }
         }
 
@@ -124,17 +111,6 @@ void IPerso::Rafraichir(QJsonArray persos)
     }
 
     RafraichirAffichage();
-}
-
-
-bool IPerso::CetteCaracExisteDeja(QString id)
-{
-    for ( int i = 0; i < m_Caracs.size() ; ++i)
-    {
-        if ( m_Caracs[i]->m_Id == id)
-            return true;
-    }
-    return false;
 }
 
 
@@ -162,66 +138,27 @@ void IPerso::RafraichirAffichage()
     }
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
+    QVector<Carac*> caracs = Aventure::ME->GetHistoire()->m_Caracs;
     // caracs
-    for ( int i = 0; i < m_Caracs.size() ; ++i)
+    for ( int i = 0; i < caracs.size() ; ++i)
     {
-        m_Caracs[i]->hide();
+        caracs[i]->hide();
     }
-    if ( m_Caracs.size() > 0 )
+    if ( caracs.size() > 0 )
     {
-        for ( int i = 0; i < m_Caracs.size() ; ++i)
+        for ( int i = 0; i < caracs.size() ; ++i)
         {
-            if ( m_Caracs[i]->bAffichable())
+            if ( caracs[i]->bAffichable())
             {
-                m_Caracs[i]->Afficher();
-                ui->caracsLayout2->addWidget(m_Caracs[i]);
-                ui->caracsLayout2->setAlignment(m_Caracs[i], Qt::AlignLeft);
-                m_Caracs[i]->show();
+                caracs[i]->Afficher();
+                ui->caracsLayout2->addWidget(caracs[i]);
+                ui->caracsLayout2->setAlignment(caracs[i], Qt::AlignLeft);
+                caracs[i]->show();
             }
         }
     }
 
     //ui->verticalLayoutPerso->update();
-}
-
-void IPerso::AppliquerCarac(SetCarac setCarac)
-{
-    bool trouve = false;
-    for ( int i = 0; i < m_Caracs.size() ; ++i)
-    {
-        if ( m_Caracs[i]->m_Id == setCarac.m_CaracId)
-        {
-            switch(setCarac.m_ModifCaracType)
-            {
-            case ModifCaracType::SetCarac : {
-                m_Caracs[i]->m_Valeur = setCarac.GetValeur();
-                break;
-            }
-            case ModifCaracType::AddToCarac : {
-                double valeur = m_Caracs[i]->m_Valeur.toDouble();
-                valeur += setCarac.GetValeur().toDouble();
-                m_Caracs[i]->m_Valeur = QString::number(valeur);
-                break;
-            }
-            case ModifCaracType::RetireDeCarac : {
-                double valeur = m_Caracs[i]->m_Valeur.toDouble();
-                valeur -= setCarac.GetValeur().toDouble();
-                m_Caracs[i]->m_Valeur = QString::number(valeur);
-                break;
-            }
-            }
-            trouve = true;
-            return;
-        }
-    }
-
-    if (!trouve)
-    {
-        Carac* carac = new Carac;
-        carac->m_Id = setCarac.m_CaracId;
-        carac->m_Valeur = setCarac.GetValeur();
-        m_Caracs.append(carac);
-    }
 }
 
 IPerso::~IPerso()

@@ -257,7 +257,7 @@ Noeud::~Noeud()
         else
         {
             // est forcément une variable à remplacer
-            texteFinal += IPerso::GetPersoInterface()->GetCaracValue(list.at(i));
+            texteFinal += Aventure::ME->GetHistoire()->GetCaracValue(list.at(i));
         }
      }
 
@@ -335,7 +335,7 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
         IPerso* perso = Aventure::ME->GetPersoInterface();
         for ( int i = 0 ; i < m_SetCaracs.size() ; ++i)
         {
-            perso->AppliquerCarac(m_SetCaracs[i] );
+            Aventure::ME->GetHistoire()->AppliquerCarac(m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }

@@ -283,6 +283,70 @@ Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
     return nullptr;
 }
 
+QString Histoire::GetCaracValue(QString caracId)
+{
+    QString val = "";
+
+    for ( int i = 0; i < m_Caracs.size() ; i++)
+    {
+        if ( m_Caracs[i]->m_Id == caracId)
+            return m_Caracs[i]->m_Valeur;
+    }
+
+    return val;
+}
+
+bool Histoire::CetteCaracExisteDeja(QString id)
+{
+    for ( int i = 0; i < m_Caracs.size() ; ++i)
+    {
+        if ( m_Caracs[i]->m_Id == id)
+            return true;
+    }
+    return false;
+}
+
+void Histoire::AppliquerCarac(SetCarac setCarac)
+{
+    bool trouve = false;
+    for ( int i = 0; i < m_Caracs.size() ; ++i)
+    {
+        if ( m_Caracs[i]->m_Id == setCarac.m_CaracId)
+        {
+            switch(setCarac.m_ModifCaracType)
+            {
+            case ModifCaracType::SetCarac : {
+                m_Caracs[i]->m_Valeur = setCarac.GetValeur();
+                break;
+            }
+            case ModifCaracType::AddToCarac : {
+                double valeur = m_Caracs[i]->m_Valeur.toDouble();
+                valeur += setCarac.GetValeur().toDouble();
+                m_Caracs[i]->m_Valeur = QString::number(valeur);
+                break;
+            }
+            case ModifCaracType::RetireDeCarac : {
+                double valeur = m_Caracs[i]->m_Valeur.toDouble();
+                valeur -= setCarac.GetValeur().toDouble();
+                m_Caracs[i]->m_Valeur = QString::number(valeur);
+                break;
+            }
+            }
+            trouve = true;
+            return;
+        }
+    }
+
+    if (!trouve)
+    {
+        Carac* carac = new Carac;
+        carac->m_Id = setCarac.m_CaracId;
+        carac->m_Valeur = setCarac.GetValeur();
+        m_Caracs.append(carac);
+    }
+}
+
+
 Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
 {
     EffetActuel()->FinExecutionNoeud();// le faire aussi pour l'évt ?

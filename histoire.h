@@ -3,6 +3,7 @@
 
 #include "evt.h"
 #include "evtaleatoire.h"
+#include "carac.h"
 
 namespace Ui {
 class Histoire;
@@ -72,6 +73,18 @@ public:
 
     Evt* AjouterEvt(QString id, QString nom);
     EvtAleatoire* AjouterEvtAleatoire(QString id, QString nom);
+
+    // caracs :
+    QVector<Carac*> m_Caracs;
+
+    bool CetteCaracExisteDeja(QString id);
+    void AppliquerCarac(SetCarac setCarac);
+
+    /**
+     * @brief GetCaracValue
+     * @return valeur de cette carac pour le perso. "" si cette carac n'existe pas
+     */
+    QString GetCaracValue(QString caracId);
 
 private:
     Ui::Histoire *ui;

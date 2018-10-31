@@ -35,7 +35,6 @@ class IPerso : public QWidget
 
 protected:
     QVector<DPerso> m_Persos;
-    bool CetteCaracExisteDeja(QString id);
 
 public:
     explicit IPerso(QWidget *parent = nullptr);
@@ -44,16 +43,6 @@ public:
     void Rafraichir(QJsonArray persos);
     void ChangerPersoCourant(QString changePerso);
     void RafraichirAffichage();
-
-    QVector<Carac*> m_Caracs;
-
-    void AppliquerCarac(SetCarac setCarac);
-
-    /**
-     * @brief GetCaracValue
-     * @return valeur de cette carac pour le perso. "" si cette carac n'existe pas
-     */
-    QString GetCaracValue(QString caracId);
 
     // accesseur vers le perso courant (qui est toujours unique)
     DPerso GetPersoCourant();

@@ -1,5 +1,6 @@
 #include "setcarac.h"
 #include "perso.h"
+#include "aventure.h"
 #include <QDebug>
 
 SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeur)
@@ -68,7 +69,7 @@ QString SetCarac::GetValeur()
     }
     else if ( m_ValeurCarac != "nexistepas*µ£$" )
     {
-        QString valeurStr = IPerso::GetPersoInterface()->GetCaracValue(m_ValeurCarac);
+        QString valeurStr = Aventure::ME->GetHistoire()->GetCaracValue(m_ValeurCarac);
         if ( valeurStr == "" )
             valeurStr = "0";
         int valeur =  valeurStr.toInt();

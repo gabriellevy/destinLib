@@ -24,6 +24,8 @@ enum ModeAffichage {
 
 /**
  * @brief Fenêtre principale du jeu
+ * Elle est appelée "Aventure" au sens large mais n'est pas une seule aventure, ceci serait plutôt la classe "Histoire"
+ * Il faudrait peut-être renommer Aventure en "Univers" plus générique et moins confusant
  */
 class Aventure : public QMainWindow
 {

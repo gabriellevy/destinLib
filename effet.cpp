@@ -96,7 +96,7 @@ Effet* Effet::GetElse()
 void Effet::valeurGlisseurAChange()
 {
     SetCarac setCarac(ModifCaracType::SetCarac, m_Glisseur->m_IdCaracAssociee, QString::number(ui->glisseur->value()));
-    IPerso::GetPersoInterface()->AppliquerCarac(setCarac);
+    Aventure::ME->GetHistoire()->AppliquerCarac(setCarac);
 }
 
 void Effet::AfficherNoeud()

@@ -31,6 +31,13 @@ Carac::Carac(QString Id, QString Intitule, QString Valeur, QString CheminImg, QS
     m_Img.load(CheminImg);
 }
 
+Jauge::Jauge(QString Id, QString Intitule, double Minimum, double Maximum, double ValeurDepart, QString Img, QString Description, QWidget *parent)
+    : Carac(Id, Intitule, "", Img, Description, MODE_AFFICHAGE::ma_Jauge, parent)
+{
+    m_ValeursJauge.m_Minimum = Minimum;
+    m_ValeursJauge.m_Maximum = Maximum;
+    m_ValeursJauge.m_ValeurDepart = ValeurDepart;
+}
 
 void Carac::DeterminerModeAffichage(QString modeAffichage)
 {
@@ -63,7 +70,7 @@ void Carac::DeterminerModeAffichage(QString modeAffichage)
     }
 }
 
-void Carac::SetValeursJauge(double Minimum, double Maximum)
+void Jauge::SetValeursJauge(double Minimum, double Maximum)
 {
     m_ValeursJauge.m_Minimum = Minimum;
     m_ValeursJauge.m_Maximum = Maximum;
@@ -100,7 +107,9 @@ void Carac::Afficher()
             AfficherIntitule();
 
             ui->jaugeCarac->show();
-            ui->jaugeCarac->setRange(static_cast<int>(m_ValeursJauge.m_Minimum), static_cast<int>(m_ValeursJauge.m_Maximum));
+            ui->jaugeCarac->setRange(
+                        static_cast<int>((static_cast<Jauge*>(this))->m_ValeursJauge.m_Minimum),
+                        static_cast<int>((static_cast<Jauge*>(this))->m_ValeursJauge.m_Maximum));
             ui->jaugeCarac->setValue(m_Valeur.toInt());
             if ( !afficheImage)
             {

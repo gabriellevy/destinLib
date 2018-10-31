@@ -50,7 +50,7 @@ bool Condition::Tester()
                         Aventure::ME->GetHistoire()->EffetActuel(true)->GetTempEcoule());
         }
         else
-            valeurCarac = IPerso::GetPersoInterface()->GetCaracValue(m_CaracId);
+            valeurCarac = Aventure::ME->GetHistoire()->GetCaracValue(m_CaracId);
 
         switch (m_Comparateur) {
         case c_Egal:
