@@ -21,7 +21,7 @@ Noeud::Noeud(QJsonObject objJson/*, QWidget *parent*/) /*:
     ui(new Ui::Noeud)*/
 {
     //ui->setupUi(this);
-
+    m_Film = nullptr;
     m_Id = "";
     m_Nom = "";
     //m_ImgPath = "";
@@ -358,7 +358,7 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
 
 bool Noeud::AQuelqueChoseAAfficher()
 {
-    return (m_Text != "" || !m_Img.isNull() || m_Nom != "");
+    return (m_Text != "" || !m_Img.isNull() || m_Nom != "" || m_Film != nullptr);
 }
 
 bool Noeud::TesterConditions()

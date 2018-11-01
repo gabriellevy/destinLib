@@ -9,6 +9,13 @@ namespace Ui {
 class Effet;
 }
 
+enum OrientationAffichageChoix
+{
+    oac_vertical,
+    oac_horizontal
+};
+
+
 class Effet : public QWidget, public Noeud
 {
     Q_OBJECT
@@ -24,6 +31,7 @@ public:
     ~Effet();
 
     QList<Choix*> m_Choix;
+    OrientationAffichageChoix m_OrientationAffichageChoix = OrientationAffichageChoix::oac_vertical;
 
     Effet* GetElse();
     void AfficherNoeud();
@@ -33,7 +41,7 @@ public:
     bool GestionTransition();
 
     Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur);
-    Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id);
+    Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg = "");
     Effet* AjouterElse(QString text);
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
 

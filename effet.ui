@@ -136,6 +136,9 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutBoutons"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>

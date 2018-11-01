@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include "setcarac.h"
 #include "condition.h"
+#include <QMovie>
 
 /*namespace Ui {
 class Noeud;
@@ -17,6 +18,7 @@ protected:
     // temp écoulé durant l'exécution de ce noeud. Il s'agit de temps de jeu et ses unités sont à l'appréciation du créateur de l'aventure puisqu'il en détermine toutes les utilisations
     float m_TempEcoule;
     QPixmap m_Img;
+    QMovie* m_Film;
 
 
 public:

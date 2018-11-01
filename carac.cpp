@@ -37,6 +37,7 @@ Jauge::Jauge(QString Id, QString Intitule, double Minimum, double Maximum, doubl
     m_ValeursJauge.m_Minimum = Minimum;
     m_ValeursJauge.m_Maximum = Maximum;
     m_ValeursJauge.m_ValeurDepart = ValeurDepart;
+    m_Valeur = QString::number(static_cast<int>(ValeurDepart));
 }
 
 void Carac::DeterminerModeAffichage(QString modeAffichage)

@@ -19,8 +19,8 @@ class Choix : public QPushButton, public Noeud
     Q_OBJECT
 
 public:
-    explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
-    explicit Choix(QString text, QWidget *parent = nullptr);
+    //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
+    explicit Choix(QString text, QString cheminImg = "", QWidget *parent = nullptr);
     ~Choix();
     void AfficherNoeud();
     /**

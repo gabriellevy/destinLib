@@ -50,7 +50,7 @@ private:
 class Jauge : public Carac
 {
 public:
-    Jauge(QString Id, QString Intitule, double m_Minimum, double m_Maximum, double m_ValeurDepart, QString Img, QString Description, QWidget *parent = 0);
+    Jauge(QString Id, QString Intitule, double m_Minimum, double m_Maximum, double m_ValeurDepart, QString Img = "", QString Description = "", QWidget *parent = 0);
 
     Glisseur m_ValeursJauge;
 

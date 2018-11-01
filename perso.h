@@ -19,6 +19,7 @@ struct DPerso
 {
     QString m_Id;
     QString m_Nom;
+    QString m_Description = "";
     QPixmap m_ImagePortrait;
     QVector<QString> m_CaracsAAfficher;
 };

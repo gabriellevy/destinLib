@@ -24,7 +24,19 @@ Effet::Effet(QString id,
 {
     m_Id = id;
     m_Text = text;
-    m_Img.load(imgPath);
+    if ( imgPath != "" )
+    {
+        // si l'image est un gif je pars du principe que c'est un gif potentiellement animé et ça devient un movie au lieu d'une image
+        if ( imgPath.endsWith(".gif"))
+        {
+            m_Film = new QMovie(imgPath);
+        }
+        else
+        {
+            m_Img.load(imgPath);
+        }
+    }
+
 
     ui->setupUi(this);
     ui->boutonContinuer->hide();
@@ -44,7 +56,7 @@ Effet::Effet(QJsonObject effetJson, QWidget *parent) :
     ui->labelGlisseur->hide();
     m_Glisseur = nullptr;
 
-    if ( effetJson.contains("choix") && effetJson["choix"].isArray())
+    /*if ( effetJson.contains("choix") && effetJson["choix"].isArray())
     {
         QJsonArray jsonArrayChoix = effetJson["choix"].toArray();
 
@@ -53,7 +65,7 @@ Effet::Effet(QJsonObject effetJson, QWidget *parent) :
             Choix* choix = new Choix(jsonArrayChoix[i].toObject());
             m_Choix.append(choix);
         }
-    }
+    }*/
 
     // A FAIRE transférer ça dans afficher noeud ?
     if ( effetJson.contains("glisseur") && effetJson["glisseur"].isObject())
@@ -120,14 +132,25 @@ void Effet::AfficherNoeud()
     }
 
     ui->imageLabel->hide();
-    if ( !m_Img.isNull() )
+
+    bool afficheImg = !m_Img.isNull();
+    bool afficheFilm = (m_Film != nullptr);
+    if ( afficheImg || afficheFilm )
     {
         ui->imageLabel->show();
-         ui->imageLabel->setPixmap(m_Img);
+
+        if ( afficheImg)
+            ui->imageLabel->setPixmap(m_Img);
+        else if ( afficheFilm)
+        {
+            ui->imageLabel->setMovie(m_Film);
+            m_Film->start();
+        }
 
         // réduction de l'image à la taille de la fenêtre si elle est plus large :
         int largeurImg = this->width() - 25; //25 pixels environ à cause de la barre de défilement à droite...
-        if ( m_Img.width() > largeurImg)
+        if ( (afficheImg &&  m_Img.width() > largeurImg)
+           || (afficheFilm &&  m_Film->scaledSize().width() > largeurImg) )
         {
             int w = largeurImg;
             int h = ui->imageLabel->heightForWidth(w);
@@ -158,7 +181,10 @@ bool Effet::GestionTransition()
             m_Choix[i]->hide();
             if ( m_Choix[i]->TesterConditions())
             {
-                ui->layoutBoutons->layout()->addWidget(m_Choix[i]);
+                if ( m_OrientationAffichageChoix == OrientationAffichageChoix::oac_vertical)
+                    ui->layoutBoutons->layout()->addWidget(m_Choix[i]);
+                else
+                    ui->horizontalLayoutBoutons->layout()->addWidget(m_Choix[i]);
                 m_Choix[i]->AfficherNoeud();
                 m_Choix[i]->show();
 
@@ -254,9 +280,9 @@ Choix* Effet::AjouterChoixChangeurDeCarac(QString text, QString carac, QString v
     return choix;
 }
 
-Choix* Effet::AjouterChoixGoToEffet(QString text, QString go_to_effet_id)
+Choix* Effet::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg)
 {
-    Choix* choix = new Choix(text);
+    Choix* choix = new Choix(text, cheminImg);
     choix->m_GoToEffetId = go_to_effet_id;
     m_Choix.push_back(choix);
     return choix;
