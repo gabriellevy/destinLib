@@ -15,13 +15,16 @@ class Perso;
 
 class SetCarac;
 
-struct DPerso
+class DPerso
 {
+public:
+    DPerso();
+
     QString m_Id;
     QString m_Nom;
     QString m_Description = "";
     QPixmap m_ImagePortrait;
-    QVector<QString> m_CaracsAAfficher;
+    QVector<QString> m_CaracsAAfficher = {};
 };
 
 /**
@@ -32,10 +35,10 @@ class IPerso : public QWidget
     Q_OBJECT
     AspectRatioLabel* myImageLabel = nullptr;
     static IPerso* s_PersosInterface; // singleton
-    static int s_IndexPersoActif;
+    static QString s_IdPersoActif;
 
 protected:
-    QVector<DPerso> m_Persos;
+    QHash<QString, DPerso> m_Persos;
 
 public:
     explicit IPerso(QWidget *parent = nullptr);
@@ -47,10 +50,9 @@ public:
 
     // accesseur vers le perso courant (qui est toujours unique)
     DPerso GetPersoCourant();
+    const DPerso GetPerso(QString id);
     static IPerso* GetPersoInterface();
-
-    // pour les aventures qui n'utilisent pas le json mais du code :surclasser IPerso et développer cette fonction
-    virtual void GenererPersos() = 0;
+    static void AjouterPersoJouable(DPerso perso);
 
 private:
     Ui::Perso *ui;

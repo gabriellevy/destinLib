@@ -4,17 +4,23 @@
 #include "aventure.h"
 #include "aspectratiolabel.h"
 
+DPerso::DPerso()
+{
+    m_Id = "";
+    m_Nom = "";
+    m_Description = "";
+}
+
 IPerso::IPerso(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Perso)
 {
     ui->setupUi(this);
     IPerso::s_PersosInterface = this;
-    s_IndexPersoActif = 0;
 }
 
 IPerso* IPerso::s_PersosInterface = nullptr;
-int IPerso::s_IndexPersoActif = -1;
+QString IPerso::s_IdPersoActif = "";
 
 IPerso* IPerso::GetPersoInterface()
 {
@@ -23,7 +29,7 @@ IPerso* IPerso::GetPersoInterface()
 
 DPerso IPerso::GetPersoCourant()
 {
-    return m_Persos[IPerso::s_IndexPersoActif];
+    return m_Persos[IPerso::s_IdPersoActif];
 }
 
 void IPerso::Rafraichir(QJsonArray persos)
@@ -106,25 +112,32 @@ void IPerso::Rafraichir(QJsonArray persos)
             }
         }
 
-        m_Persos.push_back(donneePerso);
+        AjouterPersoJouable(donneePerso);
 
     }
 
     RafraichirAffichage();
 }
 
+void IPerso::AjouterPersoJouable(DPerso perso)
+{
+    IPerso::GetPersoInterface()->m_Persos.insert(perso.m_Id, perso);
+
+    // par défaut le perso joué est le prmeir ajouté
+    if ( s_IdPersoActif == "" )
+       s_IdPersoActif = perso.m_Id;
+}
+
+const DPerso IPerso::GetPerso(QString id)
+{
+    return m_Persos[id];
+}
+
 
 void IPerso::ChangerPersoCourant(QString changePerso)
 {
-    for ( int i = 0 ; i < m_Persos.size() ; i++)
-    {
-        if ( m_Persos[i].m_Id == changePerso)
-        {
-            s_IndexPersoActif = i;
-            RafraichirAffichage();
-            return;
-        }
-    }
+    s_IdPersoActif = changePerso;
+    RafraichirAffichage();
 }
 
 void IPerso::RafraichirAffichage()

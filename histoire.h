@@ -37,12 +37,14 @@ public:
     explicit Histoire(QWidget *parent = nullptr);
     ~Histoire();
 
-    // pour les aventrues qui n'utilisent pas le json mais du code :surclasser aventure et développer cette fonction
+    // pour les aventrues qui n'utilisent pas le json mais du code :surclasser aventure et développer ces fonction
     virtual void GenererHistoire() = 0;
+    virtual void GenererPersos() = 0;
     Evt* m_CurrentEvt = nullptr;
 
     void Generer(QJsonObject aventure);
     QVector<QString> m_Themes;
+
 
     int DeterminerIndexEffet(QString idEffet);
 
