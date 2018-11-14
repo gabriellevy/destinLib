@@ -19,11 +19,9 @@ Effet::Effet(QString id,
          QString imgPath,
          QWidget *parent) :
     QWidget(parent),
-    Noeud(),
+    Noeud(id, "", text),
     ui(new Ui::Effet)
 {
-    m_Id = id;
-    m_Text = text;
     if ( imgPath != "" )
     {
         // si l'image est un gif je pars du principe que c'est un gif potentiellement animé et ça devient un movie au lieu d'une image

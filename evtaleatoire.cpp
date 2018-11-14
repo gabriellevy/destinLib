@@ -16,10 +16,10 @@ Effet* EvtAleatoire::DeterminerEffetAleatoire()
 {
     // select a random event using them
     QList<Effet*> effetsPossibles;
-    float totalDesProbas = 0;
+    double totalDesProbas = 0;
     for ( int i = 0 ; i < m_Effets.size() ; ++i)
     {
-        float proba = m_Effets[i]->GetProba();
+        double proba = m_Effets[i]->GetProba();
         if ( proba != 0)
         {
             effetsPossibles.append(m_Effets[i]);
@@ -34,8 +34,8 @@ Effet* EvtAleatoire::DeterminerEffetAleatoire()
 
     // sélectionner un de ces événements (en fonction de leur proba) et l'exécuter :
     float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);// entre 0 et 1
-    float probaIndicator = r * totalDesProbas;
-    float totalCourantDesProbas = 0;
+    double probaIndicator = r * totalDesProbas;
+    double totalCourantDesProbas = 0;
     Effet* effetchoisi = nullptr;
 
     for ( int j = 0; j < effetsPossibles.size() ; ++j )

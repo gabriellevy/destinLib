@@ -5,12 +5,14 @@
 
 Noeud::Noeud()
 {
+    m_Film = nullptr;
 }
 
 Noeud::Noeud(QString id,
       QString nom,
       QString text)
 {
+    m_Film = nullptr;
     m_Id = id;
     m_Nom = nom;
     m_Text = text;
@@ -302,6 +304,10 @@ Noeud::~Noeud()
 
 void Noeud::FinExecutionNoeud()
 {
+    bool afficheFilm = (m_Film != nullptr);
+    if ( afficheFilm )
+        m_Film->stop();
+
     // l'exécution de ce noeud est erminé. Lors de la prochaine itération il faudra refaire le test avec les nouvelles valeurs
     m_EtatCondition = ec_NonTeste;
 }
