@@ -102,16 +102,16 @@ public:
     Noeud* AjouterElse(QString text = "");
 
     // function qui sera exécutée lors de l'exécution de ce noeud
-    void AjouterCallback(std::function<void(QString)> callback, QString arg);
+    void AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg);
 
     // function qui déterminera si ce noeud est exécuté (runtime)
-    void AjouterCallbackDeTest(std::function<bool(QString)> callback, QString arg);
+    void AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg);
 
     // callback functions
-    std::function<void(QString)> m_CallbackFunction = nullptr;// PREMIER ESSAI tmp?
-    QString m_CallbackArgument;
-    std::function<bool(QString)> m_CallbackTest = nullptr;// PREMIER ESSAI tmp?
-    QString m_CallbackArgumentTest;
+    std::function<void(QVector<QString>)> m_CallbackFunction = nullptr;// PREMIER ESSAI tmp?
+    QVector<QString> m_CallbackArguments;
+    std::function<bool(QVector<QString>)> m_CallbackTest = nullptr;// PREMIER ESSAI tmp?
+    QVector<QString> m_CallbackTestArguments;
 
     virtual void FinExecutionNoeud();
 
