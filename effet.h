@@ -46,6 +46,7 @@ public:
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
 
     virtual void FinExecutionNoeud();
+    void ChargerImage(QString chemin);
 
 private:
     Ui::Effet *ui;

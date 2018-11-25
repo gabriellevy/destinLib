@@ -22,18 +22,7 @@ Effet::Effet(QString id,
     Noeud(id, "", text),
     ui(new Ui::Effet)
 {
-    if ( imgPath != "" )
-    {
-        // si l'image est un gif je pars du principe que c'est un gif potentiellement animé et ça devient un movie au lieu d'une image
-        if ( imgPath.endsWith(".gif"))
-        {
-            m_Film = new QMovie(imgPath);
-        }
-        else
-        {
-            m_Img.load(imgPath);
-        }
-    }
+    this->ChargerImage(imgPath);
 
 
     ui->setupUi(this);
@@ -41,6 +30,22 @@ Effet::Effet(QString id,
     ui->glisseur->hide();
     ui->labelGlisseur->hide();
     m_Glisseur = nullptr;
+}
+
+void Effet::ChargerImage(QString chemin)
+{
+    if ( chemin != "" )
+    {
+        // si l'image est un gif je pars du principe que c'est un gif potentiellement animé et ça devient un movie au lieu d'une image
+        if ( chemin.endsWith(".gif"))
+        {
+            m_Film = new QMovie(chemin);
+        }
+        else
+        {
+            m_Img.load(chemin);
+        }
+    }
 }
 
 Effet::Effet(QJsonObject effetJson, QWidget *parent) :
