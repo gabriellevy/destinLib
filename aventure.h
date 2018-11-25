@@ -5,6 +5,7 @@
 #include <QFont>
 #include "perso.h"
 #include "histoire.h"
+#include "reglages.h"
 #include <QMediaPlayer>
 
 namespace Ui {
@@ -27,7 +28,7 @@ enum ModeAffichage {
  * Elle est appelée "Aventure" au sens large mais n'est pas une seule aventure, ceci serait plutôt la classe "Histoire"
  * Il faudrait peut-être renommer Aventure en "Univers" plus générique et moins confusant
  */
-class Aventure : public QMainWindow
+class Univers : public QMainWindow
 {
     Q_OBJECT
 
@@ -50,16 +51,16 @@ protected:
     virtual void GenererCaracs() = 0;
 
 public:
-    explicit Aventure(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
-    explicit Aventure(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
-    ~Aventure();
+    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
+    explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
+    ~Univers();
 
     bool LancerEvtEtOuEffetCourant();
 
     const static QFont* BASE_FONT;
     const static QFont* TITRE_FONT;
     static QString CHEMIN;
-    static Aventure* ME;
+    static Univers* ME;
     ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;
 
     Histoire* GetHistoire();
@@ -74,6 +75,7 @@ public:
     EtatPartie ChangerEtatPartie(QString nouvelEtatPartie);
 
     QMediaPlayer* m_Lecteur;
+    Reglages m_Reglages;
 
 public slots:
     // déclenche l'effet de base si aucun n'a été spécifiquement choisi par l'utilisateur (si n'y avait qu'un suivant potentiel)

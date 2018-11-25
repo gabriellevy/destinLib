@@ -14,7 +14,7 @@ Evt::Evt(QJsonObject evtJson, QWidget *parent) :
 
     // logique gameplay :
     if ( !evtJson.contains("id") || !evtJson["id"].isString())
-        QMessageBox::warning(Aventure::ME, "erreur", "Un événement sans id !");
+        QMessageBox::warning(Univers::ME, "erreur", "Un événement sans id !");
 
     if ( evtJson.contains("effets") && evtJson["effets"].isArray())
     {
@@ -28,7 +28,7 @@ Evt::Evt(QJsonObject evtJson, QWidget *parent) :
         }
     }
     else if ( m_Id != "abandon" )
-        QMessageBox::warning(Aventure::ME, "erreur", "Un événement d'id " + m_Id + " sans effets !");
+        QMessageBox::warning(Univers::ME, "erreur", "Un événement d'id " + m_Id + " sans effets !");
 
     // interface
     m_EffetActuel = nullptr;
@@ -51,10 +51,10 @@ Evt::Evt(QString id,
 void Evt::AfficherNoeud()
 {
     ui->titreEvt->setText(m_Nom);
-    if ( Aventure::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
     {
         ui->titreEvt->show();
-        ui->titreEvt->setFont( *Aventure::TITRE_FONT);
+        ui->titreEvt->setFont( *Univers::TITRE_FONT);
     }
     else
         ui->titreEvt->hide();
@@ -63,7 +63,7 @@ void Evt::AfficherNoeud()
     if ( TexteAAfficher() != "")
     {
         ui->textEvt->show();
-        ui->textEvt->setFont( *Aventure::BASE_FONT);
+        ui->textEvt->setFont( *Univers::BASE_FONT);
         ui->textEvt->setWordWrap(true);
     }
     else

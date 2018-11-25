@@ -106,17 +106,17 @@ Effet* Effet::GetElse()
 void Effet::valeurGlisseurAChange()
 {
     SetCarac setCarac(ModifCaracType::SetCarac, m_Glisseur->m_IdCaracAssociee, QString::number(ui->glisseur->value()));
-    Aventure::ME->GetHistoire()->AppliquerCarac(setCarac);
+    Univers::ME->GetHistoire()->AppliquerCarac(setCarac);
 }
 
 void Effet::AfficherNoeud()
 {
     // cette fonction peut être appelée pour rafraichir un affichage donc on cache tout avant de le réafficher éventuellement
     ui->titreEffet->hide();
-    if ( Aventure::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
     {
         ui->titreEffet->show();
-        ui->titreEffet->setFont( *Aventure::TITRE_FONT);
+        ui->titreEffet->setFont( *Univers::TITRE_FONT);
         ui->titreEffet->setText(m_Nom);
     }
 
@@ -124,7 +124,7 @@ void Effet::AfficherNoeud()
     if ( TexteAAfficher() != "")
     {
         ui->texteEffet->show();
-        ui->texteEffet->setFont( *Aventure::BASE_FONT);
+        ui->texteEffet->setFont( *Univers::BASE_FONT);
         ui->texteEffet->setText(TexteAAfficher());
         ui->texteEffet->setWordWrap(true);
     }
@@ -192,7 +192,7 @@ bool Effet::GestionTransition()
     }
 
     if ( !est_ce_que_l_interface_vers_suite_est_affichee &&
-         (Aventure::ME->EstEnModeHistoire()) )
+         (Univers::ME->EstEnModeHistoire()) )
     {
         // si l'effet est dans une boucle while il doit s'afficher encore tant que la condition sera remplie
         /*if ( m_RepeatWhileConditions.size() > 0 &&
@@ -209,7 +209,7 @@ bool Effet::GestionTransition()
         }
         else
         {
-            Aventure::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+            Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
             return false;
         }
     }
@@ -266,7 +266,7 @@ void Effet::AfficherBoutonSuivant()
     ui->boutonContinuer->show();
     ui->boutonContinuer->setCursor(Qt::PointingHandCursor);
 
-    QObject::connect(ui->boutonContinuer, SIGNAL(clicked()), Aventure::ME, SLOT(DeclencherEffetSuivant()));
+    QObject::connect(ui->boutonContinuer, SIGNAL(clicked()), Univers::ME, SLOT(DeclencherEffetSuivant()));
 }
 
 

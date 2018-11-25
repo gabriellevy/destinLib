@@ -46,12 +46,12 @@ void IPerso::Rafraichir(QJsonArray persos)
 
         if ( perso.contains("nom") && perso["nom"].isString())
         {
-            ui->portraitLabel->setFont(*Aventure::TITRE_FONT);
+            ui->portraitLabel->setFont(*Univers::TITRE_FONT);
             donneePerso.m_Nom = perso["nom"].toString();
         }
         else
         {
-            QMessageBox::warning(Aventure::ME, "erreur", "Pas de nom de heros dans ce fichier aventure !");
+            QMessageBox::warning(Univers::ME, "erreur", "Pas de nom de heros dans ce fichier aventure !");
         }
 
         // portrait
@@ -74,12 +74,12 @@ void IPerso::Rafraichir(QJsonArray persos)
                     QString id = caracJsonObject["id"].toString();
                     donneePerso.m_CaracsAAfficher.push_back( id );
 
-                    if (Aventure::ME->GetHistoire()->CetteCaracExisteDeja(id))
+                    if (Univers::ME->GetHistoire()->CetteCaracExisteDeja(id))
                         continue;
                     carac->m_Id = id;
                 }
                 else
-                    QMessageBox::warning(Aventure::ME, "erreur de carac", "Elle ne contient pas d'id !");
+                    QMessageBox::warning(Univers::ME, "erreur de carac", "Elle ne contient pas d'id !");
 
                 if ( caracJsonObject.contains("intitule") && caracJsonObject["intitule"].isString() )
                 {
@@ -108,7 +108,7 @@ void IPerso::Rafraichir(QJsonArray persos)
                 }
 
                 carac->DeterminerModeAffichage(m_TypeAffichage);
-                Aventure::ME->GetHistoire()->m_Caracs.append(carac);
+                Univers::ME->GetHistoire()->m_Caracs.append(carac);
             }
         }
 
@@ -151,7 +151,7 @@ void IPerso::RafraichirAffichage()
     }
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
-    QVector<Carac*> caracs = Aventure::ME->GetHistoire()->m_Caracs;
+    QVector<Carac*> caracs = Univers::ME->GetHistoire()->m_Caracs;
     // caracs
     for ( int i = 0; i < caracs.size() ; ++i)
     {

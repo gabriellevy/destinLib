@@ -69,7 +69,7 @@ QString SetCarac::GetValeur()
     }
     else if ( m_ValeurCarac != "nexistepas*µ£$" )
     {
-        QString valeurStr = Aventure::ME->GetHistoire()->GetCaracValue(m_ValeurCarac);
+        QString valeurStr = Univers::ME->GetHistoire()->GetCaracValue(m_ValeurCarac);
         if ( valeurStr == "" )
             valeurStr = "0";
         int valeur =  valeurStr.toInt();

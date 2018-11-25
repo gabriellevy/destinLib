@@ -152,7 +152,7 @@ bool Carac::AfficherIntitule()
     if ( m_Intitule != "")
     {
         ui->caracBox->show();
-        ui->caracBox->setFont( *Aventure::BASE_FONT);
+        ui->caracBox->setFont( *Univers::BASE_FONT);
         ui->caracBox->setTitle(m_Intitule);
         ui->caracBox->setToolTip(m_Description);
         return true;
@@ -166,7 +166,7 @@ bool Carac::AfficherValeur()
     if ( m_Valeur != "" )
     {
         ui->labelValeur->show();
-        ui->labelValeur->setFont( *Aventure::BASE_FONT);
+        ui->labelValeur->setFont( *Univers::BASE_FONT);
         ui->labelValeur->setText(m_Valeur);
         ui->labelValeur->setToolTip(m_Description);
         return true;
@@ -210,7 +210,7 @@ bool Carac::AfficherImage()
 bool Carac::bAffichable()
 {
     // en mode "détail" on affiche toutes les caracs de toute façon :
-    if ( Aventure::ME->m_ModeAffichage == ModeAffichage::ema_Details )
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
         return true;
 
     // est-ce qu'elle fait partie des caracs affichables par le perso actif ?

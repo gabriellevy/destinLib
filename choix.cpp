@@ -56,7 +56,7 @@ bool Choix::AQuelqueChoseAAfficher()
 
 bool Choix::GestionTransition()
 {
-    Aventure::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+    Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
     return true;
 }
 

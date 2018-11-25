@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +41,8 @@ SOURCES += \
     genestealer.cpp \
     cultegenestealer.cpp \
     reinenorne.cpp \
-    invasionkraken.cpp
+    invasionkraken.cpp \
+    reglages.cpp
 
 HEADERS += \
     aventure.h \
@@ -60,7 +61,8 @@ HEADERS += \
     genestealer.h \
     cultegenestealer.h \
     reinenorne.h \
-    invasionkraken.h
+    invasionkraken.h \
+    reglages.h
 
 FORMS += \
     aventure.ui \

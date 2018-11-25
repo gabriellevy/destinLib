@@ -39,7 +39,7 @@ void Histoire::Generer(QJsonObject aventure)
             }
         }
         else
-            QMessageBox::warning(Aventure::ME, "erreur", "Le champs themes doit être un tableau de thèmes !");
+            QMessageBox::warning(Univers::ME, "erreur", "Le champs themes doit être un tableau de thèmes !");
     }
 
     // récupération des différents types d'événements :
@@ -54,7 +54,7 @@ void Histoire::Generer(QJsonObject aventure)
         }
     }
     else
-        QMessageBox::warning(Aventure::ME, "erreur", "Pas d'événement dans l'aventure !");
+        QMessageBox::warning(Univers::ME, "erreur", "Pas d'événement dans l'aventure !");
 
     if ( aventure.contains("evts_conditionnels") && aventure["evts_conditionnels"].isArray())
     {
@@ -78,7 +78,7 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
     {
         if ( m_Evts.count() < 1)
         {
-            QMessageBox::warning(Aventure::ME, "erreur dans Evt* Histoire::EvtActuel()", "Il n'y a aucun événement dans l'histoire !");
+            QMessageBox::warning(Univers::ME, "erreur dans Evt* Histoire::EvtActuel()", "Il n'y a aucun événement dans l'histoire !");
             return nullptr;
         }
         this->SetCurrentEvtId(m_Evts.at(0)->m_Id);
@@ -86,7 +86,7 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
         return m_Evts.at(0);
     }
 
-    if ( forceHistoireMode || Aventure::ME->GetTypeEvtActuel() == TE_Base )
+    if ( forceHistoireMode || Univers::ME->GetTypeEvtActuel() == TE_Base )
     {
         // puis recherche de l'id actuel parmi tous les tableaux d'événements
         for ( int i = 0; i < m_Evts.size(); ++i)
@@ -95,7 +95,7 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
                 return m_Evts[i];
         }
     }
-    else if ( Aventure::ME->GetTypeEvtActuel() == TE_Conditionnel)
+    else if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
     {
         idATrouver = m_CurrentConditionnelEvtId;
 
@@ -125,7 +125,7 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
 
 void Histoire::SetCurrentEvtId(QString id)
 {
-    if ( Aventure::ME->GetTypeEvtActuel() == TE_Conditionnel)
+    if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
     {
         m_CurrentConditionnelEvtId = id;
     }
@@ -167,7 +167,7 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
 {
     if ( !forceHistoireMode )
     {
-        if ( Aventure::ME->GetTypeEvtActuel() == TE_Conditionnel )
+        if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel )
         {
             if ( m_EffetConditionnelIndex == -1 || m_EffetConditionnelIndex >= EvtActuel()->m_Effets.size() )
                 return nullptr;
@@ -228,7 +228,7 @@ bool Histoire::AppliquerGoTo(Noeud* noeud)
     if ( noeud->m_GoToEvtId != "" )
     {
         QString msg = "Interdit de faire des go_to_evt dans les événements aléatoires ou conditionnels ! m_GoToEvtId : " + noeud->m_GoToEvtId;
-        Q_ASSERT_X( Aventure::ME->GetTypeEvtActuel() != TE_Conditionnel,
+        Q_ASSERT_X( Univers::ME->GetTypeEvtActuel() != TE_Conditionnel,
                     "go_to_evt", msg.toStdString().c_str());
 
         // changement d'événement :
@@ -354,7 +354,7 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
     bool effet_suivant_trouve = false;
 
     // il n'y a pas d'effet suivant si on n'est pas en état de partie "Histoire"
-    if ( Aventure::ME->GetEtatPartie() != EP_Deroulement )
+    if ( Univers::ME->GetEtatPartie() != EP_Deroulement )
         return nullptr;
 
 
@@ -431,8 +431,8 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
             // il n'y a pas d'effet suivant => evt suivant
 
             // si on était en mode aléatoire événement suivant signifie simplement retour en mode normal
-            if ( Aventure::ME->GetTypeEvtActuel() == TE_Aleatoire ||
-                Aventure::ME->GetTypeEvtActuel() == TE_Conditionnel
+            if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire ||
+                Univers::ME->GetTypeEvtActuel() == TE_Conditionnel
                  )
             {
                 noeudActuel = EffetActuel();
@@ -491,7 +491,7 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
 
 int& Histoire::GetIndexEffetConcerne()
 {
-    if ( Aventure::ME->GetTypeEvtActuel() == TE_Conditionnel)
+    if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
         return m_EffetConditionnelIndex;
    return  m_EffetIndex;
 }

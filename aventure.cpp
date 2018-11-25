@@ -4,12 +4,12 @@
 #include <QMessageBox>
 #include <QDebug>
 
-const QFont* Aventure::BASE_FONT = new QFont("Verdana", 10);
-const QFont* Aventure::TITRE_FONT = new QFont("Verdana", 20);
-QString Aventure::CHEMIN = "";
-Aventure* Aventure::ME;
+const QFont* Univers::BASE_FONT = new QFont("Verdana", 10);
+const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
+QString Univers::CHEMIN = "";
+Univers* Univers::ME;
 
-Aventure::Aventure(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(parent),
+Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(parent),
     ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
@@ -26,7 +26,7 @@ Aventure::Aventure(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(par
     //LancerAventure();
 }
 
-Aventure::Aventure(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :
+Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
 {
@@ -41,20 +41,20 @@ Aventure::Aventure(QString cheminAventure, ModeAffichage modeAffichage, QString 
     }
 }
 
-void Aventure::InstallerInterface()
+void Univers::InstallerInterface()
 {
     ui->setupUi(this);
 
-    Aventure::ME = this;
+    Univers::ME = this;
 
     m_EtatPartie = EP_Chargement;
     m_Duree = 0.0f;
 }
 
-bool Aventure::ExtraireAventure(QString cheminAventure)
+bool Univers::ExtraireAventure(QString cheminAventure)
 {
     QFile fichier(cheminAventure);
-    Aventure::CHEMIN = cheminAventure.left(cheminAventure.lastIndexOf('/') +1);
+    Univers::CHEMIN = cheminAventure.left(cheminAventure.lastIndexOf('/') +1);
 
     if ( !fichier.open(QIODevice::ReadOnly))
     {
@@ -69,7 +69,7 @@ bool Aventure::ExtraireAventure(QString cheminAventure)
     return true;
 }
 
-void Aventure::LancerAventure(QString premierEvt, QString premierEffet)
+void Univers::LancerAventure(QString premierEvt, QString premierEffet)
 {
     if ( m_AvJson.contains("titre") && m_AvJson["titre"].isString() )
         this->setWindowTitle(m_AvJson["titre"].toString());
@@ -94,17 +94,17 @@ void Aventure::LancerAventure(QString premierEvt, QString premierEffet)
     LancerEvtEtOuEffetCourant();
 }
 
-bool Aventure::EstEnModeHistoire()
+bool Univers::EstEnModeHistoire()
 {
-    return (Aventure::ME->GetEtatPartie() == EP_Deroulement);
+    return (Univers::ME->GetEtatPartie() == EP_Deroulement);
 }
 
-void Aventure::SetEtatPartie(EtatPartie etat)
+void Univers::SetEtatPartie(EtatPartie etat)
 {
     m_EtatPartie = etat;
 }
 
-TypeEvt Aventure::GetTypeEvtActuel()
+TypeEvt Univers::GetTypeEvtActuel()
 {
     if ( m_Histoire != nullptr && m_Histoire->m_CurrentEvt != nullptr)
         return m_Histoire->m_CurrentEvt->m_TypeEvenement;
@@ -115,17 +115,17 @@ TypeEvt Aventure::GetTypeEvtActuel()
     return TE_Base;
 }
 
-EtatPartie Aventure::GetEtatPartie()
+EtatPartie Univers::GetEtatPartie()
 {
     return m_EtatPartie;
 }
 
-void Aventure::AjouterDuree(float duree)
+void Univers::AjouterDuree(float duree)
 {
     m_Duree += duree;
 }
 
-EtatPartie Aventure::ChangerEtatPartie(QString nouvelEtatPartie)
+EtatPartie Univers::ChangerEtatPartie(QString nouvelEtatPartie)
 {
     if (nouvelEtatPartie == "fin_de_partie" )
         m_EtatPartie = EP_FinPartie;
@@ -138,17 +138,17 @@ EtatPartie Aventure::ChangerEtatPartie(QString nouvelEtatPartie)
     return m_EtatPartie;
 }
 
-Histoire* Aventure::GetHistoire()
+Histoire* Univers::GetHistoire()
 {
     return m_Histoire;
 }
 
-IPerso* Aventure::GetPersoInterface()
+IPerso* Univers::GetPersoInterface()
 {
     return m_Perso;
 }
 
-bool Aventure::LancerEvtEtOuEffetCourant()
+bool Univers::LancerEvtEtOuEffetCourant()
 {
     Evt* evt_actuel = m_Histoire->EvtActuel();
     Effet* effet_actuel = m_Histoire->EffetActuel();
@@ -162,7 +162,7 @@ bool Aventure::LancerEvtEtOuEffetCourant()
     return true;
 }
 
-void Aventure::DeclencherEffetSuivant()
+void Univers::DeclencherEffetSuivant()
 {
     QObject* declencheur = sender();
     if (declencheur)
@@ -173,7 +173,7 @@ void Aventure::DeclencherEffetSuivant()
 
 
 
-Aventure::~Aventure()
+Univers::~Univers()
 {
     delete ui;
 }

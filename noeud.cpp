@@ -259,7 +259,7 @@ Noeud::~Noeud()
         else
         {
             // est forcément une variable à remplacer
-            texteFinal += Aventure::ME->GetHistoire()->GetCaracValue(list.at(i));
+            texteFinal += Univers::ME->GetHistoire()->GetCaracValue(list.at(i));
         }
      }
 
@@ -277,7 +277,7 @@ Noeud::~Noeud()
  {
      // commenté à cause des noeuds else (surement entre autres)
      //Q_ASSERT_X(false, "Noeud::GestionTransition", "Je ne crois pas que la gestion de transition devrait se faire dans Noeud si ?");
-    Aventure::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+    Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
     return true;
  }
 
@@ -288,18 +288,19 @@ Noeud::~Noeud()
 
      if ( m_Son != "" )
      {
-        Aventure::ME->m_Lecteur->stop();
-        Aventure::ME->m_Lecteur->setMedia(QUrl(m_Son));
-        Aventure::ME->m_Lecteur->setVolume(50);
-        Aventure::ME->m_Lecteur->play();
+        Univers::ME->m_Lecteur->stop();
+        Univers::ME->m_Lecteur->setMedia(QUrl(m_Son));
+        Univers::ME->m_Lecteur->setVolume(50);
+        if ( Univers::ME->m_Reglages.m_SonOn )
+            Univers::ME->m_Lecteur->play();
      }
 
      this->ExecuterActionsNoeud();
 
      bool transition_auto = this->GestionTransition( );
 
-     if (!transition_auto || Aventure::ME->GetEtatPartie() == EP_FinPartie)
-         Aventure::ME->GetHistoire()->RafraichirAffichageEvtEtOuEffet( nullptr, nullptr );
+     if (!transition_auto || Univers::ME->GetEtatPartie() == EP_FinPartie)
+         Univers::ME->GetHistoire()->RafraichirAffichageEvtEtOuEffet( nullptr, nullptr );
 }
 
 void Noeud::FinExecutionNoeud()
@@ -318,10 +319,10 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
     // pour le noeud courant
     AjouterDuree( m_Duree );
     // pour l'aventure complète
-    Aventure::ME->AjouterDuree(m_Duree);
+    Univers::ME->AjouterDuree(m_Duree);
     // si on est en mode aléatoire, le temps s'écoule aussi pour le noeud histoire qui a fait appel à l'aléatoire
-    if ( Aventure::ME->GetTypeEvtActuel() == TE_Aleatoire)
-        Aventure::ME->GetHistoire()->AjouterDureeAEffetHistoireCourant(m_Duree);
+    if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire)
+        Univers::ME->GetHistoire()->AjouterDureeAEffetHistoireCourant(m_Duree);
 
     // maj du perso :
     if ( m_ChangePerso != "")
@@ -332,23 +333,23 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
     if ( m_CallbackFunction!= nullptr)
     {
         m_CallbackFunction(m_CallbackArgument);
-        Aventure::ME->GetPersoInterface()->RafraichirAffichage();
+        Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }
 
     // maj des caracs
     if ( m_SetCaracs.size()>0)
     {
-        IPerso* perso = Aventure::ME->GetPersoInterface();
+        IPerso* perso = Univers::ME->GetPersoInterface();
         for ( int i = 0 ; i < m_SetCaracs.size() ; ++i)
         {
-            Aventure::ME->GetHistoire()->AppliquerCarac(m_SetCaracs[i] );
+            Univers::ME->GetHistoire()->AppliquerCarac(m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }
 
     // mise à jour de l'état de la partie :
     if ( m_NouvelEtatPartie != "" )
-        Aventure::ME->ChangerEtatPartie(m_NouvelEtatPartie);
+        Univers::ME->ChangerEtatPartie(m_NouvelEtatPartie);
 
     /*if (this->AQuelqueChoseAAfficher() && afficherNoeud)
     {
