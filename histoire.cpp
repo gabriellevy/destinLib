@@ -212,7 +212,7 @@ int Histoire::DeterminerIndexEffet(QString idEffet)
     for ( int i = 0; i < evtActuel->m_Effets.size(); ++i)
     {
         if ( evtActuel->m_Effets[i] != nullptr &&
-             typeid(*(evtActuel->m_Effets[i])) == typeid(Effet) &&
+             //typeid(*(evtActuel->m_Effets[i])) == typeid(Effet) &&
              evtActuel->m_Effets[i]->m_Id == idEffet)
         {
             return i;
