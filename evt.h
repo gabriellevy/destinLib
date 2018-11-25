@@ -45,6 +45,8 @@ public:
     Effet* AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id, QString cheminImg = "", QString id = "" );
     Effet* AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id = "");
 
+    Effet* TrouverEffet(QString id);
+
 private:
     Ui::Evt *ui;
 };

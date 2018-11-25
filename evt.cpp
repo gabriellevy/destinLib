@@ -115,6 +115,17 @@ Evt::~Evt()
     delete ui;
 }
 
+
+Effet* Evt::TrouverEffet(QString id)
+{
+    foreach(Effet* effet, m_Effets)
+    {
+        if ( effet->m_Id == id)
+            return effet;
+    }
+    return nullptr;
+}
+
 Effet* Evt::AjouterEffetVide()
 {
     Effet* effet = new Effet();
