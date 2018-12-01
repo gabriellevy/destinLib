@@ -19,7 +19,7 @@ enum MODE_AFFICHAGE {
 };
 
 /**
- * @brief DPerso signifie "data perso". C'est un contenant des données principales d'un personnage indépendandemment du système d'interface qui est l'essentiel de ce fichier
+ * @brief DCarac signifie "data carac". C'est un contenant des données principales d'une carac indépendandemment du système d'interface qui est l'essentiel de ce fichier
  */
 class DCarac
 {
@@ -41,7 +41,7 @@ protected:
 
 public:
     explicit Carac(QWidget *parent = nullptr);
-    Carac(QString Id, QString Intitule, QString Valeur, QString Img, QString Description, MODE_AFFICHAGE ModeAffichage, QWidget *parent = 0);
+    Carac(QString Id, QString Intitule, QString Valeur, QString Img, QString Description, MODE_AFFICHAGE ModeAffichage, QWidget *parent = nullptr);
     ~Carac();
 
     MODE_AFFICHAGE m_ModeAffichage; // de quelle manière est affichée cette carac dans l'interface personnage
@@ -62,7 +62,7 @@ private:
 class Jauge : public Carac
 {
 public:
-    Jauge(QString Id, QString Intitule, double m_Minimum, double m_Maximum, double m_ValeurDepart, QString Img = "", QString Description = "", QWidget *parent = 0);
+    Jauge(QString Id, QString Intitule, double m_Minimum, double m_Maximum, double m_ValeurDepart, QString Img = "", QString Description = "", QWidget *parent = nullptr);
 
     Glisseur m_ValeursJauge;
 

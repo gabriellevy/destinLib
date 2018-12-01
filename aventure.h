@@ -35,8 +35,8 @@ class Univers : public QMainWindow
 protected:
     QJsonObject m_AvJson;
     EtatPartie m_EtatPartie;
-    bool ExtraireAventure(QString cheminAventure);
-    void LancerAventure(QString premierEvt = "", QString premierEffet = "");
+    //bool ExtraireAventure(QString cheminAventure);
+    //void LancerAventure(QString premierEvt = "", QString premierEffet = "");
 
     // interfaces/widgets
     Histoire* m_Histoire;
@@ -52,7 +52,7 @@ protected:
 
 public:
     explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
-    explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
+    //explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
     ~Univers();
 
     bool LancerEvtEtOuEffetCourant();

@@ -22,7 +22,7 @@ protected:
 
 
 public:
-    explicit Noeud(QJsonObject evtJson/*, QWidget *parent = 0*/);
+   // explicit Noeud(QJsonObject evtJson/*, QWidget *parent = 0*/);
     explicit Noeud(QString id, QString nom, QString text);
     explicit Noeud();
     virtual ~Noeud();

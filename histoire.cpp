@@ -25,7 +25,7 @@ Histoire::~Histoire()
 }
 
 
-void Histoire::Generer(QJsonObject aventure)
+/*void Histoire::Generer(QJsonObject aventure)
 {
     if ( aventure.contains("themes") )
     {
@@ -67,7 +67,7 @@ void Histoire::Generer(QJsonObject aventure)
         }
     }
 
-}
+}*/
 
 Evt* Histoire::EvtActuel(bool forceHistoireMode)
 {

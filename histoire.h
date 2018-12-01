@@ -10,7 +10,7 @@ class Histoire;
 }
 
 /**
- * @brief Classe qui gère le déroulement et l'affichae de toute l'histoire du jeu
+ * @brief Classe qui gère le déroulement et l'affichage de toute l'histoire du jeu
  */
 class Histoire : public QWidget
 {
@@ -42,7 +42,7 @@ public:
     virtual void GenererPersos() = 0;
     Evt* m_CurrentEvt = nullptr;
 
-    void Generer(QJsonObject aventure);
+    //void Generer(QJsonObject aventure);
     QVector<QString> m_Themes;
 
 

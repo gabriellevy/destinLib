@@ -3,9 +3,9 @@
 #include "aventure.h"
 #include <QDebug>
 
-Evt::Evt(QJsonObject evtJson, QWidget *parent) :
+/*Evt::Evt(QJsonObject evtJson, QWidget *parent) :
     QWidget(parent),
-    Noeud(evtJson/*, parent*/),
+    Noeud(evtJson),
     ui(new Ui::Evt)
 {
     ui->setupUi(this);
@@ -32,7 +32,7 @@ Evt::Evt(QJsonObject evtJson, QWidget *parent) :
 
     // interface
     m_EffetActuel = nullptr;
-}
+}*/
 
 Evt::Evt(QString id,
          QString nom,
@@ -132,6 +132,8 @@ Effet* Evt::AjouterEffet(Effet* effet)
     if ( this->m_MsChrono != -1 )
         effet->ChangerChrono(this->m_MsChrono);
     m_Effets.push_back(effet);
+
+    return effet;
 }
 
 Effet* Evt::AjouterEffetVide()

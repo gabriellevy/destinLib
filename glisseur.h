@@ -12,7 +12,7 @@ public:
     double m_ValeurDepart;
     QString m_IdCaracAssociee;
 
-    Glisseur(QJsonObject json);
+    //Glisseur(QJsonObject json);
     Glisseur(QString valeur_min = "0", QString valeur_max = "1", QString valeur_depart = "0", QString carac_id = "");
 };
 

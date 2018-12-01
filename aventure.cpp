@@ -26,7 +26,7 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(paren
     //LancerAventure();
 }
 
-Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :
+/*Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
 {
@@ -39,7 +39,7 @@ Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString fi
     {
         LancerAventure(firstEvt, premierEffet);
     }
-}
+}*/
 
 void Univers::InstallerInterface()
 {
@@ -51,7 +51,7 @@ void Univers::InstallerInterface()
     m_Duree = 0.0f;
 }
 
-bool Univers::ExtraireAventure(QString cheminAventure)
+/*bool Univers::ExtraireAventure(QString cheminAventure)
 {
     QFile fichier(cheminAventure);
     Univers::CHEMIN = cheminAventure.left(cheminAventure.lastIndexOf('/') +1);
@@ -67,9 +67,9 @@ bool Univers::ExtraireAventure(QString cheminAventure)
     m_AvJson = QJsonDocument::fromJson(avData).object();
 
     return true;
-}
+}*/
 
-void Univers::LancerAventure(QString premierEvt, QString premierEffet)
+/*void Univers::LancerAventure(QString premierEvt, QString premierEffet)
 {
     if ( m_AvJson.contains("titre") && m_AvJson["titre"].isString() )
         this->setWindowTitle(m_AvJson["titre"].toString());
@@ -92,7 +92,7 @@ void Univers::LancerAventure(QString premierEvt, QString premierEffet)
 
     m_EtatPartie = EP_Deroulement;
     LancerEvtEtOuEffetCourant();
-}
+}*/
 
 bool Univers::EstEnModeHistoire()
 {
@@ -152,7 +152,7 @@ bool Univers::LancerEvtEtOuEffetCourant()
 {
     Evt* evt_actuel = m_Histoire->EvtActuel();
     Effet* effet_actuel = m_Histoire->EffetActuel();
-    if ( evt_actuel == 0 || evt_actuel == nullptr || effet_actuel == 0 || effet_actuel == nullptr)
+    if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == 0 || effet_actuel == nullptr)
         return false;
 
     evt_actuel->LancerNoeud();

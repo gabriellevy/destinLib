@@ -27,7 +27,7 @@ public:
              QString text = "",
              QString imgPath = "",
              QWidget *parent = nullptr);
-    explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);
+    /*explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);*/
     ~Effet();
 
     QList<Choix*> m_Choix;

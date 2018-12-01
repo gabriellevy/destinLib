@@ -48,9 +48,9 @@ void Effet::ChargerImage(QString chemin)
     }
 }
 
-Effet::Effet(QJsonObject effetJson, QWidget *parent) :
+/*Effet::Effet(QJsonObject effetJson, QWidget *parent) :
     QWidget(parent),
-    Noeud(effetJson/*, parent*/),
+    Noeud(effetJson),
     ui(new Ui::Effet)
 {
     ui->setupUi(this);
@@ -58,17 +58,6 @@ Effet::Effet(QJsonObject effetJson, QWidget *parent) :
     ui->glisseur->hide();
     ui->labelGlisseur->hide();
     m_Glisseur = nullptr;
-
-    /*if ( effetJson.contains("choix") && effetJson["choix"].isArray())
-    {
-        QJsonArray jsonArrayChoix = effetJson["choix"].toArray();
-
-        for ( int i = 0; i < jsonArrayChoix.size(); ++i)
-        {
-            Choix* choix = new Choix(jsonArrayChoix[i].toObject());
-            m_Choix.append(choix);
-        }
-    }*/
 
     // A FAIRE transférer ça dans afficher noeud ?
     if ( effetJson.contains("glisseur") && effetJson["glisseur"].isObject())
@@ -93,7 +82,7 @@ Effet::Effet(QJsonObject effetJson, QWidget *parent) :
         m_ElseNoeud = new Effet(effetJson["else"].toObject());
         m_ElseNoeud->ui = ui;
     }
-}
+}*/
 
 Effet* Effet::AjouterElse(QString text)
 {

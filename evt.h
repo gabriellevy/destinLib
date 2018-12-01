@@ -20,7 +20,7 @@ class Evt : public QWidget, public Noeud
     Effet* m_EffetActuel;
 
 public:
-    explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);
+    //explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);
     explicit Evt(QString id,
                       QString nom,
                       QWidget *parent = nullptr);

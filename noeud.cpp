@@ -18,9 +18,7 @@ Noeud::Noeud(QString id,
     m_Text = text;
 }
 
-Noeud::Noeud(QJsonObject objJson/*, QWidget *parent*/) /*:
-    QWidget(parent),
-    ui(new Ui::Noeud)*/
+/*Noeud::Noeud(QJsonObject objJson)
 {
     //ui->setupUi(this);
     m_Film = nullptr;
@@ -131,16 +129,12 @@ Noeud::Noeud(QJsonObject objJson/*, QWidget *parent*/) /*:
         }
     }
 
-    /**
-      * noeuds de condition :
-      */
+    //noeuds de condition :
     Condition::RemplirListeCondition( objJson, m_Conditions, false);
 
     Condition::RemplirListeCondition( objJson, m_RepeatWhileConditions, true);
 
-    /**
-      * noeuds de proba (= noeud de condition particuliers)
-      */
+    // noeuds de proba (= noeud de condition particuliers)
     if ( objJson.contains("if_proba") && objJson["if_proba"].isString())
     {
         Condition* conditionProba = new Condition( objJson["if_proba"].toString().toDouble() );
@@ -165,7 +159,7 @@ Noeud::Noeud(QJsonObject objJson/*, QWidget *parent*/) /*:
 
         m_Conditions.append(conditionProba);
     }
-}
+}*/
 
 void Noeud::AjouterRetireurACarac(QString id, QString valeur)
 {
