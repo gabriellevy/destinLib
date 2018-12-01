@@ -115,8 +115,18 @@ public:
 
     virtual void FinExecutionNoeud();
 
+    void ChangerChrono( int ms );
+
 private:
     //Ui::Noeud *ui;
+
+protected:
+
+    // nombre de millisecondes d'attente sur ce noeud avant qu'on passe automatiquement au suivant
+    // si égal à -1, pas de chrono : on affiche un bouton "continuer" à la place
+    // dans le cas d'un chrono sur un evt, tous les effets ont ce même chrono appliqué à eux
+    // dans un effet contenant un choix, le chrono ne cache pas les boutons de choix mais, si il atteint son terme avant que le joueur n'ai choisi, un choix aléatoire est choisi.
+    int m_MsChrono = -1;
 };
 
 #endif // NOEUD_H

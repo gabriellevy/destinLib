@@ -309,7 +309,7 @@ void Noeud::FinExecutionNoeud()
     if ( afficheFilm )
         m_Film->stop();
 
-    // l'exécution de ce noeud est erminé. Lors de la prochaine itération il faudra refaire le test avec les nouvelles valeurs
+    // l'exécution de ce noeud est terminée. Lors de la prochaine itération il faudra refaire le test avec les nouvelles valeurs
     m_EtatCondition = ec_NonTeste;
 }
 
@@ -389,6 +389,12 @@ bool Noeud::TesterConditions()
     else m_EtatCondition = ec_False;
 
     return res;
+}
+
+
+void Noeud::ChangerChrono( int ms )
+{
+    m_MsChrono = ms;
 }
 
 

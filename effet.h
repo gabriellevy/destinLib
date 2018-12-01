@@ -55,6 +55,7 @@ private:
 public slots:
     //void ExecuterNoeudSlot(bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true);
     void valeurGlisseurAChange();
+    void FinChrono();
 };
 
 #endif // EFFET_H

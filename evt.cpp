@@ -126,10 +126,18 @@ Effet* Evt::TrouverEffet(QString id)
     return nullptr;
 }
 
+Effet* Evt::AjouterEffet(Effet* effet)
+{
+    // si l'événement a un chrono il le transmet à tous ses effets (pour annuler celà le chrono sur les effets doit être changé individuellement vers -1)
+    if ( this->m_MsChrono != -1 )
+        effet->ChangerChrono(this->m_MsChrono);
+    m_Effets.push_back(effet);
+}
+
 Effet* Evt::AjouterEffetVide()
 {
     Effet* effet = new Effet();
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -139,7 +147,7 @@ Effet* Evt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QS
                             text,
                              "");
     effet->AjouterRetireurACarac(caracId, valeurRetire);
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -149,7 +157,7 @@ Effet* Evt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeu
                             text,
                              "");
     effet->AjouterChangeurDeCarac(caracId, nouvelleValeur);
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -157,7 +165,7 @@ Effet* Evt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, Q
 {
     Effet* effet = new Effet(id);
     effet->AjouterAjouteurACarac(caracId, valeurAjoutee);
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -166,7 +174,7 @@ Effet* Evt::AjouterEffetNarration(QString text, QString cheminImg, QString id)
     Effet* effet = new Effet(id,
                             text,
                              cheminImg);
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -178,7 +186,7 @@ Effet* Evt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeu
 
     effet->AjouterGlisseur(valeur_min, valeur_max, valeur_depart, carac_id);
 
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -188,7 +196,7 @@ Effet* Evt::AjouterEffetChangementPerso(QString persoId, QString text, QString c
                             text,
                              cheminImg);
     effet->m_ChangePerso = persoId;
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }
 
@@ -196,6 +204,6 @@ Effet* Evt::AjouterEffetTest(QString caracId, Comparateur comparateur, QString v
 {
     Effet* effet = new Effet(id, "", "");
     effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
-    m_Effets.push_back(effet);
+    AjouterEffet(effet);
     return effet;
 }

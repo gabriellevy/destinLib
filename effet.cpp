@@ -1,6 +1,7 @@
 #include "effet.h"
 #include "ui_effet.h"
 #include "aventure.h"
+#include <QTimer>
 #include <QDebug>
 
 Effet::Effet(QWidget *parent) :
@@ -23,7 +24,6 @@ Effet::Effet(QString id,
     ui(new Ui::Effet)
 {
     this->ChargerImage(imgPath);
-
 
     ui->setupUi(this);
     ui->boutonContinuer->hide();
@@ -163,6 +163,16 @@ void Effet::AfficherNoeud()
         }
     }
 
+    // déclenchement du chrono pour cet effet si il en a un :
+    if ( m_MsChrono != -1 )
+    {
+        QTimer::singleShot(m_MsChrono, this, SLOT(FinChrono()));
+    }
+}
+
+void Effet::FinChrono()
+{
+    Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
 }
 
 void Effet::FinExecutionNoeud()

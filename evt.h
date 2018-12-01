@@ -26,7 +26,6 @@ public:
                       QWidget *parent = nullptr);
     ~Evt();
 
-    QVector<Effet*> m_Effets;
     TypeEvt m_TypeEvenement;
     void Clean();
 
@@ -36,6 +35,8 @@ public:
     void RafraichirAffichageEffet(Effet* effet);
     void AfficherNoeud();
 
+    // fonction intermédiaire d'ajout d'effet qui doit être appelée par toutes les fonctions d'ajout d'effets plus spécifiques ci après
+    Effet* AjouterEffet(Effet* effet);
     Effet* AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text = "", QString id = "");
     Effet* AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text = "", QString id = "");
     Effet* AjouterEffetNarration(QString text, QString cheminImg = "", QString id = "");
@@ -45,6 +46,8 @@ public:
     Effet* AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id, QString cheminImg = "", QString id = "" );
     Effet* AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id = "");
 
+
+    QVector<Effet*> m_Effets;
     Effet* TrouverEffet(QString id);
 
 private:
