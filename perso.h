@@ -15,6 +15,9 @@ class Perso;
 
 class SetCarac;
 
+/**
+ * @brief DPerso signifie "data perso". C'est un contenant des données principales d'un personnage indépendandemment du système d'interface qui est l'essentiel de ce fichier
+ */
 class DPerso
 {
 public:

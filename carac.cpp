@@ -3,27 +3,28 @@
 #include "aventure.h"
 #include <QDebug>
 
+DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description)
+{
+    m_Valeur = Valeur;
+    m_Id = Id;
+    m_Intitule = Intitule;
+    m_Description = Description;
+}
+
 Carac::Carac(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Carac)
 {
     ui->setupUi(this);
 
-    m_Valeur = "";
-    m_Id = "";
-    m_Intitule = "";
     //m_Img = NULL;
-    m_Description = "";
     m_ModeAffichage = MODE_AFFICHAGE::Ma_Cache;
 }
 
 Carac::Carac(QString Id, QString Intitule, QString Valeur, QString CheminImg, QString Description, MODE_AFFICHAGE ModeAffichage, QWidget *parent) :
     QWidget(parent),
-    m_Id(Id),
-    m_Intitule(Intitule),
-    m_Valeur(Valeur),
-    m_Description(Description),
     m_ModeAffichage(ModeAffichage),
+    m_DataCarac(Id, Intitule, Valeur, Description),
     ui(new Ui::Carac)
 {
     ui->setupUi(this);
@@ -37,7 +38,7 @@ Jauge::Jauge(QString Id, QString Intitule, double Minimum, double Maximum, doubl
     m_ValeursJauge.m_Minimum = Minimum;
     m_ValeursJauge.m_Maximum = Maximum;
     m_ValeursJauge.m_ValeurDepart = ValeurDepart;
-    m_Valeur = QString::number(static_cast<int>(ValeurDepart));
+    m_DataCarac.m_Valeur = QString::number(static_cast<int>(ValeurDepart));
 }
 
 void Carac::DeterminerModeAffichage(QString modeAffichage)
@@ -75,8 +76,8 @@ void Jauge::SetValeursJauge(double Minimum, double Maximum)
 {
     m_ValeursJauge.m_Minimum = Minimum;
     m_ValeursJauge.m_Maximum = Maximum;
-    m_ValeursJauge.m_ValeurDepart = m_Valeur.toDouble();
-    m_ValeursJauge.m_IdCaracAssociee = m_Id;
+    m_ValeursJauge.m_ValeurDepart = m_DataCarac.m_Valeur.toDouble();
+    m_ValeursJauge.m_IdCaracAssociee = m_DataCarac.m_Id;
 }
 
 void Carac::Afficher()
@@ -91,14 +92,14 @@ void Carac::Afficher()
         case MODE_AFFICHAGE::ma_Binaire:{
             if ( !AfficherIntitule())
             {
-                qDebug()<<"La carac de cet id est censée avoir un affichage binaire mais n'a pas d'intitulé : " <<m_Id.toStdString().c_str();
+                qDebug()<<"La carac de cet id est censée avoir un affichage binaire mais n'a pas d'intitulé : " <<m_DataCarac.m_Id.toStdString().c_str();
             }
 
         }break;
         case MODE_AFFICHAGE::ma_Img:{
             if ( !AfficherImage() )
             {
-                 qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image : " <<m_Id.toStdString().c_str();
+                 qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image : " <<m_DataCarac.m_Id.toStdString().c_str();
             }
             AfficherIntitule();
 
@@ -111,7 +112,7 @@ void Carac::Afficher()
             ui->jaugeCarac->setRange(
                         static_cast<int>((static_cast<Jauge*>(this))->m_ValeursJauge.m_Minimum),
                         static_cast<int>((static_cast<Jauge*>(this))->m_ValeursJauge.m_Maximum));
-            ui->jaugeCarac->setValue(m_Valeur.toInt());
+            ui->jaugeCarac->setValue(m_DataCarac.m_Valeur.toInt());
             if ( !afficheImage)
             {
                 ui->jaugeCarac->update();
@@ -123,7 +124,7 @@ void Carac::Afficher()
         {
             AfficherValeur();
         } else {
-            qDebug()<<"La carac de cet id est censée avoir un affichage nombre mais n'a pas d'intitulé ce qui est nécessaire pour l'identifier : " <<m_Id.toStdString().c_str();
+            qDebug()<<"La carac de cet id est censée avoir un affichage nombre mais n'a pas d'intitulé ce qui est nécessaire pour l'identifier : " <<m_DataCarac.m_Id.toStdString().c_str();
         }
         AfficherImage();
         }break;
@@ -149,12 +150,12 @@ void Carac::Afficher()
 
 bool Carac::AfficherIntitule()
 {
-    if ( m_Intitule != "")
+    if ( m_DataCarac.m_Intitule != "")
     {
         ui->caracBox->show();
         ui->caracBox->setFont( *Univers::BASE_FONT);
-        ui->caracBox->setTitle(m_Intitule);
-        ui->caracBox->setToolTip(m_Description);
+        ui->caracBox->setTitle(m_DataCarac.m_Intitule);
+        ui->caracBox->setToolTip(m_DataCarac.m_Description);
         return true;
     }
     else
@@ -163,17 +164,17 @@ bool Carac::AfficherIntitule()
 
 bool Carac::AfficherValeur()
 {
-    if ( m_Valeur != "" )
+    if ( m_DataCarac.m_Valeur != "" )
     {
         ui->labelValeur->show();
         ui->labelValeur->setFont( *Univers::BASE_FONT);
-        ui->labelValeur->setText(m_Valeur);
-        ui->labelValeur->setToolTip(m_Description);
+        ui->labelValeur->setText(m_DataCarac.m_Valeur);
+        ui->labelValeur->setToolTip(m_DataCarac.m_Description);
         return true;
     }
     else
     {
-        qDebug() << "Pas de valeur à afficher pour cette carac d'ic :"<<m_Id.toStdString().c_str();
+        qDebug() << "Pas de valeur à afficher pour cette carac d'ic :"<<m_DataCarac.m_Id.toStdString().c_str();
         return false;
     }
 }
@@ -195,7 +196,7 @@ bool Carac::AfficherImage()
             ui->imageCarac->setMinimumSize(AdjustSize);
             ui->imageCarac->setMaximumSize(AdjustSize);
         }
-        ui->imageCarac->setToolTip(m_Description);
+        ui->imageCarac->setToolTip(m_DataCarac.m_Description);
         return true;
     }
     else {
@@ -216,8 +217,8 @@ bool Carac::bAffichable()
     // est-ce qu'elle fait partie des caracs affichables par le perso actif ?
     for ( int i=0; i < IPerso::GetPersoInterface()->GetPersoCourant().m_CaracsAAfficher.size() ; i++)
     {
-        if ( IPerso::GetPersoInterface()->GetPersoCourant().m_CaracsAAfficher[i] == this->m_Id)
-            return (m_Valeur != "" && m_Valeur != "0" && m_ModeAffichage != MODE_AFFICHAGE::Ma_Cache);
+        if ( IPerso::GetPersoInterface()->GetPersoCourant().m_CaracsAAfficher[i] == this->m_DataCarac.m_Id)
+            return (m_DataCarac.m_Valeur != "" && m_DataCarac.m_Valeur != "0" && m_ModeAffichage != MODE_AFFICHAGE::Ma_Cache);
     }
     return false;
 }

@@ -76,19 +76,19 @@ void IPerso::Rafraichir(QJsonArray persos)
 
                     if (Univers::ME->GetHistoire()->CetteCaracExisteDeja(id))
                         continue;
-                    carac->m_Id = id;
+                    carac->m_DataCarac.m_Id = id;
                 }
                 else
                     QMessageBox::warning(Univers::ME, "erreur de carac", "Elle ne contient pas d'id !");
 
                 if ( caracJsonObject.contains("intitule") && caracJsonObject["intitule"].isString() )
                 {
-                    carac->m_Intitule = caracJsonObject["intitule"].toString();
+                    carac->m_DataCarac.m_Intitule = caracJsonObject["intitule"].toString();
                 }
 
                 if ( caracJsonObject.contains("valeur") && caracJsonObject["valeur"].isString() )
                 {
-                    carac->m_Valeur = caracJsonObject["valeur"].toString();
+                    carac->m_DataCarac.m_Valeur = caracJsonObject["valeur"].toString();
                 }
 
                 /*if ( caracJsonObject.contains("img") && caracJsonObject["img"].isString() )
@@ -98,7 +98,7 @@ void IPerso::Rafraichir(QJsonArray persos)
 
                 if ( caracJsonObject.contains("description") && caracJsonObject["description"].isString() )
                 {
-                    carac->m_Description = caracJsonObject["description"].toString();
+                    carac->m_DataCarac.m_Description = caracJsonObject["description"].toString();
                 }
 
                 QString m_TypeAffichage = "";

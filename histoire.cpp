@@ -289,8 +289,8 @@ QString Histoire::GetCaracValue(QString caracId)
 
     for ( int i = 0; i < m_Caracs.size() ; i++)
     {
-        if ( m_Caracs[i]->m_Id == caracId)
-            return m_Caracs[i]->m_Valeur;
+        if ( m_Caracs[i]->m_DataCarac.m_Id == caracId)
+            return m_Caracs[i]->m_DataCarac.m_Valeur;
     }
 
     return val;
@@ -300,7 +300,7 @@ bool Histoire::CetteCaracExisteDeja(QString id)
 {
     for ( int i = 0; i < m_Caracs.size() ; ++i)
     {
-        if ( m_Caracs[i]->m_Id == id)
+        if ( m_Caracs[i]->m_DataCarac.m_Id == id)
             return true;
     }
     return false;
@@ -311,24 +311,24 @@ void Histoire::AppliquerCarac(SetCarac setCarac)
     bool trouve = false;
     for ( int i = 0; i < m_Caracs.size() ; ++i)
     {
-        if ( m_Caracs[i]->m_Id == setCarac.m_CaracId)
+        if ( m_Caracs[i]->m_DataCarac.m_Id == setCarac.m_CaracId)
         {
             switch(setCarac.m_ModifCaracType)
             {
             case ModifCaracType::SetCarac : {
-                m_Caracs[i]->m_Valeur = setCarac.GetValeur();
+                m_Caracs[i]->m_DataCarac.m_Valeur = setCarac.GetValeur();
                 break;
             }
             case ModifCaracType::AddToCarac : {
-                double valeur = m_Caracs[i]->m_Valeur.toDouble();
+                double valeur = m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
                 valeur += setCarac.GetValeur().toDouble();
-                m_Caracs[i]->m_Valeur = QString::number(valeur);
+                m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
                 break;
             }
             case ModifCaracType::RetireDeCarac : {
-                double valeur = m_Caracs[i]->m_Valeur.toDouble();
+                double valeur = m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
                 valeur -= setCarac.GetValeur().toDouble();
-                m_Caracs[i]->m_Valeur = QString::number(valeur);
+                m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
                 break;
             }
             }
@@ -340,8 +340,8 @@ void Histoire::AppliquerCarac(SetCarac setCarac)
     if (!trouve)
     {
         Carac* carac = new Carac;
-        carac->m_Id = setCarac.m_CaracId;
-        carac->m_Valeur = setCarac.GetValeur();
+        carac->m_DataCarac.m_Id = setCarac.m_CaracId;
+        carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
         m_Caracs.append(carac);
     }
 }

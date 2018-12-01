@@ -18,6 +18,20 @@ enum MODE_AFFICHAGE {
     ma_Jauge // sous forme de jauge => possible seulement si on a défini une valeur maximum de cette valeur
 };
 
+/**
+ * @brief DPerso signifie "data perso". C'est un contenant des données principales d'un personnage indépendandemment du système d'interface qui est l'essentiel de ce fichier
+ */
+class DCarac
+{
+public:
+    DCarac(QString Id = "", QString Intitule = "", QString Valeur = "", QString Description = "");
+
+    QString m_Id;
+    QString m_Intitule;
+    QString m_Valeur;
+    QString m_Description;
+};
+
 class Carac : public QWidget
 {
     Q_OBJECT
@@ -26,19 +40,17 @@ protected:
     QPixmap m_Img;
 
 public:
-    explicit Carac(QWidget *parent = 0);
+    explicit Carac(QWidget *parent = nullptr);
     Carac(QString Id, QString Intitule, QString Valeur, QString Img, QString Description, MODE_AFFICHAGE ModeAffichage, QWidget *parent = 0);
     ~Carac();
 
-    QString m_Id;
-    QString m_Intitule;
-    QString m_Valeur;
-    QString m_Description;
     MODE_AFFICHAGE m_ModeAffichage; // de quelle manière est affichée cette carac dans l'interface personnage
 
     void DeterminerModeAffichage(QString modeAffichage);
     void Afficher();
     bool bAffichable();
+
+    DCarac m_DataCarac;
 
 private:
     Ui::Carac *ui;
