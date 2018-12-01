@@ -16,7 +16,7 @@ class Noeud// : public QWidget
 protected:
     QString m_NouvelEtatPartie = "";
     // temp écoulé durant l'exécution de ce noeud. Il s'agit de temps de jeu et ses unités sont à l'appréciation du créateur de l'aventure puisqu'il en détermine toutes les utilisations
-    float m_TempEcoule;
+    double m_TempEcoule;
     QPixmap m_Img;
     QMovie* m_Film;
 
@@ -101,21 +101,21 @@ public:
     Condition* AjouterConditionProba( double proba);
     Noeud* AjouterElse(QString text = "");
 
+    virtual void FinExecutionNoeud();
+
+    void ChangerChrono( int ms );
+
     // function qui sera exécutée lors de l'exécution de ce noeud
     void AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg);
 
     // function qui déterminera si ce noeud est exécuté (runtime)
     void AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg);
 
-    // callback functions
-    std::function<void(QVector<QString>)> m_CallbackFunction = nullptr;// PREMIER ESSAI tmp?
-    QVector<QString> m_CallbackArguments;
-    std::function<bool(QVector<QString>)> m_CallbackTest = nullptr;// PREMIER ESSAI tmp?
-    QVector<QString> m_CallbackTestArguments;
-
-    virtual void FinExecutionNoeud();
-
-    void ChangerChrono( int ms );
+    // fonctions runtime callbacks. Ce sont des fonctions personnalisables qui sont exécutées lors du jeu, pas à sa préparation
+    QVector<std::function<void(QVector<QString>)>> m_CallbackFunctions;
+    QVector<QVector<QString>> m_CallbackArguments;
+    QVector<std::function<bool(QVector<QString>)>> m_CallbackTestFunctions;
+    QVector<QVector<QString>> m_CallbackTestArguments;
 
 private:
     //Ui::Noeud *ui;

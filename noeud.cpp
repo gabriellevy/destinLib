@@ -324,9 +324,10 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
         IPerso::GetPersoInterface()->ChangerPersoCourant(m_ChangePerso);
     }
 
-    if ( m_CallbackFunction!= nullptr)
+    int index = 0;
+    foreach ( std::function<void(QVector<QString>)> f_CallbackFunction, m_CallbackFunctions)
     {
-        m_CallbackFunction(m_CallbackArguments);
+        f_CallbackFunction(m_CallbackArguments[index++]);
         Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }
 
@@ -371,8 +372,13 @@ bool Noeud::TesterConditions()
     }
 
     bool resultatCallback = true;
-    if ( m_CallbackTest != nullptr)
-        resultatCallback = m_CallbackTest(m_CallbackTestArguments );
+
+
+    int index = 0;
+    foreach ( std::function<bool(QVector<QString>)> f_CallbackFunction, m_CallbackTestFunctions)
+    {
+        resultatCallback = resultatCallback && f_CallbackFunction(m_CallbackTestArguments[index++]);
+    }
 
     bool res = ( resultatCallback &&
         Condition::TesterTableauDeConditions(m_Conditions) &&
@@ -394,15 +400,15 @@ void Noeud::ChangerChrono( int ms )
 
 void Noeud::AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg)
 {
-    m_CallbackFunction = callback;
-    m_CallbackArguments = arg;
+    m_CallbackFunctions.push_back( callback );
+    m_CallbackArguments.push_back( arg);
 }
 
 
 void Noeud::AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg)
 {
-    m_CallbackTest = callback;
-    m_CallbackTestArguments = arg;
+    m_CallbackTestFunctions.push_back( callback);
+    m_CallbackTestArguments.push_back( arg);
 }
 
 double Noeud::GetProba()
