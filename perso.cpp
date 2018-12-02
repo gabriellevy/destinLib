@@ -4,11 +4,10 @@
 #include "aventure.h"
 #include "aspectratiolabel.h"
 
-DPerso::DPerso()
+DPerso::DPerso(QString id, QString nom, QString description)
+    :m_Id(id), m_Nom(nom), m_Description(description)
 {
-    m_Id = "";
-    m_Nom = "";
-    m_Description = "";
+
 }
 
 IPerso::IPerso(QWidget *parent) :

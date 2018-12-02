@@ -21,7 +21,7 @@ class SetCarac;
 class DPerso
 {
 public:
-    DPerso();
+    DPerso(QString id = "", QString nom = "", QString description = "");
 
     QString m_Id;
     QString m_Nom;

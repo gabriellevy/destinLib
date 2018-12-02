@@ -32,7 +32,7 @@ double Condition::CalculerProbaFinale()
 bool Condition::Tester()
 {
     // une condition doit soit reposer sur les proba soit sur une valeur fixe
-    if ( m_Proba != -1.0)
+    if ( abs(m_Proba  + 1.0) < 0.00001)
     //if ( fabs(m_Proba + 1) <= 0.0001)
     {
         double resProba = (double(qrand()%1000))/1000;
@@ -88,6 +88,8 @@ bool Condition::Tester()
 
     QString msg = "Test de comparaison impossible car pas de type de condition déclaré " ;
     Q_ASSERT_X(false, "condition", msg.toStdString().c_str() );
+
+    return false;
 }
 
 void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &conditions, bool conditionsWhile)
