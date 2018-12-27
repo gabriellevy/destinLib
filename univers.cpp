@@ -1,4 +1,4 @@
-#include "aventure.h"
+#include "univers.h"
 #include "ui_aventure.h"
 #include <QFile>
 #include <QMessageBox>
@@ -24,6 +24,11 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(paren
     ui->histoireWidget->layout()->addWidget(m_Histoire);*/
 
     //LancerAventure();
+}
+
+void Univers::AppliquerFond(QString urlImageFond)
+{
+    ui->Fond->setStyleSheet("QWidget#Fond { background-image: url(" + urlImageFond + ") }");
 }
 
 /*Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :

@@ -13,8 +13,11 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color : rgba(0,0,0,0)</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="grilleWidget" native="true">
+   <widget class="QWidget" name="Fond" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -42,6 +45,29 @@
      <property name="bottomMargin">
       <number>0</number>
      </property>
+     <item row="0" column="0">
+      <widget class="QWidget" name="persoWidget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>500</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2"/>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QWidget" name="histoireWidget" native="true">
        <property name="sizePolicy">
@@ -76,29 +102,6 @@
          <number>3</number>
         </property>
        </layout>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QWidget" name="persoWidget" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>500</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2"/>
       </widget>
      </item>
     </layout>

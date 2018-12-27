@@ -1,6 +1,6 @@
 #include "condition.h"
 #include "perso.h"
-#include "aventure.h"
+#include "univers.h"
 
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
 {

@@ -1,7 +1,7 @@
 #include "histoire.h"
 #include "ui_histoire.h"
 #include <QMessageBox>
-#include "aventure.h"
+#include "univers.h"
 #include <QScrollBar>
 #include <QDebug>
 #include <QTime>

@@ -1,6 +1,6 @@
 #include "carac.h"
 #include "ui_carac.h"
-#include "aventure.h"
+#include "univers.h"
 #include <QDebug>
 
 DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description)

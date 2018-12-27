@@ -1,6 +1,6 @@
 #include "setcarac.h"
 #include "perso.h"
-#include "aventure.h"
+#include "univers.h"
 #include <QDebug>
 
 SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeur)

@@ -1,6 +1,6 @@
 #include "evt.h"
 #include "ui_evt.h"
-#include "aventure.h"
+#include "univers.h"
 #include <QDebug>
 
 /*Evt::Evt(QJsonObject evtJson, QWidget *parent) :
@@ -41,15 +41,26 @@ Evt::Evt(QString id,
     Noeud(id,
           nom,
           ""),
+    m_CheminImgFond(""),
     ui(new Ui::Evt)
 {
     ui->setupUi(this);
 
     m_EffetActuel = nullptr;
+
+    ui->groupBox->setStyleSheet("background-color: rgba(0,0,0,0)");
+    ui->effetsWidget->setStyleSheet("background-color: rgba(0,0,0,0)");
+}
+
+void Evt::AjouterImgFond(QString fond)
+{
+    m_CheminImgFond = fond;
 }
 
 void Evt::AfficherNoeud()
 {
+    if ( m_CheminImgFond != "")
+        Univers::ME->AppliquerFond(m_CheminImgFond);
     ui->titreEvt->setText(m_Nom);
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
     {
