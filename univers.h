@@ -1,5 +1,5 @@
-#ifndef AVENTURE_H
-#define AVENTURE_H
+#ifndef UNIVERS_H
+#define UNIVERS_H
 
 #include <QMainWindow>
 #include <QFont>
@@ -9,7 +9,7 @@
 #include <QMediaPlayer>
 
 namespace Ui {
-class Aventure;
+class Univers;
 }
 
 enum EtatPartie {
@@ -25,8 +25,6 @@ enum ModeAffichage {
 
 /**
  * @brief Fenêtre principale du jeu
- * Elle est appelée "Aventure" au sens large mais n'est pas une seule aventure, ceci serait plutôt la classe "Histoire"
- * Il faudrait peut-être renommer Aventure en "Univers" plus générique et moins confusant
  */
 class Univers : public QMainWindow
 {
@@ -42,7 +40,7 @@ protected:
     Histoire* m_Histoire;
     IPerso* m_Perso;
     float m_Duree;
-    Ui::Aventure *ui;
+    Ui::Univers *ui;
 
     void InstallerInterface();
 
@@ -51,7 +49,7 @@ protected:
     virtual void GenererCaracs() = 0;
 
 public:
-    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
+    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, bool barreDeCote = true);
     //explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
     ~Univers();
 
@@ -83,9 +81,12 @@ public:
      */
     void AppliquerFond(QString urlImageFond);
 
+
+    virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
+
 public slots:
     // déclenche l'effet de base si aucun n'a été spécifiquement choisi par l'utilisateur (si n'y avait qu'un suivant potentiel)
     void DeclencherEffetSuivant();
 };
 
-#endif // AVENTURE_H
+#endif // UNIVERS_H

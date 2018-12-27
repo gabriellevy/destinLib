@@ -48,6 +48,8 @@ public:
     virtual void FinExecutionNoeud();
     void ChargerImage(QString chemin);
 
+    virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
+
 private:
     Ui::Effet *ui;
     Glisseur* m_Glisseur;

@@ -33,6 +33,14 @@ Choix::Choix(QString text, QString cheminImg, QWidget *parent) :
     }
 }
 
+void Choix::RafraichirAffichageLayouts(int largeur, int hauteur)
+{
+    if( largeur != -1)
+    {
+        this->setFixedWidth(largeur);
+    }
+}
+
 void Choix::AfficherNoeud()
 {
     this->setText(TexteAAfficher() );

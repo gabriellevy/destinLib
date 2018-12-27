@@ -1,5 +1,5 @@
 #include "univers.h"
-#include "ui_aventure.h"
+#include "ui_univers.h"
 #include <QFile>
 #include <QMessageBox>
 #include <QDebug>
@@ -9,12 +9,15 @@ const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
 QString Univers::CHEMIN = "";
 Univers* Univers::ME;
 
-Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(parent),
-    ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
+Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool BarreDeCote):QMainWindow(parent),
+    ui(new Ui::Univers), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
 
     m_Lecteur = new QMediaPlayer;
+
+    if ( !BarreDeCote)
+        ui->persoWidget->hide();
 
     // positionner l'interface
     /*m_Perso = new IPerso(ui->persoWidget);
@@ -24,6 +27,10 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(paren
     ui->histoireWidget->layout()->addWidget(m_Histoire);*/
 
     //LancerAventure();
+
+
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
+        ui->histoireWidget->setStyleSheet("background-color : rgb(255,0,0)");
 }
 
 void Univers::AppliquerFond(QString urlImageFond)
@@ -176,6 +183,26 @@ void Univers::DeclencherEffetSuivant()
     m_Histoire->DeterminerPuisLancerEffetSuivant();
 }
 
+
+void Univers::RafraichirAffichageLayouts(int largeur, int hauteur)
+{
+    if( largeur != -1)
+    {
+        this->setFixedSize(largeur, hauteur);
+        this->ui->Fond->setFixedSize(largeur, hauteur);
+        this->ui->histoireWidget->setFixedSize(largeur - m_Reglages.m_LargeurColonneGauche, hauteur);
+        this->ui->persoWidget->setFixedSize(m_Reglages.m_LargeurColonneGauche, hauteur);
+        this->ui->centralwidget->setFixedSize(largeur, hauteur);
+    }
+    //ui->centralwidget->layout()->update();
+   // ui->centralwidget->layout()->activate();
+
+    ui->Fond->layout()->update();
+    ui->Fond->layout()->activate();
+
+    this->layout()->update();
+    this->layout()->activate();
+}
 
 
 Univers::~Univers()

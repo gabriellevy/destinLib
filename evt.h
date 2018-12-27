@@ -57,6 +57,8 @@ public:
     QVector<Effet*> m_Effets;
     Effet* TrouverEffet(QString id);
 
+    void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
+
 private:
     Ui::Evt *ui;
 };

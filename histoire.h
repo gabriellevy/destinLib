@@ -88,6 +88,8 @@ public:
      */
     QString GetCaracValue(QString caracId);
 
+    void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
+
 private:
     Ui::Histoire *ui;
 };
