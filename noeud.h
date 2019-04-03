@@ -35,7 +35,7 @@ public:
     QString m_GoToEvtId = "";
     QString m_GoToEffetId = "";
     QList<SetCarac> m_SetCaracs;
-    QList<QString> m_Themes;
+    //QList<QString> m_Themes;
     float m_Duree;
     QString m_Text = "";
     // testé après exécution : tant que cette condition est vrai le noeud est réexécuté en boucle
@@ -90,7 +90,7 @@ public:
     /**
      * @return true si ce noeud possède dans m_Themes au moins u ndes thèems du paramètre
      */
-    bool AUnDeCesThemes(QList<QString> themes);
+    //bool AUnDeCesThemes(QList<QString> themes);
 
     // modifier caracs
     void AjouterRetireurACarac(QString id, QString valeur);

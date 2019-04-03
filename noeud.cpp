@@ -204,7 +204,7 @@ Condition* Noeud::AjouterConditionProba( double proba)
 }
 
 
-bool Noeud::AUnDeCesThemes(QList<QString> themes)
+/*bool Noeud::AUnDeCesThemes(QList<QString> themes)
 {
     for ( int i = 0 ; i < themes.size() ; ++i)
     {
@@ -213,7 +213,7 @@ bool Noeud::AUnDeCesThemes(QList<QString> themes)
                 return true;
     }
     return false;
-}
+}*/
 
 double Noeud::GetTempEcoule()
 {

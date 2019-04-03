@@ -67,7 +67,7 @@ HEADERS += \
     univers.h
 
 FORMS += \
-    aventure.ui \
+    univers.ui \
     perso.ui \
     histoire.ui \
     carac.ui \
