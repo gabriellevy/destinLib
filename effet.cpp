@@ -92,6 +92,19 @@ Effet* Effet::AjouterElse(QString text)
     return m_ElseNoeud;
 }
 
+void Effet::RafraichirAffichageLayouts(int largeur, int hauteur)
+{
+    if( largeur != -1)
+    {
+        this->setFixedWidth(largeur - Univers::ME->m_Reglages.m_LargeurColonneGauche);
+    }
+    ui->horizontalLayout->layout()->update();
+    ui->horizontalLayout->layout()->activate();
+
+    this->layout()->update();
+    this->layout()->activate();
+}
+
 Effet* Effet::GetElse()
 {
     return m_ElseNoeud;
@@ -157,6 +170,8 @@ void Effet::AfficherNoeud()
     {
         QTimer::singleShot(m_MsChrono, this, SLOT(FinChrono()));
     }
+
+    Univers::ME->GetHistoire()->EvtActuel()->RafraichirAffichageLayouts();
 }
 
 void Effet::FinChrono()

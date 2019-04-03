@@ -117,6 +117,8 @@ public:
     QVector<std::function<bool(QVector<QString>)>> m_CallbackTestFunctions;
     QVector<QVector<QString>> m_CallbackTestArguments;
 
+    virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1) = 0;
+
 private:
     //Ui::Noeud *ui;
 

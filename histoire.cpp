@@ -5,6 +5,7 @@
 #include <QScrollBar>
 #include <QDebug>
 #include <QTime>
+#include "reglages.h"
 
 Histoire::Histoire(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +18,28 @@ Histoire::Histoire(QWidget *parent) :
 
     QTime time = QTime::currentTime();
     qsrand(static_cast<uint>(time.msec()));
+
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
+        ui->histoireScrollArea->setStyleSheet("background-color : rgb(0,255,0)");
+}
+
+
+void Histoire::RafraichirAffichageLayouts(int largeur, int hauteur)
+{
+    if( largeur != -1)
+    {
+        this->setFixedSize(largeur, hauteur);
+        this->ui->histoireScrollArea->setFixedSize(largeur - Univers::ME->m_Reglages.m_LargeurColonneGauche, hauteur);
+        this->ui->histoireLayout->setFixedSize(largeur - Univers::ME->m_Reglages.m_LargeurColonneGauche, hauteur);
+    }
+    //ui->histoireScrollArea->layout()->update();
+   // ui->histoireScrollArea->layout()->activate();
+
+    ui->histoireLayout->layout()->update();
+    ui->histoireLayout->layout()->activate();
+
+    //this->layout()->update();
+    //this->layout()->activate();
 }
 
 Histoire::~Histoire()

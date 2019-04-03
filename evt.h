@@ -21,6 +21,8 @@ class Evt : public QWidget, public Noeud
     Q_OBJECT
     Effet* m_EffetActuel;
 
+    QString m_CheminImgFond;
+
 public:
     //explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);
     explicit Evt(QString id,
@@ -48,11 +50,18 @@ public:
     Effet* AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id, QString cheminImg = "", QString id = "" );
     Effet* AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id = "");
 
+    /**
+     * @brief AjouterImgFond
+     * @param fond : chemin vers l'image à utiliser en fond. Exemple : ':/images/fond.jpg'
+     */
+    void AjouterImgFond(QString fond);
 
     QVector<Effet*> m_Effets;
     Effet* TrouverEffet(QString id);
 
-    QVector<Theme> m_Themes;
+    QVector<Theme*> m_Themes;
+
+    void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
 private:
     Ui::Evt *ui;

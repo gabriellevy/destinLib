@@ -41,15 +41,32 @@ Evt::Evt(QString id,
     Noeud(id,
           nom,
           ""),
+    m_CheminImgFond(""),
     ui(new Ui::Evt)
 {
     ui->setupUi(this);
 
     m_EffetActuel = nullptr;
+
+    //ui->groupBox->setStyleSheet("background-color: rgba(0,0,0,0)");
+    //ui->effetsWidget->setStyleSheet("background-color: rgba(0,0,0,0)");
+
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
+        ui->effetsWidget->setStyleSheet("background-color : rgb(0,0,255)");
+
+    //ui->effetsWidget->layout()->setAlignment(Qt::AlignBottom);
+    //((QVBoxLayout*)(ui->effetsWidget->layout()))->addStretch();
+}
+
+void Evt::AjouterImgFond(QString fond)
+{
+    m_CheminImgFond = fond;
 }
 
 void Evt::AfficherNoeud()
 {
+    if ( m_CheminImgFond != "")
+        Univers::ME->AppliquerFond(m_CheminImgFond);
     ui->titreEvt->setText(m_Nom);
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && m_Nom != "")
     {
@@ -68,6 +85,23 @@ void Evt::AfficherNoeud()
     }
     else
         ui->textEvt->hide();
+
+    RafraichirAffichageLayouts();
+}
+
+void Evt::RafraichirAffichageLayouts(int largeur, int hauteur)
+{
+    if( largeur != -1)
+    {
+
+    }
+    ui->EvtWidget->layout()->update();
+    ui->EvtWidget->layout()->activate();
+    ui->effetsWidget->adjustSize();
+
+    ui->effetsWidget->layout()->update();
+    ui->effetsWidget->layout()->activate();
+    ui->effetsWidget->adjustSize();
 }
 
 void Evt::Clean()

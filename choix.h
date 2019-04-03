@@ -28,6 +28,7 @@ public:
      * @return false car les noeuds choix ne sont jamais affichés en tant que tels (seulement comme boutons en bas d'un autre noeud)
      */
     virtual bool AQuelqueChoseAAfficher();
+    virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
     void LancerNoeud();
     bool GestionTransition();
