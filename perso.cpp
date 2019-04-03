@@ -1,7 +1,7 @@
 #include "perso.h"
 #include "ui_perso.h"
 #include <QMessageBox>
-#include "aventure.h"
+#include "univers.h"
 #include "aspectratiolabel.h"
 
 DPerso::DPerso(QString id, QString nom, QString description)

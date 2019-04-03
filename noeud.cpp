@@ -1,6 +1,6 @@
 #include "noeud.h"
 //#include "ui_noeud.h"
-#include "aventure.h"
+#include "univers.h"
 #include <QDebug>
 
 Noeud::Noeud()

@@ -4,6 +4,8 @@
 #include "evt.h"
 #include "evtaleatoire.h"
 #include "carac.h"
+#include <QVector>
+#include "theme.h"
 
 namespace Ui {
 class Histoire;
@@ -40,10 +42,11 @@ public:
     // pour les aventrues qui n'utilisent pas le json mais du code :surclasser aventure et développer ces fonction
     virtual void GenererHistoire() = 0;
     virtual void GenererPersos() = 0;
+    virtual void GenererThemes() = 0;
     Evt* m_CurrentEvt = nullptr;
 
     //void Generer(QJsonObject aventure);
-    QVector<QString> m_Themes;
+    //QVector<QString> m_Themes;
 
 
     int DeterminerIndexEffet(QString idEffet);
@@ -78,6 +81,8 @@ public:
 
     // caracs :
     QVector<Carac*> m_Caracs;
+
+    QVector<Theme*> m_Themes;
 
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);

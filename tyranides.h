@@ -2,7 +2,7 @@
 #define TYRANIDES_H
 
 #include <QWidget>
-#include "aventure.h"
+#include "univers.h"
 
 /*namespace Ui {
 class Tyranides;

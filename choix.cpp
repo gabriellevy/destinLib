@@ -1,6 +1,6 @@
 #include "choix.h"
 #include "ui_choix.h"
-#include "aventure.h"
+#include "univers.h"
 
 /*Choix::Choix(QJsonObject choixJson, QWidget *parent) :
     QPushButton("", parent),

@@ -1,6 +1,6 @@
 #include "effet.h"
 #include "ui_effet.h"
-#include "aventure.h"
+#include "univers.h"
 #include <QTimer>
 #include <QDebug>
 

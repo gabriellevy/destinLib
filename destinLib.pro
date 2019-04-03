@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    aventure.cpp \
     perso.cpp \
     histoire.cpp \
     carac.cpp \
@@ -42,10 +41,11 @@ SOURCES += \
     cultegenestealer.cpp \
     reinenorne.cpp \
     invasionkraken.cpp \
-    reglages.cpp
+    reglages.cpp \
+    theme.cpp \
+    univers.cpp
 
 HEADERS += \
-    aventure.h \
     perso.h \
     histoire.h \
     carac.h \
@@ -62,7 +62,9 @@ HEADERS += \
     cultegenestealer.h \
     reinenorne.h \
     invasionkraken.h \
-    reglages.h
+    reglages.h \
+    theme.h \
+    univers.h
 
 FORMS += \
     aventure.ui \

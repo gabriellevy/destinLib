@@ -2,6 +2,8 @@
 #define EVT_H
 
 #include "effet.h"
+#include <QVector>
+#include "theme.h"
 
 namespace Ui {
 class Evt;
@@ -49,6 +51,8 @@ public:
 
     QVector<Effet*> m_Effets;
     Effet* TrouverEffet(QString id);
+
+    QVector<Theme> m_Themes;
 
 private:
     Ui::Evt *ui;

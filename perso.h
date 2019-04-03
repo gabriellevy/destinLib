@@ -8,6 +8,8 @@
 #include "carac.h"
 #include "aspectratiolabel.h"
 #include <QPixmap>
+#include <QVector>
+#include "theme.h"
 
 namespace Ui {
 class Perso;
@@ -28,6 +30,8 @@ public:
     QString m_Description = "";
     QPixmap m_ImagePortrait;
     QVector<QString> m_CaracsAAfficher = {};
+
+    QVector<Theme*> m_Themes;
 };
 
 /**

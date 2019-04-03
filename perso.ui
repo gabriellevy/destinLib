@@ -137,7 +137,7 @@
   <customwidget>
    <class>AspectRatioLabel</class>
    <extends>QLabel</extends>
-   <header location="global">aspectratiolabel.h</header>
+   <header>aspectratiolabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
