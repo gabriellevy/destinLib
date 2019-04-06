@@ -6,6 +6,8 @@
 #include "carac.h"
 #include <QVector>
 #include "theme.h"
+#include "dbmanager.h"
+#include "perso.h"
 
 namespace Ui {
 class Histoire;
@@ -40,11 +42,21 @@ public:
     ~Histoire();
 
     // pour les aventrues qui n'utilisent pas le json mais du code :surclasser aventure et développer ces fonction
+
     virtual void GenererHistoire() = 0;
     virtual void GenererPersos() = 0;
     virtual void GenererThemes() = 0;
     virtual QString GetTitre() = 0;
     Evt* m_CurrentEvt = nullptr;
+
+    /**
+     * @brief charge le contenu de la bdd visée dans l'histoire
+     * @param cheminBDD
+     *
+     * Il est tout à fait possible que les fonctions GenererHistoire et/ou GenererPersos
+     * soient remplacées par des fonctions de ce genre si toutes les informations de l'histoire sont en bdd
+     */
+    virtual void ChargerBDD(QString cheminBDD);
 
     void AppliquerTheme(Theme* theme);
 
@@ -87,8 +99,12 @@ public:
 
     QVector<Theme*> m_Themes;
 
+    DbManager m_Db;
+
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);
+
+    DPerso* GetPersoCourant();
 
     /**
      * @brief GetCaracValue

@@ -45,7 +45,7 @@ class IPerso : public QWidget
     static QString s_IdPersoActif;
 
 protected:
-    QHash<QString, DPerso> m_Persos;
+    QHash<QString, DPerso*> m_Persos;
 
 public:
     explicit IPerso(QWidget *parent = nullptr);
@@ -56,10 +56,10 @@ public:
     void RafraichirAffichage();
 
     // accesseur vers le perso courant (qui est toujours unique)
-    DPerso GetPersoCourant();
-    const DPerso GetPerso(QString id);
+    DPerso* GetPersoCourant();
+    const DPerso* GetPerso(QString id);
     static IPerso* GetPersoInterface();
-    static void AjouterPersoJouable(DPerso perso);
+    static void AjouterPersoJouable(DPerso* perso);
 
 private:
     Ui::Perso *ui;

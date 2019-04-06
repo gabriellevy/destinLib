@@ -26,7 +26,7 @@ IPerso* IPerso::GetPersoInterface()
     return IPerso::s_PersosInterface;
 }
 
-DPerso IPerso::GetPersoCourant()
+DPerso* IPerso::GetPersoCourant()
 {
     return m_Persos[IPerso::s_IdPersoActif];
 }
@@ -113,16 +113,16 @@ DPerso IPerso::GetPersoCourant()
     RafraichirAffichage();
 }*/
 
-void IPerso::AjouterPersoJouable(DPerso perso)
+void IPerso::AjouterPersoJouable(DPerso* perso)
 {
-    IPerso::GetPersoInterface()->m_Persos.insert(perso.m_Id, perso);
+    IPerso::GetPersoInterface()->m_Persos.insert(perso->m_Id, perso);
 
     // par défaut le perso joué est le prmeir ajouté
     if ( s_IdPersoActif == "" )
-       s_IdPersoActif = perso.m_Id;
+       s_IdPersoActif = perso->m_Id;
 }
 
-const DPerso IPerso::GetPerso(QString id)
+const DPerso* IPerso::GetPerso(QString id)
 {
     return m_Persos[id];
 }
@@ -139,9 +139,9 @@ void IPerso::RafraichirAffichage()
     // portrait
     if ( myImageLabel == nullptr )
     {
-        ui->imagePortrait->setPixmap(GetPersoCourant().m_ImagePortrait);
+        ui->imagePortrait->setPixmap(GetPersoCourant()->m_ImagePortrait);
 
-        ui->portraitLabel->setText(GetPersoCourant().m_Nom);
+        ui->portraitLabel->setText(GetPersoCourant()->m_Nom);
     }
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?

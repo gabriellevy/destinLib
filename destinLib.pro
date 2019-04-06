@@ -29,6 +29,7 @@ SOURCES += \
     histoire.cpp \
     carac.cpp \
     aspectratiolabel.cpp \
+    dbmanager.cpp \
     evt.cpp \
     effet.cpp \
     noeud.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     histoire.h \
     carac.h \
     aspectratiolabel.h \
+    dbmanager.h \
     evt.h \
     effet.h \
     noeud.h \

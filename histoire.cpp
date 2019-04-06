@@ -213,6 +213,12 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
 
 }
 
+
+void Histoire::ChargerBDD(QString cheminBDD)
+{
+    // A FAIRE : il faut charger ici les évts, effets etc...
+}
+
 void Histoire::SetEffetIndex(int index)
 {
     GetIndexEffetConcerne() = index;
@@ -327,6 +333,11 @@ QString Histoire::GetCaracValue(QString caracId)
     }
 
     return val;
+}
+
+DPerso* Histoire::GetPersoCourant()
+{
+    return Univers::ME->GetPersoInterface()->GetPersoCourant();
 }
 
 bool Histoire::CetteCaracExisteDeja(QString id)
