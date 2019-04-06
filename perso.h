@@ -51,7 +51,7 @@ public:
     explicit IPerso(QWidget *parent = nullptr);
     ~IPerso();
 
-    void Rafraichir(QJsonArray persos);
+    //void Rafraichir(QJsonArray persos);
     void ChangerPersoCourant(QString changePerso);
     void RafraichirAffichage();
 

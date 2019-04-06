@@ -55,6 +55,8 @@ public:
     //explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
     ~Univers();
 
+    void InitialiserHistoire(Histoire* histoire);
+
     bool LancerEvtEtOuEffetCourant();
 
     const static QFont* BASE_FONT;
@@ -85,6 +87,12 @@ public:
      */
     void AppliquerFond(QString urlImageFond);
 
+    /**
+     * @brief AppliquerTheme
+     * @param fond
+     * Un de ces jours il faudra créer un objet thème à appliquer à une fenêtre, pour l'instant c'est du bricolage
+     */
+    void AppliquerTheme(QColor fond);
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 

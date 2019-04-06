@@ -13,6 +13,11 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool BarreDeCote)
     ui(new Ui::Univers), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
+    m_Perso = new IPerso(ui->persoWidget);
+
+    // positionner l'interface
+    ui->persoWidget->layout()->addWidget(m_Perso);
+    m_Perso->show();
 
     m_Lecteur = new QMediaPlayer;
 
@@ -33,9 +38,27 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool BarreDeCote)
         ui->histoireWidget->setStyleSheet("background-color : rgb(255,0,0)");
 }
 
+
+void Univers::InitialiserHistoire(Histoire* histoire)
+{
+    m_Histoire = histoire;
+    this->setWindowTitle(histoire->GetTitre());
+    ui->histoireWidget->layout()->addWidget(m_Histoire);
+}
+
 void Univers::AppliquerFond(QString urlImageFond)
 {
     ui->Fond->setStyleSheet("QWidget#Fond { background-image: url(" + urlImageFond + ") }");
+}
+
+void Univers::AppliquerTheme(QColor fond)
+{
+    ui->Fond->setStyleSheet("QWidget#Fond { background-color: rgba(" +
+                            QString::number(fond.red()) +
+                            "," + QString::number(fond.green()) +
+                            "," + QString::number(fond.blue()) +
+                            "," + QString::number(fond.alpha()) +
+                            ") }");
 }
 
 /*Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :

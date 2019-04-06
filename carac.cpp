@@ -218,7 +218,7 @@ bool Carac::bAffichable()
     for ( int i=0; i < IPerso::GetPersoInterface()->GetPersoCourant().m_CaracsAAfficher.size() ; i++)
     {
         if ( IPerso::GetPersoInterface()->GetPersoCourant().m_CaracsAAfficher[i] == this->m_DataCarac.m_Id)
-            return (m_DataCarac.m_Valeur != "" && m_DataCarac.m_Valeur != "0" && m_ModeAffichage != MODE_AFFICHAGE::Ma_Cache);
+            return (m_DataCarac.m_Valeur != "" /*&& m_DataCarac.m_Valeur != "0"*/ && m_ModeAffichage != MODE_AFFICHAGE::Ma_Cache);
     }
     return false;
 }

@@ -19,7 +19,7 @@ public:
     Theme(QString intitule, QString description="");
 
     // caracs associées à ce thème et leur valeur par défaut à l'instanciation du thème
-    QVector<Carac*> m_Caracs;
+    QVector<Carac*> m_CaracsDeBase;
     // callbacks de fonctions liées au thème appelables au runime
     QMap<QString, std::function<void()>> m_Callbacks;
 };

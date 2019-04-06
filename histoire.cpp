@@ -306,6 +306,16 @@ Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
     return nullptr;
 }
 
+void Histoire::AppliquerTheme(Theme* theme)
+{
+    this->m_Themes.push_back(theme);
+
+    for(Carac* carac: theme->m_CaracsDeBase)
+    {
+        this->m_Caracs.push_back(carac);
+    }
+}
+
 QString Histoire::GetCaracValue(QString caracId)
 {
     QString val = "";

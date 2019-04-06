@@ -43,7 +43,10 @@ public:
     virtual void GenererHistoire() = 0;
     virtual void GenererPersos() = 0;
     virtual void GenererThemes() = 0;
+    virtual QString GetTitre() = 0;
     Evt* m_CurrentEvt = nullptr;
+
+    void AppliquerTheme(Theme* theme);
 
     //void Generer(QJsonObject aventure);
     //QVector<QString> m_Themes;
@@ -79,7 +82,7 @@ public:
     Evt* AjouterEvt(QString id, QString nom);
     EvtAleatoire* AjouterEvtAleatoire(QString id, QString nom);
 
-    // caracs :
+    // caracs actuelles du joueur
     QVector<Carac*> m_Caracs;
 
     QVector<Theme*> m_Themes;

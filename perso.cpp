@@ -31,7 +31,7 @@ DPerso IPerso::GetPersoCourant()
     return m_Persos[IPerso::s_IdPersoActif];
 }
 
-void IPerso::Rafraichir(QJsonArray persos)
+/*void IPerso::Rafraichir(QJsonArray persos)
 {
     for (int i = 0 ; i < persos.size() ; i++)
     {
@@ -90,11 +90,6 @@ void IPerso::Rafraichir(QJsonArray persos)
                     carac->m_DataCarac.m_Valeur = caracJsonObject["valeur"].toString();
                 }
 
-                /*if ( caracJsonObject.contains("img") && caracJsonObject["img"].isString() )
-                {
-                    carac->m_Img = caracJsonObject["img"].toString();
-                }*/
-
                 if ( caracJsonObject.contains("description") && caracJsonObject["description"].isString() )
                 {
                     carac->m_DataCarac.m_Description = caracJsonObject["description"].toString();
@@ -116,7 +111,7 @@ void IPerso::Rafraichir(QJsonArray persos)
     }
 
     RafraichirAffichage();
-}
+}*/
 
 void IPerso::AjouterPersoJouable(DPerso perso)
 {
