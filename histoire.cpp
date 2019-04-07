@@ -216,7 +216,18 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
 
 void Histoire::ChargerBDD(QString cheminBDD)
 {
-    // A FAIRE : il faut charger ici les évts, effets etc...
+    if ( !this->m_Db.m_db.isOpen())
+        this->m_Db.Initialisation(cheminBDD);
+
+    if ( this->m_Db.m_db.isOpen())
+    {
+        this->ChargerEvtsBdd();
+        /*this->ChargerChoix();
+        this->ChargerConditions();
+        this->FonctionsModifsProba();
+        this->FonctionsSetCarac();
+        this->FonctionsCallbacks();*/
+    }
 }
 
 void Histoire::SetEffetIndex(int index)
@@ -605,4 +616,40 @@ void Histoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
 
     if ( evtChangement || effetChangement)
         this->update();
+}
+
+Evt* Histoire::GetEvtSelonBddId(int id)
+{
+    for ( Evt* evt: this->m_Evts)
+    {
+        if ( evt->m_BDD_EvtId == id)
+            return evt;
+    }
+
+    QString msg = QString("evt introuvable pour cet id : " + QString::number(id));
+    Q_ASSERT_X(true, "GetEvtSelonBddId", msg.toStdString().c_str());
+
+    return nullptr;
+}
+
+void Histoire::ChargerEvtsBdd()
+{
+    QSqlQuery query("SELECT * FROM d_Evt");
+    while (query.next())
+    {
+       int bd_id = query.value("id").toInt();
+
+       Evt* evt = AjouterEvt("evt vide", "et sans nom");
+       evt->AjouterImgFond(query.value("m_CheminImgFond").toString());
+       evt->m_BDD_EvtId = bd_id;
+       QString TypeEvenement = query.value("m_TypeEvenement").toString();
+       if (TypeEvenement == "TE_Base") evt->m_TypeEvenement = TypeEvt::TE_Base;
+       else if (TypeEvenement == "TE_Conditionnel") evt->m_TypeEvenement = TypeEvt::TE_Conditionnel;
+       if (TypeEvenement == "TE_Aleatoire") evt->m_TypeEvenement = TypeEvt::TE_Aleatoire;
+
+       // récupération de la partie noeud :
+       evt->AppliquerValeurDeNoeudBDD( query.value("est_noeud_id").toInt());
+
+       evt->ChargerEffetsBdd();
+    }
 }

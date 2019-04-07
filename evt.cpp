@@ -48,6 +48,8 @@ Evt::Evt(QString id,
 
     m_EffetActuel = nullptr;
 
+    m_TypeEvenement = TE_Base;
+
     //ui->groupBox->setStyleSheet("background-color: rgba(0,0,0,0)");
     //ui->effetsWidget->setStyleSheet("background-color: rgba(0,0,0,0)");
 
@@ -58,9 +60,28 @@ Evt::Evt(QString id,
     //((QVBoxLayout*)(ui->effetsWidget->layout()))->addStretch();
 }
 
+void Evt::ChargerEffetsBdd()
+{
+    QSqlQuery query("SELECT * FROM d_Effet WHERE appartient_a_evt_id = " +
+                    QString::number(this->m_BDD_EvtId) +
+                    " ORDER BY ordre");
+    while (query.next())
+    {
+       int bd_id = query.value("id").toInt();
+
+       Effet* effet = this->AjouterEffetVide();
+       effet->m_BDD_EffetId = bd_id;
+       effet->ChargerImage(query.value("m_CheminImg").toString());
+
+       // récupération de la partie noeud :
+       effet->AppliquerValeurDeNoeudBDD( query.value("est_un_noeud_id").toInt());
+    }
+}
+
 void Evt::AjouterImgFond(QString fond)
 {
-    m_CheminImgFond = fond;
+    if ( fond != "")
+        m_CheminImgFond = fond;
 }
 
 void Evt::AfficherNoeud()

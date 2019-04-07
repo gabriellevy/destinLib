@@ -50,6 +50,9 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
+    // gestion de la bdd :
+    int m_BDD_EffetId = -1;
+
 private:
     Ui::Effet *ui;
     Glisseur* m_Glisseur;

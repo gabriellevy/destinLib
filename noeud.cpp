@@ -215,6 +215,25 @@ Condition* Noeud::AjouterConditionProba( double proba)
     return false;
 }*/
 
+void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
+{
+    QString req_str = "SELECT * FROM d_Noeud WHERE id = " + QString::number(bd_id);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+       this->m_BDD_NoeudId = query.value("id").toInt();
+       this->m_Duree = query.value("m_Duree").toFloat();
+       this->m_ChangePerso = query.value("m_ChangePerso").toString();
+       this->m_Id = query.value("m_Id").toString();
+       this->m_Nom = query.value("m_Nom").toString();
+       this->m_Son = query.value("m_Son").toString();
+       this->m_GoToEvtId = query.value("m_GoToEvtId").toString();
+       this->m_GoToEffetId = query.value("m_GoToEffetId").toString();
+       this->m_Text = query.value("m_Text").toString();
+       //this->m_CheminImg = query.value("m_CheminImg").toString();
+    }
+}
+
 double Noeud::GetTempEcoule()
 {
     return m_TempEcoule;

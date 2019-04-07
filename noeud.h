@@ -119,6 +119,10 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1) = 0;
 
+    // gestion de la bdd :
+    int m_BDD_NoeudId;
+    void AppliquerValeurDeNoeudBDD(int bd_id);
+
 private:
     //Ui::Noeud *ui;
 

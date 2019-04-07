@@ -63,6 +63,14 @@ public:
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
+    // gestion de la bdd :
+    int m_BDD_EvtId = -1; // note : uné vénement a un id en tant qu'evt et un pour sa partie "noeud" générique
+    /**
+     * @brief charge les effets appartenent à cet événement depuis la bdd
+     * @param evt_id
+     */
+    virtual void ChargerEffetsBdd();
+
 private:
     Ui::Evt *ui;
 };

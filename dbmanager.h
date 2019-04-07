@@ -12,9 +12,9 @@ public:
     DbManager();
 
     bool Initialisation(const QString& path);
+    QSqlDatabase m_db;
 
 private:
-    QSqlDatabase m_db;
 };
 
 #endif // DBMANAGER_H

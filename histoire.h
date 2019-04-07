@@ -37,6 +37,9 @@ protected:
     QString m_CurrentConditionnelEvtId;
     int m_EffetConditionnelIndex;
 
+    // gestion de la BDD :
+    virtual void ChargerEvtsBdd();
+
 public:
     explicit Histoire(QWidget *parent = nullptr);
     ~Histoire();
@@ -78,6 +81,8 @@ public:
     Noeud* DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel = nullptr);
     Noeud* GetEffetDindexSuivant(Noeud* noeudActuel);
     Noeud* TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel);
+    // si les événements sont issues de la bdd ils ont un id qui permet de les extraire :
+    Evt* GetEvtSelonBddId(int id);
     bool AppliquerGoTo(Noeud* noeud);
 
     void RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet);
