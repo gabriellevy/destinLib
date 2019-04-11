@@ -40,6 +40,7 @@ public:
     bool AQuelqueChoseAAfficher();
     bool GestionTransition();
 
+    Choix* AjouterChoixVide();
     Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur);
     Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg = "");
     Effet* AjouterElse(QString text);
@@ -47,6 +48,7 @@ public:
 
     virtual void FinExecutionNoeud();
     void ChargerImage(QString chemin);
+    void ChargerChoixBdd();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 

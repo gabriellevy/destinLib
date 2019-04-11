@@ -288,6 +288,31 @@ void Effet::AfficherBoutonSuivant()
     QObject::connect(ui->boutonContinuer, SIGNAL(clicked()), Univers::ME, SLOT(DeclencherEffetSuivant()));
 }
 
+void Effet::ChargerChoixBdd()
+{
+    QString req = "SELECT * FROM d_Choix WHERE appartient_a_effet_id = " +
+            QString::number(this->m_BDD_EffetId) +
+            " ORDER BY ordre";
+    QSqlQuery query(req);
+    while (query.next())
+    {
+       int bd_id = query.value("id").toInt();
+
+       Choix* choix = this->AjouterChoixVide();
+       choix->m_BDD_ChoixId = bd_id;
+
+       // récupération de la partie noeud :
+       choix->AppliquerValeurDeNoeudBDD( query.value("est_un_noeud_id").toInt());
+    }
+}
+
+Choix* Effet::AjouterChoixVide()
+{
+    Choix* choix = new Choix();
+    m_Choix.push_back(choix);
+    return choix;
+}
+
 
 Choix* Effet::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur)
 {

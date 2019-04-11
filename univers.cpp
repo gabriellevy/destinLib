@@ -144,9 +144,6 @@ TypeEvt Univers::GetTypeEvtActuel()
     if ( m_Histoire != nullptr && m_Histoire->m_CurrentEvt != nullptr)
         return m_Histoire->m_CurrentEvt->m_TypeEvenement;
 
-    /*Q_ASSERT_X(false,
-               "Choix::GetTypeEvtActuel",
-               "l'événement actuel ne semble pas accessible");*/
     return TE_Base;
 }
 

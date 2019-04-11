@@ -75,6 +75,8 @@ void Evt::ChargerEffetsBdd()
 
        // récupération de la partie noeud :
        effet->AppliquerValeurDeNoeudBDD( query.value("est_un_noeud_id").toInt());
+
+       effet->ChargerChoixBdd();
     }
 }
 

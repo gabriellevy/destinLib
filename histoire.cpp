@@ -222,8 +222,7 @@ void Histoire::ChargerBDD(QString cheminBDD)
     if ( this->m_Db.m_db.isOpen())
     {
         this->ChargerEvtsBdd();
-        /*this->ChargerChoix();
-        this->ChargerConditions();
+        /*this->ChargerConditions();
         this->FonctionsModifsProba();
         this->FonctionsSetCarac();
         this->FonctionsCallbacks();*/
