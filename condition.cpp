@@ -29,10 +29,33 @@ double Condition::CalculerProbaFinale()
     return probaFinale;
 }
 
+
+Comparateur Condition::GetComparateurFromStr(QString compStr)
+{
+    if (compStr == "c_Egal") return Comparateur::c_Egal;
+    else if (compStr == "c_Superieur") return Comparateur::c_Superieur;
+    else if (compStr == "c_SuperieurEgal") return Comparateur::c_SuperieurEgal;
+    else if (compStr == "c_InferieurEgal") return Comparateur::c_InferieurEgal;
+    else if (compStr == "c_Inferieur") return Comparateur::c_Inferieur;
+    else if (compStr == "c_Different") return Comparateur::c_Different;
+    return Comparateur::c_Aucun;
+}
+
+QString Condition::GetStrFromComparateur(Comparateur comp)
+{
+    if (comp == c_Egal) return "c_Egal";
+    else if (comp == c_Superieur) return "c_Superieur";
+    else if (comp == c_SuperieurEgal) return "c_SuperieurEgal";
+    else if (comp == c_InferieurEgal) return "c_InferieurEgal";
+    else if (comp == c_Inferieur) return "c_Inferieur";
+    else if (comp == c_Different) return "c_Different";
+    return "c_Aucun";
+}
+
 bool Condition::Tester()
 {
     // une condition doit soit reposer sur les proba soit sur une valeur fixe
-    if ( abs(m_Proba  + 1.0) < 0.00001)
+    if ( abs(m_Proba  + 1.0) > 0.00001)
     //if ( fabs(m_Proba + 1) <= 0.0001)
     {
         double resProba = (double(qrand()%1000))/1000;

@@ -45,11 +45,37 @@ SetCarac::SetCarac(QJsonObject obj, ModifCaracType modifCaracType, QString valeu
     else
         qDebug()<<"Pas de valeur pour le set carac. m_CaracId : "<<m_CaracId << " id : "<<obj["id"];
 
-    if ( obj.contains("intitule") && obj["intitule"].isString())
+    /*if ( obj.contains("intitule") && obj["intitule"].isString())
     {
         m_Intitule = obj["intitule"].toString();
-    }
+    }*/
 
+}
+
+ModifCaracType SetCarac::GetModifCaracTypeFromQString(QString str)
+{
+    if ( str == "SetCarac") {
+        return ModifCaracType::SetCarac;
+    } else if ( str == "AddToCarac") {
+        return ModifCaracType::AddToCarac;
+    } else if ( str == "RetireDeCarac") {
+        return ModifCaracType::RetireDeCarac;
+    }
+    Q_ASSERT_X(true, "SetCarac::GetModifCaracTypeFromQString", "type qui n'existe pas");
+    return ModifCaracType::SetCarac;
+}
+
+QString SetCarac::GetQStringFromModifCaracType(ModifCaracType mct)
+{
+    if ( mct == ModifCaracType::SetCarac) {
+        return "SetCarac";
+    } else if ( mct == ModifCaracType::AddToCarac) {
+        return "AddToCarac";
+    } else if ( mct == ModifCaracType::RetireDeCarac) {
+        return "RetireDeCarac";
+    }
+    Q_ASSERT_X(true, "SetCarac::GetQStringFromModifCaracType", "type qui n'existe pas");
+    return "";
 }
 
 QString SetCarac::GetValeur()

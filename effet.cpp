@@ -92,7 +92,7 @@ Effet* Effet::AjouterElse(QString text)
     return m_ElseNoeud;
 }
 
-void Effet::RafraichirAffichageLayouts(int largeur, int hauteur)
+void Effet::RafraichirAffichageLayouts(int largeur, int )
 {
     if( largeur != -1)
     {

@@ -33,7 +33,7 @@ Choix::Choix(QString text, QString cheminImg, QWidget *parent) :
     }
 }
 
-void Choix::RafraichirAffichageLayouts(int largeur, int hauteur)
+void Choix::RafraichirAffichageLayouts(int largeur, int)
 {
     if( largeur != -1)
     {

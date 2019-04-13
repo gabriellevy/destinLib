@@ -112,7 +112,7 @@ void Evt::AfficherNoeud()
     RafraichirAffichageLayouts();
 }
 
-void Evt::RafraichirAffichageLayouts(int largeur, int hauteur)
+void Evt::RafraichirAffichageLayouts(int largeur, int )
 {
     if( largeur != -1)
     {

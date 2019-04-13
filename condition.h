@@ -67,6 +67,10 @@ public:
     static bool TesterTableauDeConditions(QList<Condition*> &conditions);
 
     ModifProba* AjouterModifProba(double valeur, QList<Condition*> conditions);
+
+    // concertisseur string/Comparateur
+    static Comparateur GetComparateurFromStr(QString compStr);
+    static QString GetStrFromComparateur(Comparateur comp);
 };
 
 #endif // CONDITION_H

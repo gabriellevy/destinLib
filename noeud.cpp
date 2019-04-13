@@ -161,28 +161,32 @@ Noeud::Noeud(QString id,
     }
 }*/
 
-void Noeud::AjouterRetireurACarac(QString id, QString valeur)
+SetCarac* Noeud::AjouterRetireurACarac(QString id, QString valeur)
 {
-    SetCarac set_carac(ModifCaracType::RetireDeCarac, id, valeur);
+    SetCarac* set_carac = new SetCarac(ModifCaracType::RetireDeCarac, id, valeur);
     m_SetCaracs.append(set_carac);
+    return set_carac;
 }
 
-void Noeud::AjouterAjouteurACarac(QString id, QString valeur)
+SetCarac* Noeud::AjouterAjouteurACarac(QString id, QString valeur)
 {
-    SetCarac set_carac(ModifCaracType::AddToCarac, id, valeur);
+    SetCarac* set_carac = new SetCarac(ModifCaracType::AddToCarac, id, valeur);
     m_SetCaracs.append(set_carac);
+    return set_carac;
 }
 
-void Noeud::AjouterChangeurDeCarac(QString id, QString valeur)
+SetCarac* Noeud::AjouterChangeurDeCarac(QString id, QString valeur)
 {
-    SetCarac set_carac(ModifCaracType::SetCarac, id, valeur);
+    SetCarac* set_carac = new SetCarac(ModifCaracType::SetCarac, id, valeur);
     m_SetCaracs.append(set_carac);
+    return set_carac;
 }
 
-void Noeud::AjouterSetCaracTrue(QString id)
+SetCarac* Noeud::AjouterSetCaracTrue(QString id)
 {
-    SetCarac set_carac(ModifCaracType::SetCarac, id, "1");
+    SetCarac* set_carac = new SetCarac(ModifCaracType::SetCarac, id, "1");
     m_SetCaracs.append(set_carac);
+    return set_carac;
 }
 
 Condition* Noeud::AjouterCondition( QString caracId, Comparateur comparateur, QString valeur)
@@ -219,6 +223,7 @@ void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
 {
     QString req_str = "SELECT * FROM d_Noeud WHERE id = " + QString::number(bd_id);
     QSqlQuery query(req_str);
+    Q_ASSERT_X(query.size() <= 1, "Plus d'un noeud de la BDD retourné par la requête.", "Noeud::AppliquerValeurDeNoeudBDD");
     while (query.next())
     {
        this->m_BDD_NoeudId = query.value("id").toInt();
@@ -231,6 +236,69 @@ void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
        this->m_GoToEffetId = query.value("m_GoToEffetId").toString();
        this->m_Text = query.value("m_Text").toString();
        //this->m_CheminImg = query.value("m_CheminImg").toString();
+
+        this->ChargerConditionsBdd();
+        this->ChargerSetCaracBdd();
+    }
+}
+
+void Noeud::ChargerConditionsBdd()
+{
+    // A FAIRE : ne prend pas en compte les conditions de type repeat while
+    QString req_str = "SELECT * FROM d_Condition WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+       int id = query.value("id").toInt();
+       QString compStr = query.value("m_Comparateur").toString();
+       Comparateur comparateur = Condition::GetComparateurFromStr(compStr);
+       double proba = query.value("m_Proba").toDouble();
+
+       Condition* cond = nullptr;
+
+       if ( proba <0) {
+           // condition de base
+           cond = this->AjouterCondition(
+                       query.value("m_CaracId").toString(),
+                       comparateur,
+                       query.value("m_Valeur").toString());
+       } else {
+            // condition à base de proba
+           cond = this->AjouterConditionProba(proba);
+        }
+    }
+}
+
+void Noeud::ChargerSetCaracBdd()
+{
+    QString req_str = "SELECT * FROM d_SetCarac WHERE noeud_id = " + QString::number(m_BDD_NoeudId);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+        ModifCaracType eType = SetCarac::GetModifCaracTypeFromQString(query.value("m_ModifCaracType").toString());
+
+        QString idCarac = query.value("m_CaracId").toString();
+        QString valeur = query.value("m_Valeur").toString();
+        SetCarac* setC = nullptr;
+
+        switch (eType)
+        {
+        case ModifCaracType::SetCarac :
+            setC = this->AjouterChangeurDeCarac(idCarac, valeur);
+            break;
+        case ModifCaracType::AddToCarac:
+            setC = this->AjouterAjouteurACarac(idCarac, valeur);
+            break;
+        case ModifCaracType::RetireDeCarac:
+            setC = this->AjouterRetireurACarac(idCarac, valeur);
+            break;
+        }
+
+        setC->m_ValeurRandom = query.value("m_ValeurRandom").toString();
+        setC->m_ValeurMin = query.value("m_ValeurMin").toString();
+        setC->m_ValeurMax = query.value("m_ValeurMax").toString();
+        setC->m_ValeurCarac = query.value("m_ValeurCarac").toString();
+        setC->m_ValeurRandom = query.value("m_ValeurRandom").toString();
     }
 }
 
@@ -356,7 +424,7 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
         IPerso* perso = Univers::ME->GetPersoInterface();
         for ( int i = 0 ; i < m_SetCaracs.size() ; ++i)
         {
-            Univers::ME->GetHistoire()->AppliquerCarac(m_SetCaracs[i] );
+            Univers::ME->GetHistoire()->AppliquerCarac(*m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }

@@ -34,7 +34,7 @@ public:
     //QString m_ImgPath = "";
     QString m_GoToEvtId = "";
     QString m_GoToEffetId = "";
-    QList<SetCarac> m_SetCaracs;
+    QList<SetCarac*> m_SetCaracs;
     //QList<QString> m_Themes;
     float m_Duree;
     QString m_Text = "";
@@ -93,10 +93,10 @@ public:
     //bool AUnDeCesThemes(QList<QString> themes);
 
     // modifier caracs
-    void AjouterRetireurACarac(QString id, QString valeur);
-    void AjouterAjouteurACarac(QString id, QString valeur);
-    void AjouterChangeurDeCarac(QString id, QString valeur);
-    void AjouterSetCaracTrue(QString id);
+    SetCarac* AjouterRetireurACarac(QString id, QString valeur);
+    SetCarac* AjouterAjouteurACarac(QString id, QString valeur);
+    SetCarac* AjouterChangeurDeCarac(QString id, QString valeur);
+    SetCarac* AjouterSetCaracTrue(QString id);
     Condition* AjouterCondition( QString caracId, Comparateur comparateur, QString valeur);
     Condition* AjouterConditionProba( double proba);
     Noeud* AjouterElse(QString text = "");
@@ -122,6 +122,10 @@ public:
     // gestion de la bdd :
     int m_BDD_NoeudId;
     void AppliquerValeurDeNoeudBDD(int bd_id);
+    // charger une condition peut s'appliquer à plusieurs types de noeuds
+    // donc l'id est celui de la partie noeud mais il peut correspondre par exemple à un effet, un evt, un choix...
+    void ChargerConditionsBdd();
+    void ChargerSetCaracBdd();
 
 private:
     //Ui::Noeud *ui;
