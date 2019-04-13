@@ -239,6 +239,58 @@ void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
 
         this->ChargerConditionsBdd();
         this->ChargerSetCaracBdd();
+        this->ChargerFonctionsCallbacksBdd();
+        this->ChargerFonctionsTestCallbacksBdd();
+    }
+}
+
+
+
+void AppelCallback::ChargerArgumentsBdd()
+{
+    QString req_str = "SELECT * FROM d_CallbackArgument WHERE est_a_callback_id = " + QString::number(m_BDD_FonctId);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+        // un argument issu de la BDD ne peut être que une référence à une carac du jeu ou une valeur string enregistrée brute
+        QString argCaracId = query.value("caracIdParam").toString();
+        if ( argCaracId != "") {
+            this->m_ArgumentsCaracId.push_back(argCaracId);
+        } else {
+            this->m_ArgumentsParValeur.push_back(query.value("valeurBrute").toString());
+        }
+    }
+}
+
+void Noeud::ChargerFonctionsCallbacksBdd()
+{
+    QString req_str = "SELECT * FROM d_FonctionCallback WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId) +
+            " AND est_callback_test = 0";
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+       AppelCallback* appel = new AppelCallback();
+       appel->m_NomFonction = query.value("fonction_id").toString();
+       appel->m_BDD_FonctId = query.value("id").toInt();
+
+       appel->ChargerArgumentsBdd();
+       m_FonctionsAppellees.push_back(appel);
+    }
+}
+
+void Noeud::ChargerFonctionsTestCallbacksBdd()
+{
+    QString req_str = "SELECT * FROM d_FonctionCallback WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId) +
+            " AND est_callback_test = 1";
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+       AppelCallback* appel = new AppelCallback();
+       appel->m_NomFonction = query.value("fonction_id").toString();
+       appel->m_BDD_FonctId = query.value("id").toInt();
+
+       appel->ChargerArgumentsBdd();
+       m_FonctionsDeTest.push_back(appel);
     }
 }
 
@@ -266,6 +318,11 @@ void Noeud::ChargerConditionsBdd()
             // condition à base de proba
            cond = this->AjouterConditionProba(proba);
         }
+
+       if ( cond != nullptr) {
+           cond->m_BDD_CondId = id;
+           cond->ChargerModifProbaBdd();
+       }
     }
 }
 
@@ -411,10 +468,19 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
         IPerso::GetPersoInterface()->ChangerPersoCourant(m_ChangePerso);
     }
 
-    int index = 0;
+    /*int index = 0;
     foreach ( std::function<void(QVector<QString>)> f_CallbackFunction, m_CallbackFunctions)
     {
         f_CallbackFunction(m_CallbackArguments[index++]);
+        Univers::ME->GetPersoInterface()->RafraichirAffichage();
+    }*/
+
+    foreach(AppelCallback* appel, m_FonctionsAppellees)
+    {
+        Univers::ME->GetHistoire()->AppelerFonctionCallback(
+                    appel->m_NomFonction,
+                    appel->m_ArgumentsCaracId,
+                    appel->m_ArgumentsParValeur);
         Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }
 
@@ -461,10 +527,20 @@ bool Noeud::TesterConditions()
     bool resultatCallback = true;
 
 
-    int index = 0;
+    /*int index = 0;
     foreach ( std::function<bool(QVector<QString>)> f_CallbackFunction, m_CallbackTestFunctions)
     {
         resultatCallback = resultatCallback && f_CallbackFunction(m_CallbackTestArguments[index++]);
+    }*/
+
+    foreach(AppelCallback* appel, m_FonctionsDeTest)
+    {
+       resultatCallback = resultatCallback &&
+               Univers::ME->GetHistoire()->AppelerFonctionCallback(
+                   appel->m_NomFonction,
+                   appel->m_ArgumentsCaracId,
+                   appel->m_ArgumentsParValeur);
+        Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }
 
     bool res = ( resultatCallback &&
@@ -485,7 +561,7 @@ void Noeud::ChangerChrono( int ms )
 }
 
 
-void Noeud::AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg)
+/*void Noeud::AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg)
 {
     m_CallbackFunctions.push_back( callback );
     m_CallbackArguments.push_back( arg);
@@ -496,7 +572,7 @@ void Noeud::AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback
 {
     m_CallbackTestFunctions.push_back( callback);
     m_CallbackTestArguments.push_back( arg);
-}
+}*/
 
 double Noeud::GetProba()
 {

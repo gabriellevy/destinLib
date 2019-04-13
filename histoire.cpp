@@ -146,6 +146,11 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
 }
 
 
+bool Histoire::AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params)
+{
+    return this->m_CallbackFunctions[fonction](caracs, params);
+}
+
 void Histoire::SetCurrentEvtId(QString id)
 {
     if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
@@ -222,8 +227,6 @@ void Histoire::ChargerBDD(QString cheminBDD)
     if ( this->m_Db.m_db.isOpen())
     {
         this->ChargerEvtsBdd();
-        /*this->FonctionsModifsProba();
-        this->FonctionsCallbacks();*/
     }
 }
 

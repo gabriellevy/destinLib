@@ -21,6 +21,14 @@ class Histoire : public QWidget
     Q_OBJECT
 
 protected:
+    /**
+     * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime
+     * Elle ont un identifiant unique (égal à leur nom) qui permet de les référence en base de données par exemple
+     * le premier paramètre QVector<QString> correspond à l'id des carac qu'on doit passer à la fonction en paramètre
+     * le 2ème correspond à des valeurs "brutes"
+     */
+    QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
+
     QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
     QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
     QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
@@ -49,6 +57,7 @@ public:
     virtual void GenererHistoire() = 0;
     virtual void GenererPersos() = 0;
     virtual void GenererThemes() = 0;
+    virtual void GenererFonctionsCallback() = 0; // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
     virtual QString GetTitre() = 0;
     Evt* m_CurrentEvt = nullptr;
 
@@ -60,6 +69,8 @@ public:
      * soient remplacées par des fonctions de ce genre si toutes les informations de l'histoire sont en bdd
      */
     virtual void ChargerBDD(QString cheminBDD);
+
+    bool AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params);
 
     void AppliquerTheme(Theme* theme);
 

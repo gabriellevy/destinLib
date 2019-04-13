@@ -27,19 +27,15 @@ class ModifProba
 public:
     double m_Valeur = 0.0;
     QList<Condition*> m_Conditions;
+    int m_BDD_Id;
 
     ModifProba(double valeur);
     ModifProba();
+    void ChargerConditionsBdd();
 };
 
 class Condition
 {
-    QString m_CaracId;
-    //double m_ValeurNombre; // valeur à comparer si il s'agit d'un nombre
-    QString m_Valeur = "0"; // valeur à comparer si il s'agit d'une chaîne de caractères
-    Comparateur m_Comparateur = c_Aucun;
-    // proba (sur 1) que cette condition soit vérifiée
-    double m_Proba = -1.0;
 
 public:
     Condition();
@@ -47,6 +43,12 @@ public:
     Condition(double proba);
 
     QList<ModifProba*> m_ModifsProba;
+    QString m_CaracId;
+    //double m_ValeurNombre; // valeur à comparer si il s'agit d'un nombre
+    QString m_Valeur = "0"; // valeur à comparer si il s'agit d'une chaîne de caractères
+    Comparateur m_Comparateur = c_Aucun;
+    // proba (sur 1) que cette condition soit vérifiée
+    double m_Proba = -1.0;
 
     /**
      * @brief Teste la condition avec les valeurs actuelles du personnage joueur
@@ -67,10 +69,15 @@ public:
     static bool TesterTableauDeConditions(QList<Condition*> &conditions);
 
     ModifProba* AjouterModifProba(double valeur, QList<Condition*> conditions);
+    ModifProba* AjouterModifProbaVide();
 
     // concertisseur string/Comparateur
     static Comparateur GetComparateurFromStr(QString compStr);
     static QString GetStrFromComparateur(Comparateur comp);
+
+    // gestion de la bdd :
+    int m_BDD_CondId;
+    void ChargerModifProbaBdd();
 };
 
 #endif // CONDITION_H

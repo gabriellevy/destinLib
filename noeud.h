@@ -11,6 +11,20 @@
 class Noeud;
 }*/
 
+/**
+ * @brief référence à un appel d'une fonction. Cette fonction est récupéré dans
+ * la map des fonctions callback  du noeud actuel et on lui applique les arguments associés
+ */
+struct AppelCallback {
+    int m_BDD_FonctId;
+    QString m_NomFonction;
+    QVector<QString> m_ArgumentsCaracId;
+    QVector<QString> m_ArgumentsParValeur;
+
+    void ChargerArgumentsBdd();
+
+};
+
 class Noeud// : public QWidget
 {
 protected:
@@ -106,16 +120,19 @@ public:
     void ChangerChrono( int ms );
 
     // function qui sera exécutée lors de l'exécution de ce noeud
-    void AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg);
+    //void AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg);
 
     // function qui déterminera si ce noeud est exécuté (runtime)
-    void AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg);
+    //void AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg);
 
     // fonctions runtime callbacks. Ce sont des fonctions personnalisables qui sont exécutées lors du jeu, pas à sa préparation
-    QVector<std::function<void(QVector<QString>)>> m_CallbackFunctions;
+    /*QVector<std::function<void(QVector<QString>)>> m_CallbackFunctions;
     QVector<QVector<QString>> m_CallbackArguments;
     QVector<std::function<bool(QVector<QString>)>> m_CallbackTestFunctions;
-    QVector<QVector<QString>> m_CallbackTestArguments;
+    QVector<QVector<QString>> m_CallbackTestArguments;*/
+
+    QVector<AppelCallback*> m_FonctionsAppellees;
+    QVector<AppelCallback*> m_FonctionsDeTest;
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1) = 0;
 
@@ -126,6 +143,8 @@ public:
     // donc l'id est celui de la partie noeud mais il peut correspondre par exemple à un effet, un evt, un choix...
     void ChargerConditionsBdd();
     void ChargerSetCaracBdd();
+    void ChargerFonctionsCallbacksBdd();
+    void ChargerFonctionsTestCallbacksBdd();
 
 private:
     //Ui::Noeud *ui;

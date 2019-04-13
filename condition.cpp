@@ -78,10 +78,8 @@ bool Condition::Tester()
         switch (m_Comparateur) {
         case c_Egal:
             return (valeurCarac == m_Valeur );
-            break;
         case c_Superieur:
             return (valeurCarac.toDouble() > m_Valeur.toDouble() );
-            break;
         case c_SuperieurEgal:
         {
 
@@ -93,17 +91,13 @@ bool Condition::Tester()
             double val2 = m_Valeur.toDouble(&ok);
             Q_ASSERT_X(ok, " Condition::Tester", (QString("Conversion de m_Valeur : "  + m_Valeur + " impossible")).toStdString().c_str());
             return ( val1 >= val2 );
-            break;
         }
         case c_Inferieur:
             return (valeurCarac.toDouble() < m_Valeur.toDouble() );
-            break;
         case c_InferieurEgal:
             return (valeurCarac.toDouble() <= m_Valeur.toDouble() );
-            break;
         case c_Different:
             return (valeurCarac != m_Valeur );
-            break;
         default:
             break;
         }
@@ -113,6 +107,20 @@ bool Condition::Tester()
     Q_ASSERT_X(false, "condition", msg.toStdString().c_str() );
 
     return false;
+}
+
+void Condition::ChargerModifProbaBdd()
+{
+    QString req_str = "SELECT * FROM d_ModifProba WHERE est_a_condition_id = " + QString::number(m_BDD_CondId);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+       ModifProba* mdfproba = this->AjouterModifProbaVide();
+       mdfproba->m_Valeur = query.value("m_Valeur").toDouble();
+       mdfproba->m_BDD_Id = query.value("id").toInt();
+
+       mdfproba->ChargerConditionsBdd();
+    }
 }
 
 void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &conditions, bool conditionsWhile)
@@ -143,6 +151,14 @@ void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &c
             }
         }
     }
+}
+
+ModifProba* Condition::AjouterModifProbaVide()
+{
+    // les modificateurs de proba sont des conditions dans la condition qui affectent le probabilité de cette dernière :
+    ModifProba* modifproba = new ModifProba();
+    m_ModifsProba.append(modifproba);
+    return modifproba;
 }
 
 ModifProba* Condition::AjouterModifProba(double valeur, QList<Condition*> conditions)
@@ -251,10 +267,32 @@ bool Condition::TesterTableauDeConditions(QList<Condition*> &conditions)
     */
 
 ModifProba::ModifProba(double valeur):m_Valeur(valeur)
-{
-
-}
+{}
 ModifProba::ModifProba()
-{
+{}
 
+
+void ModifProba::ChargerConditionsBdd()
+{
+    QString req_str = "SELECT * FROM d_Condition WHERE est_a_modif_proba_id = " + QString::number(m_BDD_Id);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+       Condition* cond = new Condition();
+
+       int id = query.value("id").toInt();
+       QString compStr = query.value("m_Comparateur").toString();
+       Comparateur comparateur = Condition::GetComparateurFromStr(compStr);
+
+       Q_ASSERT_X( query.value("m_Proba").toDouble() < 0,
+                     "Une proba dans la condition d'un modif proba ça ne me semble pas naturel !",
+                     "ChargerConditionsBdd");
+
+       cond->m_Valeur = query.value("m_Valeur").toString();
+       cond->m_CaracId = query.value("m_CaracId").toString();
+       cond->m_Comparateur = comparateur;
+       cond->m_BDD_CondId = id;
+
+       m_Conditions.push_back(cond);
+    }
 }
