@@ -130,6 +130,8 @@ public:
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
+    void AnnulerResultatsDeTests(Noeud* saufCeluiLa);
+
 private:
     Ui::Histoire *ui;
 };

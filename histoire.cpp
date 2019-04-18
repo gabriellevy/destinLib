@@ -104,6 +104,13 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
             QMessageBox::warning(Univers::ME, "erreur dans Evt* Histoire::EvtActuel()", "Il n'y a aucun événement dans l'histoire !");
             return nullptr;
         }
+        // si un événement s'appelle 'Debut' alors c'est que c'est le premiers, sinon on commence simplement au premier événement :
+        m_CurrentEvtId = "Debut";
+        Evt* prochainEvt = this->EvtActuel(forceHistoireMode);
+        if ( prochainEvt != nullptr)
+            return prochainEvt;
+        else m_CurrentEvtId = "";
+
         this->SetCurrentEvtId(m_Evts.at(0)->m_Id);
 
         return m_Evts.at(0);
@@ -148,6 +155,8 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
 
 bool Histoire::AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params)
 {
+    QString msg = "Fonction callback inexistante : " + fonction;
+    Q_ASSERT_X(this->m_CallbackFunctions.contains(fonction), msg.toStdString().c_str(), "AppelerFonctionCallback");
     return this->m_CallbackFunctions[fonction](caracs, params);
 }
 
@@ -198,7 +207,11 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
         if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel )
         {
             if ( m_EffetConditionnelIndex == -1 || m_EffetConditionnelIndex >= EvtActuel()->m_Effets.size() )
+            {
+                QString msg = "m_EffetConditionnelIndex invalide : " + QString::number(m_EffetConditionnelIndex);
+                Q_ASSERT_X(true, "Histoire::EffetActuel", msg.toStdString().c_str());
                 return nullptr;
+            }
 
             return EvtActuel()->m_Effets[m_EffetConditionnelIndex];
         }
@@ -206,7 +219,11 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
     else
     {
         if ( m_EffetIndex == -1 || m_EffetIndex >= EvtActuel(forceHistoireMode)->m_Effets.size() )
+        {
+            QString msg = "m_EffetIndex invalide : " + QString::number(m_EffetIndex);
+            Q_ASSERT_X(true, "Histoire::EffetActuel", msg.toStdString().c_str());
             return nullptr;
+        }
 
         return EvtActuel(forceHistoireMode)->m_Effets[m_EffetIndex];
     }
@@ -417,9 +434,13 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
     {
         noeudActuel = EffetActuel();
         if ( !noeudActuel->TesterConditions() &&
-             dynamic_cast<Effet*>(noeudActuel) != nullptr)
+             dynamic_cast<Effet*>(noeudActuel)->GetElse() != nullptr)
         {
-            noeudActuel = static_cast<Effet*>(noeudActuel)->GetElse();
+            noeudActuel = dynamic_cast<Effet*>(noeudActuel)->GetElse();
+            if ( noeudActuel == nullptr)
+            {
+                qDebug()<<"------------- il y a un problème ici !"<<endl;
+            }
         }
     }
 
@@ -542,6 +563,23 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
     }
 
     return noeudActuel;
+}
+
+void Histoire::AnnulerResultatsDeTests(Noeud* saufCeluiLa)
+{
+    for(Evt* evt: m_Evts)
+    {
+        /*if ( evt != saufCeluiLa)
+            evt->m_EtatCondition = EtatCondition::ec_NonTeste;*/
+        for(Effet* effet: evt->m_Effets)
+        {
+            if ( effet != saufCeluiLa )
+                effet->m_EtatCondition = EtatCondition::ec_NonTeste;
+            else {
+                qDebug()<<"trouvé !!!! "<<endl;
+            }
+        }
+    }
 }
 
 int& Histoire::GetIndexEffetConcerne()

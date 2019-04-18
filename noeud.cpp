@@ -421,6 +421,9 @@ Noeud::~Noeud()
 
  void Noeud::LancerNoeud()
  {
+     // comme on a fini tous les tests de transition on remet à 0 les résultats de test qu'on a réalisé et qu'on avait "en cache"
+     Univers::ME->GetHistoire()->AnnulerResultatsDeTests(this);
+
      if ( this->AQuelqueChoseAAfficher() )
          this->AfficherNoeud();
 

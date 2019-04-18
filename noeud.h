@@ -71,6 +71,10 @@ public:
      */
     QString TexteAAfficher();
 
+    /**
+     * @brief stocke le rsultat de la condition de ce noeud durant cette itération (au cas où le résultat de ce test est variable)
+     * Cette valeur est remise à non testé quand on quitte le noeud, pour le cas où on y reviendrait
+     */
     EtatCondition m_EtatCondition = ec_NonTeste;
     bool TesterConditions();
     /**

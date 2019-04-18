@@ -162,6 +162,37 @@ bool Carac::AfficherIntitule()
         return false;
 }
 
+
+QString Carac::GetCaracValue(QString id)
+{
+    return Univers::ME->GetHistoire()->GetCaracValue(id);
+}
+
+int Carac::GetCaracValueAsInt(QString id)
+{
+    return Univers::ME->GetHistoire()->GetCaracValue(id).toInt();
+}
+
+int Carac::AJouterValeurACaracId(QString idCarac, int valeurAjoutee)
+{
+    Univers::ME->GetHistoire()->AppliquerCarac(
+                SetCarac(ModifCaracType::AddToCarac, idCarac, QString::number(valeurAjoutee)));
+    return Carac::GetCaracValueAsInt(idCarac);
+}
+
+int Carac::RetirerValeurACaracId(QString idCarac, int valeurRetiree)
+{
+    Univers::ME->GetHistoire()->AppliquerCarac(
+                SetCarac(ModifCaracType::RetireDeCarac, idCarac, QString::number(valeurRetiree)));
+    return Carac::GetCaracValueAsInt(idCarac);
+}
+
+QString Carac::SetValeurACaracId(QString idCarac, QString valeurSet)
+{
+    Univers::ME->GetHistoire()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
+    return Carac::GetCaracValue(idCarac);
+}
+
 bool Carac::AfficherValeur()
 {
     if ( m_DataCarac.m_Valeur != "" )
