@@ -13,8 +13,8 @@ Histoire::Histoire(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_CurrentEvtId = "";
-    m_EffetIndex = 0;
+    //m_CurrentEvtId = "";
+    //m_EffetIndex = 0;
 
     QTime time = QTime::currentTime();
     qsrand(static_cast<uint>(time.msec()));
@@ -92,12 +92,31 @@ Histoire::~Histoire()
 
 }*/
 
+Evt* Histoire::GetEvtSelonId(QString idATrouver)
+{
+    for ( int i = 0; i < m_Evts.size(); ++i)
+    {
+        if ( m_Evts[i]->m_Id == idATrouver)
+            return m_Evts[i];
+    }
+    for ( int i = 0; i < m_EvtsAleatoires.size(); ++i)
+    {
+        if ( m_Evts[i]->m_Id == idATrouver)
+            return m_Evts[i];
+    }
+
+    for ( int i = 0; i < m_EvtsConditionnels.size(); ++i)
+    {
+        if ( m_EvtsConditionnels[i]->m_Id == idATrouver)
+            return m_EvtsConditionnels[i];
+    }
+    return nullptr;
+}
+
 Evt* Histoire::EvtActuel(bool forceHistoireMode)
 {
-    QString idATrouver = m_CurrentEvtId;
-
     // premier lancement
-    if ( idATrouver == "")
+    if ( this->m_NoeudActuel == nullptr)
     {
         if ( m_Evts.count() < 1)
         {
@@ -105,16 +124,38 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
             return nullptr;
         }
         // si un événement s'appelle 'Debut' alors c'est que c'est le premiers, sinon on commence simplement au premier événement :
-        m_CurrentEvtId = "Debut";
+        this->m_NoeudActuel = this->GetEvtSelonId("Debut");
+        /*m_CurrentEvtId = "Debut";
         Evt* prochainEvt = this->EvtActuel(forceHistoireMode);
         if ( prochainEvt != nullptr)
             return prochainEvt;
-        else m_CurrentEvtId = "";
+        else m_CurrentEvtId = "";*/
 
-        this->SetCurrentEvtId(m_Evts.at(0)->m_Id);
+        if ( this->m_NoeudActuel == nullptr )
+            this->SetCurrentEvtId(m_Evts.at(0)->m_Id);
 
-        return m_Evts.at(0);
+        //return m_Evts.at(0);
     }
+
+    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
+        return static_cast<Evt*>(this->m_NoeudActuel);
+
+    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
+    {
+        Effet* effetActuel = static_cast<Effet*>(this->m_NoeudActuel);
+        return effetActuel->m_Evt;
+    }
+
+    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Choix)
+    {
+        Choix* choixActuel = static_cast<Choix*>(this->m_NoeudActuel);
+        return choixActuel->m_ParentEffet->m_Evt;
+    }
+
+    Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
+
+
+    /*QString idATrouver = m_CurrentEvtId;
 
     if ( forceHistoireMode || Univers::ME->GetTypeEvtActuel() == TE_Base )
     {
@@ -147,7 +188,7 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
     {
         if ( m_EvtsConditionnels[i]->m_Id == m_CurrentEvtId)
             return m_EvtsConditionnels[i];
-    }
+    }*/
 
     return nullptr;
 }
@@ -162,7 +203,28 @@ bool Histoire::AppelerFonctionCallback(QString fonction, QVector<QString> caracs
 
 void Histoire::SetCurrentEvtId(QString id)
 {
-    if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
+    for (Evt* evt: m_Evts)
+    {
+        if ( evt->m_Id == id) {
+            m_NoeudActuel = evt;
+            return;
+        }
+    }
+    for (Evt* evt: m_EvtsAleatoires)
+    {
+        if ( evt->m_Id == id) {
+            m_NoeudActuel = evt;
+            return;
+        }
+    }
+    for (Evt* evt: m_EvtsConditionnels)
+    {
+        if ( evt->m_Id == id) {
+            m_NoeudActuel = evt;
+            return;
+        }
+    }
+    /*if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
     {
         m_CurrentConditionnelEvtId = id;
     }
@@ -170,7 +232,7 @@ void Histoire::SetCurrentEvtId(QString id)
     {
         m_CurrentEvtId = id;
     }
-    GetIndexEffetConcerne() = 0;
+    GetIndexEffetConcerne() = 0;*/
 }
 
 EvtAleatoire* Histoire::AjouterEvtAleatoire(QString id, QString nom)
@@ -200,9 +262,44 @@ int Histoire::DeterminerIndexEvt(QString idEvt)
     return -1;
 }
 
+int Histoire::CalculerIndex(Evt* evtATrouver)
+{
+    int index =0;
+    for ( Evt* evt: this->m_Evts)
+    {
+        if ( evt == evtATrouver)
+            return index;
+        index++;
+    }
+    Q_ASSERT_X(true, "Evt introuvable dans sa propre histoire !", "Evt::CalculerIndex");
+    return -1;
+}
+
 Effet* Histoire::EffetActuel(bool forceHistoireMode)
 {
-    if ( !forceHistoireMode )
+    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
+    {
+        return static_cast<Effet*>(this->m_NoeudActuel);
+    }
+
+    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Choix)
+    {
+        Choix* choixActuel = static_cast<Choix*>(this->m_NoeudActuel);
+        return choixActuel->m_ParentEffet;
+    }
+
+    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
+    {
+        Evt* evt = static_cast<Evt*>(this->m_NoeudActuel);
+        qDebug()<<"Attention : GetEffet lancé alors qu'un Evt est le noeud actuel ! On a renvoyé le premier effet de ce noeud"<<endl;
+        return evt->m_Effets[0];
+    }
+
+    Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
+
+    return nullptr;
+
+    /*if ( !forceHistoireMode )
     {
         if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel )
         {
@@ -231,7 +328,7 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
     Evt* evt = EvtActuel();
     Q_ASSERT_X(m_EffetIndex < evt->m_Effets.size(), "Histoire::EffetActuel", "m_EffetIndex actuel ne fait pas partie de l'événement actuel => ratage de passage à l'événement suivant à priori...");
 
-    return EvtActuel()->m_Effets[m_EffetIndex];
+    return EvtActuel()->m_Effets[m_EffetIndex];*/
 
 }
 
@@ -249,7 +346,15 @@ void Histoire::ChargerBDD(QString cheminBDD)
 
 void Histoire::SetEffetIndex(int index)
 {
-    GetIndexEffetConcerne() = index;
+    Evt* evtActuel = this->EvtActuel();
+    Q_ASSERT_X(index<evtActuel->m_Effets.length(), "index impossible pour cet événement", "Histoire::SetEffetIndex");
+    m_NoeudActuel = evtActuel->m_Effets[index];
+    //GetIndexEffetConcerne() = index;
+}
+
+void Histoire::GoToEffetId(QString idEffet)
+{
+    this->m_NoeudActuel = EvtActuel()->m_Effets[this->DeterminerIndexEffet(idEffet)];
 }
 
 int Histoire::DeterminerIndexEffet(QString idEffet)
@@ -282,6 +387,7 @@ int Histoire::DeterminerIndexEffet(QString idEffet)
 
 bool Histoire::AppliquerGoTo(Noeud* noeud)
 {
+    bool ilYAgoto = false;
     if ( noeud->m_GoToEvtId != "" )
     {
         QString msg = "Interdit de faire des go_to_evt dans les événements aléatoires ou conditionnels ! m_GoToEvtId : " + noeud->m_GoToEvtId;
@@ -291,21 +397,19 @@ bool Histoire::AppliquerGoTo(Noeud* noeud)
         // changement d'événement :
         this->SetCurrentEvtId(noeud->m_GoToEvtId);
 
-        if ( noeud->m_GoToEffetId != "" )
-        {
-            GetIndexEffetConcerne() = DeterminerIndexEffet(noeud->m_GoToEffetId);
-        }
-        return true;
+        ilYAgoto = true;
     }
-    else if ( noeud->m_GoToEffetId != "" )
+
+    if ( noeud->m_GoToEffetId != "" )
     {
-        GetIndexEffetConcerne() = DeterminerIndexEffet(noeud->m_GoToEffetId);
-        return true;
+        this->GoToEffetId(noeud->m_GoToEffetId);
+        //GetIndexEffetConcerne() = DeterminerIndexEffet(noeud->m_GoToEffetId);
+        ilYAgoto = true;
     }
-    return false;
+    return ilYAgoto;
 }
 
-Noeud* Histoire::TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel)
+/*Noeud* Histoire::TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel)
 {
     if ( noeudActuel->TesterConditions())
     {
@@ -318,9 +422,9 @@ Noeud* Histoire::TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel)
             return noeudActuel;
     }
     return nullptr;
-}
+}*/
 
-Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
+/*Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
 {
     Evt* evtActuel = EvtActuel();
     while ( GetIndexEffetConcerne() < evtActuel->m_Effets.size() )
@@ -338,7 +442,7 @@ Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
         }
     }
     return nullptr;
-}
+}*/
 
 void Histoire::AppliquerTheme(Theme* theme)
 {
@@ -419,83 +523,81 @@ void Histoire::AppliquerCarac(SetCarac setCarac)
 }
 
 
-Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
+Noeud* Histoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool noeudActuelEstValide)
 {
-    EffetActuel()->FinExecutionNoeud();// le faire aussi pour l'évt ?
+    if ( noeudActuel != nullptr)
+        this->m_NoeudActuel = noeudActuel;
 
-    bool effet_suivant_trouve = false;
+    this->m_NoeudActuel->FinExecutionNoeud();
+
+    bool noeud_suivant_trouve = false;
+
+    // si le noeud actuel est un evt alors il faut lancer immédiatement automatquement son prmeier effet :
+    if ( noeudActuelEstValide && !noeud_suivant_trouve && this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
+    {
+        this->m_NoeudActuel = this->EvtActuel()->m_Effets[0];
+        noeud_suivant_trouve = true;
+    }
 
     // il n'y a pas d'effet suivant si on n'est pas en état de partie "Histoire"
+    // note => je ne comprends même plus ce que ça veut dire. Si je refais ce fameux mode histoire il faudra le documenter dans le wiki...
     if ( Univers::ME->GetEtatPartie() != EP_Deroulement )
         return nullptr;
 
-
-    if ( noeudActuel == nullptr)
-    {
-        noeudActuel = EffetActuel();
-        if ( !noeudActuel->TesterConditions() &&
-             dynamic_cast<Effet*>(noeudActuel)->GetElse() != nullptr)
-        {
-            noeudActuel = dynamic_cast<Effet*>(noeudActuel)->GetElse();
-            if ( noeudActuel == nullptr)
-            {
-                qDebug()<<"------------- il y a un problème ici !"<<endl;
-            }
-        }
-    }
-
     Evt* evtActuel = EvtActuel();
-    Evt* oldEvtActuel = EvtActuel();
+    //Evt* oldEvtActuel = EvtActuel();
 
     // les événements conditionnels, si leurs conditions sont remplies, sont immédiatement lancés :
-    for ( int y = 0 ; y < m_EvtsConditionnels.size() ; ++y)
+    /*for ( int y = 0 ; y < m_EvtsConditionnels.size() ; ++y)
     {
         if ( m_EvtsConditionnels[y]->TesterConditions())
         {
             this->SetCurrentEvtId(m_EvtsConditionnels[y]->m_Id);
-            noeudActuel = EffetActuel();
+            this->m_NoeudActuel = EffetActuel();
             evtActuel = EvtActuel();
             effet_suivant_trouve = true;
         }
-    }
+    }*/
 
     // si le noeud doit se répéter on bloque le passage auto à l'effet suivant mais les actions et go to s'appliquent normalement
-    bool repeter = ( noeudActuel->m_RepeatWhileConditions.size() > 0 &&
-               Condition::TesterTableauDeConditions(noeudActuel->m_RepeatWhileConditions) );
+    /*bool repeter = ( noeudActuel->m_RepeatWhileConditions.size() > 0 &&
+               Condition::TesterTableauDeConditions(noeudActuel->m_RepeatWhileConditions) );*/
 
     // déterminer si l'effet actuel contenait des 'go to' qui conditionnent le prochain événement ou effet :
-    if ( !effet_suivant_trouve )
+    if ( !noeud_suivant_trouve )
     {
-         if ( noeudActuel != nullptr
-             && AppliquerGoTo(noeudActuel))
+         if ( noeudActuelEstValide &&
+              this->m_NoeudActuel != nullptr
+             && AppliquerGoTo(this->m_NoeudActuel))
         {
-            evtActuel = EvtActuel();
+            //evtActuel = EvtActuel();
 
-            noeudActuel = EffetActuel();
+            //noeudActuel = EffetActuel();
 
-            noeudActuel = TesterSiEffetEstLancableOuSonElse(noeudActuel);
+            //noeudActuel = TesterSiEffetEstLancableOuSonElse(noeudActuel);
 
-            effet_suivant_trouve = (noeudActuel != nullptr);
+            noeud_suivant_trouve = (this->m_NoeudActuel != nullptr);
         }
         else
         {
             // dans ce cas on doit forcément tester l'effet suivant :
-            GetIndexEffetConcerne()++;
+             this->PasserAEffetIndexSuivant();
+            //GetIndexEffetConcerne()++;
         }
     }
 
     // on est peut-être dans un événement aléatoire dont il faut sélectionner un effet ?
     if ( evtActuel->m_TypeEvenement == TE_Aleatoire)
     {
-        noeudActuel = (static_cast<EvtAleatoire*>(evtActuel))->DeterminerEffetAleatoire();
+        this->m_NoeudActuel = (static_cast<EvtAleatoire*>(evtActuel))->DeterminerEffetAleatoire();
 
-        SetEffetIndex( evtActuel->m_Effets.indexOf(static_cast<Effet*>(noeudActuel)));
+        SetEffetIndex( evtActuel->m_Effets.indexOf(static_cast<Effet*>(this->m_NoeudActuel)));
 
-        effet_suivant_trouve = (noeudActuel != nullptr);
+        noeud_suivant_trouve = (this->m_NoeudActuel != nullptr);
     }
 
     // on ne passe pas à l'effet suivant si il y a un while qui force à y rester :
-    if ( !effet_suivant_trouve && !repeter )
+    /*if ( !effet_suivant_trouve && !repeter )
     {
         // effet suivant tout simplement :
         noeudActuel = GetEffetDindexSuivant( noeudActuel);
@@ -535,58 +637,88 @@ Noeud* Histoire::DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel)
             }
 
         }
-    }
+    }*/
 
-    bool afficheEffet = false;
+    bool afficheNoeud = false;
 
-    if ( noeudActuel == nullptr)
-        noeudActuel = EffetActuel();
+    if ( this->m_NoeudActuel == nullptr)
+        this->m_NoeudActuel = EffetActuel();
 
-    if ( noeudActuel != nullptr)
-        afficheEffet = true;
+    if ( this->m_NoeudActuel != nullptr)
+        afficheNoeud = true;
 
-    if ( evtActuel == nullptr)
-        evtActuel = EvtActuel();
+    /*if ( evtActuel == nullptr)
+        evtActuel = EvtActuel();*/
 
-    if ( oldEvtActuel != evtActuel )
+    /*if ( oldEvtActuel != evtActuel )
     {
         // on est entré dans un nouvel événement => on exécute ses actions puis on passera à celles du premier effet si il y en a un
         //m_EffetIndex = -1;
         // si l'effet courant va être exécuté il se chargera d'afficher les élément de l'événement et/ou de alncer l'effet suivant dnc on se contente d'excuter le noeud
         evtActuel->LancerNoeud();
-    }
+    }*/
 
-    // note : ce peut être un Effet au sens objet mais aussi un simple noeud, un else par exemple
-    if ( afficheEffet )
+    // on fait le test de condition une seule fois juste avant d'effectuer les effets :
+    while ( !this->m_NoeudActuel->TesterConditions())
     {
-        noeudActuel->LancerNoeud();
-    }
+        afficheNoeud = false; // de toute façon le noeud actuel n'est pas lançable : on doit passer au suivant
 
-    return noeudActuel;
-}
-
-void Histoire::AnnulerResultatsDeTests(Noeud* saufCeluiLa)
-{
-    for(Evt* evt: m_Evts)
-    {
-        /*if ( evt != saufCeluiLa)
-            evt->m_EtatCondition = EtatCondition::ec_NonTeste;*/
-        for(Effet* effet: evt->m_Effets)
+        if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
         {
-            if ( effet != saufCeluiLa )
-                effet->m_EtatCondition = EtatCondition::ec_NonTeste;
-            else {
-                qDebug()<<"trouvé !!!! "<<endl;
+            Effet* effet = dynamic_cast<Effet*>(this->m_NoeudActuel);
+            if ( effet->GetElse() != nullptr)
+            {
+                this->m_NoeudActuel = dynamic_cast<Effet*>(this->m_NoeudActuel)->GetElse();
+                afficheNoeud = true;
+            } else {
+                break;
             }
+        } else {
+            break;
         }
     }
+
+    // note : ce peut être un Effet au sens objet mais aussi un simple noeud, un else par exemple ou un Evt
+    if ( afficheNoeud )
+    {
+        this->m_NoeudActuel->LancerNoeud();
+    } else {
+        // le noeud courant était invalide et on n'a asp trouvé de else valide, on cherche le suivant
+        return this->DeterminerPuisLancerNoeudSuivant(this->m_NoeudActuel, false);
+    }
+
+    return this->m_NoeudActuel;
 }
 
-int& Histoire::GetIndexEffetConcerne()
+/*int& Histoire::GetIndexEffetConcerne()
 {
-    if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
+   if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
         return m_EffetConditionnelIndex;
    return  m_EffetIndex;
+}*/
+
+void Histoire::PasserAEffetIndexSuivant()
+{
+    int index = this->EffetActuel()->CalculerIndex() + 1;
+    Evt* evtActuel = this->EvtActuel();
+    if (index >= evtActuel->m_Effets.length())
+    {
+        // Il n'y a pas d'effet suivant par défaut dans cet événement
+        // on va essayer de apsser à l'événement suivant mais ce n'est pas très "propre"
+        this->PasserAEvtIndexSuivant();
+    } else {
+        this->m_NoeudActuel = evtActuel->m_Effets[index];
+    }
+}
+
+void Histoire::PasserAEvtIndexSuivant()
+{
+    qDebug()<<"Histoire::PasserAEvtIndexSuivant : Attention il n'est pas très recommandé de passer d'un événement à un autre sans goto. De plus ça ne fonctionne que pour les événements de l'histoire de base."<<endl;
+    int index = this->CalculerIndex(this->EvtActuel()) + 1;
+
+    QString msg = "Impossible de passer à l'index d'effet suivant index : " + QString::number(index);
+    Q_ASSERT_X(index >= this->m_Evts.length(), msg.toStdString().c_str(), "Histoire::PasserAEvtIndexSuivant");
+    this->m_NoeudActuel = this->m_Evts[index];
 }
 
 void Histoire::AjouterDureeAEffetHistoireCourant(float duree)
@@ -609,21 +741,18 @@ void Histoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
     if ( evt != m_DernierEvtAffiche)
     {
         evtChangement = true;
-        m_DernierEvtAffiche = evt;
         // nettoyage de l'evenement précédent
-        if ( m_CurrentEvt != nullptr)
+        if ( m_DernierEvtAffiche != nullptr)
         {
-            m_CurrentEvt->hide();
-            /*ui->histoireLayout->layout()->removeWidget(m_CurrentEvt);
-            m_CurrentEvt->Clean();
-            delete m_CurrentEvt;
-            m_CurrentEvt = nullptr;*/
+            m_DernierEvtAffiche->hide();
         }
+        m_DernierEvtAffiche = evt;
 
         //affichage du nouveau
-        m_CurrentEvt = evt;
+        //m_CurrentEvt = evt;
         //m_CurrentEvt->LancerNoeud();
-        ui->histoireLayout->layout()->addWidget(m_CurrentEvt);
+        ui->histoireLayout->layout()->addWidget(evt);
+        //ui->histoireLayout->layout()->addWidget(m_CurrentEvt);
     }
 
     /*if ( effet == m_DernierEffetAffiche)
@@ -642,14 +771,14 @@ void Histoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
     {
         // the point of the following takeWidget is to avoid the destruction of the previous evt by the setWidget call just after
         /*QWidget* evt = */ui->histoireScrollArea->takeWidget();
-        ui->histoireScrollArea->setWidget(m_CurrentEvt);
-        m_CurrentEvt->show();
+        ui->histoireScrollArea->setWidget(evt);
+        evt->show();
     }
     if ( effetChangement )
     {
         QScrollBar* vertScroll = ui->histoireScrollArea->verticalScrollBar();
         vertScroll->setValue(0);
-        m_CurrentEvt->RafraichirAffichageEffet(effet);
+        evt->RafraichirAffichageEffet(effet);
     }
 
     if ( evtChangement || effetChangement)

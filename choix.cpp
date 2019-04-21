@@ -14,12 +14,15 @@
     QObject::connect(this, SIGNAL(clicked()), this, SLOT(ExecuterNoeudSlot()));
 }*/
 
-Choix::Choix(QString text, QString cheminImg, QWidget *parent) :
+Choix::Choix(Effet* ParentEffet, QString text, QString cheminImg, QWidget *parent) :
     QPushButton(text, parent),
     Noeud(),
+    m_ParentEffet(ParentEffet),
     ui(new Ui::Choix)
 {
     ui->setupUi(this);
+
+    m_TypeNoeud = TypeNoeud::etn_Choix;
 
     this->setCursor(Qt::PointingHandCursor);
 
@@ -64,7 +67,7 @@ bool Choix::AQuelqueChoseAAfficher()
 
 bool Choix::GestionTransition()
 {
-    Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
     return true;
 }
 

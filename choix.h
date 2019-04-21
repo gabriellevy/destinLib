@@ -8,6 +8,8 @@ namespace Ui {
 class Choix;
 }
 
+class Effet;
+
 /**
  * @brief The Choix class
  * dérive des noeuds tout comme les effets mais est un bouton et a comme principale particularité que l'exécution des actions n'est
@@ -22,7 +24,7 @@ class Choix : public QPushButton, public Noeud
 
 public:
     //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
-    explicit Choix(QString text="", QString cheminImg = "", QWidget *parent = nullptr);
+    explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "", QWidget *parent = nullptr);
     ~Choix();
     void AfficherNoeud();
     /**
@@ -34,6 +36,7 @@ public:
 
     void LancerNoeud();
     bool GestionTransition();
+    Effet* m_ParentEffet;
 
     // gestion de la bdd :
     int m_BDD_ChoixId = -1;

@@ -3,14 +3,14 @@
 #include "univers.h"
 #include <QDebug>
 
-Noeud::Noeud()
+Noeud::Noeud():m_TypeNoeud(TypeNoeud::etn_Noeud)
 {
     m_Film = nullptr;
 }
 
 Noeud::Noeud(QString id,
       QString nom,
-      QString text)
+      QString text):Noeud()
 {
     m_Film = nullptr;
     m_Id = id;
@@ -415,15 +415,12 @@ Noeud::~Noeud()
  {
      // commenté à cause des noeuds else (surement entre autres)
      //Q_ASSERT_X(false, "Noeud::GestionTransition", "Je ne crois pas que la gestion de transition devrait se faire dans Noeud si ?");
-    Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
     return true;
  }
 
  void Noeud::LancerNoeud()
  {
-     // comme on a fini tous les tests de transition on remet à 0 les résultats de test qu'on a réalisé et qu'on avait "en cache"
-     Univers::ME->GetHistoire()->AnnulerResultatsDeTests(this);
-
      if ( this->AQuelqueChoseAAfficher() )
          this->AfficherNoeud();
 
@@ -451,7 +448,7 @@ void Noeud::FinExecutionNoeud()
         m_Film->stop();
 
     // l'exécution de ce noeud est terminée. Lors de la prochaine itération il faudra refaire le test avec les nouvelles valeurs
-    m_EtatCondition = ec_NonTeste;
+    //m_EtatCondition = ec_NonTeste;
 }
 
 void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)
@@ -521,11 +518,11 @@ bool Noeud::AQuelqueChoseAAfficher()
 
 bool Noeud::TesterConditions()
 {
-    if ( m_EtatCondition != ec_NonTeste)
+    /*if ( m_EtatCondition != ec_NonTeste)
     {
         // cette condition a déjà été testé une fois : on ne la reteste aps car la proba aléatoire pourrait donner des résultat différents cette fois
         return ( m_EtatCondition == ec_True);
-    }
+    }*/
 
     bool resultatCallback = true;
 
@@ -550,9 +547,9 @@ bool Noeud::TesterConditions()
         Condition::TesterTableauDeConditions(m_Conditions) &&
         Condition::TesterTableauDeConditions(this->m_RepeatWhileConditions));
 
-    if ( res )
+    /*if ( res )
         m_EtatCondition = ec_True;
-    else m_EtatCondition = ec_False;
+    else m_EtatCondition = ec_False;*/
 
     return res;
 }

@@ -25,6 +25,13 @@ struct AppelCallback {
 
 };
 
+enum TypeNoeud {
+    etn_Noeud,
+    etn_Effet,
+    etn_Evt,
+    etn_Choix
+};
+
 class Noeud// : public QWidget
 {
 protected:
@@ -41,6 +48,7 @@ public:
     explicit Noeud();
     virtual ~Noeud();
 
+    TypeNoeud m_TypeNoeud;
     QString m_ChangePerso = ""; // à l'exécution de ce noeud on change de personnage principal joué par le joueur pour le remplacer par celui qui a cet id
     QString m_Id = "";
     QString m_Nom = "";
@@ -75,7 +83,7 @@ public:
      * @brief stocke le rsultat de la condition de ce noeud durant cette itération (au cas où le résultat de ce test est variable)
      * Cette valeur est remise à non testé quand on quitte le noeud, pour le cas où on y reviendrait
      */
-    EtatCondition m_EtatCondition = ec_NonTeste;
+    //EtatCondition m_EtatCondition = ec_NonTeste;
     bool TesterConditions();
     /**
      * @brief AQuelqueChoseAAfficher

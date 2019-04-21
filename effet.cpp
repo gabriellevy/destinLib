@@ -4,8 +4,9 @@
 #include <QTimer>
 #include <QDebug>
 
-Effet::Effet(QWidget *parent) :
+Effet::Effet(Evt* evt, QWidget *parent) :
     QWidget(parent),
+    m_Evt(evt),
     ui(new Ui::Effet)
 {
     ui->setupUi(this);
@@ -13,14 +14,16 @@ Effet::Effet(QWidget *parent) :
     ui->glisseur->hide();
     ui->labelGlisseur->hide();
     m_Glisseur = nullptr;
+    m_TypeNoeud = TypeNoeud::etn_Effet;
 }
 
-Effet::Effet(QString id,
+Effet::Effet(Evt* evt, QString id,
          QString text,
          QString imgPath,
          QWidget *parent) :
     QWidget(parent),
     Noeud(id, "", text),
+    m_Evt(evt),
     ui(new Ui::Effet)
 {
     this->ChargerImage(imgPath);
@@ -30,6 +33,7 @@ Effet::Effet(QString id,
     ui->glisseur->hide();
     ui->labelGlisseur->hide();
     m_Glisseur = nullptr;
+    m_TypeNoeud = TypeNoeud::etn_Effet;
 }
 
 void Effet::ChargerImage(QString chemin)
@@ -86,7 +90,7 @@ void Effet::ChargerImage(QString chemin)
 
 Effet* Effet::AjouterElse(QString text)
 {
-    m_ElseNoeud = new Effet();
+    m_ElseNoeud = new Effet(this->m_Evt);
     m_ElseNoeud->m_Text = text;
     m_ElseNoeud->ui = ui;
     return m_ElseNoeud;
@@ -108,6 +112,19 @@ void Effet::RafraichirAffichageLayouts(int largeur, int )
 Effet* Effet::GetElse()
 {
     return m_ElseNoeud;
+}
+
+int Effet::CalculerIndex()
+{
+    int index =0;
+    for ( Effet* effet: this->m_Evt->m_Effets)
+    {
+        if ( effet == this)
+            return index;
+        index++;
+    }
+    Q_ASSERT_X(true, "Effet introuvable dans son propre evt !", "Effet::CalculerIndex");
+    return -1;
 }
 
 void Effet::valeurGlisseurAChange()
@@ -176,7 +193,7 @@ void Effet::AfficherNoeud()
 
 void Effet::FinChrono()
 {
-    Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
 void Effet::FinExecutionNoeud()
@@ -191,6 +208,7 @@ bool Effet::GestionTransition()
 {
     bool est_ce_que_l_interface_vers_suite_est_affichee = false;
 
+    // si l'effet contient un choix on l'affiche et on considère que le passage vers l'effet suivant est géré par les choix
     if ( m_Choix.size() > 0 )
     {
         for ( int i = 0 ; i < m_Choix.size() ; ++i)
@@ -228,7 +246,7 @@ bool Effet::GestionTransition()
         }
         else
         {
-            Univers::ME->GetHistoire()->DeterminerPuisLancerEffetSuivant(this);
+            Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
             return false;
         }
     }
@@ -259,7 +277,7 @@ Glisseur* Effet::AjouterGlisseur(QString valeur_min, QString valeur_max, QString
     return m_Glisseur;
 }
 
-bool Effet::AQuelqueChoseAAfficher()
+/*bool Effet::AQuelqueChoseAAfficher()
 {
     bool choixAAfficher = false;
     // vérifier que les choix ne sont pas bloqués par des conditions
@@ -273,7 +291,7 @@ bool Effet::AQuelqueChoseAAfficher()
     }
 
     return (Noeud::AQuelqueChoseAAfficher() || choixAAfficher);
-}
+}*/
 
 Effet::~Effet()
 {
@@ -308,7 +326,7 @@ void Effet::ChargerChoixBdd()
 
 Choix* Effet::AjouterChoixVide()
 {
-    Choix* choix = new Choix();
+    Choix* choix = new Choix(this);
     m_Choix.push_back(choix);
     return choix;
 }
@@ -316,7 +334,7 @@ Choix* Effet::AjouterChoixVide()
 
 Choix* Effet::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur)
 {
-    Choix* choix = new Choix(text);
+    Choix* choix = new Choix(this, text);
     choix->AjouterChangeurDeCarac(carac, valeur);
     m_Choix.push_back(choix);
     return choix;
@@ -324,7 +342,7 @@ Choix* Effet::AjouterChoixChangeurDeCarac(QString text, QString carac, QString v
 
 Choix* Effet::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg)
 {
-    Choix* choix = new Choix(text, cheminImg);
+    Choix* choix = new Choix(this, text, cheminImg);
     choix->m_GoToEffetId = go_to_effet_id;
     m_Choix.push_back(choix);
     return choix;

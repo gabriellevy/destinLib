@@ -141,8 +141,8 @@ void Univers::SetEtatPartie(EtatPartie etat)
 
 TypeEvt Univers::GetTypeEvtActuel()
 {
-    if ( m_Histoire != nullptr && m_Histoire->m_CurrentEvt != nullptr)
-        return m_Histoire->m_CurrentEvt->m_TypeEvenement;
+    if ( m_Histoire != nullptr && m_Histoire->EvtActuel() != nullptr)
+        return m_Histoire->EvtActuel()->m_TypeEvenement;
 
     return TE_Base;
 }
@@ -200,7 +200,7 @@ void Univers::DeclencherEffetSuivant()
     if (declencheur)
         disconnect( declencheur, SIGNAL(clicked()), nullptr, nullptr );
 
-    m_Histoire->DeterminerPuisLancerEffetSuivant();
+    m_Histoire->DeterminerPuisLancerNoeudSuivant();
 }
 
 

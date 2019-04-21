@@ -58,6 +58,7 @@ Evt::Evt(QString id,
 
     //ui->effetsWidget->layout()->setAlignment(Qt::AlignBottom);
     //((QVBoxLayout*)(ui->effetsWidget->layout()))->addStretch();
+    m_TypeNoeud = TypeNoeud::etn_Evt;
 }
 
 void Evt::ChargerEffetsBdd()
@@ -148,6 +149,9 @@ void Evt::LancerNoeud()
     this->AfficherNoeud();
 
     this->ExecuterActionsNoeud();
+
+    // un evt ne suffit pas à un affichage et une pause : il faut lancer l'effet suivant automatiquement
+    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
 void Evt::RafraichirAffichageEffet(Effet* effet)
@@ -195,14 +199,15 @@ Effet* Evt::AjouterEffet(Effet* effet)
 
 Effet* Evt::AjouterEffetVide()
 {
-    Effet* effet = new Effet();
+    Effet* effet = new Effet(this);
     AjouterEffet(effet);
     return effet;
 }
 
 Effet* Evt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text, QString id)
 {
-    Effet* effet = new Effet(id,
+    Effet* effet = new Effet(this,
+                             id,
                             text,
                              "");
     effet->AjouterRetireurACarac(caracId, valeurRetire);
@@ -212,7 +217,8 @@ Effet* Evt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QS
 
 Effet* Evt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text, QString id)
 {
-    Effet* effet = new Effet(id,
+    Effet* effet = new Effet(this,
+                             id,
                             text,
                              "");
     effet->AjouterChangeurDeCarac(caracId, nouvelleValeur);
@@ -222,7 +228,7 @@ Effet* Evt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeu
 
 Effet* Evt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id)
 {
-    Effet* effet = new Effet(id);
+    Effet* effet = new Effet(this, id);
     effet->AjouterAjouteurACarac(caracId, valeurAjoutee);
     AjouterEffet(effet);
     return effet;
@@ -230,7 +236,8 @@ Effet* Evt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, Q
 
 Effet* Evt::AjouterEffetNarration(QString text, QString cheminImg, QString id)
 {
-    Effet* effet = new Effet(id,
+    Effet* effet = new Effet(this,
+                             id,
                             text,
                              cheminImg);
     AjouterEffet(effet);
@@ -239,7 +246,8 @@ Effet* Evt::AjouterEffetNarration(QString text, QString cheminImg, QString id)
 
 Effet* Evt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id, QString cheminImg, QString id )
 {
-    Effet* effet = new Effet(id,
+    Effet* effet = new Effet(this,
+                             id,
                             text,
                              cheminImg);
 
@@ -251,7 +259,8 @@ Effet* Evt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeu
 
 Effet* Evt::AjouterEffetChangementPerso(QString persoId, QString text, QString cheminImg, QString id)
 {
-    Effet* effet = new Effet(id,
+    Effet* effet = new Effet(this,
+                             id,
                             text,
                              cheminImg);
     effet->m_ChangePerso = persoId;
@@ -261,7 +270,7 @@ Effet* Evt::AjouterEffetChangementPerso(QString persoId, QString text, QString c
 
 Effet* Evt::AjouterEffetTest(QString caracId, Comparateur comparateur, QString valeur, QString id )
 {
-    Effet* effet = new Effet(id, "", "");
+    Effet* effet = new Effet(this, id, "", "");
     effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
     AjouterEffet(effet);
     return effet;

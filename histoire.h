@@ -37,13 +37,15 @@ protected:
     Effet* m_DernierEffetAffiche = nullptr;
 
     int DeterminerIndexEvt(QString idEvt);
+    int CalculerIndex(Evt* evtATrouver);
 
     // repérage d'événement courant et effet courant en mode histoire normal
-    QString m_CurrentEvtId;
-    int m_EffetIndex; // index de l'effet actuel dans la liste des effets de l'événement actuel
+    //QString m_CurrentEvtId;
+    //int m_EffetIndex; // index de l'effet actuel dans la liste des effets de l'événement actuel
+    Noeud* m_NoeudActuel = nullptr;
 
-    QString m_CurrentConditionnelEvtId;
-    int m_EffetConditionnelIndex;
+    //QString m_CurrentConditionnelEvtId;
+    //int m_EffetConditionnelIndex;
 
     // gestion de la BDD :
     virtual void ChargerEvtsBdd();
@@ -59,7 +61,7 @@ public:
     virtual void GenererThemes() = 0;
     virtual void GenererFonctionsCallback() = 0; // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
     virtual QString GetTitre() = 0;
-    Evt* m_CurrentEvt = nullptr;
+    //Evt* m_CurrentEvt = nullptr;
 
     /**
      * @brief charge le contenu de la bdd visée dans l'histoire
@@ -77,7 +79,9 @@ public:
     //void Generer(QJsonObject aventure);
     //QVector<QString> m_Themes;
 
-
+    void PasserAEffetIndexSuivant();
+    void PasserAEvtIndexSuivant();
+    void GoToEffetId(QString idEffet);
     int DeterminerIndexEffet(QString idEffet);
 
     /**
@@ -88,24 +92,27 @@ public:
     Evt* EvtActuel(bool forceHistoireMode = false);
     Effet* EffetActuel(bool forceHistoireMode = false);
 
-    // déclenche l'effet suivant de base si aucun n'a été spécifiquement choisi par l'utilisateur (qu'il n'y avait qu'un suivant potentiel)
-    Noeud* DeterminerPuisLancerEffetSuivant(Noeud* noeudActuel = nullptr);
+    Noeud* DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel = nullptr, bool noeudActuelEstValide = true);
     Noeud* GetEffetDindexSuivant(Noeud* noeudActuel);
     Noeud* TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel);
     // si les événements sont issues de la bdd ils ont un id qui permet de les extraire :
     Evt* GetEvtSelonBddId(int id);
+    Evt* GetEvtSelonId(QString idATrouver);
     bool AppliquerGoTo(Noeud* noeud);
 
     void RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet);
 
     void SetEffetIndex(int index);
+    /**
+     * @brief trouve l'événement correspondant aà l'id en paramètre et en fait le noeud actuel
+     */
     void SetCurrentEvtId(QString);
     void AjouterDureeAEffetHistoireCourant(float duree);
     /**
      * @brief GetIndexEffetConcerne
      * @return référence vers l'index d'effet normal ou aléatoire selon le mode dans lequel on se trouve à ce moment
      */
-    int& GetIndexEffetConcerne();
+    //int& GetIndexEffetConcerne();
 
     Evt* AjouterEvt(QString id, QString nom);
     EvtAleatoire* AjouterEvtAleatoire(QString id, QString nom);
@@ -129,8 +136,6 @@ public:
     QString GetCaracValue(QString caracId);
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
-
-    void AnnulerResultatsDeTests(Noeud* saufCeluiLa);
 
 private:
     Ui::Histoire *ui;

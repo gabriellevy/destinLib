@@ -14,11 +14,11 @@ enum Comparateur {
     c_Aucun
 };
 
-enum EtatCondition {
+/*enum EtatCondition {
     ec_NonTeste, // cette condition n'a pas encore été testée durant cette itération
     ec_True,
     ec_False
-};
+};*/
 
 class Condition;
 
