@@ -159,7 +159,10 @@ bool Carac::AfficherIntitule()
         return true;
     }
     else
+    {
+        qDebug()<<"Tentative d'afficher une carac dénuée d'intitulé"<<endl;
         return false;
+    }
 }
 
 
