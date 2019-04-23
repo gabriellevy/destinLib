@@ -12,7 +12,7 @@ enum MODE_AFFICHAGE {
     Ma_Cache, // n'est pas affichée => automatique si elle n'est pas définie dans le json dans la partie 'héros'
     //ta_Deduit, // pas précisé dans le json donc déduit des autres caractéristiques (cf code)
     ma_Binaire, // seul l'intitulé est affiché si la carac n'est pas égale à 0 ou ""
-    ma_Img, // image seulement
+    ma_Img, // image seulement (et infobulle si il y a une description)
     ma_Texte, // mode par défaut
     ma_Nombre,
     ma_Jauge // sous forme de jauge => possible seulement si on a défini une valeur maximum de cette valeur
@@ -23,13 +23,14 @@ enum MODE_AFFICHAGE {
  */
 class DCarac
 {
+    QString m_Description;
 public:
     DCarac(QString Id = "", QString Intitule = "", QString Valeur = "", QString Description = "");
 
     QString m_Id;
     QString m_Intitule;
     QString m_Valeur;
-    QString m_Description;
+    QString GetDescription() {return m_Description;}
 };
 
 class Carac : public QWidget
@@ -49,6 +50,8 @@ public:
     void DeterminerModeAffichage(QString modeAffichage);
     void Afficher();
     bool bAffichable();
+
+    virtual QString GetCaracDescription();
 
     DCarac m_DataCarac;
 

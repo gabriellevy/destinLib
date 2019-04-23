@@ -101,7 +101,7 @@ void Carac::Afficher()
             {
                  qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image : " <<m_DataCarac.m_Id.toStdString().c_str();
             }
-            AfficherIntitule();
+            //AfficherIntitule();
 
         }break;
         case MODE_AFFICHAGE::ma_Jauge :{
@@ -148,6 +148,11 @@ void Carac::Afficher()
     }
 }
 
+QString Carac::GetCaracDescription()
+{
+    return m_DataCarac.GetDescription();
+}
+
 bool Carac::AfficherIntitule()
 {
     if ( m_DataCarac.m_Intitule != "")
@@ -155,7 +160,7 @@ bool Carac::AfficherIntitule()
         ui->caracBox->show();
         ui->caracBox->setFont( *Univers::BASE_FONT);
         ui->caracBox->setTitle(m_DataCarac.m_Intitule);
-        ui->caracBox->setToolTip(m_DataCarac.m_Description);
+        ui->caracBox->setToolTip(this->GetCaracDescription());
         return true;
     }
     else
@@ -203,7 +208,7 @@ bool Carac::AfficherValeur()
         ui->labelValeur->show();
         ui->labelValeur->setFont( *Univers::BASE_FONT);
         ui->labelValeur->setText(m_DataCarac.m_Valeur);
-        ui->labelValeur->setToolTip(m_DataCarac.m_Description);
+        ui->labelValeur->setToolTip(this->GetCaracDescription());
         return true;
     }
     else
@@ -230,7 +235,7 @@ bool Carac::AfficherImage()
             ui->imageCarac->setMinimumSize(AdjustSize);
             ui->imageCarac->setMaximumSize(AdjustSize);
         }
-        ui->imageCarac->setToolTip(m_DataCarac.m_Description);
+        ui->imageCarac->setToolTip(this->GetCaracDescription());
         return true;
     }
     else {
