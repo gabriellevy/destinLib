@@ -196,6 +196,12 @@ void Effet::FinChrono()
     Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
+void Effet::SupprimerTousLesChoix()
+{
+    qDeleteAll(this->m_Choix.begin(), this->m_Choix.end());
+    this->m_Choix.clear();
+}
+
 void Effet::FinExecutionNoeud()
 {
     Noeud::FinExecutionNoeud();

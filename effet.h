@@ -44,6 +44,7 @@ public:
     Choix* AjouterChoixVide();
     Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur);
     Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg = "");
+    void SupprimerTousLesChoix();
     Effet* AjouterElse(QString text);
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
 
