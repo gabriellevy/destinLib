@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include "setcarac.h"
 #include "condition.h"
+#include "selectionneurdevenement.h"
 #include <QMovie>
 
 /*namespace Ui {
@@ -55,6 +56,7 @@ public:
     QString m_Son = "";
     //QString m_ImgPath = "";
     QString m_GoToEvtId = "";
+    SelectionneurDEvenement* m_SelectionneurDEvenement = nullptr;
     QString m_GoToEffetId = "";
     QList<SetCarac*> m_SetCaracs;
     //QList<QString> m_Themes;
@@ -157,6 +159,7 @@ public:
     void ChargerSetCaracBdd();
     void ChargerFonctionsCallbacksBdd();
     void ChargerFonctionsTestCallbacksBdd();
+    void ChargerSelectionneurEvtBdd();
 
 private:
     //Ui::Noeud *ui;

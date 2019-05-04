@@ -219,6 +219,31 @@ Condition* Noeud::AjouterConditionProba( double proba)
     return false;
 }*/
 
+void Noeud::ChargerSelectionneurEvtBdd()
+{
+    QString req_str = "SELECT * FROM d_SelectionneurDEvt WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId);
+    QSqlQuery query(req_str);
+
+    while (query.next())
+    {
+        int bdd_id = query.value("id").toInt();
+        QString intitule = query.value("intitule").toString();
+        // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
+        for ( SelectionneurDEvenement* sel: SelectionneurDEvenement::s_TousLesSelectionneurs)
+        {
+            if ( sel->m_BddId == bdd_id) {
+                this->m_SelectionneurDEvenement = sel;
+                return;
+            }
+        }
+
+        // pas trouvé : on le crée
+        SelectionneurDEvenement* sel = new SelectionneurDEvenement(intitule, bdd_id);
+        this->m_SelectionneurDEvenement = sel;
+        SelectionneurDEvenement::s_TousLesSelectionneurs.push_back(sel);
+    }
+}
+
 void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
 {
     QString req_str = "SELECT * FROM d_Noeud WHERE id = " + QString::number(bd_id);
@@ -241,6 +266,7 @@ void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
         this->ChargerSetCaracBdd();
         this->ChargerFonctionsCallbacksBdd();
         this->ChargerFonctionsTestCallbacksBdd();
+        this->ChargerSelectionneurEvtBdd();
     }
 }
 
@@ -317,6 +343,9 @@ void Noeud::ChargerConditionsBdd()
        } else {
             // condition à base de proba
            cond = this->AjouterConditionProba(proba);
+           cond->m_CaracId = query.value("m_CaracId").toString();
+           cond->m_Comparateur = comparateur;
+           cond->m_Valeur = query.value("m_Valeur").toString();
         }
 
        if ( cond != nullptr) {

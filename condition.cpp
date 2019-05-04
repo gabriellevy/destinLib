@@ -29,6 +29,16 @@ double Condition::CalculerProbaFinale()
     return probaFinale;
 }
 
+Comparateur Condition::GetComparateurFromStrSigne(QString compStr)
+{
+    if (compStr == "==") return Comparateur::c_Egal;
+    else if (compStr == ">") return Comparateur::c_Superieur;
+    else if (compStr == ">=") return Comparateur::c_SuperieurEgal;
+    else if (compStr == "<=") return Comparateur::c_InferieurEgal;
+    else if (compStr == "<") return Comparateur::c_Inferieur;
+    else if (compStr == "!=") return Comparateur::c_Different;
+    return Comparateur::c_Aucun;
+}
 
 Comparateur Condition::GetComparateurFromStr(QString compStr)
 {
@@ -54,59 +64,62 @@ QString Condition::GetStrFromComparateur(Comparateur comp)
 
 bool Condition::Tester()
 {
+    bool retour = true;
+
+    QString valeurCarac;
+
+    // la plupart des caracs viennent du perso mais certaines sont "spéciales" (si elles commencent par §)
+    if ( m_CaracId == "§duree_effet_histoire")
+    {
+        valeurCarac = QString::number(
+                    Univers::ME->GetHistoire()->EffetActuel(true)->GetTempEcoule());
+    }
+    else
+        valeurCarac = Univers::ME->GetHistoire()->GetCaracValue(m_CaracId);
+
+    switch (m_Comparateur) {
+    case c_Egal:
+        retour = (valeurCarac == m_Valeur );
+        break;
+    case c_Superieur:
+        retour = (valeurCarac.toDouble() > m_Valeur.toDouble() );
+        break;
+    case c_SuperieurEgal:
+    {
+
+        //QString str = "1234.56";
+        //double valTmp = str.toDouble();
+        double val1 = valeurCarac.toDouble();
+
+        bool ok;
+        double val2 = m_Valeur.toDouble(&ok);
+        Q_ASSERT_X(ok, " Condition::Tester", (QString("Conversion de m_Valeur : "  + m_Valeur + " impossible")).toStdString().c_str());
+        retour = ( val1 >= val2 );
+        break;
+    }
+    case c_Inferieur:
+        retour = (valeurCarac.toDouble() < m_Valeur.toDouble() );
+        break;
+    case c_InferieurEgal:
+        retour = (valeurCarac.toDouble() <= m_Valeur.toDouble() );
+        break;
+    case c_Different:
+        retour = (valeurCarac != m_Valeur );
+        break;
+    default:
+        break;
+    }
+
     // une condition doit soit reposer sur les proba soit sur une valeur fixe
-    if ( abs(m_Proba  + 1.0) > 0.00001)
+    if ( retour && abs(m_Proba  + 1.0) > 0.00001)
     //if ( fabs(m_Proba + 1) <= 0.0001)
     {
         double resProba = (double(qrand()%1000))/1000;
 
-        return resProba <= CalculerProbaFinale();
-    }
-    else
-    {
-        QString valeurCarac;
-
-        // la plupart des caracs viennent du perso mais certaines sont "spéciales" (si elles commencent par §)
-        if ( m_CaracId == "§duree_effet_histoire")
-        {
-            valeurCarac = QString::number(
-                        Univers::ME->GetHistoire()->EffetActuel(true)->GetTempEcoule());
-        }
-        else
-            valeurCarac = Univers::ME->GetHistoire()->GetCaracValue(m_CaracId);
-
-        switch (m_Comparateur) {
-        case c_Egal:
-            return (valeurCarac == m_Valeur );
-        case c_Superieur:
-            return (valeurCarac.toDouble() > m_Valeur.toDouble() );
-        case c_SuperieurEgal:
-        {
-
-            //QString str = "1234.56";
-            //double valTmp = str.toDouble();
-            double val1 = valeurCarac.toDouble();
-
-            bool ok;
-            double val2 = m_Valeur.toDouble(&ok);
-            Q_ASSERT_X(ok, " Condition::Tester", (QString("Conversion de m_Valeur : "  + m_Valeur + " impossible")).toStdString().c_str());
-            return ( val1 >= val2 );
-        }
-        case c_Inferieur:
-            return (valeurCarac.toDouble() < m_Valeur.toDouble() );
-        case c_InferieurEgal:
-            return (valeurCarac.toDouble() <= m_Valeur.toDouble() );
-        case c_Different:
-            return (valeurCarac != m_Valeur );
-        default:
-            break;
-        }
+        retour = resProba <= CalculerProbaFinale();
     }
 
-    QString msg = "Test de comparaison impossible car pas de type de condition déclaré " ;
-    Q_ASSERT_X(false, "condition", msg.toStdString().c_str() );
-
-    return false;
+    return retour;
 }
 
 void Condition::ChargerModifProbaBdd()

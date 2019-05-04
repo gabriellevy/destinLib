@@ -14,7 +14,6 @@ EvtAleatoire::EvtAleatoire(QString id,
 
 Effet* EvtAleatoire::DeterminerEffetAleatoire()
 {
-    // select a random event using them
     QList<Effet*> effetsPossibles;
     double totalDesProbas = 0;
     for ( int i = 0 ; i < m_Effets.size() ; ++i)
@@ -34,7 +33,7 @@ Effet* EvtAleatoire::DeterminerEffetAleatoire()
 
     // sélectionner un de ces événements (en fonction de leur proba) et l'exécuter :
     float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);// entre 0 et 1
-    double probaIndicator = r * totalDesProbas;
+    double probaIndicator = static_cast<double>(r) * totalDesProbas;
     double totalCourantDesProbas = 0;
     Effet* effetchoisi = nullptr;
 

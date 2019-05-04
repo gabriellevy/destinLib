@@ -81,6 +81,32 @@ void Evt::ChargerEffetsBdd()
     }
 }
 
+void Evt::AjouterASelectionneurEvt(int selectionneur_bdd_id)
+{
+    // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
+    for ( SelectionneurDEvenement* sel: SelectionneurDEvenement::s_TousLesSelectionneurs)
+    {
+        if ( sel->m_BddId == selectionneur_bdd_id) {
+            sel->m_Evts.push_back(this);
+            return;
+        }
+    }
+
+    // pas trouvé : on le crée
+    QString req_str = "SELECT * FROM d_SelectionneurDEvt WHERE id = " + QString::number(selectionneur_bdd_id);
+    QSqlQuery query(req_str);
+
+    while (query.next())
+    {
+        int bdd_id = query.value("id").toInt();
+        QString intitule = query.value("intitule").toString();
+
+        SelectionneurDEvenement* sel = new SelectionneurDEvenement(intitule, bdd_id);
+        sel->m_Evts.push_back(this);
+        SelectionneurDEvenement::s_TousLesSelectionneurs.push_back(sel);
+    }
+}
+
 void Evt::AjouterImgFond(QString fond)
 {
     if ( fond != "")

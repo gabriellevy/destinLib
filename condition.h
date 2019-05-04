@@ -74,6 +74,7 @@ public:
     // concertisseur string/Comparateur
     static Comparateur GetComparateurFromStr(QString compStr);
     static QString GetStrFromComparateur(Comparateur comp);
+    static Comparateur GetComparateurFromStrSigne(QString comp);
 
     // gestion de la bdd :
     int m_BDD_CondId;

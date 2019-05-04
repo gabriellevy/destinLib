@@ -406,6 +406,15 @@ bool Histoire::AppliquerGoTo(Noeud* noeud)
         //GetIndexEffetConcerne() = DeterminerIndexEffet(noeud->m_GoToEffetId);
         ilYAgoto = true;
     }
+
+    if ( noeud->m_SelectionneurDEvenement != nullptr)
+    {
+        Evt* evSuivant = noeud->m_SelectionneurDEvenement->DeterminerEvtSuivant();
+        this->SetCurrentEvtId(evSuivant->m_Id);
+
+        ilYAgoto = true;
+    }
+
     return ilYAgoto;
 }
 
@@ -818,5 +827,9 @@ void Histoire::ChargerEvtsBdd()
        evt->AppliquerValeurDeNoeudBDD( query.value("est_noeud_id").toInt());
 
        evt->ChargerEffetsBdd();
+
+       int selectionneur_bdd_id = query.value("appartient_selectionneur_evt_id").toInt();
+       if ( selectionneur_bdd_id > 0 )
+           evt->AjouterASelectionneurEvt(selectionneur_bdd_id);
     }
 }

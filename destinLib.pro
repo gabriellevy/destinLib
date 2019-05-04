@@ -44,7 +44,8 @@ SOURCES += \
     invasionkraken.cpp \
     reglages.cpp \
     theme.cpp \
-    univers.cpp
+    univers.cpp \
+    selectionneurdevenement.cpp
 
 HEADERS += \
     perso.h \
@@ -66,7 +67,8 @@ HEADERS += \
     invasionkraken.h \
     reglages.h \
     theme.h \
-    univers.h
+    univers.h \
+    selectionneurdevenement.h
 
 FORMS += \
     univers.ui \

@@ -70,6 +70,10 @@ public:
      * @param evt_id
      */
     virtual void ChargerEffetsBdd();
+    /**
+     * @brief dans le cas où cet événement appartiendrait à un système de sélection d'événement on l'y ajoute :
+     */
+    void AjouterASelectionneurEvt(int selectionneur_bdd_id);
 
 private:
     Ui::Evt *ui;
