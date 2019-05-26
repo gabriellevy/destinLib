@@ -9,11 +9,18 @@ const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
 QString Univers::CHEMIN = "";
 Univers* Univers::ME;
 
-Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool BarreDeCote):QMainWindow(parent),
+Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(parent),
     ui(new Ui::Univers), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
     m_Perso = new IPerso(ui->persoWidget);
+}
+
+void Univers::LancerHistoire(QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
+{
+    this->AfficherHistoire(ui->histoireWidget);
+
+    m_Perso->RafraichirAffichage();
 
     // positionner l'interface
     ui->persoWidget->layout()->addWidget(m_Perso);
@@ -38,12 +45,17 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool BarreDeCote)
         ui->histoireWidget->setStyleSheet("background-color : rgb(255,0,0)");
 }
 
-
-void Univers::InitialiserHistoire(Histoire* histoire)
+void Univers::ExecuterGenerateurHistoire(QWidget *parent)
 {
-    m_Histoire = histoire;
-    this->setWindowTitle(histoire->GetTitre());
-    ui->histoireWidget->layout()->addWidget(m_Histoire);
+    m_GenHistoire = new GenHistoire(parent);
+    m_Histoire = m_GenHistoire->GenererHistoire();
+}
+
+
+void Univers::AfficherHistoire(QWidget *parent)
+{
+    this->setWindowTitle(m_Histoire->GetTitre());
+    parent->layout()->addWidget(m_Histoire);
 }
 
 void Univers::AppliquerFond(QString urlImageFond)
@@ -170,9 +182,14 @@ EtatPartie Univers::ChangerEtatPartie(QString nouvelEtatPartie)
     return m_EtatPartie;
 }
 
-Histoire* Univers::GetHistoire()
+ExecHistoire* Univers::GetHistoire()
 {
     return m_Histoire;
+}
+
+GenHistoire* Univers::GetGenHistoire()
+{
+    return m_GenHistoire;
 }
 
 IPerso* Univers::GetPersoInterface()

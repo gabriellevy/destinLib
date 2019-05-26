@@ -1,6 +1,6 @@
 #include "invasionkraken.h"
 
-InvasionKraken::InvasionKraken(QWidget *parent) : Histoire(parent)
+InvasionKraken::InvasionKraken(QWidget *parent) : ExecHistoire(parent)
 {
 }
 

@@ -1,10 +1,10 @@
 #ifndef CULTEGENESTEALER_H
 #define CULTEGENESTEALER_H
 
-#include "histoire.h"
+#include "exechistoire.h"
 
 
-class CulteGenestealer : public Histoire
+class CulteGenestealer : public ExecHistoire
 {
 public:
     CulteGenestealer(QWidget *parent = nullptr);

@@ -1,4 +1,4 @@
-#include "histoire.h"
+#include "exechistoire.h"
 #include "ui_histoire.h"
 #include <QMessageBox>
 #include "univers.h"
@@ -7,7 +7,7 @@
 #include <QTime>
 #include "reglages.h"
 
-Histoire::Histoire(QWidget *parent) :
+ExecHistoire::ExecHistoire(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Histoire)
 {
@@ -23,8 +23,12 @@ Histoire::Histoire(QWidget *parent) :
         ui->histoireScrollArea->setStyleSheet("background-color : rgb(0,255,0)");
 }
 
+QString ExecHistoire::GetTitre()
+{
+    return "titre non initialisé !";
+}
 
-void Histoire::RafraichirAffichageLayouts(int largeur, int hauteur)
+void ExecHistoire::RafraichirAffichageLayouts(int largeur, int hauteur)
 {
     if( largeur != -1)
     {
@@ -42,7 +46,7 @@ void Histoire::RafraichirAffichageLayouts(int largeur, int hauteur)
     //this->layout()->activate();
 }
 
-Histoire::~Histoire()
+ExecHistoire::~ExecHistoire()
 {
     delete ui;
 }
@@ -92,7 +96,7 @@ Histoire::~Histoire()
 
 }*/
 
-Evt* Histoire::GetEvtSelonId(QString idATrouver)
+Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
 {
     for ( int i = 0; i < m_Evts.size(); ++i)
     {
@@ -113,7 +117,7 @@ Evt* Histoire::GetEvtSelonId(QString idATrouver)
     return nullptr;
 }
 
-Evt* Histoire::EvtActuel(bool forceHistoireMode)
+Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
 {
     // premier lancement
     if ( this->m_NoeudActuel == nullptr)
@@ -194,14 +198,14 @@ Evt* Histoire::EvtActuel(bool forceHistoireMode)
 }
 
 
-bool Histoire::AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params)
+bool ExecHistoire::AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params)
 {
     QString msg = "Fonction callback inexistante : " + fonction;
     Q_ASSERT_X(this->m_CallbackFunctions.contains(fonction), msg.toStdString().c_str(), "AppelerFonctionCallback");
     return this->m_CallbackFunctions[fonction](caracs, params);
 }
 
-void Histoire::SetCurrentEvtId(QString id)
+void ExecHistoire::SetCurrentEvtId(QString id)
 {
     for (Evt* evt: m_Evts)
     {
@@ -235,21 +239,7 @@ void Histoire::SetCurrentEvtId(QString id)
     GetIndexEffetConcerne() = 0;*/
 }
 
-EvtAleatoire* Histoire::AjouterEvtAleatoire(QString id, QString nom)
-{
-    EvtAleatoire* evt = new EvtAleatoire(id, nom);
-    m_Evts.push_back(static_cast<Evt*>(evt));
-    return evt;
-}
-
-Evt* Histoire::AjouterEvt(QString id, QString nom)
-{
-    Evt* evt = new Evt(id, nom);
-    m_Evts.push_back(evt);
-    return evt;
-}
-
-int Histoire::DeterminerIndexEvt(QString idEvt)
+int ExecHistoire::DeterminerIndexEvt(QString idEvt)
 {
     for ( int i = 0; i < m_Evts.size(); ++i)
     {
@@ -262,7 +252,7 @@ int Histoire::DeterminerIndexEvt(QString idEvt)
     return -1;
 }
 
-int Histoire::CalculerIndex(Evt* evtATrouver)
+int ExecHistoire::CalculerIndex(Evt* evtATrouver)
 {
     int index =0;
     for ( Evt* evt: this->m_Evts)
@@ -275,7 +265,7 @@ int Histoire::CalculerIndex(Evt* evtATrouver)
     return -1;
 }
 
-Effet* Histoire::EffetActuel(bool forceHistoireMode)
+Effet* ExecHistoire::EffetActuel(bool forceHistoireMode)
 {
     if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
     {
@@ -332,19 +322,7 @@ Effet* Histoire::EffetActuel(bool forceHistoireMode)
 
 }
 
-
-void Histoire::ChargerBDD(QString cheminBDD)
-{
-    if ( !this->m_Db.m_db.isOpen())
-        this->m_Db.Initialisation(cheminBDD);
-
-    if ( this->m_Db.m_db.isOpen())
-    {
-        this->ChargerEvtsBdd();
-    }
-}
-
-void Histoire::SetEffetIndex(int index)
+void ExecHistoire::SetEffetIndex(int index)
 {
     Evt* evtActuel = this->EvtActuel();
     Q_ASSERT_X(index<evtActuel->m_Effets.length(), "index impossible pour cet événement", "Histoire::SetEffetIndex");
@@ -352,12 +330,12 @@ void Histoire::SetEffetIndex(int index)
     //GetIndexEffetConcerne() = index;
 }
 
-void Histoire::GoToEffetId(QString idEffet)
+void ExecHistoire::GoToEffetId(QString idEffet)
 {
     this->m_NoeudActuel = EvtActuel()->m_Effets[this->DeterminerIndexEffet(idEffet)];
 }
 
-int Histoire::DeterminerIndexEffet(QString idEffet)
+int ExecHistoire::DeterminerIndexEffet(QString idEffet)
 {
     Evt* evtActuel = EvtActuel();
 
@@ -385,7 +363,7 @@ int Histoire::DeterminerIndexEffet(QString idEffet)
     return -1;
 }
 
-bool Histoire::AppliquerGoTo(Noeud* noeud)
+bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 {
     bool ilYAgoto = false;
     if ( noeud->m_GoToEvtId != "" )
@@ -453,7 +431,7 @@ bool Histoire::AppliquerGoTo(Noeud* noeud)
     return nullptr;
 }*/
 
-void Histoire::AppliquerTheme(Theme* theme)
+void ExecHistoire::AppliquerTheme(Theme* theme)
 {
     this->m_Themes.push_back(theme);
 
@@ -463,7 +441,7 @@ void Histoire::AppliquerTheme(Theme* theme)
     }
 }
 
-QString Histoire::GetCaracValue(QString caracId)
+QString ExecHistoire::GetCaracValue(QString caracId)
 {
     QString val = "";
 
@@ -476,12 +454,12 @@ QString Histoire::GetCaracValue(QString caracId)
     return val;
 }
 
-DPerso* Histoire::GetPersoCourant()
+DPerso* ExecHistoire::GetPersoCourant()
 {
     return Univers::ME->GetPersoInterface()->GetPersoCourant();
 }
 
-bool Histoire::CetteCaracExisteDeja(QString id)
+bool ExecHistoire::CetteCaracExisteDeja(QString id)
 {
     for ( int i = 0; i < m_Caracs.size() ; ++i)
     {
@@ -491,7 +469,7 @@ bool Histoire::CetteCaracExisteDeja(QString id)
     return false;
 }
 
-void Histoire::AppliquerCarac(SetCarac setCarac)
+void ExecHistoire::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = false;
     for ( int i = 0; i < m_Caracs.size() ; ++i)
@@ -532,7 +510,7 @@ void Histoire::AppliquerCarac(SetCarac setCarac)
 }
 
 
-Noeud* Histoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool noeudActuelEstValide)
+Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool noeudActuelEstValide)
 {
     if ( noeudActuel != nullptr)
         this->m_NoeudActuel = noeudActuel;
@@ -706,7 +684,7 @@ Noeud* Histoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool noeud
    return  m_EffetIndex;
 }*/
 
-void Histoire::PasserAEffetIndexSuivant()
+void ExecHistoire::PasserAEffetIndexSuivant()
 {
     int index = this->EffetActuel()->CalculerIndex() + 1;
     Evt* evtActuel = this->EvtActuel();
@@ -720,7 +698,7 @@ void Histoire::PasserAEffetIndexSuivant()
     }
 }
 
-void Histoire::PasserAEvtIndexSuivant()
+void ExecHistoire::PasserAEvtIndexSuivant()
 {
     qDebug()<<"Histoire::PasserAEvtIndexSuivant : Attention il n'est pas très recommandé de passer d'un événement à un autre sans goto. De plus ça ne fonctionne que pour les événements de l'histoire de base."<<endl;
     int index = this->CalculerIndex(this->EvtActuel()) + 1;
@@ -730,7 +708,7 @@ void Histoire::PasserAEvtIndexSuivant()
     this->m_NoeudActuel = this->m_Evts[index];
 }
 
-void Histoire::AjouterDureeAEffetHistoireCourant(float duree)
+void ExecHistoire::AjouterDureeAEffetHistoireCourant(float duree)
 {
     Effet* effet = EffetActuel(true);
     Q_ASSERT_X(effet!= nullptr, "effet == nullptr", "Effet actuel d'histoire introuvable ! ");
@@ -740,7 +718,7 @@ void Histoire::AjouterDureeAEffetHistoireCourant(float duree)
     evt->AjouterDuree(duree);
 }
 
-void Histoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
+void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
 {
     if ( evt == nullptr) evt = EvtActuel();
     if ( effet == nullptr ) effet = EffetActuel();
@@ -794,7 +772,7 @@ void Histoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
         this->update();
 }
 
-Evt* Histoire::GetEvtSelonBddId(int id)
+Evt* ExecHistoire::GetEvtSelonBddId(int id)
 {
     for ( Evt* evt: this->m_Evts)
     {
@@ -806,30 +784,4 @@ Evt* Histoire::GetEvtSelonBddId(int id)
     Q_ASSERT_X(true, "GetEvtSelonBddId", msg.toStdString().c_str());
 
     return nullptr;
-}
-
-void Histoire::ChargerEvtsBdd()
-{
-    QSqlQuery query("SELECT * FROM d_Evt");
-    while (query.next())
-    {
-       int bd_id = query.value("id").toInt();
-
-       Evt* evt = AjouterEvt("evt vide", "et sans nom");
-       evt->AjouterImgFond(query.value("m_CheminImgFond").toString());
-       evt->m_BDD_EvtId = bd_id;
-       QString TypeEvenement = query.value("m_TypeEvenement").toString();
-       if (TypeEvenement == "TE_Base") evt->m_TypeEvenement = TypeEvt::TE_Base;
-       else if (TypeEvenement == "TE_Conditionnel") evt->m_TypeEvenement = TypeEvt::TE_Conditionnel;
-       if (TypeEvenement == "TE_Aleatoire") evt->m_TypeEvenement = TypeEvt::TE_Aleatoire;
-
-       // récupération de la partie noeud :
-       evt->AppliquerValeurDeNoeudBDD( query.value("est_noeud_id").toInt());
-
-       evt->ChargerEffetsBdd();
-
-       int selectionneur_bdd_id = query.value("appartient_selectionneur_evt_id").toInt();
-       if ( selectionneur_bdd_id > 0 )
-           evt->AjouterASelectionneurEvt(selectionneur_bdd_id);
-    }
 }

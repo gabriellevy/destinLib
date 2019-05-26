@@ -1,6 +1,7 @@
 #include "condition.h"
 #include "perso.h"
 #include "univers.h"
+#include <QSqlQuery>
 
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
 {

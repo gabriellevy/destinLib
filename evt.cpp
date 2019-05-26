@@ -2,6 +2,7 @@
 #include "ui_evt.h"
 #include "univers.h"
 #include <QDebug>
+#include <QSqlQuery>
 
 /*Evt::Evt(QJsonObject evtJson, QWidget *parent) :
     QWidget(parent),

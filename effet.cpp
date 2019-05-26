@@ -3,6 +3,7 @@
 #include "univers.h"
 #include <QTimer>
 #include <QDebug>
+#include <QSqlQuery>
 
 Effet::Effet(Evt* evt, QWidget *parent) :
     QWidget(parent),

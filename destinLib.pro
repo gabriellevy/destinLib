@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui widgets multimedia
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,7 +27,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     perso.cpp \
-    histoire.cpp \
     carac.cpp \
     aspectratiolabel.cpp \
     dbmanager.cpp \
@@ -45,11 +45,12 @@ SOURCES += \
     reglages.cpp \
     theme.cpp \
     univers.cpp \
-    selectionneurdevenement.cpp
+    selectionneurdevenement.cpp \
+    genhistoire.cpp \
+    exechistoire.cpp
 
 HEADERS += \
     perso.h \
-    histoire.h \
     carac.h \
     aspectratiolabel.h \
     dbmanager.h \
@@ -68,7 +69,9 @@ HEADERS += \
     reglages.h \
     theme.h \
     univers.h \
-    selectionneurdevenement.h
+    selectionneurdevenement.h \
+    genhistoire.h \
+    exechistoire.h
 
 FORMS += \
     univers.ui \

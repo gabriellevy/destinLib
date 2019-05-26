@@ -6,7 +6,6 @@
 #include "carac.h"
 #include <QVector>
 #include "theme.h"
-#include "dbmanager.h"
 #include "perso.h"
 
 namespace Ui {
@@ -16,22 +15,11 @@ class Histoire;
 /**
  * @brief Classe qui gère le déroulement et l'affichage de toute l'histoire du jeu
  */
-class Histoire : public QWidget
+class ExecHistoire : public QWidget
 {
     Q_OBJECT
 
 protected:
-    /**
-     * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime
-     * Elle ont un identifiant unique (égal à leur nom) qui permet de les référence en base de données par exemple
-     * le premier paramètre QVector<QString> correspond à l'id des carac qu'on doit passer à la fonction en paramètre
-     * le 2ème correspond à des valeurs "brutes"
-     */
-    QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
-
-    QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
-    QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
-    QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
 
     Evt* m_DernierEvtAffiche = nullptr;
     Effet* m_DernierEffetAffiche = nullptr;
@@ -47,37 +35,28 @@ protected:
     //QString m_CurrentConditionnelEvtId;
     //int m_EffetConditionnelIndex;
 
-    // gestion de la BDD :
-    virtual void ChargerEvtsBdd();
-
 public:
-    explicit Histoire(QWidget *parent = nullptr);
-    ~Histoire();
+    explicit ExecHistoire(QWidget *parent = nullptr);
+    ~ExecHistoire();
 
-    // pour les aventrues qui n'utilisent pas le json mais du code :surclasser aventure et développer ces fonction
-
-    virtual void GenererHistoire() = 0;
-    virtual void GenererPersos() = 0;
-    virtual void GenererThemes() = 0;
-    virtual void GenererFonctionsCallback() = 0; // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
-    virtual QString GetTitre() = 0;
-    //Evt* m_CurrentEvt = nullptr;
+    QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
+    QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
+    QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
 
     /**
-     * @brief charge le contenu de la bdd visée dans l'histoire
-     * @param cheminBDD
-     *
-     * Il est tout à fait possible que les fonctions GenererHistoire et/ou GenererPersos
-     * soient remplacées par des fonctions de ce genre si toutes les informations de l'histoire sont en bdd
+     * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime
+     * Elle ont un identifiant unique (égal à leur nom) qui permet de les référence en base de données par exemple
+     * le premier paramètre QVector<QString> correspond à l'id des carac qu'on doit passer à la fonction en paramètre
+     * le 2ème correspond à des valeurs "brutes"
      */
-    virtual void ChargerBDD(QString cheminBDD);
+    QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
+
+    virtual QString GetTitre();
+    //Evt* m_CurrentEvt = nullptr;
 
     bool AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params);
 
     void AppliquerTheme(Theme* theme);
-
-    //void Generer(QJsonObject aventure);
-    //QVector<QString> m_Themes;
 
     void PasserAEffetIndexSuivant();
     void PasserAEvtIndexSuivant();
@@ -114,15 +93,10 @@ public:
      */
     //int& GetIndexEffetConcerne();
 
-    Evt* AjouterEvt(QString id, QString nom);
-    EvtAleatoire* AjouterEvtAleatoire(QString id, QString nom);
-
     // caracs actuelles du joueur
     QVector<Carac*> m_Caracs;
 
     QVector<Theme*> m_Themes;
-
-    DbManager m_Db;
 
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);

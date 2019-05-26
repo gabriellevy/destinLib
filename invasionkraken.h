@@ -1,10 +1,10 @@
 #ifndef INVASIONKRAKEN_H
 #define INVASIONKRAKEN_H
 
-#include "histoire.h"
+#include "exechistoire.h"
 
 
-class InvasionKraken : public Histoire
+class InvasionKraken : public ExecHistoire
 {
     Q_OBJECT
 public:

@@ -6,7 +6,8 @@
 #include <QVector>
 #include "theme.h"
 #include "perso.h"
-#include "histoire.h"
+#include "exechistoire.h"
+#include "genhistoire.h"
 #include "reglages.h"
 #include <QMediaPlayer>
 
@@ -38,24 +39,26 @@ protected:
     //bool ExtraireAventure(QString cheminAventure);
     //void LancerAventure(QString premierEvt = "", QString premierEffet = "");
 
+    // utiliser le générateur de base éventuellement mais en général il faudra le surclasser je pense
+    GenHistoire* m_GenHistoire = nullptr;
     // interfaces/widgets
-    Histoire* m_Histoire;
+    ExecHistoire* m_Histoire = nullptr;
     IPerso* m_Perso;
     float m_Duree;
     Ui::Univers *ui;
 
     void InstallerInterface();
 
-    // pour les aventrues qui n'utilisent pas le json mais du code :surclasser aventure et développer cette fonction
-    virtual void GenererAventure() = 0;
     virtual void GenererCaracs() = 0;
 
 public:
-    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, bool barreDeCote = true);
+    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
     //explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
     ~Univers();
 
-    void InitialiserHistoire(Histoire* histoire);
+    void AfficherHistoire(QWidget *parent = nullptr);
+    virtual void ExecuterGenerateurHistoire(QWidget *parent = nullptr);
+    virtual void LancerHistoire(QString premierEvt, QString premierEffet, bool BarreDeCote = true);
 
     bool LancerEvtEtOuEffetCourant();
 
@@ -65,7 +68,8 @@ public:
     static Univers* ME;
     ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;
 
-    Histoire* GetHistoire();
+    ExecHistoire* GetHistoire();
+    GenHistoire* GetGenHistoire();
     IPerso* GetPersoInterface();
     void SetEtatPartie(EtatPartie etat);
     void SetTypeEvt(TypeEvt typeEvt);

@@ -34,6 +34,8 @@ public:
     QVector<Theme*> m_Themes;
 };
 
+class ExecHistoire;
+
 /**
  * @brief Class permettant d'afficher le persos mais contenant aussi toutes les données et caractéristiques de tous les personnages affichables
  */

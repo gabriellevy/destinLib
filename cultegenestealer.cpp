@@ -1,7 +1,7 @@
 #include "cultegenestealer.h"
 #include "perso.h"
 
-CulteGenestealer::CulteGenestealer(QWidget *parent):Histoire(parent)
+CulteGenestealer::CulteGenestealer(QWidget *parent):ExecHistoire(parent)
 {
 }
 

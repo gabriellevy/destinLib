@@ -2,6 +2,7 @@
 //#include "ui_noeud.h"
 #include "univers.h"
 #include <QDebug>
+#include <QSqlQuery>
 
 Noeud::Noeud():m_TypeNoeud(TypeNoeud::etn_Noeud)
 {
