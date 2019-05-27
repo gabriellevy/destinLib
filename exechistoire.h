@@ -1,12 +1,12 @@
-#ifndef HISTOIRE_H
-#define HISTOIRE_H
+#ifndef EXECHISTOIRE_H
+#define EXECHISTOIRE_H
 
-#include "evt.h"
-#include "evtaleatoire.h"
-#include "carac.h"
-#include <QVector>
-#include "theme.h"
 #include "perso.h"
+
+class Evt;
+class Effet;
+class Hist;
+class Noeud;
 
 namespace Ui {
 class Histoire;
@@ -36,27 +36,15 @@ protected:
     //int m_EffetConditionnelIndex;
 
 public:
-    explicit ExecHistoire(QWidget *parent = nullptr);
+    explicit ExecHistoire(Hist* histoire, QWidget *parent = nullptr);
     ~ExecHistoire();
 
-    QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
-    QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
-    QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
-
-    /**
-     * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime
-     * Elle ont un identifiant unique (égal à leur nom) qui permet de les référence en base de données par exemple
-     * le premier paramètre QVector<QString> correspond à l'id des carac qu'on doit passer à la fonction en paramètre
-     * le 2ème correspond à des valeurs "brutes"
-     */
-    QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
+    Hist* m_Histoire;
 
     virtual QString GetTitre();
     //Evt* m_CurrentEvt = nullptr;
 
     bool AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params);
-
-    void AppliquerTheme(Theme* theme);
 
     void PasserAEffetIndexSuivant();
     void PasserAEvtIndexSuivant();
@@ -93,15 +81,8 @@ public:
      */
     //int& GetIndexEffetConcerne();
 
-    // caracs actuelles du joueur
-    QVector<Carac*> m_Caracs;
-
-    QVector<Theme*> m_Themes;
-
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);
-
-    DPerso* GetPersoCourant();
 
     /**
      * @brief GetCaracValue
@@ -115,4 +96,4 @@ private:
     Ui::Histoire *ui;
 };
 
-#endif // HISTOIRE_H
+#endif // EXECHISTOIRE_H

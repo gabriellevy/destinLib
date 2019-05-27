@@ -1,10 +1,9 @@
 #ifndef GENHISTOIRE_H
 #define GENHISTOIRE_H
-#include "evt.h"
+
 #include <QString>
-#include "evtaleatoire.h"
 #include "dbmanager.h"
-#include "exechistoire.h"
+#include "histoire.h"
 
 /**
  * @brief Class servant à générer toute l'histoire du jeu destin. Une fois cette exécution terminée elle renvoie un objet ExecHistoire à exécutee t n'est plus utilisée.
@@ -18,11 +17,11 @@ protected:
     virtual void ChargerEvtsBdd();
 
 public:
-    GenHistoire(QWidget *parent);
+    GenHistoire(Hist* histoireGeneree);
     virtual ~GenHistoire();
 
-    ExecHistoire* m_HistoireGeneree = nullptr;
-    virtual ExecHistoire* GenererHistoire();
+    Hist* m_HistoireGeneree = nullptr;
+    virtual Hist* GenererHistoire();
     virtual void GenererPersos();
     virtual void GenererThemes();
     virtual void GenererFonctionsCallback(); // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête

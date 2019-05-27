@@ -178,7 +178,7 @@ void Evt::LancerNoeud()
     this->ExecuterActionsNoeud();
 
     // un evt ne suffit pas à un affichage et une pause : il faut lancer l'effet suivant automatiquement
-    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
 void Evt::RafraichirAffichageEffet(Effet* effet)

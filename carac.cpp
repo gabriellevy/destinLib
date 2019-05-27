@@ -173,31 +173,31 @@ bool Carac::AfficherIntitule()
 
 QString Carac::GetCaracValue(QString id)
 {
-    return Univers::ME->GetHistoire()->GetCaracValue(id);
+    return Univers::ME->GetExecHistoire()->GetCaracValue(id);
 }
 
 int Carac::GetCaracValueAsInt(QString id)
 {
-    return Univers::ME->GetHistoire()->GetCaracValue(id).toInt();
+    return Univers::ME->GetExecHistoire()->GetCaracValue(id).toInt();
 }
 
 int Carac::AJouterValeurACaracId(QString idCarac, int valeurAjoutee)
 {
-    Univers::ME->GetHistoire()->AppliquerCarac(
+    Univers::ME->GetExecHistoire()->AppliquerCarac(
                 SetCarac(ModifCaracType::AddToCarac, idCarac, QString::number(valeurAjoutee)));
     return Carac::GetCaracValueAsInt(idCarac);
 }
 
 int Carac::RetirerValeurACaracId(QString idCarac, int valeurRetiree)
 {
-    Univers::ME->GetHistoire()->AppliquerCarac(
+    Univers::ME->GetExecHistoire()->AppliquerCarac(
                 SetCarac(ModifCaracType::RetireDeCarac, idCarac, QString::number(valeurRetiree)));
     return Carac::GetCaracValueAsInt(idCarac);
 }
 
 QString Carac::SetValeurACaracId(QString idCarac, QString valeurSet)
 {
-    Univers::ME->GetHistoire()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
+    Univers::ME->GetExecHistoire()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
     return Carac::GetCaracValue(idCarac);
 }
 

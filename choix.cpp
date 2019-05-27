@@ -67,7 +67,7 @@ bool Choix::AQuelqueChoseAAfficher()
 
 bool Choix::GestionTransition()
 {
-    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
     return true;
 }
 

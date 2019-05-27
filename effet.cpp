@@ -131,7 +131,7 @@ int Effet::CalculerIndex()
 void Effet::valeurGlisseurAChange()
 {
     SetCarac setCarac(ModifCaracType::SetCarac, m_Glisseur->m_IdCaracAssociee, QString::number(ui->glisseur->value()));
-    Univers::ME->GetHistoire()->AppliquerCarac(setCarac);
+    Univers::ME->GetExecHistoire()->AppliquerCarac(setCarac);
 }
 
 void Effet::AfficherNoeud()
@@ -189,12 +189,12 @@ void Effet::AfficherNoeud()
         QTimer::singleShot(m_MsChrono, this, SLOT(FinChrono()));
     }
 
-    Univers::ME->GetHistoire()->EvtActuel()->RafraichirAffichageLayouts();
+    Univers::ME->GetExecHistoire()->EvtActuel()->RafraichirAffichageLayouts();
 }
 
 void Effet::FinChrono()
 {
-    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
 void Effet::SupprimerTousLesChoix()
@@ -253,7 +253,7 @@ bool Effet::GestionTransition()
         }
         else
         {
-            Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+            Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
             return false;
         }
     }

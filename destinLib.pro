@@ -47,7 +47,8 @@ SOURCES += \
     univers.cpp \
     selectionneurdevenement.cpp \
     genhistoire.cpp \
-    exechistoire.cpp
+    exechistoire.cpp \
+    histoire.cpp
 
 HEADERS += \
     perso.h \
@@ -71,7 +72,8 @@ HEADERS += \
     univers.h \
     selectionneurdevenement.h \
     genhistoire.h \
-    exechistoire.h
+    exechistoire.h \
+    histoire.h
 
 FORMS += \
     univers.ui \

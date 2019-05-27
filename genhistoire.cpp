@@ -1,16 +1,14 @@
 #include "genhistoire.h"
 
-GenHistoire::GenHistoire(QWidget *parent)
+GenHistoire::GenHistoire(Hist* histoireGeneree):m_HistoireGeneree(histoireGeneree)
 {
-    if ( parent != nullptr)
-        m_HistoireGeneree = new ExecHistoire(parent);
 }
 
 GenHistoire::~GenHistoire()
 {
 }
 
-ExecHistoire* GenHistoire::GenererHistoire()
+Hist* GenHistoire::GenererHistoire()
 {
     return m_HistoireGeneree;
 }

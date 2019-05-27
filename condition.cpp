@@ -73,10 +73,10 @@ bool Condition::Tester()
     if ( m_CaracId == "§duree_effet_histoire")
     {
         valeurCarac = QString::number(
-                    Univers::ME->GetHistoire()->EffetActuel(true)->GetTempEcoule());
+                    Univers::ME->GetExecHistoire()->EffetActuel(true)->GetTempEcoule());
     }
     else
-        valeurCarac = Univers::ME->GetHistoire()->GetCaracValue(m_CaracId);
+        valeurCarac = Univers::ME->GetExecHistoire()->GetCaracValue(m_CaracId);
 
     switch (m_Comparateur) {
     case c_Egal:

@@ -427,7 +427,7 @@ Noeud::~Noeud()
         else
         {
             // est forcément une variable à remplacer
-            texteFinal += Univers::ME->GetHistoire()->GetCaracValue(list.at(i));
+            texteFinal += Univers::ME->GetExecHistoire()->GetCaracValue(list.at(i));
         }
      }
 
@@ -445,7 +445,7 @@ Noeud::~Noeud()
  {
      // commenté à cause des noeuds else (surement entre autres)
      //Q_ASSERT_X(false, "Noeud::GestionTransition", "Je ne crois pas que la gestion de transition devrait se faire dans Noeud si ?");
-    Univers::ME->GetHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
     return true;
  }
 
@@ -468,7 +468,7 @@ Noeud::~Noeud()
      bool transition_auto = this->GestionTransition( );
 
      if (!transition_auto || Univers::ME->GetEtatPartie() == EP_FinPartie)
-         Univers::ME->GetHistoire()->RafraichirAffichageEvtEtOuEffet( nullptr, nullptr );
+         Univers::ME->GetExecHistoire()->RafraichirAffichageEvtEtOuEffet( nullptr, nullptr );
 }
 
 void Noeud::FinExecutionNoeud()
@@ -490,7 +490,7 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
     Univers::ME->AjouterDuree(m_Duree);
     // si on est en mode aléatoire, le temps s'écoule aussi pour le noeud histoire qui a fait appel à l'aléatoire
     if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire)
-        Univers::ME->GetHistoire()->AjouterDureeAEffetHistoireCourant(m_Duree);
+        Univers::ME->GetExecHistoire()->AjouterDureeAEffetHistoireCourant(m_Duree);
 
     // maj du perso :
     if ( m_ChangePerso != "")
@@ -507,7 +507,7 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
 
     foreach(AppelCallback* appel, m_FonctionsAppellees)
     {
-        Univers::ME->GetHistoire()->AppelerFonctionCallback(
+        Univers::ME->GetExecHistoire()->AppelerFonctionCallback(
                     appel->m_NomFonction,
                     appel->m_ArgumentsCaracId,
                     appel->m_ArgumentsParValeur);
@@ -520,7 +520,7 @@ void Noeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSi
         IPerso* perso = Univers::ME->GetPersoInterface();
         for ( int i = 0 ; i < m_SetCaracs.size() ; ++i)
         {
-            Univers::ME->GetHistoire()->AppliquerCarac(*m_SetCaracs[i] );
+            Univers::ME->GetExecHistoire()->AppliquerCarac(*m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }
@@ -566,7 +566,7 @@ bool Noeud::TesterConditions()
     foreach(AppelCallback* appel, m_FonctionsDeTest)
     {
        resultatCallback = resultatCallback &&
-               Univers::ME->GetHistoire()->AppelerFonctionCallback(
+               Univers::ME->GetExecHistoire()->AppelerFonctionCallback(
                    appel->m_NomFonction,
                    appel->m_ArgumentsCaracId,
                    appel->m_ArgumentsParValeur);

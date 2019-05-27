@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QDebug>
+#include "histoire.h"
 
 const QFont* Univers::BASE_FONT = new QFont("Verdana", 10);
 const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
@@ -16,8 +17,10 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(paren
     m_Perso = new IPerso(ui->persoWidget);
 }
 
-void Univers::LancerHistoire(QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
+void Univers::LancerHistoire(ExecHistoire* execHistoire, QWidget *parent, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
 {
+    this->m_ExecHistoire = execHistoire;
+
     this->AfficherHistoire(ui->histoireWidget);
 
     m_Perso->RafraichirAffichage();
@@ -45,17 +48,19 @@ void Univers::LancerHistoire(QString /*premierEvt*/, QString /*premierEffet*/, b
         ui->histoireWidget->setStyleSheet("background-color : rgb(255,0,0)");
 }
 
-void Univers::ExecuterGenerateurHistoire(QWidget *parent)
+Hist* Univers::ExecuterGenerateurHistoire()
 {
-    m_GenHistoire = new GenHistoire(parent);
-    m_Histoire = m_GenHistoire->GenererHistoire();
+    m_Histoire = new Hist();
+    m_GenHistoire = new GenHistoire(m_Histoire);
+    m_GenHistoire->GenererHistoire();
+    return m_Histoire;
 }
 
 
 void Univers::AfficherHistoire(QWidget *parent)
 {
-    this->setWindowTitle(m_Histoire->GetTitre());
-    parent->layout()->addWidget(m_Histoire);
+    this->setWindowTitle(m_ExecHistoire->GetTitre());
+    parent->layout()->addWidget(m_ExecHistoire);
 }
 
 void Univers::AppliquerFond(QString urlImageFond)
@@ -153,8 +158,8 @@ void Univers::SetEtatPartie(EtatPartie etat)
 
 TypeEvt Univers::GetTypeEvtActuel()
 {
-    if ( m_Histoire != nullptr && m_Histoire->EvtActuel() != nullptr)
-        return m_Histoire->EvtActuel()->m_TypeEvenement;
+    if ( m_ExecHistoire != nullptr && m_ExecHistoire->EvtActuel() != nullptr)
+        return m_ExecHistoire->EvtActuel()->m_TypeEvenement;
 
     return TE_Base;
 }
@@ -182,7 +187,12 @@ EtatPartie Univers::ChangerEtatPartie(QString nouvelEtatPartie)
     return m_EtatPartie;
 }
 
-ExecHistoire* Univers::GetHistoire()
+ExecHistoire* Univers::GetExecHistoire()
+{
+    return m_ExecHistoire;
+}
+
+Hist* Univers::GetHistoire()
 {
     return m_Histoire;
 }
@@ -199,8 +209,8 @@ IPerso* Univers::GetPersoInterface()
 
 bool Univers::LancerEvtEtOuEffetCourant()
 {
-    Evt* evt_actuel = m_Histoire->EvtActuel();
-    Effet* effet_actuel = m_Histoire->EffetActuel();
+    Evt* evt_actuel = m_ExecHistoire->EvtActuel();
+    Effet* effet_actuel = m_ExecHistoire->EffetActuel();
     if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == 0 || effet_actuel == nullptr)
         return false;
 
@@ -217,7 +227,7 @@ void Univers::DeclencherEffetSuivant()
     if (declencheur)
         disconnect( declencheur, SIGNAL(clicked()), nullptr, nullptr );
 
-    m_Histoire->DeterminerPuisLancerNoeudSuivant();
+    m_ExecHistoire->DeterminerPuisLancerNoeudSuivant();
 }
 
 

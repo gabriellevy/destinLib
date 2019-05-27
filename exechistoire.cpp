@@ -6,9 +6,13 @@
 #include <QDebug>
 #include <QTime>
 #include "reglages.h"
+#include "histoire.h"
+#include "evt.h"
+#include "evtaleatoire.h"
 
-ExecHistoire::ExecHistoire(QWidget *parent) :
+ExecHistoire::ExecHistoire(Hist* histoire, QWidget *parent) :
     QWidget(parent),
+    m_Histoire(histoire),
     ui(new Ui::Histoire)
 {
     ui->setupUi(this);
@@ -62,7 +66,7 @@ ExecHistoire::~ExecHistoire()
 
             for ( int i = 0; i < jsonArrayThemes.size(); ++i)
             {
-                m_Themes.append(jsonArrayThemes[i].toObject()["valeur"].toString());
+                this->m_Histoire->m_Themes.append(jsonArrayThemes[i].toObject()["valeur"].toString());
             }
         }
         else
@@ -77,7 +81,7 @@ ExecHistoire::~ExecHistoire()
         for ( int i = 0; i < jsonArrayEvts.size(); ++i)
         {
             Evt* evt = new Evt(jsonArrayEvts[i].toObject());
-            m_Evts.append(evt);
+            this->m_Histoire->m_Evts.append(evt);
         }
     }
     else
@@ -90,7 +94,7 @@ ExecHistoire::~ExecHistoire()
         for ( int i = 0; i < jsonArrayEvts.size(); ++i)
         {
             Evt* evt = new Evt(jsonArrayEvts[i].toObject());
-            m_EvtsConditionnels.append(evt);
+            this->m_Histoire->m_EvtsConditionnels.append(evt);
         }
     }
 
@@ -98,21 +102,21 @@ ExecHistoire::~ExecHistoire()
 
 Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
 {
-    for ( int i = 0; i < m_Evts.size(); ++i)
+    for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
     {
-        if ( m_Evts[i]->m_Id == idATrouver)
-            return m_Evts[i];
+        if ( this->m_Histoire->m_Evts[i]->m_Id == idATrouver)
+            return this->m_Histoire->m_Evts[i];
     }
-    for ( int i = 0; i < m_EvtsAleatoires.size(); ++i)
+    for ( int i = 0; i < this->m_Histoire->m_EvtsAleatoires.size(); ++i)
     {
-        if ( m_Evts[i]->m_Id == idATrouver)
-            return m_Evts[i];
+        if ( this->m_Histoire->m_Evts[i]->m_Id == idATrouver)
+            return this->m_Histoire->m_Evts[i];
     }
 
-    for ( int i = 0; i < m_EvtsConditionnels.size(); ++i)
+    for ( int i = 0; i < this->m_Histoire->m_EvtsConditionnels.size(); ++i)
     {
-        if ( m_EvtsConditionnels[i]->m_Id == idATrouver)
-            return m_EvtsConditionnels[i];
+        if ( this->m_Histoire->m_EvtsConditionnels[i]->m_Id == idATrouver)
+            return this->m_Histoire->m_EvtsConditionnels[i];
     }
     return nullptr;
 }
@@ -122,7 +126,7 @@ Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
     // premier lancement
     if ( this->m_NoeudActuel == nullptr)
     {
-        if ( m_Evts.count() < 1)
+        if ( this->m_Histoire->m_Evts.count() < 1)
         {
             QMessageBox::warning(Univers::ME, "erreur dans Evt* Histoire::EvtActuel()", "Il n'y a aucun événement dans l'histoire !");
             return nullptr;
@@ -136,9 +140,9 @@ Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
         else m_CurrentEvtId = "";*/
 
         if ( this->m_NoeudActuel == nullptr )
-            this->SetCurrentEvtId(m_Evts.at(0)->m_Id);
+            this->SetCurrentEvtId(this->m_Histoire->m_Evts.at(0)->m_Id);
 
-        //return m_Evts.at(0);
+        //return this->m_Histoire->m_Evts.at(0);
     }
 
     if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
@@ -164,34 +168,34 @@ Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
     if ( forceHistoireMode || Univers::ME->GetTypeEvtActuel() == TE_Base )
     {
         // puis recherche de l'id actuel parmi tous les tableaux d'événements
-        for ( int i = 0; i < m_Evts.size(); ++i)
+        for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
         {
-            if ( m_Evts[i]->m_Id == idATrouver)
-                return m_Evts[i];
+            if ( this->m_Histoire->m_Evts[i]->m_Id == idATrouver)
+                return this->m_Histoire->m_Evts[i];
         }
     }
     else if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
     {
         idATrouver = m_CurrentConditionnelEvtId;
 
-        for ( int i = 0; i < m_EvtsConditionnels.size(); ++i)
+        for ( int i = 0; i < this->m_Histoire->m_EvtsConditionnels.size(); ++i)
         {
-            if ( m_EvtsConditionnels[i]->m_Id == idATrouver)
-                return m_EvtsConditionnels[i];
+            if ( this->m_Histoire->m_EvtsConditionnels[i]->m_Id == idATrouver)
+                return this->m_Histoire->m_EvtsConditionnels[i];
         }
     }
 
     // dans les modes non histoire il y a quand même un événement actuel qui peut encore se trouver dans les événements histoire ou aléatoires :
-    for ( int i = 0; i < m_Evts.size(); ++i)
+    for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
     {
-        if ( m_Evts[i]->m_Id == idATrouver)
-            return m_Evts[i];
+        if ( this->m_Histoire->m_Evts[i]->m_Id == idATrouver)
+            return this->m_Histoire->m_Evts[i];
     }
 
-    for ( int i = 0; i < m_EvtsConditionnels.size(); ++i)
+    for ( int i = 0; i < this->m_Histoire->m_EvtsConditionnels.size(); ++i)
     {
-        if ( m_EvtsConditionnels[i]->m_Id == m_CurrentEvtId)
-            return m_EvtsConditionnels[i];
+        if ( this->m_Histoire->m_EvtsConditionnels[i]->m_Id == m_CurrentEvtId)
+            return this->m_Histoire->m_EvtsConditionnels[i];
     }*/
 
     return nullptr;
@@ -201,27 +205,27 @@ Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
 bool ExecHistoire::AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params)
 {
     QString msg = "Fonction callback inexistante : " + fonction;
-    Q_ASSERT_X(this->m_CallbackFunctions.contains(fonction), msg.toStdString().c_str(), "AppelerFonctionCallback");
-    return this->m_CallbackFunctions[fonction](caracs, params);
+    Q_ASSERT_X(m_Histoire->m_CallbackFunctions.contains(fonction), msg.toStdString().c_str(), "AppelerFonctionCallback");
+    return m_Histoire->m_CallbackFunctions[fonction](caracs, params);
 }
 
 void ExecHistoire::SetCurrentEvtId(QString id)
 {
-    for (Evt* evt: m_Evts)
+    for (Evt* evt: this->m_Histoire->m_Evts)
     {
         if ( evt->m_Id == id) {
             m_NoeudActuel = evt;
             return;
         }
     }
-    for (Evt* evt: m_EvtsAleatoires)
+    for (Evt* evt: this->m_Histoire->m_EvtsAleatoires)
     {
         if ( evt->m_Id == id) {
             m_NoeudActuel = evt;
             return;
         }
     }
-    for (Evt* evt: m_EvtsConditionnels)
+    for (Evt* evt: this->m_Histoire->m_EvtsConditionnels)
     {
         if ( evt->m_Id == id) {
             m_NoeudActuel = evt;
@@ -241,9 +245,9 @@ void ExecHistoire::SetCurrentEvtId(QString id)
 
 int ExecHistoire::DeterminerIndexEvt(QString idEvt)
 {
-    for ( int i = 0; i < m_Evts.size(); ++i)
+    for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
     {
-        if ( m_Evts[i] != nullptr && m_Evts[i]->m_Id == idEvt)
+        if ( this->m_Histoire->m_Evts[i] != nullptr && this->m_Histoire->m_Evts[i]->m_Id == idEvt)
             return i;
     }
 
@@ -255,7 +259,7 @@ int ExecHistoire::DeterminerIndexEvt(QString idEvt)
 int ExecHistoire::CalculerIndex(Evt* evtATrouver)
 {
     int index =0;
-    for ( Evt* evt: this->m_Evts)
+    for ( Evt* evt: this->m_Histoire->m_Evts)
     {
         if ( evt == evtATrouver)
             return index;
@@ -431,39 +435,24 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
     return nullptr;
 }*/
 
-void ExecHistoire::AppliquerTheme(Theme* theme)
-{
-    this->m_Themes.push_back(theme);
-
-    for(Carac* carac: theme->m_CaracsDeBase)
-    {
-        this->m_Caracs.push_back(carac);
-    }
-}
-
 QString ExecHistoire::GetCaracValue(QString caracId)
 {
     QString val = "";
 
-    for ( int i = 0; i < m_Caracs.size() ; i++)
+    for ( int i = 0; i < this->m_Histoire->m_Caracs.size() ; i++)
     {
-        if ( m_Caracs[i]->m_DataCarac.m_Id == caracId)
-            return m_Caracs[i]->m_DataCarac.m_Valeur;
+        if ( this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Id == caracId)
+            return this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur;
     }
 
     return val;
 }
 
-DPerso* ExecHistoire::GetPersoCourant()
-{
-    return Univers::ME->GetPersoInterface()->GetPersoCourant();
-}
-
 bool ExecHistoire::CetteCaracExisteDeja(QString id)
 {
-    for ( int i = 0; i < m_Caracs.size() ; ++i)
+    for ( int i = 0; i < this->m_Histoire->m_Caracs.size() ; ++i)
     {
-        if ( m_Caracs[i]->m_DataCarac.m_Id == id)
+        if ( this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Id == id)
             return true;
     }
     return false;
@@ -472,26 +461,26 @@ bool ExecHistoire::CetteCaracExisteDeja(QString id)
 void ExecHistoire::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = false;
-    for ( int i = 0; i < m_Caracs.size() ; ++i)
+    for ( int i = 0; i < this->m_Histoire->m_Caracs.size() ; ++i)
     {
-        if ( m_Caracs[i]->m_DataCarac.m_Id == setCarac.m_CaracId)
+        if ( this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Id == setCarac.m_CaracId)
         {
             switch(setCarac.m_ModifCaracType)
             {
             case ModifCaracType::SetCarac : {
-                m_Caracs[i]->m_DataCarac.m_Valeur = setCarac.GetValeur();
+                this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur = setCarac.GetValeur();
                 break;
             }
             case ModifCaracType::AddToCarac : {
-                double valeur = m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
+                double valeur = this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
                 valeur += setCarac.GetValeur().toDouble();
-                m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
+                this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
                 break;
             }
             case ModifCaracType::RetireDeCarac : {
-                double valeur = m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
+                double valeur = this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
                 valeur -= setCarac.GetValeur().toDouble();
-                m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
+                this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
                 break;
             }
             }
@@ -505,7 +494,7 @@ void ExecHistoire::AppliquerCarac(SetCarac setCarac)
         Carac* carac = new Carac;
         carac->m_DataCarac.m_Id = setCarac.m_CaracId;
         carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
-        m_Caracs.append(carac);
+        this->m_Histoire->m_Caracs.append(carac);
     }
 }
 
@@ -535,11 +524,11 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
     //Evt* oldEvtActuel = EvtActuel();
 
     // les événements conditionnels, si leurs conditions sont remplies, sont immédiatement lancés :
-    /*for ( int y = 0 ; y < m_EvtsConditionnels.size() ; ++y)
+    /*for ( int y = 0 ; y < this->m_Histoire->m_EvtsConditionnels.size() ; ++y)
     {
-        if ( m_EvtsConditionnels[y]->TesterConditions())
+        if ( this->m_Histoire->m_EvtsConditionnels[y]->TesterConditions())
         {
-            this->SetCurrentEvtId(m_EvtsConditionnels[y]->m_Id);
+            this->SetCurrentEvtId(this->m_Histoire->m_EvtsConditionnels[y]->m_Id);
             this->m_NoeudActuel = EffetActuel();
             evtActuel = EvtActuel();
             effet_suivant_trouve = true;
@@ -613,12 +602,12 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
                 GetIndexEffetConcerne() = 0;
                 int indexEvtActuel = DeterminerIndexEvt(m_CurrentEvtId);
                 indexEvtActuel++;
-                if ( indexEvtActuel >= m_Evts.size())
+                if ( indexEvtActuel >= this->m_Histoire->m_Evts.size())
                 {
                     qDebug()<<"Impossible de trouver un événement suivant pour: evt id : " <<evtActuel->m_Id.toStdString().c_str();
                 }
                 qDebug()<<"Effet* Histoire::DeterminerEtActiverEffetSuivant(). indexEvtActuel : "<< indexEvtActuel;
-                this->SetCurrentEvtId(m_Evts[indexEvtActuel]->m_Id);
+                this->SetCurrentEvtId(this->m_Histoire->m_Evts[indexEvtActuel]->m_Id);
 
                 evtActuel = EvtActuel();
             }
@@ -704,8 +693,8 @@ void ExecHistoire::PasserAEvtIndexSuivant()
     int index = this->CalculerIndex(this->EvtActuel()) + 1;
 
     QString msg = "Impossible de passer à l'index d'effet suivant index : " + QString::number(index);
-    Q_ASSERT_X(index >= this->m_Evts.length(), msg.toStdString().c_str(), "Histoire::PasserAEvtIndexSuivant");
-    this->m_NoeudActuel = this->m_Evts[index];
+    Q_ASSERT_X(index >= this->m_Histoire->m_Evts.length(), msg.toStdString().c_str(), "Histoire::PasserAEvtIndexSuivant");
+    this->m_NoeudActuel = this->m_Histoire->m_Evts[index];
 }
 
 void ExecHistoire::AjouterDureeAEffetHistoireCourant(float duree)
@@ -774,7 +763,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
 
 Evt* ExecHistoire::GetEvtSelonBddId(int id)
 {
-    for ( Evt* evt: this->m_Evts)
+    for ( Evt* evt: this->m_Histoire->m_Evts)
     {
         if ( evt->m_BDD_EvtId == id)
             return evt;

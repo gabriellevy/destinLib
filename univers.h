@@ -6,6 +6,7 @@
 #include <QVector>
 #include "theme.h"
 #include "perso.h"
+#include "histoire.h"
 #include "exechistoire.h"
 #include "genhistoire.h"
 #include "reglages.h"
@@ -42,7 +43,8 @@ protected:
     // utiliser le générateur de base éventuellement mais en général il faudra le surclasser je pense
     GenHistoire* m_GenHistoire = nullptr;
     // interfaces/widgets
-    ExecHistoire* m_Histoire = nullptr;
+    Hist* m_Histoire = nullptr;
+    ExecHistoire* m_ExecHistoire = nullptr;
     IPerso* m_Perso;
     float m_Duree;
     Ui::Univers *ui;
@@ -57,8 +59,8 @@ public:
     ~Univers();
 
     void AfficherHistoire(QWidget *parent = nullptr);
-    virtual void ExecuterGenerateurHistoire(QWidget *parent = nullptr);
-    virtual void LancerHistoire(QString premierEvt, QString premierEffet, bool BarreDeCote = true);
+    virtual Hist* ExecuterGenerateurHistoire();
+    virtual void LancerHistoire(ExecHistoire* execHistoire, QWidget *parent = nullptr, QString premierEvt = "", QString premierEffet = "", bool BarreDeCote = true);
 
     bool LancerEvtEtOuEffetCourant();
 
@@ -68,7 +70,8 @@ public:
     static Univers* ME;
     ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;
 
-    ExecHistoire* GetHistoire();
+    Hist* GetHistoire();
+    ExecHistoire* GetExecHistoire();
     GenHistoire* GetGenHistoire();
     IPerso* GetPersoInterface();
     void SetEtatPartie(EtatPartie etat);
