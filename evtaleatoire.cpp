@@ -2,11 +2,9 @@
 
 
 EvtAleatoire::EvtAleatoire(QString id,
-         QString nom,
-         QWidget *parent) :
+         QString nom) :
     Evt(id,
-        nom,
-        parent)
+        nom)
 {
     m_TypeEvenement = TE_Aleatoire;
 }

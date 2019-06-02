@@ -2,6 +2,7 @@
 #define CHOIX_H
 
 #include <QPushButton>
+#include "execnoeud.h"
 #include "noeud.h"
 
 namespace Ui {
@@ -9,43 +10,34 @@ class Choix;
 }
 
 class Effet;
+class ExecEffet;
 
 /**
- * @brief The Choix class
- * dérive des noeuds tout comme les effets mais est un bouton et a comme principale particularité que l'exécution des actions n'est
+ * @brief dérive des noeuds tout comme les effets mais est un bouton et a comme principale particularité que l'exécution des actions n'est
  * faite que quand on appuie sur le bouton de même que la transition. Ils sont donc complètement désolidarisés de l'affichage contrairement
  * à la plupart des noeuds
  *
  * Les choix appartiennt toujours à un effet. Ils sont affichés en bas de cet effet
  */
-class Choix : public QPushButton, public Noeud
+class Choix : public Noeud
 {
-    Q_OBJECT
 
 public:
     //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
-    explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "", QWidget *parent = nullptr);
-    ~Choix();
-    void AfficherNoeud();
+    explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "");
+    virtual ~Choix() {}
+
     /**
-     * @brief AQuelqueChoseAAfficher
      * @return false car les noeuds choix ne sont jamais affichés en tant que tels (seulement comme boutons en bas d'un autre noeud)
      */
     virtual bool AQuelqueChoseAAfficher();
-    virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
-
-    void LancerNoeud();
-    bool GestionTransition();
     Effet* m_ParentEffet;
 
     // gestion de la bdd :
     int m_BDD_ChoixId = -1;
 
-private:
-    Ui::Choix *ui;
-
-public slots:
-    void ExecuterNoeudSlot(/*bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true*/);
+    //QString m_Text;
+    QString m_CheminImg;
 
 };
 

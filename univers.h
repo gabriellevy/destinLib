@@ -56,7 +56,7 @@ protected:
 public:
     explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
     //explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
-    ~Univers();
+    virtual ~Univers();
 
     void AfficherHistoire(QWidget *parent = nullptr);
     virtual Hist* ExecuterGenerateurHistoire();

@@ -25,12 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    execchoix.cpp \
+    execeffet.cpp \
+    execevt.cpp \
+    execnoeud.cpp \
+    genevt.cpp \
         main.cpp \
     perso.cpp \
     carac.cpp \
     aspectratiolabel.cpp \
     dbmanager.cpp \
     evt.cpp \
+    evtaleatoire.cpp \
     effet.cpp \
     noeud.cpp \
     setcarac.cpp \
@@ -51,11 +57,17 @@ SOURCES += \
     histoire.cpp
 
 HEADERS += \
+    execchoix.h \
+    execeffet.h \
+    execevt.h \
+    execnoeud.h \
+    genevt.h \
     perso.h \
     carac.h \
     aspectratiolabel.h \
     dbmanager.h \
     evt.h \
+    evtaleatoire.h \
     effet.h \
     noeud.h \
     setcarac.h \

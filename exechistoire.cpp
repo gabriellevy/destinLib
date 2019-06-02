@@ -7,8 +7,8 @@
 #include <QTime>
 #include "reglages.h"
 #include "histoire.h"
-#include "evt.h"
-#include "evtaleatoire.h"
+#include "execevt.h"
+#include "execeffet.h"
 
 ExecHistoire::ExecHistoire(Hist* histoire, QWidget *parent) :
     QWidget(parent),
@@ -123,8 +123,13 @@ Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
 
 Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
 {
+    return this->ExecEvtActuel(forceHistoireMode)->GetEvt();
+}
+
+ExecEvt* ExecHistoire::ExecEvtActuel(bool /*forceHistoireMode*/)
+{
     // premier lancement
-    if ( this->m_NoeudActuel == nullptr)
+    if ( this->m_ExecEvtActuel == nullptr)
     {
         if ( this->m_Histoire->m_Evts.count() < 1)
         {
@@ -132,35 +137,37 @@ Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
             return nullptr;
         }
         // si un événement s'appelle 'Debut' alors c'est que c'est le premiers, sinon on commence simplement au premier événement :
-        this->m_NoeudActuel = this->GetEvtSelonId("Debut");
+        this->SetExecEvtActuel(this->GetEvtSelonId("Debut"));
+
         /*m_CurrentEvtId = "Debut";
         Evt* prochainEvt = this->EvtActuel(forceHistoireMode);
         if ( prochainEvt != nullptr)
             return prochainEvt;
         else m_CurrentEvtId = "";*/
 
-        if ( this->m_NoeudActuel == nullptr )
+        if ( this->m_ExecEvtActuel == nullptr )
             this->SetCurrentEvtId(this->m_Histoire->m_Evts.at(0)->m_Id);
 
         //return this->m_Histoire->m_Evts.at(0);
     }
 
-    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
-        return static_cast<Evt*>(this->m_NoeudActuel);
+    if ( this->m_ExecEvtActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
+        return static_cast<ExecEvt*>(this->m_ExecEvtActuel);
 
-    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
+    /*if ( this->m_ExecEvtActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Effet)
     {
-        Effet* effetActuel = static_cast<Effet*>(this->m_NoeudActuel);
-        return effetActuel->m_Evt;
-    }
+        ExecEffet* effetActuel = static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
+        return effetActuel->m_ExecEvt;
+    }*/
 
-    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Choix)
+    /*if ( this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Choix)
     {
-        Choix* choixActuel = static_cast<Choix*>(this->m_NoeudActuel);
-        return choixActuel->m_ParentEffet->m_Evt;
-    }
+        ExecChoix* choixActuel = static_cast<ExecChoix*>(this->m_ExecNoeudActuel);
+        return choixActuel->m_ExecEffet->m_ExecEvt;
+    }*/
 
-    Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
+    //Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
+    Q_ASSERT_X(true, "Pas d'événement actuel : bizarre", "Histoire::EvtActuel");
 
 
     /*QString idATrouver = m_CurrentEvtId;
@@ -214,21 +221,21 @@ void ExecHistoire::SetCurrentEvtId(QString id)
     for (Evt* evt: this->m_Histoire->m_Evts)
     {
         if ( evt->m_Id == id) {
-            m_NoeudActuel = evt;
+            this->SetExecEvtActuel(evt);
             return;
         }
     }
     for (Evt* evt: this->m_Histoire->m_EvtsAleatoires)
     {
         if ( evt->m_Id == id) {
-            m_NoeudActuel = evt;
+            this->SetExecEvtActuel(evt);
             return;
         }
     }
     for (Evt* evt: this->m_Histoire->m_EvtsConditionnels)
     {
         if ( evt->m_Id == id) {
-            m_NoeudActuel = evt;
+            this->SetExecEvtActuel(evt);
             return;
         }
     }
@@ -271,23 +278,29 @@ int ExecHistoire::CalculerIndex(Evt* evtATrouver)
 
 Effet* ExecHistoire::EffetActuel(bool forceHistoireMode)
 {
-    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
+    return this->ExecEffetActuel(forceHistoireMode)->GetEffet();
+}
+
+ExecEffet* ExecHistoire::ExecEffetActuel(bool /*forceHistoireMode*/)
+{
+    return this->m_ExecEvtActuel->m_ExecEffetActuel;
+    /*if ( this->m_ExecEvtActuel->m_ExecEffetActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
     {
-        return static_cast<Effet*>(this->m_NoeudActuel);
+        return static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
     }
 
-    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Choix)
+    if ( this->m_ExecNoeudActuel->m_TypeNoeud == TypeNoeud::etn_Choix)
     {
-        Choix* choixActuel = static_cast<Choix*>(this->m_NoeudActuel);
+        Choix* choixActuel = static_cast<Choix*>(this->m_ExecNoeudActuel);
         return choixActuel->m_ParentEffet;
     }
 
-    if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
+    if ( this->m_ExecNoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
     {
-        Evt* evt = static_cast<Evt*>(this->m_NoeudActuel);
+        Evt* evt = static_cast<Evt*>(this->m_ExecNoeudActuel);
         qDebug()<<"Attention : GetEffet lancé alors qu'un Evt est le noeud actuel ! On a renvoyé le premier effet de ce noeud"<<endl;
         return evt->m_Effets[0];
-    }
+    }*/
 
     Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
 
@@ -330,13 +343,14 @@ void ExecHistoire::SetEffetIndex(int index)
 {
     Evt* evtActuel = this->EvtActuel();
     Q_ASSERT_X(index<evtActuel->m_Effets.length(), "index impossible pour cet événement", "Histoire::SetEffetIndex");
-    m_NoeudActuel = evtActuel->m_Effets[index];
+    m_ExecEvtActuel->SetEffetIndex(index);
     //GetIndexEffetConcerne() = index;
 }
 
 void ExecHistoire::GoToEffetId(QString idEffet)
 {
-    this->m_NoeudActuel = EvtActuel()->m_Effets[this->DeterminerIndexEffet(idEffet)];
+    int index = this->DeterminerIndexEffet(idEffet);
+    this->SetEffetIndex(index);
 }
 
 int ExecHistoire::DeterminerIndexEffet(QString idEffet)
@@ -499,19 +513,20 @@ void ExecHistoire::AppliquerCarac(SetCarac setCarac)
 }
 
 
-Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool noeudActuelEstValide)
+ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)
 {
     if ( noeudActuel != nullptr)
-        this->m_NoeudActuel = noeudActuel;
+        this->m_ExecNoeudActuel = noeudActuel;
 
-    this->m_NoeudActuel->FinExecutionNoeud();
+    this->m_ExecNoeudActuel->FinExecutionNoeud();
 
     bool noeud_suivant_trouve = false;
 
-    // si le noeud actuel est un evt alors il faut lancer immédiatement automatquement son prmeier effet :
-    if ( noeudActuelEstValide && !noeud_suivant_trouve && this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
+    // si le noeud actuel est un evt alors il faut lancer immédiatement automatquement son premier effet :
+    if ( noeudActuelEstValide && !noeud_suivant_trouve && this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
     {
-        this->m_NoeudActuel = this->EvtActuel()->m_Effets[0];
+        this->m_ExecEvtActuel->SetEffetIndex(0);
+        this->m_ExecNoeudActuel = this->m_ExecEvtActuel;
         noeud_suivant_trouve = true;
     }
 
@@ -543,8 +558,8 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
     if ( !noeud_suivant_trouve )
     {
          if ( noeudActuelEstValide &&
-              this->m_NoeudActuel != nullptr
-             && AppliquerGoTo(this->m_NoeudActuel))
+              this->m_ExecNoeudActuel != nullptr
+             && AppliquerGoTo(this->m_ExecNoeudActuel->m_Noeud))
         {
             //evtActuel = EvtActuel();
 
@@ -552,7 +567,7 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
 
             //noeudActuel = TesterSiEffetEstLancableOuSonElse(noeudActuel);
 
-            noeud_suivant_trouve = (this->m_NoeudActuel != nullptr);
+            noeud_suivant_trouve = (this->m_ExecNoeudActuel != nullptr);
         }
         else
         {
@@ -565,11 +580,12 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
     // on est peut-être dans un événement aléatoire dont il faut sélectionner un effet ?
     if ( evtActuel->m_TypeEvenement == TE_Aleatoire)
     {
-        this->m_NoeudActuel = (static_cast<EvtAleatoire*>(evtActuel))->DeterminerEffetAleatoire();
+        Effet* effetAleatoire = (static_cast<EvtAleatoire*>(evtActuel))->DeterminerEffetAleatoire();
+        this->m_ExecNoeudActuel = this->m_ExecEvtActuel->SetExecEffet(effetAleatoire);
 
-        SetEffetIndex( evtActuel->m_Effets.indexOf(static_cast<Effet*>(this->m_NoeudActuel)));
+        //SetEffetIndex( evtActuel->m_Effets.indexOf(static_cast<Effet*>(this->m_ExecNoeudActuel)));
 
-        noeud_suivant_trouve = (this->m_NoeudActuel != nullptr);
+        noeud_suivant_trouve = (this->m_ExecNoeudActuel != nullptr);
     }
 
     // on ne passe pas à l'effet suivant si il y a un while qui force à y rester :
@@ -617,10 +633,10 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
 
     bool afficheNoeud = false;
 
-    if ( this->m_NoeudActuel == nullptr)
-        this->m_NoeudActuel = EffetActuel();
+    if ( this->m_ExecNoeudActuel == nullptr)
+        this->m_ExecNoeudActuel = ExecEffetActuel();
 
-    if ( this->m_NoeudActuel != nullptr)
+    if ( this->m_ExecNoeudActuel != nullptr)
         afficheNoeud = true;
 
     /*if ( evtActuel == nullptr)
@@ -635,35 +651,48 @@ Noeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel, bool n
     }*/
 
     // on fait le test de condition une seule fois juste avant d'effectuer les effets :
-    while ( !this->m_NoeudActuel->TesterConditions())
+    while ( !this->m_ExecNoeudActuel->m_Noeud->TesterConditions())
     {
         afficheNoeud = false; // de toute façon le noeud actuel n'est pas lançable : on doit passer au suivant
 
-        if ( this->m_NoeudActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
+        /* else désactivé jusqu'à nouvel ordre
+         * if ( this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Effet)
         {
-            Effet* effet = dynamic_cast<Effet*>(this->m_NoeudActuel);
+            Effet* effet = dynamic_cast<Effet*>(this->m_ExecNoeudActuel);
             if ( effet->GetElse() != nullptr)
             {
-                this->m_NoeudActuel = dynamic_cast<Effet*>(this->m_NoeudActuel)->GetElse();
+                this->m_ExecNoeudActuel = dynamic_cast<Effet*>(this->m_ExecNoeudActuel)->GetElse();
                 afficheNoeud = true;
             } else {
                 break;
             }
         } else {
             break;
-        }
+        }*/
     }
 
     // note : ce peut être un Effet au sens objet mais aussi un simple noeud, un else par exemple ou un Evt
     if ( afficheNoeud )
     {
-        this->m_NoeudActuel->LancerNoeud();
+        this->m_ExecNoeudActuel->LancerNoeud();
     } else {
         // le noeud courant était invalide et on n'a asp trouvé de else valide, on cherche le suivant
-        return this->DeterminerPuisLancerNoeudSuivant(this->m_NoeudActuel, false);
+        return this->DeterminerPuisLancerNoeudSuivant(this->m_ExecNoeudActuel, false);
     }
 
-    return this->m_NoeudActuel;
+    switch (this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud) {
+    case TypeNoeud::etn_Evt: this->m_ExecEvtActuel = static_cast<ExecEvt*>(this->m_ExecNoeudActuel);
+        break;
+    /* a priori pas nécessaire :
+     * case TypeNoeud::etn_Choix: this->m_ExecEvtActuel->m_ExecEffetActuel->m_ExecChoix = static_cast<ExecChoix*>(this->m_ExecNoeudActuel);
+        break;*/
+    case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->m_ExecEffetActuel = static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
+        break;
+    default:
+        break;
+    }
+
+    return this->m_ExecNoeudActuel;
 }
 
 /*int& Histoire::GetIndexEffetConcerne()
@@ -683,7 +712,7 @@ void ExecHistoire::PasserAEffetIndexSuivant()
         // on va essayer de apsser à l'événement suivant mais ce n'est pas très "propre"
         this->PasserAEvtIndexSuivant();
     } else {
-        this->m_NoeudActuel = evtActuel->m_Effets[index];
+        this->m_ExecNoeudActuel = this->m_ExecEvtActuel->SetEffetIndex(index);
     }
 }
 
@@ -694,7 +723,22 @@ void ExecHistoire::PasserAEvtIndexSuivant()
 
     QString msg = "Impossible de passer à l'index d'effet suivant index : " + QString::number(index);
     Q_ASSERT_X(index >= this->m_Histoire->m_Evts.length(), msg.toStdString().c_str(), "Histoire::PasserAEvtIndexSuivant");
-    this->m_NoeudActuel = this->m_Histoire->m_Evts[index];
+    this->SetExecEvtActuel( this->m_Histoire->m_Evts[index] );
+}
+
+ExecEvt* ExecHistoire::SetExecEvtActuel(Evt* evt)
+{
+    if ( this->m_ExecEvtActuel != nullptr) {
+        QString msg = "Tentative de alncer un événement déjà lancé : " + evt->m_Id;
+        Q_ASSERT_X(this->m_ExecEvtActuel->GetEvt() == evt, msg.toStdString().c_str(), "ExecHistoire::SetEvtActuel");
+
+        m_ExecEvtActuel->hide();
+        delete this->m_ExecEvtActuel;
+    }
+
+    this->m_ExecNoeudActuel = this->m_ExecEvtActuel = new ExecEvt(evt);
+
+    return this->m_ExecEvtActuel;
 }
 
 void ExecHistoire::AjouterDureeAEffetHistoireCourant(float duree)
@@ -718,16 +762,17 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
     {
         evtChangement = true;
         // nettoyage de l'evenement précédent
-        if ( m_DernierEvtAffiche != nullptr)
+        /* normalement il n'y a plus à le retirer : c'est fait quand on change d'exeeffet
+         * if ( m_ExecEvtActuel != nullptr)
         {
-            m_DernierEvtAffiche->hide();
-        }
+            m_ExecEvtActuel->hide();
+        }*/
         m_DernierEvtAffiche = evt;
 
         //affichage du nouveau
         //m_CurrentEvt = evt;
         //m_CurrentEvt->LancerNoeud();
-        ui->histoireLayout->layout()->addWidget(evt);
+        ui->histoireLayout->layout()->addWidget(m_ExecEvtActuel);
         //ui->histoireLayout->layout()->addWidget(m_CurrentEvt);
     }
 
@@ -743,21 +788,23 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
             m_DernierEffetAffiche = effet;
         }
     }
-    if ( evtChangement)
+    if ( evtChangement )
     {
+        this->SetExecEvtActuel(evt);
         // the point of the following takeWidget is to avoid the destruction of the previous evt by the setWidget call just after
         /*QWidget* evt = */ui->histoireScrollArea->takeWidget();
-        ui->histoireScrollArea->setWidget(evt);
-        evt->show();
+        ui->histoireScrollArea->setWidget(this->m_ExecEvtActuel);
+        this->m_ExecEvtActuel->show();
     }
     if ( effetChangement )
     {
+        ExecEffet* exec_effet = this->m_ExecEvtActuel->SetExecEffet(effet);
         QScrollBar* vertScroll = ui->histoireScrollArea->verticalScrollBar();
         vertScroll->setValue(0);
-        evt->RafraichirAffichageEffet(effet);
+        this->m_ExecEvtActuel->RafraichirAffichageEffet(exec_effet);
     }
 
-    if ( evtChangement || effetChangement)
+    if ( evtChangement || effetChangement )
         this->update();
 }
 

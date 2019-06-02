@@ -3,10 +3,13 @@
 
 #include "perso.h"
 
-class Evt;
+class ExecNoeud;
+class ExecEffet;
+class ExecEvt;
 class Effet;
 class Hist;
 class Noeud;
+class Evt;
 
 namespace Ui {
 class Histoire;
@@ -30,7 +33,9 @@ protected:
     // repérage d'événement courant et effet courant en mode histoire normal
     //QString m_CurrentEvtId;
     //int m_EffetIndex; // index de l'effet actuel dans la liste des effets de l'événement actuel
-    Noeud* m_NoeudActuel = nullptr;
+    ExecNoeud* m_ExecNoeudActuel = nullptr; // 'curseur' pointant sur le noeud précisément exécuté à ce moment, que ce soit un événement, effet, choix
+    ExecEvt* m_ExecEvtActuel = nullptr; // evt actuel (il doit toujours y en avoir un à partir de quand le destin est lancé
+
 
     //QString m_CurrentConditionnelEvtId;
     //int m_EffetConditionnelIndex;
@@ -56,10 +61,13 @@ public:
      * @param forceHistoireMode : renvoie l'événement courant de l'histoire, excluant l'événement aléatoire secondaire même si on est en mode aléatoire
      * @return événement actuellement exécuté par le joueur
      */
+    ExecEvt* ExecEvtActuel(bool forceHistoireMode = false);
+    ExecEffet* ExecEffetActuel(bool forceHistoireMode = false);
     Evt* EvtActuel(bool forceHistoireMode = false);
     Effet* EffetActuel(bool forceHistoireMode = false);
+    ExecEvt* SetExecEvtActuel(Evt* evt);
 
-    Noeud* DeterminerPuisLancerNoeudSuivant(Noeud* noeudActuel = nullptr, bool noeudActuelEstValide = true);
+    ExecNoeud* DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel = nullptr, bool noeudActuelEstValide = true);
     Noeud* GetEffetDindexSuivant(Noeud* noeudActuel);
     Noeud* TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel);
     // si les événements sont issues de la bdd ils ont un id qui permet de les extraire :

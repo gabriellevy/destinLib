@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "histoire.h"
+#include "execeffet.h"
+#include "execevt.h"
 
 const QFont* Univers::BASE_FONT = new QFont("Verdana", 10);
 const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
@@ -17,7 +19,7 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(paren
     m_Perso = new IPerso(ui->persoWidget);
 }
 
-void Univers::LancerHistoire(ExecHistoire* execHistoire, QWidget *parent, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
+void Univers::LancerHistoire(ExecHistoire* execHistoire, QWidget*/* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
 {
     this->m_ExecHistoire = execHistoire;
 
@@ -158,7 +160,7 @@ void Univers::SetEtatPartie(EtatPartie etat)
 
 TypeEvt Univers::GetTypeEvtActuel()
 {
-    if ( m_ExecHistoire != nullptr && m_ExecHistoire->EvtActuel() != nullptr)
+    if ( m_ExecHistoire != nullptr && m_ExecHistoire->ExecEvtActuel() != nullptr)
         return m_ExecHistoire->EvtActuel()->m_TypeEvenement;
 
     return TE_Base;
@@ -209,8 +211,8 @@ IPerso* Univers::GetPersoInterface()
 
 bool Univers::LancerEvtEtOuEffetCourant()
 {
-    Evt* evt_actuel = m_ExecHistoire->EvtActuel();
-    Effet* effet_actuel = m_ExecHistoire->EffetActuel();
+    ExecEvt* evt_actuel = m_ExecHistoire->ExecEvtActuel();
+    ExecEffet* effet_actuel = m_ExecHistoire->ExecEffetActuel();
     if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == 0 || effet_actuel == nullptr)
         return false;
 

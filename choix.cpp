@@ -1,6 +1,4 @@
 #include "choix.h"
-#include "ui_choix.h"
-#include "univers.h"
 
 /*Choix::Choix(QJsonObject choixJson, QWidget *parent) :
     QPushButton("", parent),
@@ -14,50 +12,13 @@
     QObject::connect(this, SIGNAL(clicked()), this, SLOT(ExecuterNoeudSlot()));
 }*/
 
-Choix::Choix(Effet* ParentEffet, QString text, QString cheminImg, QWidget *parent) :
-    QPushButton(text, parent),
-    Noeud(),
-    m_ParentEffet(ParentEffet),
-    ui(new Ui::Choix)
+Choix::Choix(Effet* ParentEffet, QString text, QString cheminImg) :
+        Noeud(),
+        m_ParentEffet(ParentEffet),
+        m_CheminImg(cheminImg)
 {
-    ui->setupUi(this);
-
     m_TypeNoeud = TypeNoeud::etn_Choix;
-
-    this->setCursor(Qt::PointingHandCursor);
-
-    QObject::connect(this, SIGNAL(clicked()), this, SLOT(ExecuterNoeudSlot()));
-
     m_Text = text;
-
-    if ( cheminImg != "" )
-    {
-        m_Img.load(cheminImg);
-    }
-}
-
-void Choix::RafraichirAffichageLayouts(int largeur, int)
-{
-    if( largeur != -1)
-    {
-        this->setFixedWidth(largeur);
-    }
-}
-
-void Choix::AfficherNoeud()
-{
-    this->setText(TexteAAfficher() );
-
-    if ( !m_Img.isNull() )
-    {
-        QIcon icone(m_Img);
-        this->setIcon(icone);
-        this->setIconSize(m_Img.rect().size());
-
-        // si il n'y a pas de texte c'est un bouton uniquement icone
-        if ( m_Text == "")
-            this->setFixedSize(m_Img.rect().size());
-    }
 }
 
 bool Choix::AQuelqueChoseAAfficher()
@@ -65,30 +26,3 @@ bool Choix::AQuelqueChoseAAfficher()
     return false;
 }
 
-bool Choix::GestionTransition()
-{
-    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
-    return true;
-}
-
-
-void Choix::ExecuterNoeudSlot(/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)
-{
-    /*QObject* declencheur = sender();
-    if (declencheur)
-        disconnect( declencheur, SIGNAL(clicked()), nullptr, nullptr );*/
-
-    this->ExecuterActionsNoeud(/*afficherNoeud, lancerNoeudSuivantSiRienAAfiicher*/);
-
-    this->GestionTransition();
-}
-
-void Choix::LancerNoeud()
-{
-    Q_ASSERT_X(false, "Choix::LancerNoeud", "On ne doit jamais lancer intégralement l'effet d'un bouton, il doit être soit affiché soit exécuté");
-}
-
-Choix::~Choix()
-{
-    delete ui;
-}

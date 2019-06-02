@@ -13,11 +13,10 @@
  */
 class EvtAleatoire : public Evt
 {
-    Q_OBJECT
 public:
     explicit EvtAleatoire(QString id,
-                      QString nom,
-                      QWidget *parent = nullptr);
+                      QString nom);
+    virtual ~EvtAleatoire() {}
 
     Effet* DeterminerEffetAleatoire();
 };

@@ -4,6 +4,7 @@
 #include <QString>
 #include "dbmanager.h"
 #include "histoire.h"
+#include "genevt.h"
 
 /**
  * @brief Class servant à générer toute l'histoire du jeu destin. Une fois cette exécution terminée elle renvoie un objet ExecHistoire à exécutee t n'est plus utilisée.
@@ -11,6 +12,7 @@
 class GenHistoire
 {
 private:
+    GenEvt* m_GenerateurEvt = nullptr;
 
 protected:
     // gestion de la BDD :

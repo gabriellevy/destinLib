@@ -2,6 +2,7 @@
 
 GenHistoire::GenHistoire(Hist* histoireGeneree):m_HistoireGeneree(histoireGeneree)
 {
+    m_GenerateurEvt = new GenEvt();
 }
 
 GenHistoire::~GenHistoire()
@@ -38,8 +39,8 @@ void GenHistoire::ChargerBDD(QString cheminBDD)
 
 EvtAleatoire* GenHistoire::AjouterEvtAleatoire(QString id, QString nom)
 {
-    EvtAleatoire* evt = new EvtAleatoire(id, nom);
-    m_HistoireGeneree->m_Evts.push_back(static_cast<Evt*>(evt));
+    EvtAleatoire* evt = this->m_GenerateurEvt->GenererEvtAleatoire(id, nom);
+    m_HistoireGeneree->m_EvtsAleatoires.push_back(evt);
     return evt;
 }
 
@@ -58,7 +59,7 @@ void GenHistoire::ChargerEvtsBdd()
        int bd_id = query.value("id").toInt();
 
        Evt* evt = AjouterEvt("evt vide", "et sans nom");
-       evt->AjouterImgFond(query.value("m_CheminImgFond").toString());
+       this->m_GenerateurEvt->AjouterImgFond(evt, query.value("m_CheminImgFond").toString());
        evt->m_BDD_EvtId = bd_id;
        QString TypeEvenement = query.value("m_TypeEvenement").toString();
        if (TypeEvenement == "TE_Base") evt->m_TypeEvenement = TypeEvt::TE_Base;
@@ -68,11 +69,11 @@ void GenHistoire::ChargerEvtsBdd()
        // récupération de la partie noeud :
        evt->AppliquerValeurDeNoeudBDD( query.value("est_noeud_id").toInt());
 
-       evt->ChargerEffetsBdd();
+       this->m_GenerateurEvt->ChargerEffetsBdd(evt);
 
        int selectionneur_bdd_id = query.value("appartient_selectionneur_evt_id").toInt();
        if ( selectionneur_bdd_id > 0 )
-           evt->AjouterASelectionneurEvt(selectionneur_bdd_id);
+           m_GenerateurEvt->AjouterASelectionneurEvt(evt, selectionneur_bdd_id);
     }
 }
 
