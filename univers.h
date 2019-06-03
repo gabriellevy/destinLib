@@ -51,7 +51,7 @@ protected:
 
     void InstallerInterface();
 
-    virtual void GenererCaracs() = 0;
+    virtual void GenererCaracs() {};
 
 public:
     explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);

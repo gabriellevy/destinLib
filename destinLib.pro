@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets multimedia
-QT += sql
+QT += core gui sql widgets multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,6 +29,7 @@ SOURCES += \
     execevt.cpp \
     execnoeud.cpp \
     genevt.cpp \
+    genhistoirebdd.cpp \
         main.cpp \
     perso.cpp \
     carac.cpp \
@@ -62,6 +62,7 @@ HEADERS += \
     execevt.h \
     execnoeud.h \
     genevt.h \
+    genhistoirebdd.h \
     perso.h \
     carac.h \
     aspectratiolabel.h \
