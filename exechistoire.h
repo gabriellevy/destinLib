@@ -61,8 +61,8 @@ public:
      * @param forceHistoireMode : renvoie l'événement courant de l'histoire, excluant l'événement aléatoire secondaire même si on est en mode aléatoire
      * @return événement actuellement exécuté par le joueur
      */
-    ExecEvt* ExecEvtActuel(bool forceHistoireMode = false);
-    ExecEffet* ExecEffetActuel(bool forceHistoireMode = false);
+    ExecEvt* GetExecEvtActuel(bool forceHistoireMode = false);
+    ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
     Evt* EvtActuel(bool forceHistoireMode = false);
     Effet* EffetActuel(bool forceHistoireMode = false);
     ExecEvt* SetExecEvtActuel(Evt* evt);

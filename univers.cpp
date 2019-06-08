@@ -43,16 +43,20 @@ void Univers::LancerHistoire(ExecHistoire* execHistoire, QWidget*/* parent*/, QS
     m_Histoire = new Histoire(ui->histoireWidget);
     ui->histoireWidget->layout()->addWidget(m_Histoire);*/
 
-    //LancerAventure();
-
 
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
         ui->histoireWidget->setStyleSheet("background-color : rgb(255,0,0)");
+
+    //LancerAventure();
+
+    LancerEvtEtOuEffetCourant();
+    //DeclencherEffetSuivant();
+    //this->m_ExecHistoire->GetExecEvtActuel();
 }
 
 Hist* Univers::ExecuterGenerateurHistoire()
 {
-    m_Histoire = new Hist();
+    m_Histoire = new Hist("titre inconu : vous devriez surclasser 'ExecuterGenerateurHistoire'");
     m_GenHistoire = new GenHistoire(m_Histoire);
     m_GenHistoire->GenererHistoire();
     return m_Histoire;
@@ -101,7 +105,7 @@ void Univers::InstallerInterface()
 
     Univers::ME = this;
 
-    m_EtatPartie = EP_Chargement;
+    this->SetEtatPartie(EP_Chargement);
     m_Duree = 0.0f;
 }
 
@@ -160,7 +164,7 @@ void Univers::SetEtatPartie(EtatPartie etat)
 
 TypeEvt Univers::GetTypeEvtActuel()
 {
-    if ( m_ExecHistoire != nullptr && m_ExecHistoire->ExecEvtActuel() != nullptr)
+    if ( m_ExecHistoire != nullptr && m_ExecHistoire->GetExecEvtActuel() != nullptr)
         return m_ExecHistoire->EvtActuel()->m_TypeEvenement;
 
     return TE_Base;
@@ -179,7 +183,7 @@ void Univers::AjouterDuree(float duree)
 EtatPartie Univers::ChangerEtatPartie(QString nouvelEtatPartie)
 {
     if (nouvelEtatPartie == "fin_de_partie" )
-        m_EtatPartie = EP_FinPartie;
+        this->SetEtatPartie(EP_FinPartie);
     else
     {
         QString msg = "Nouvel état de partie non reconnu : " + nouvelEtatPartie ;
@@ -211,8 +215,8 @@ IPerso* Univers::GetPersoInterface()
 
 bool Univers::LancerEvtEtOuEffetCourant()
 {
-    ExecEvt* evt_actuel = m_ExecHistoire->ExecEvtActuel();
-    ExecEffet* effet_actuel = m_ExecHistoire->ExecEffetActuel();
+    ExecEvt* evt_actuel = m_ExecHistoire->GetExecEvtActuel();
+    ExecEffet* effet_actuel = m_ExecHistoire->GetExecEffetActuel();
     if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == 0 || effet_actuel == nullptr)
         return false;
 

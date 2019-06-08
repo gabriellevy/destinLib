@@ -15,7 +15,7 @@
 class Hist
 {
 public:
-    Hist();
+    Hist(QString titre);
 
     void AppliquerTheme(Theme* theme);
 
@@ -23,11 +23,11 @@ public:
     QVector<Carac*> m_Caracs;
 
     QVector<Theme*> m_Themes;
+    QString m_Titre = "Titre inconnu";
 
     QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
     QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
     QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
-
 
     /**
      * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime

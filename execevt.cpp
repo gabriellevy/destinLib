@@ -29,6 +29,14 @@ ExecEvt::~ExecEvt()
     delete ui;
 }
 
+ExecEffet* ExecEvt::GetExecEffetActuel()
+{
+    if ( this->m_ExecEffetActuel == nullptr)
+        this->SetEffetIndex(0);
+
+    return this->m_ExecEffetActuel;
+}
+
 ExecEffet* ExecEvt::SetEffetIndex(int index)
 {
     return this->SetExecEffet(this->GetEvt()->m_Effets[index]);
@@ -36,9 +44,23 @@ ExecEffet* ExecEvt::SetEffetIndex(int index)
 
 ExecEffet* ExecEvt::SetExecEffet(Effet* effet)
 {
-    if ( m_ExecEffetActuel!= nullptr)
-        delete this->m_ExecEffetActuel;
-    this->m_ExecEffetActuel = new ExecEffet(this, effet);
+    if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet) {
+        /*if ( m_ExecEffetActuel!= nullptr)
+            delete this->m_ExecEffetActuel;*/
+        this->m_ExecEffetActuel = new ExecEffet(this, effet);
+    }
+
+    return this->m_ExecEffetActuel;
+}
+
+ExecEffet* ExecEvt::SetExecEffet(ExecEffet* exec_effet)
+{
+    if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
+        /*if ( m_ExecEffetActuel!= nullptr)
+            delete this->m_ExecEffetActuel;*/
+        this->m_ExecEffetActuel = exec_effet;
+    }
+
 
     return this->m_ExecEffetActuel;
 }

@@ -29,7 +29,7 @@ ExecHistoire::ExecHistoire(Hist* histoire, QWidget *parent) :
 
 QString ExecHistoire::GetTitre()
 {
-    return "titre non initialisé !";
+    return m_Histoire->m_Titre;
 }
 
 void ExecHistoire::RafraichirAffichageLayouts(int largeur, int hauteur)
@@ -123,14 +123,15 @@ Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
 
 Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
 {
-    return this->ExecEvtActuel(forceHistoireMode)->GetEvt();
+    return this->GetExecEvtActuel(forceHistoireMode)->GetEvt();
 }
 
-ExecEvt* ExecHistoire::ExecEvtActuel(bool /*forceHistoireMode*/)
+ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
 {
     // premier lancement
     if ( this->m_ExecEvtActuel == nullptr)
     {
+        Univers::ME->SetEtatPartie(EP_Deroulement);
         if ( this->m_Histoire->m_Evts.count() < 1)
         {
             QMessageBox::warning(Univers::ME, "erreur dans Evt* Histoire::EvtActuel()", "Il n'y a aucun événement dans l'histoire !");
@@ -205,7 +206,7 @@ ExecEvt* ExecHistoire::ExecEvtActuel(bool /*forceHistoireMode*/)
             return this->m_Histoire->m_EvtsConditionnels[i];
     }*/
 
-    return nullptr;
+    return this->m_ExecEvtActuel;
 }
 
 
@@ -278,12 +279,12 @@ int ExecHistoire::CalculerIndex(Evt* evtATrouver)
 
 Effet* ExecHistoire::EffetActuel(bool forceHistoireMode)
 {
-    return this->ExecEffetActuel(forceHistoireMode)->GetEffet();
+    return this->GetExecEffetActuel(forceHistoireMode)->GetEffet();
 }
 
-ExecEffet* ExecHistoire::ExecEffetActuel(bool /*forceHistoireMode*/)
+ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
 {
-    return this->m_ExecEvtActuel->m_ExecEffetActuel;
+    return this->m_ExecEvtActuel->GetExecEffetActuel();
     /*if ( this->m_ExecEvtActuel->m_ExecEffetActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
     {
         return static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
@@ -525,8 +526,8 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     // si le noeud actuel est un evt alors il faut lancer immédiatement automatquement son premier effet :
     if ( noeudActuelEstValide && !noeud_suivant_trouve && this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
     {
-        this->m_ExecEvtActuel->SetEffetIndex(0);
-        this->m_ExecNoeudActuel = this->m_ExecEvtActuel;
+        //this->m_ExecEvtActuel->SetEffetIndex(0);
+        this->m_ExecNoeudActuel = this->m_ExecEvtActuel->GetExecEffetActuel();
         noeud_suivant_trouve = true;
     }
 
@@ -634,7 +635,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     bool afficheNoeud = false;
 
     if ( this->m_ExecNoeudActuel == nullptr)
-        this->m_ExecNoeudActuel = ExecEffetActuel();
+        this->m_ExecNoeudActuel = GetExecEffetActuel();
 
     if ( this->m_ExecNoeudActuel != nullptr)
         afficheNoeud = true;
@@ -686,7 +687,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     /* a priori pas nécessaire :
      * case TypeNoeud::etn_Choix: this->m_ExecEvtActuel->m_ExecEffetActuel->m_ExecChoix = static_cast<ExecChoix*>(this->m_ExecNoeudActuel);
         break;*/
-    case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->m_ExecEffetActuel = static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
+    case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->SetExecEffet(static_cast<ExecEffet*>(this->m_ExecNoeudActuel));
         break;
     default:
         break;
@@ -729,11 +730,16 @@ void ExecHistoire::PasserAEvtIndexSuivant()
 ExecEvt* ExecHistoire::SetExecEvtActuel(Evt* evt)
 {
     if ( this->m_ExecEvtActuel != nullptr) {
+
+        if ( this->m_ExecEvtActuel->GetEvt() == evt ) {
+            this->m_ExecNoeudActuel = this->m_ExecEvtActuel;
+            return this->m_ExecEvtActuel;
+        }
         QString msg = "Tentative de alncer un événement déjà lancé : " + evt->m_Id;
         Q_ASSERT_X(this->m_ExecEvtActuel->GetEvt() == evt, msg.toStdString().c_str(), "ExecHistoire::SetEvtActuel");
 
         m_ExecEvtActuel->hide();
-        delete this->m_ExecEvtActuel;
+        //delete this->m_ExecEvtActuel;
     }
 
     this->m_ExecNoeudActuel = this->m_ExecEvtActuel = new ExecEvt(evt);

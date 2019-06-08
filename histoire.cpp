@@ -1,7 +1,7 @@
 #include "histoire.h"
 #include "univers.h"
 
-Hist::Hist()
+Hist::Hist(QString titre):m_Titre(titre)
 {
 
 }

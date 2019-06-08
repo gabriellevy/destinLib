@@ -20,11 +20,11 @@ void Reglages::ChangeTaille(int largeur, int hauteur)
 
     if ( Univers::ME->GetHistoire() )
     {
-        if ( Univers::ME->GetExecHistoire()->ExecEffetActuel() )
-            Univers::ME->GetExecHistoire()->ExecEffetActuel()->RafraichirAffichageLayouts(m_Largeur,m_Hauteur);
+        if ( Univers::ME->GetExecHistoire()->GetExecEffetActuel() )
+            Univers::ME->GetExecHistoire()->GetExecEffetActuel()->RafraichirAffichageLayouts(m_Largeur,m_Hauteur);
 
-        if ( Univers::ME->GetExecHistoire()->ExecEvtActuel() )
-            Univers::ME->GetExecHistoire()->ExecEvtActuel()->RafraichirAffichageLayouts(m_Largeur,m_Hauteur);
+        if ( Univers::ME->GetExecHistoire()->GetExecEvtActuel() )
+            Univers::ME->GetExecHistoire()->GetExecEvtActuel()->RafraichirAffichageLayouts(m_Largeur,m_Hauteur);
 
         Univers::ME->GetExecHistoire()->RafraichirAffichageLayouts(m_Largeur,m_Hauteur);
     }
