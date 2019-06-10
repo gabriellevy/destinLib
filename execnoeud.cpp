@@ -35,7 +35,7 @@ void ExecNoeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuiva
         Univers::ME->GetExecHistoire()->AjouterDureeAEffetHistoireCourant(m_Noeud->m_Duree);
 
     // maj du perso :
-    if ( m_Noeud->m_ChangePerso != "")
+    if ( m_Noeud->m_ChangePerso != QLatin1String(""))
     {
         IPerso::GetPersoInterface()->ChangerPersoCourant(m_Noeud->m_ChangePerso);
     }
@@ -68,7 +68,7 @@ void ExecNoeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuiva
     }
 
     // mise à jour de l'état de la partie :
-    if ( m_Noeud->m_NouvelEtatPartie != "" )
+    if ( m_Noeud->m_NouvelEtatPartie != QLatin1String("") )
         Univers::ME->ChangerEtatPartie(m_Noeud->m_NouvelEtatPartie);
 
     /*if (this->AQuelqueChoseAAfficher() && afficherNoeud)
@@ -88,7 +88,7 @@ void ExecNoeud::LancerNoeud()
     if ( this->m_Noeud->AQuelqueChoseAAfficher() && this->m_Noeud->m_TypeNoeud != TypeNoeud::etn_Choix)
         this->AfficherNoeud();
 
-    if ( m_Noeud->m_Son != "" )
+    if ( m_Noeud->m_Son != QLatin1String("") )
     {
        Univers::ME->m_Lecteur->stop();
        Univers::ME->m_Lecteur->setMedia(QUrl(m_Noeud->m_Son));

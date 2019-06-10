@@ -217,7 +217,7 @@ bool Univers::LancerEvtEtOuEffetCourant()
 {
     ExecEvt* evt_actuel = m_ExecHistoire->GetExecEvtActuel();
     ExecEffet* effet_actuel = m_ExecHistoire->GetExecEffetActuel();
-    if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == 0 || effet_actuel == nullptr)
+    if ( evt_actuel == nullptr || evt_actuel == 0 || effet_actuel == 0 || effet_actuel == nullptr)
         return false;
 
     evt_actuel->LancerNoeud();

@@ -26,6 +26,15 @@ ExecEffet::ExecEffet(ExecEvt* exec_evt, Effet* effet, QWidget *parent):
     }
 }
 
+void ExecEffet::NettoyageAffichage()
+{
+    /*while ( QWidget* w = findChild<QWidget*>() )
+        delete w;*/
+    for ( ExecChoix* choix: this->m_ExecChoix ) {
+        this->layout()->removeWidget(choix);
+    }
+}
+
 void ExecEffet::FinExecutionNoeud()
 {
     ExecNoeud::FinExecutionNoeud();
@@ -36,7 +45,9 @@ void ExecEffet::FinExecutionNoeud()
 
 Effet* ExecEffet::GetEffet()
 {
-    return static_cast<Effet*>(m_Noeud);
+    if ( m_Noeud != nullptr)
+        return static_cast<Effet*>(m_Noeud);
+    else return nullptr;
 }
 
 ExecEffet::~ExecEffet()
@@ -109,6 +120,8 @@ bool ExecEffet::GestionTransition()
 
 void ExecEffet::AfficherNoeud()
 {
+    GenerationExecChoix();
+
     // cette fonction peut être appelée pour rafraichir un affichage donc on cache tout avant de le réafficher éventuellement
     ui->titreEffet->hide();
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && GetEffet()->m_Nom != "")
@@ -162,14 +175,17 @@ void ExecEffet::AfficherNoeud()
         QTimer::singleShot(GetEffet()->m_MsChrono, this, SLOT(FinChrono()));
     }
 
-    if ( this->GetEffet()->m_Choix.length() > 0 ) {
+    Univers::ME->GetExecHistoire()->GetExecEvtActuel()->RafraichirAffichageLayouts();
+}
+
+void ExecEffet::GenerationExecChoix()
+{
+    if ( this->GetEffet()->m_Choix.length() > 0 &&
+         this->m_ExecChoix.length() < this->GetEffet()->m_Choix.length() ) {
         for (Choix* choix: this->GetEffet()->m_Choix) {
             this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
         }
-
     }
-
-    Univers::ME->GetExecHistoire()->GetExecEvtActuel()->RafraichirAffichageLayouts();
 }
 
 

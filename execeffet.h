@@ -20,10 +20,12 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
     Glisseur* AjouterGlisseur();
+    void GenerationExecChoix();
     bool GestionTransition();
 
     virtual void FinExecutionNoeud();
     void ChargerImage(QString chemin);
+    void NettoyageAffichage();
 
     Effet* GetEffet();
     void AfficherNoeud();

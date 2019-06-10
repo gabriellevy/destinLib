@@ -40,14 +40,9 @@ void ExecHistoire::RafraichirAffichageLayouts(int largeur, int hauteur)
         this->ui->histoireScrollArea->setFixedSize(largeur - Univers::ME->m_Reglages.m_LargeurColonneGauche, hauteur);
         this->ui->histoireLayout->setFixedSize(largeur - Univers::ME->m_Reglages.m_LargeurColonneGauche, hauteur);
     }
-    //ui->histoireScrollArea->layout()->update();
-   // ui->histoireScrollArea->layout()->activate();
 
     ui->histoireLayout->layout()->update();
     ui->histoireLayout->layout()->activate();
-
-    //this->layout()->update();
-    //this->layout()->activate();
 }
 
 ExecHistoire::~ExecHistoire()
@@ -344,7 +339,7 @@ void ExecHistoire::SetEffetIndex(int index)
 {
     Evt* evtActuel = this->EvtActuel();
     Q_ASSERT_X(index<evtActuel->m_Effets.length(), "index impossible pour cet événement", "Histoire::SetEffetIndex");
-    m_ExecEvtActuel->SetEffetIndex(index);
+    this->m_ExecNoeudActuel = m_ExecEvtActuel->SetEffetIndex(index);
     //GetIndexEffetConcerne() = index;
 }
 
@@ -358,9 +353,9 @@ int ExecHistoire::DeterminerIndexEffet(QString idEffet)
 {
     Evt* evtActuel = EvtActuel();
 
-    if ( idEffet == "pas_fait" ||
-         idEffet == "pas_encore_fait" ||
-         idEffet == "")
+    if ( idEffet == QLatin1String("pas_fait") ||
+         idEffet == QLatin1String("pas_encore_fait") ||
+         idEffet == QLatin1String(""))
     {
         QMessageBox::warning(this,
                              "Partie non créée !",
@@ -387,7 +382,7 @@ int ExecHistoire::DeterminerIndexEffet(QString idEffet)
 bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 {
     bool ilYAgoto = false;
-    if ( noeud->m_GoToEvtId != "" )
+    if ( noeud->m_GoToEvtId != QLatin1String("") )
     {
         QString msg = "Interdit de faire des go_to_evt dans les événements aléatoires ou conditionnels ! m_GoToEvtId : " + noeud->m_GoToEvtId;
         Q_ASSERT_X( Univers::ME->GetTypeEvtActuel() != TE_Conditionnel,
@@ -399,7 +394,7 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
         ilYAgoto = true;
     }
 
-    if ( noeud->m_GoToEffetId != "" )
+    if ( noeud->m_GoToEffetId != QLatin1String("") )
     {
         this->GoToEffetId(noeud->m_GoToEffetId);
         //GetIndexEffetConcerne() = DeterminerIndexEffet(noeud->m_GoToEffetId);
@@ -784,11 +779,11 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
         //ui->histoireLayout->layout()->addWidget(m_CurrentEvt);
     }
 
-    /*if ( effet == m_DernierEffetAffiche)
-    {
-        QMessageBox::warning(Aventure::ME, "erreur dans Deroulement::AfficherEffet", "Tentative d'afficher deux fois d'affilée le même effet !");
-    }
-    else*/ if ( effet != nullptr )
+    /*Q_ASSERT_X( effet != m_DernierEffetAffiche,
+                "Tentative d'afficher deux fois d'affilée le même effet !",
+                "ExecHistoire::RafraichirAffichageEvtEtOuEffet");*/
+
+    if ( effet != nullptr )
     {
         if ( m_DernierEffetAffiche != effet)
         {
@@ -809,7 +804,8 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
         ExecEffet* exec_effet = this->m_ExecEvtActuel->SetExecEffet(effet);
         QScrollBar* vertScroll = ui->histoireScrollArea->verticalScrollBar();
         vertScroll->setValue(0);
-        this->m_ExecEvtActuel->RafraichirAffichageEffet(exec_effet);
+        //this->m_ExecEvtActuel->RafraichirAffichageEffet(exec_effet);
+        this->m_ExecEvtActuel->SetExecEffet(exec_effet);
     }
 
     if ( evtChangement || effetChangement )

@@ -11,15 +11,8 @@ ExecEvt::ExecEvt( Evt* evt, QWidget *parent) :
 
     m_ExecEffetActuel = nullptr;
 
-    //ui->groupBox->setStyleSheet("background-color: rgba(0,0,0,0)");
-    //ui->effetsWidget->setStyleSheet("background-color: rgba(0,0,0,0)");
-
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
         ui->effetsWidget->setStyleSheet("background-color : rgb(0,0,255)");
-
-    //ui->effetsWidget->layout()->setAlignment(Qt::AlignBottom);
-    //((QVBoxLayout*)(ui->effetsWidget->layout()))->addStretch();
-
 }
 
 ExecEvt::~ExecEvt()
@@ -42,25 +35,9 @@ ExecEffet* ExecEvt::SetEffetIndex(int index)
 
 ExecEffet* ExecEvt::SetExecEffet(Effet* effet)
 {
-    if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet) {
-        /*if ( m_ExecEffetActuel!= nullptr)
-            delete this->m_ExecEffetActuel;*/
-        this->m_ExecEffetActuel = new ExecEffet(this, effet);
-    }
-
-    return this->m_ExecEffetActuel;
-}
-
-ExecEffet* ExecEvt::SetExecEffet(ExecEffet* exec_effet)
-{
-    if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
-        /*if ( m_ExecEffetActuel!= nullptr)
-            delete this->m_ExecEffetActuel;*/
-        this->m_ExecEffetActuel = exec_effet;
-    }
-
-
-    return this->m_ExecEffetActuel;
+   if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet)
+        return this->SetExecEffet(new ExecEffet(this, effet));
+   return this->m_ExecEffetActuel;
 }
 
 
@@ -136,19 +113,37 @@ Evt* ExecEvt::GetEvt()
     return static_cast<Evt*>(m_Noeud);
 }
 
-void ExecEvt::RafraichirAffichageEffet(ExecEffet* effet)
-{
-    if ( m_ExecEffetActuel != nullptr)
-    {
-        //ui->effetsWidget->layout()->removeWidget(m_EffetActuel);
-        m_ExecEffetActuel->hide();
+
+
+ExecEffet* ExecEvt::SetExecEffet(ExecEffet* exec_effet)
+/*{
+    if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
+        this->RafraichirAffichageEffet(exec_effet);
+        this->m_ExecEffetActuel = exec_effet;
     }
-    m_ExecEffetActuel = effet;
-    //m_EffetActuel->LancerNoeud();
 
-    ui->effetsWidget->layout()->addWidget(m_ExecEffetActuel);
 
-    m_ExecEffetActuel->show();
-    this->update();
-    m_ExecEffetActuel->update();
+    return this->m_ExecEffetActuel;
+}
+
+void ExecEvt::RafraichirAffichageEffet(ExecEffet* exec_effet)*/
+{
+    if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
+        if ( m_ExecEffetActuel != nullptr)
+        {
+            m_ExecEffetActuel->NettoyageAffichage();
+            m_ExecEffetActuel->hide();
+            ui->effetsWidget->layout()->removeWidget(m_ExecEffetActuel);
+        }
+        m_ExecEffetActuel = exec_effet;
+        //m_EffetActuel->LancerNoeud();
+
+        ui->effetsWidget->layout()->addWidget(m_ExecEffetActuel);
+
+        m_ExecEffetActuel->show();
+        this->update();
+        m_ExecEffetActuel->update();
+    }
+
+    return this->m_ExecEffetActuel;
 }
