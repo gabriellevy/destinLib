@@ -7,7 +7,7 @@
 #include <QTimer>
 
 ExecEffet::ExecEffet(ExecEvt* exec_evt, Effet* effet, QWidget *parent):
-    ExecNoeud(parent),
+    ExecNoeud(effet, parent),
     m_ExecEvt(exec_evt),
     ui(new Ui::Effet)
 {
@@ -127,8 +127,6 @@ void ExecEffet::AfficherNoeud()
         ui->texteEffet->setWordWrap(true);
     }
 
-    return;
-
     ui->imageLabel->hide();
 
     bool afficheImg = !m_Img.isNull();
@@ -162,6 +160,13 @@ void ExecEffet::AfficherNoeud()
     if ( GetEffet()->m_MsChrono != -1 )
     {
         QTimer::singleShot(GetEffet()->m_MsChrono, this, SLOT(FinChrono()));
+    }
+
+    if ( this->GetEffet()->m_Choix.length() > 0 ) {
+        for (Choix* choix: this->GetEffet()->m_Choix) {
+            this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
+        }
+
     }
 
     Univers::ME->GetExecHistoire()->GetExecEvtActuel()->RafraichirAffichageLayouts();

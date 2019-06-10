@@ -23,11 +23,12 @@ class SetCarac;
 class DPerso
 {
 public:
-    DPerso(QString id = "", QString nom = "", QString description = "");
+    DPerso(QString id = "", QString nom = "", QString description = "", QString CheminImagePortrait = "");
 
     QString m_Id;
     QString m_Nom;
     QString m_Description = "";
+    QString m_CheminImagePortrait = "";
     QPixmap m_ImagePortrait;
     QVector<QString> m_CaracsAAfficher = {};
 

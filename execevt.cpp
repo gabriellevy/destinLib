@@ -4,14 +4,12 @@
 #include "execeffet.h"
 
 ExecEvt::ExecEvt( Evt* evt, QWidget *parent) :
-    ExecNoeud (parent),
+    ExecNoeud (evt, parent),
     ui(new Ui::Evt)
 {
     ui->setupUi(this);
 
     m_ExecEffetActuel = nullptr;
-
-    m_Noeud = evt;
 
     //ui->groupBox->setStyleSheet("background-color: rgba(0,0,0,0)");
     //ui->effetsWidget->setStyleSheet("background-color: rgba(0,0,0,0)");

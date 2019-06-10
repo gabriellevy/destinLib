@@ -20,7 +20,7 @@ class ExecChoix : /*public QPushButton, */public ExecNoeud
     void AfficherNoeud();
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
-    void LancerNoeud();
+    //void LancerNoeud();
     bool GestionTransition();
 
     ExecNoeud* GetExecNoeud();

@@ -4,8 +4,8 @@
 #include "univers.h"
 #include "aspectratiolabel.h"
 
-DPerso::DPerso(QString id, QString nom, QString description)
-    :m_Id(id), m_Nom(nom), m_Description(description)
+DPerso::DPerso(QString id, QString nom, QString description, QString CheminImagePortrait)
+    :m_Id(id), m_Nom(nom), m_Description(description), m_CheminImagePortrait(CheminImagePortrait)
 {
 
 }
@@ -139,7 +139,11 @@ void IPerso::RafraichirAffichage()
     // portrait
     if ( myImageLabel == nullptr )
     {
-        ui->imagePortrait->setPixmap(GetPersoCourant()->m_ImagePortrait);
+        if ( GetPersoCourant()->m_CheminImagePortrait != "" )
+        {
+            GetPersoCourant()->m_ImagePortrait.load(GetPersoCourant()->m_CheminImagePortrait);
+            ui->imagePortrait->setPixmap(GetPersoCourant()->m_ImagePortrait);
+        }
 
         ui->portraitLabel->setText(GetPersoCourant()->m_Nom);
     }

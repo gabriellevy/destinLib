@@ -358,7 +358,9 @@ int ExecHistoire::DeterminerIndexEffet(QString idEffet)
 {
     Evt* evtActuel = EvtActuel();
 
-    if ( idEffet == "pas_fait" || idEffet == "pas_encore_fait" || idEffet == "")
+    if ( idEffet == "pas_fait" ||
+         idEffet == "pas_encore_fait" ||
+         idEffet == "")
     {
         QMessageBox::warning(this,
                              "Partie non créée !",

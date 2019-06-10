@@ -3,7 +3,7 @@
 #include "univers.h"
 
 ExecChoix::ExecChoix(ExecEffet* execEffet, Choix* choix, QWidget *parent) :
-    ExecNoeud(parent),
+    ExecNoeud(choix, parent),
     m_Choix(choix),
     m_ExecEffet(execEffet),
     ui(new Ui::Choix)
@@ -69,10 +69,10 @@ void ExecChoix::ExecuterNoeudSlot(/*bool afficherNoeud, bool lancerNoeudSuivantS
     this->GestionTransition();
 }
 
-void ExecChoix::LancerNoeud()
+/*void ExecChoix::LancerNoeud()
 {
     Q_ASSERT_X(false, "Choix::LancerNoeud", "On ne doit jamais lancer intégralement l'effet d'un bouton, il doit être soit affiché soit exécuté");
-}
+}*/
 
 ExecChoix::~ExecChoix()
 {

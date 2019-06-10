@@ -3,7 +3,7 @@
 #include <QMovie>
 #include "noeud.h"
 
-ExecNoeud::ExecNoeud(QWidget* parent):QWidget (parent)
+ExecNoeud::ExecNoeud(Noeud* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
 {
 
 }
@@ -85,7 +85,7 @@ void ExecNoeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuiva
 
 void ExecNoeud::LancerNoeud()
 {
-    if ( this->m_Noeud->AQuelqueChoseAAfficher() )
+    if ( this->m_Noeud->AQuelqueChoseAAfficher() && this->m_Noeud->m_TypeNoeud != TypeNoeud::etn_Choix)
         this->AfficherNoeud();
 
     if ( m_Noeud->m_Son != "" )

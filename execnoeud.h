@@ -10,7 +10,7 @@ class ExecNoeud : public QWidget
     Q_OBJECT
 
 public:
-    ExecNoeud(QWidget* parent = nullptr);
+    ExecNoeud(Noeud* noeud, QWidget* parent = nullptr);
     virtual ~ExecNoeud() {}
 
     QPixmap m_Img;
