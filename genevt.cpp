@@ -23,7 +23,7 @@ void GenEvt::ChargerEffetsBdd(Evt* evtDest)
        // récupération de la partie noeud :
        effet->AppliquerValeurDeNoeudBDD( query.value("est_un_noeud_id").toInt());
 
-       effet->ChargerChoixBdd();
+       this->ChargerChoixBdd(effet);
     }
 }
 
@@ -60,104 +60,157 @@ void GenEvt::AjouterImgFond(Evt* evt, QString fond)
     }
 }
 
-Effet* GenEvt::AjouterEffet(Evt* evtDest, Effet* effet)
+Effet* GenEvt::AjouterEffet(Effet* effet, Evt* evtDest)
 {
+    if ( evtDest == nullptr )
+        evtDest = m_DernierEvtGenere;
+
     // si l'événement a un chrono il le transmet à tous ses effets (pour annuler celà le chrono sur les effets doit être changé individuellement vers -1)
     if ( evtDest->m_MsChrono != -1 )
         effet->ChangerChrono(evtDest->m_MsChrono);
     evtDest->m_Effets.push_back(effet);
 
+    m_DernierEffetGenere = effet;
     return effet;
 }
 
 Effet* GenEvt::AjouterEffetVide(Evt* evtDest)
 {
+    if ( evtDest == nullptr)
+        evtDest = m_DernierEvtGenere;
     Effet* effet = new Effet(evtDest);
-    AjouterEffet(evtDest, effet);
-    return effet;
+
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetRetireurACarac(Evt* evtDest, QString caracId, QString valeurRetire, QString text, QString id)
+Effet* GenEvt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text, QString id, Evt* evtDest)
 {
-    Effet* effet = new Effet(evtDest,
-                            id,
-                            text,
-                            "");
+    if ( evtDest == nullptr)
+        evtDest = m_DernierEvtGenere;
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
     effet->AjouterRetireurACarac(caracId, valeurRetire);
-    AjouterEffet(evtDest, effet);
-    return effet;
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetModificateurCarac(Evt* evtDest, QString caracId, QString nouvelleValeur, QString text, QString id)
+Effet* GenEvt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text, QString id, Evt* evtDest)
 {
-    Effet* effet = new Effet(evtDest,
-                            id,
-                            text,
-                            "");
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
     effet->AjouterChangeurDeCarac(caracId, nouvelleValeur);
-    AjouterEffet(evtDest, effet);
-    return effet;
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetAjouteurACarac(Evt* evtDest, QString caracId, QString valeurAjoutee, QString id)
+Effet* GenEvt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id, Evt* evtDest)
 {
-    Effet* effet = new Effet(evtDest, id);
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
     effet->AjouterAjouteurACarac(caracId, valeurAjoutee);
-    AjouterEffet(evtDest, effet);
-    return effet;
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetNarration(Evt* evtDest, QString text, QString cheminImg, QString id)
+Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id, Evt* evtDest)
 {
-    Effet* effet = new Effet(evtDest,
-                            id,
-                            text,
-                            cheminImg);
-    AjouterEffet(evtDest, effet);
-    return effet;
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
+    effet->m_ImgPath = cheminImg;
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetGlisseur(Evt* evtDest, QString text, QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id, QString cheminImg, QString id )
+Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
+                                    QString carac_id, QString cheminImg, QString id, Evt* evtDest )
 {
-    Effet* effet = new Effet(evtDest,
-                            id,
-                            text,
-                            cheminImg);
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
+    effet->m_ImgPath = cheminImg;
 
     effet->AjouterGlisseur(valeur_min, valeur_max, valeur_depart, carac_id);
 
-    AjouterEffet(evtDest, effet);
-    return effet;
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetChangementPerso(Evt* evtDest, QString persoId, QString text, QString cheminImg, QString id)
+Effet* GenEvt::AjouterEffetChangementPerso(QString persoId, QString text, QString cheminImg, QString id, Evt* evtDest)
 {
-    Effet* effet = new Effet(evtDest,
-                             id,
-                            text,
-                             cheminImg);
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
+    effet->m_ImgPath = cheminImg;
     effet->m_ChangePerso = persoId;
-    AjouterEffet(evtDest, effet);
-    return effet;
+    return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetTest(Evt* evtDest, QString caracId, Comparateur comparateur, QString valeur, QString id )
+Effet* GenEvt::AjouterEffetTest(QString caracId, Comparateur comparateur, QString valeur, QString id, Evt* evtDest )
 {
-    Effet* effet = new Effet(evtDest, id, "", "");
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
     effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
-    AjouterEffet(evtDest, effet);
-    return effet;
+    return AjouterEffet(effet, evtDest);
 }
 
 Evt* GenEvt::GenererEvt(QString id, QString nom)
 {
     Evt* evt = new Evt(id, nom);
+    m_DernierEvtGenere = evt;
     return evt;
 }
 
 EvtAleatoire* GenEvt::GenererEvtAleatoire(QString id, QString nom)
 {
     EvtAleatoire* evt = new EvtAleatoire(id, nom);
+    m_DernierEvtGenere = evt;
     return evt;
+}
+
+Choix* GenEvt::AjouterChoixVide(Effet* effetDest)
+{
+    if ( effetDest == nullptr)
+        effetDest = m_DernierEffetGenere;
+
+    Choix* choix = new Choix(effetDest);
+    effetDest->m_Choix.push_back(choix);
+    return choix;
+}
+
+
+Choix* GenEvt::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, Effet* effetDest)
+{
+    Choix* choix = AjouterChoixVide(effetDest);
+    choix->m_Text = text;
+    choix->AjouterChangeurDeCarac(carac, valeur);
+    return choix;
+}
+
+Choix* GenEvt::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg, Effet* effetDest)
+{
+    Choix* choix = AjouterChoixVide(effetDest);
+    choix->m_Text = text;
+    choix->m_CheminImg = cheminImg;
+    choix->m_GoToEffetId = go_to_effet_id;
+    return choix;
+}
+
+void GenEvt::ChargerChoixBdd(Effet* effet)
+{
+    if ( effet == nullptr)
+        effet = m_DernierEffetGenere;
+
+    QString req = "SELECT * FROM d_Choix WHERE appartient_a_effet_id = " +
+            QString::number(effet->m_BDD_EffetId) +
+            " ORDER BY ordre";
+    QSqlQuery query(req);
+    while (query.next())
+    {
+       int bd_id = query.value("id").toInt();
+
+       Choix* choix = this->AjouterChoixVide(effet);
+       choix->m_BDD_ChoixId = bd_id;
+
+       // récupération de la partie noeud :
+       choix->AppliquerValeurDeNoeudBDD( query.value("est_un_noeud_id").toInt());
+    }
 }
 

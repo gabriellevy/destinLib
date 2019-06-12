@@ -13,12 +13,16 @@
  */
 class EvtAleatoire : public Evt
 {
-public:
+protected:
     explicit EvtAleatoire(QString id,
                       QString nom);
+
+public:
     virtual ~EvtAleatoire() {}
 
     Effet* DeterminerEffetAleatoire();
+
+    friend class GenEvt;
 };
 
 #endif // EVTALEATOIRE_H

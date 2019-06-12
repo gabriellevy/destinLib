@@ -14,10 +14,11 @@ enum TypeEvt {
 
 class Evt : public Noeud
 {
-
-public:
+protected:
     //explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);
     explicit Evt(QString id, QString nom);
+
+public:
     virtual ~Evt() {}
 
     TypeEvt m_TypeEvenement;
@@ -31,6 +32,8 @@ public:
 
     // utilisé suelment si l'événement a été chargé à partie de la base de donénes :
     int m_BDD_EvtId = -1; // note : un événement a un id en tant qu'evt et un pour sa partie "noeud" générique
+
+    friend class GenEvt;
 };
 
 #endif // EVT_H

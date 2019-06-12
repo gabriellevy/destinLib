@@ -21,10 +21,11 @@ class ExecEffet;
  */
 class Choix : public Noeud
 {
-
-public:
+protected:
     //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
     explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "");
+
+public:
     virtual ~Choix() {}
 
     /**
@@ -38,6 +39,8 @@ public:
 
     //QString m_Text;
     QString m_CheminImg;
+
+    friend class GenEvt;
 
 };
 

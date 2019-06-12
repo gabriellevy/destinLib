@@ -16,13 +16,14 @@ class Evt;
 class Effet : public Noeud
 {
     //Effet* m_ElseNoeud = nullptr;
-
-public:
+protected:
     explicit Effet(Evt* evt);
     explicit Effet(Evt* evt,
                    QString id,
              QString text = "",
              QString imgPath = "");
+
+public:
     virtual ~Effet() {};
     /*explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);*/
 
@@ -31,14 +32,9 @@ public:
 
     //Effet* GetElse();
     //bool AQuelqueChoseAAfficher();
-
-    Choix* AjouterChoixVide();
-    Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur);
-    Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg = "");
     void SupprimerTousLesChoix();
     //Effet* AjouterElse(QString text);
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
-    void ChargerChoixBdd();
     int CalculerIndex();
 
     Evt* m_Evt;
@@ -46,6 +42,8 @@ public:
 
     // gestion de la bdd :
     int m_BDD_EffetId = -1;
+
+    friend class GenEvt;
 
 private:
 };
