@@ -19,9 +19,9 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(paren
     m_Perso = new IPerso(ui->persoWidget);
 }
 
-void Univers::LancerHistoire(ExecHistoire* execHistoire, QWidget*/* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
+void Univers::LancerHistoire(Hist* histoire, QWidget*/* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
 {
-    this->m_ExecHistoire = execHistoire;
+    this->m_ExecHistoire = new ExecHistoire(histoire);
 
     this->AfficherHistoire(ui->histoireWidget);
 

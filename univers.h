@@ -60,7 +60,7 @@ public:
 
     void AfficherHistoire(QWidget *parent = nullptr);
     virtual Hist* ExecuterGenerateurHistoire();
-    virtual void LancerHistoire(ExecHistoire* execHistoire, QWidget *parent = nullptr, QString premierEvt = "", QString premierEffet = "", bool BarreDeCote = true);
+    virtual void LancerHistoire(Hist* histoire, QWidget *parent = nullptr, QString premierEvt = "", QString premierEffet = "", bool BarreDeCote = true);
 
     bool LancerEvtEtOuEffetCourant();
 
