@@ -24,6 +24,8 @@ class DPerso
 {
 public:
     DPerso(QString id = "", QString nom = "", QString description = "", QString CheminImagePortrait = "");
+    // c'estd ans cette focntion qu'il faut initialiser les caracs du perso, pas dans le constructeur
+    virtual void InitialiserPerso();
 
     QString m_Id;
     QString m_Nom;
@@ -56,6 +58,7 @@ public:
 
     //void Rafraichir(QJsonArray persos);
     void ChangerPersoCourant(QString changePerso);
+    void InitialiserPerso();
     void RafraichirAffichage();
 
     // accesseur vers le perso courant (qui est toujours unique)

@@ -173,6 +173,7 @@ bool Carac::AfficherIntitule()
 
 QString Carac::GetCaracValue(QString id)
 {
+    Q_ASSERT_X(Univers::ME->GetExecHistoire() != nullptr, "Exec histoire non initialisée !","Carac::SetValeurACaracId" );
     return Univers::ME->GetExecHistoire()->GetCaracValue(id);
 }
 
@@ -197,6 +198,7 @@ int Carac::RetirerValeurACaracId(QString idCarac, int valeurRetiree)
 
 QString Carac::SetValeurACaracId(QString idCarac, QString valeurSet)
 {
+    Q_ASSERT_X(Univers::ME->GetExecHistoire() != nullptr, "Exec histoire non initialisée !","Carac::SetValeurACaracId" );
     Univers::ME->GetExecHistoire()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
     return Carac::GetCaracValue(idCarac);
 }

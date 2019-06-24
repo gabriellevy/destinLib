@@ -134,6 +134,20 @@ void IPerso::ChangerPersoCourant(QString changePerso)
     RafraichirAffichage();
 }
 
+void DPerso::InitialiserPerso()
+{
+
+}
+
+void IPerso::InitialiserPerso()
+{
+    QHashIterator<QString, DPerso*> i(m_Persos);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->InitialiserPerso();
+    }
+}
+
 void IPerso::RafraichirAffichage()
 {
     // portrait
