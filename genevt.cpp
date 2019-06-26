@@ -83,6 +83,15 @@ Effet* GenEvt::AjouterEffetVide(Evt* evtDest)
     return AjouterEffet(effet, evtDest);
 }
 
+Effet* GenEvt::AjouterEffetSelectionneurDeNoeud(QString id, QString text, Evt* evtDest)
+{
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
+    effet->m_SelectionneurDeNoeud = new SelectionneurDeNoeud(id);
+    return effet;
+}
+
 Effet* GenEvt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text, QString id, Evt* evtDest)
 {
     if ( evtDest == nullptr)
@@ -223,9 +232,7 @@ void GenEvt::ChargerChoixBdd(Effet* effet)
 
 Effet* GenEvt::AjouterEffetSelecteurDEvt(Evt* evtDest, QVector<Noeud*> noeudsDestination, QString id, QString text)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
-    effet->m_Text = text;
+    Effet* effet = this->AjouterEffetSelectionneurDeNoeud(id, text, evtDest);
 
     // vérification et ajout des noeuds destination
     for (int i = 0; i < noeudsDestination.length() ; ++i) {

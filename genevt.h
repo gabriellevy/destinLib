@@ -30,6 +30,7 @@ public:
     Effet* AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
                                 QString carac_id, QString cheminImg = "", QString id = "", Evt* evtDest = nullptr );
     Effet* AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id = "", Evt* evtDest = nullptr);
+    Effet* AjouterEffetSelectionneurDeNoeud(QString id, QString text, Evt* evtDest);
 
     // fonctions intermédiaires d'ajouts de choix dans les effets :
     Choix* AjouterChoixVide(Effet* effetDest = nullptr);
