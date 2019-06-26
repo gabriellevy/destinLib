@@ -3,7 +3,7 @@
 
 #include <QPushButton>
 #include "execnoeud.h"
-#include "noeud.h"
+#include "noeudnarratif.h"
 
 namespace Ui {
 class Choix;
@@ -19,7 +19,7 @@ class ExecEffet;
  *
  * Les choix appartiennt toujours à un effet. Ils sont affichés en bas de cet effet
  */
-class Choix : public Noeud
+class Choix : public NoeudNarratif
 {
 protected:
     //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);

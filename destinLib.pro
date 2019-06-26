@@ -31,6 +31,7 @@ SOURCES += \
     genevt.cpp \
     genhistoirebdd.cpp \
         main.cpp \
+    noeudnarratif.cpp \
     perso.cpp \
     carac.cpp \
     aspectratiolabel.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     execnoeud.h \
     genevt.h \
     genhistoirebdd.h \
+    noeudnarratif.h \
     perso.h \
     carac.h \
     aspectratiolabel.h \

@@ -3,14 +3,14 @@
 
 #include <QWidget>
 
-class Noeud;
+class NoeudNarratif;
 
 class ExecNoeud : public QWidget
 {
     Q_OBJECT
 
 public:
-    ExecNoeud(Noeud* noeud, QWidget* parent = nullptr);
+    ExecNoeud(NoeudNarratif* noeud, QWidget* parent = nullptr);
     virtual ~ExecNoeud() {}
 
     QPixmap m_Img;
@@ -42,7 +42,7 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
-    Noeud* m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
+    NoeudNarratif* m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
 
 private:
     //Ui::Noeud *ui;

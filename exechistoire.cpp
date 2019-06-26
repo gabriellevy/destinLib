@@ -401,10 +401,18 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
         ilYAgoto = true;
     }
 
-    if ( noeud->m_SelectionneurDEvenement != nullptr)
+    if ( noeud->m_SelectionneurDeNoeud != nullptr)
     {
-        Evt* evSuivant = noeud->m_SelectionneurDEvenement->DeterminerEvtSuivant();
-        this->SetCurrentEvtId(evSuivant->m_Id);
+        Noeud* noeudSuivant = noeud->m_SelectionneurDeNoeud->DeterminerEvtSuivant();
+
+        Evt* evSuivant = dynamic_cast<Evt*>(noeudSuivant);
+        if ( evSuivant == nullptr ) {
+            Effet* effetSuivant = dynamic_cast<Effet*>(noeudSuivant);
+            Q_ASSERT_X( effetSuivant != nullptr, "noeud suivant n'étant ni un effet ni un evt !!", "ExecHistoire::AppliquerGoTo");
+            this->GoToEffetId(effetSuivant->m_Id);
+        } else {
+            this->SetCurrentEvtId(evSuivant->m_Id);
+        }
 
         ilYAgoto = true;
     }

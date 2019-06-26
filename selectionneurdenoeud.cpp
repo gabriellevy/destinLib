@@ -1,37 +1,37 @@
-#include "selectionneurdevenement.h"
+#include "selectionneurdenoeud.h"
 #include "noeud.h"
 #include "evt.h"
 #include <QDebug>
 
-QList<SelectionneurDEvenement*> SelectionneurDEvenement::s_TousLesSelectionneurs = {};
+QList<SelectionneurDeNoeud*> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 
-SelectionneurDEvenement::SelectionneurDEvenement(QString intitule, int bdd_id):m_BddId(bdd_id), m_Intitule(intitule)
+SelectionneurDeNoeud::SelectionneurDeNoeud(QString intitule, int bdd_id):m_BddId(bdd_id), m_Intitule(intitule)
 {}
 
-Evt* SelectionneurDEvenement::DeterminerEvtSuivant()
+Noeud* SelectionneurDeNoeud::DeterminerEvtSuivant()
 {
-    QList<Evt*> evtsPossibles;
+    QList<Noeud*> noeudsPossibles;
     double totalDesProbas = 0;
-    for ( int i = 0 ; i < m_Evts.size() ; ++i)
+    for ( int i = 0 ; i < m_Noeuds.size() ; ++i)
     {
-        if ( m_Evts[i]->TesterConditions())
+        if ( m_Noeuds[i]->TesterConditions())
         {
-            double proba = m_Evts[i]->GetProba();
+            double proba = m_Noeuds[i]->GetProba();
             Q_ASSERT_X(proba >= 0,
                        "Attention un événement inclu dans un sélectionneur d'événement doit avoir une proba pour être sélectionnable !",
                        "SelectionneurDEvenement::DeterminerEvtSuivant");
             if ( proba != 0)
             {
-                evtsPossibles.append(m_Evts[i]);
+                noeudsPossibles.append(m_Noeuds[i]);
                 totalDesProbas += proba;
             }
         } else {
-            qDebug()<<"Cet événement ne peut pas arriver : " << m_Evts[i]->m_Id;
+            qDebug()<<"Cet événement ne peut pas arriver : " << m_Noeuds[i]->m_Id;
         }
     }
 
     QString txt = "Aucun evt trouvé dans le sélectionneur d'événement ";
-    Q_ASSERT_X(  evtsPossibles.size() > 0,
+    Q_ASSERT_X(  noeudsPossibles.size() > 0,
                  "DeterminerEvtAleatoire",
                  txt.toStdString().c_str() );
 
@@ -39,18 +39,18 @@ Evt* SelectionneurDEvenement::DeterminerEvtSuivant()
     float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);// entre 0 et 1
     double probaIndicator = static_cast<double>(r) * totalDesProbas;
     double totalCourantDesProbas = 0;
-    Evt* evtchoisi = nullptr;
+    Noeud* noeudChoisi = nullptr;
 
-    for ( int j = 0; j < evtsPossibles.size() ; ++j )
+    for ( int j = 0; j < noeudsPossibles.size() ; ++j )
     {
-        totalCourantDesProbas += evtsPossibles[j]->GetProba();
+        totalCourantDesProbas += noeudsPossibles[j]->GetProba();
         if ( probaIndicator < totalCourantDesProbas)
         {
             // cet événement est sélectionné :
-            evtchoisi = evtsPossibles[j];
+            noeudChoisi = noeudsPossibles[j];
             break;
         }
     }
 
-    return evtchoisi;
+    return noeudChoisi;
 }

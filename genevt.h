@@ -54,6 +54,15 @@ public:
      */
     void AjouterASelectionneurEvt(Evt* evt, int selectionneur_bdd_id);
 
+    /**
+     * @brief crée un effet qui lors de son exécution enverra vers un des noeuds passés en paramètres selon leurs probas
+     * @param evt : événement auquel ajouter l'effet
+     * @param noeudsDestination : noeuds vers lesquel l'effet redirigera. Ils doivent avoir une proba > 0
+     * @param id : id du noeud à creéer
+     * @return effet généré
+     */
+    Effet* AjouterEffetSelecteurDEvt(Evt* evt, QVector<Noeud*> noeudsDestination, QString id = "", QString text = "");
+
 private:
 
     // événement en cours de génération par cet objet

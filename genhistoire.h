@@ -13,6 +13,8 @@ class GenHistoire
 protected:
     GenEvt* m_GenerateurEvt = nullptr;
 
+    virtual void GenererCaracs() {}
+
 public:
     GenHistoire(Hist* histoireGeneree);
     virtual ~GenHistoire();

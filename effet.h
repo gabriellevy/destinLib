@@ -1,7 +1,7 @@
 #ifndef EFFET_H
 #define EFFET_H
 
-#include "noeud.h"
+#include "noeudnarratif.h"
 #include "choix.h"
 #include "execnoeud.h"
 #include "glisseur.h"
@@ -13,7 +13,7 @@ enum OrientationAffichageChoix
 };
 class Evt;
 
-class Effet : public Noeud
+class Effet : public NoeudNarratif
 {
     //Effet* m_ElseNoeud = nullptr;
 protected:
@@ -24,7 +24,7 @@ protected:
              QString imgPath = "");
 
 public:
-    virtual ~Effet() {};
+    virtual ~Effet() {}
     /*explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);*/
 
     QList<Choix*> m_Choix;

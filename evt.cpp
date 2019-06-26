@@ -35,7 +35,7 @@
 
 Evt::Evt(QString id,
          QString nom) :
-    Noeud(id,
+    NoeudNarratif(id,
           nom,
           ""),
     m_CheminImgFond("")

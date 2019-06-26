@@ -12,7 +12,7 @@ enum TypeEvt {
     TE_Aleatoire // quand l'histoire prend une pause le temps d'un ou plusieurs événements aléatoires
 };
 
-class Evt : public Noeud
+class Evt : public NoeudNarratif
 {
 protected:
     //explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);

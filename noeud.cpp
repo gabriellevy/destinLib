@@ -8,13 +8,9 @@ Noeud::Noeud():m_TypeNoeud(TypeNoeud::etn_Noeud)
 {
 }
 
-Noeud::Noeud(QString id,
-      QString nom,
-      QString text):Noeud()
+Noeud::Noeud(QString id):Noeud()
 {
     m_Id = id;
-    m_Nom = nom;
-    m_Text = text;
 }
 
 /*Noeud::Noeud(QJsonObject objJson)
@@ -218,222 +214,13 @@ Condition* Noeud::AjouterConditionProba( double proba)
     return false;
 }*/
 
-void Noeud::ChargerSelectionneurEvtBdd()
-{
-    QString req_str = "SELECT * FROM d_SelectionneurDEvt WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId);
-    QSqlQuery query(req_str);
-
-    while (query.next())
-    {
-        int bdd_id = query.value("id").toInt();
-        QString intitule = query.value("intitule").toString();
-        // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
-        for ( SelectionneurDEvenement* sel: SelectionneurDEvenement::s_TousLesSelectionneurs)
-        {
-            if ( sel->m_BddId == bdd_id) {
-                this->m_SelectionneurDEvenement = sel;
-                return;
-            }
-        }
-
-        // pas trouvé : on le crée
-        SelectionneurDEvenement* sel = new SelectionneurDEvenement(intitule, bdd_id);
-        this->m_SelectionneurDEvenement = sel;
-        SelectionneurDEvenement::s_TousLesSelectionneurs.push_back(sel);
-    }
-}
-
-void Noeud::AppliquerValeurDeNoeudBDD(int bd_id)
-{
-    QString req_str = "SELECT * FROM d_Noeud WHERE id = " + QString::number(bd_id);
-    QSqlQuery query(req_str);
-    Q_ASSERT_X(query.size() <= 1, "Plus d'un noeud de la BDD retourné par la requête.", "Noeud::AppliquerValeurDeNoeudBDD");
-    while (query.next())
-    {
-       this->m_BDD_NoeudId = query.value("id").toInt();
-       this->m_Duree = query.value("m_Duree").toFloat();
-       this->m_ChangePerso = query.value("m_ChangePerso").toString();
-       this->m_Id = query.value("m_Id").toString();
-       this->m_Nom = query.value("m_Nom").toString();
-       this->m_Son = query.value("m_Son").toString();
-       this->m_GoToEvtId = query.value("m_GoToEvtId").toString();
-       this->m_GoToEffetId = query.value("m_GoToEffetId").toString();
-       this->m_Text = query.value("m_Text").toString();
-       //this->m_CheminImg = query.value("m_CheminImg").toString();
-
-        this->ChargerConditionsBdd();
-        this->ChargerSetCaracBdd();
-        this->ChargerFonctionsCallbacksBdd();
-        this->ChargerFonctionsTestCallbacksBdd();
-        this->ChargerSelectionneurEvtBdd();
-    }
-}
-
-
-
-void AppelCallback::ChargerArgumentsBdd()
-{
-    QString req_str = "SELECT * FROM d_CallbackArgument WHERE est_a_callback_id = " + QString::number(m_BDD_FonctId);
-    QSqlQuery query(req_str);
-    while (query.next())
-    {
-        // un argument issu de la BDD ne peut être que une référence à une carac du jeu ou une valeur string enregistrée brute
-        QString argCaracId = query.value("caracIdParam").toString();
-        if ( argCaracId != "") {
-            this->m_ArgumentsCaracId.push_back(argCaracId);
-        } else {
-            this->m_ArgumentsParValeur.push_back(query.value("valeurBrute").toString());
-        }
-    }
-}
-
-void Noeud::ChargerFonctionsCallbacksBdd()
-{
-    QString req_str = "SELECT * FROM d_FonctionCallback WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId) +
-            " AND est_callback_test = 0";
-    QSqlQuery query(req_str);
-    while (query.next())
-    {
-       AppelCallback* appel = new AppelCallback();
-       appel->m_NomFonction = query.value("fonction_id").toString();
-       appel->m_BDD_FonctId = query.value("id").toInt();
-
-       appel->ChargerArgumentsBdd();
-       m_FonctionsAppellees.push_back(appel);
-    }
-}
-
-void Noeud::ChargerFonctionsTestCallbacksBdd()
-{
-    QString req_str = "SELECT * FROM d_FonctionCallback WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId) +
-            " AND est_callback_test = 1";
-    QSqlQuery query(req_str);
-    while (query.next())
-    {
-       AppelCallback* appel = new AppelCallback();
-       appel->m_NomFonction = query.value("fonction_id").toString();
-       appel->m_BDD_FonctId = query.value("id").toInt();
-
-       appel->ChargerArgumentsBdd();
-       m_FonctionsDeTest.push_back(appel);
-    }
-}
-
-void Noeud::ChargerConditionsBdd()
-{
-    // A FAIRE : ne prend pas en compte les conditions de type repeat while
-    QString req_str = "SELECT * FROM d_Condition WHERE est_a_noeud_id = " + QString::number(m_BDD_NoeudId);
-    QSqlQuery query(req_str);
-    while (query.next())
-    {
-       int id = query.value("id").toInt();
-       QString compStr = query.value("m_Comparateur").toString();
-       Comparateur comparateur = Condition::GetComparateurFromStr(compStr);
-       double proba = query.value("m_Proba").toDouble();
-
-       Condition* cond = nullptr;
-
-       if ( proba <0) {
-           // condition de base
-           cond = this->AjouterCondition(
-                       query.value("m_CaracId").toString(),
-                       comparateur,
-                       query.value("m_Valeur").toString());
-       } else {
-            // condition à base de proba
-           cond = this->AjouterConditionProba(proba);
-           cond->m_CaracId = query.value("m_CaracId").toString();
-           cond->m_Comparateur = comparateur;
-           cond->m_Valeur = query.value("m_Valeur").toString();
-        }
-
-       if ( cond != nullptr) {
-           cond->m_BDD_CondId = id;
-           cond->ChargerModifProbaBdd();
-       }
-    }
-}
-
-void Noeud::ChargerSetCaracBdd()
-{
-    QString req_str = "SELECT * FROM d_SetCarac WHERE noeud_id = " + QString::number(m_BDD_NoeudId);
-    QSqlQuery query(req_str);
-    while (query.next())
-    {
-        ModifCaracType eType = SetCarac::GetModifCaracTypeFromQString(query.value("m_ModifCaracType").toString());
-
-        QString idCarac = query.value("m_CaracId").toString();
-        QString valeur = query.value("m_Valeur").toString();
-        SetCarac* setC = nullptr;
-
-        switch (eType)
-        {
-        case ModifCaracType::SetCarac :
-            setC = this->AjouterChangeurDeCarac(idCarac, valeur);
-            break;
-        case ModifCaracType::AddToCarac:
-            setC = this->AjouterAjouteurACarac(idCarac, valeur);
-            break;
-        case ModifCaracType::RetireDeCarac:
-            setC = this->AjouterRetireurACarac(idCarac, valeur);
-            break;
-        }
-
-        setC->m_ValeurRandom = query.value("m_ValeurRandom").toString();
-        setC->m_ValeurMin = query.value("m_ValeurMin").toString();
-        setC->m_ValeurMax = query.value("m_ValeurMax").toString();
-        setC->m_ValeurCarac = query.value("m_ValeurCarac").toString();
-        setC->m_ValeurRandom = query.value("m_ValeurRandom").toString();
-    }
-}
-
-
-void Noeud::AjouterDuree(float duree)
-{
-    m_TempEcoule += duree;
-}
-
-double Noeud::GetTempEcoule()
-{
-    return m_TempEcoule;
-}
-
 Noeud::~Noeud()
 {
     while (!m_Conditions.isEmpty())
           delete m_Conditions.takeFirst();
 
-    while (!m_RepeatWhileConditions.isEmpty())
-          delete m_RepeatWhileConditions.takeFirst();
-
     /*while ( m_SetCaracs.size() > 0 )
         delete m_SetCaracs.takeAt(0);*/
-}
-
- QString Noeud::TexteAAfficher()
- {
-     QString texteFinal = "";
-
-     QStringList list = m_Text.split("%%%");
-     for ( int i = 0 ; i < list.size() ; ++i)
-     {
-        if ( i %2 == 0)
-        {
-            texteFinal += list.at(i);
-        }
-        else
-        {
-            // est forcément une variable à remplacer
-            texteFinal += Univers::ME->GetExecHistoire()->GetCaracValue(list.at(i));
-        }
-     }
-
-    return texteFinal;
- }
-
-bool Noeud::AQuelqueChoseAAfficher()
-{
-    return (m_Text != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "nullptr""");
 }
 
 bool Noeud::TesterConditions()
@@ -464,8 +251,7 @@ bool Noeud::TesterConditions()
     }
 
     bool res = ( resultatCallback &&
-        Condition::TesterTableauDeConditions(m_Conditions) &&
-        Condition::TesterTableauDeConditions(this->m_RepeatWhileConditions));
+        Condition::TesterTableauDeConditions(m_Conditions));
 
     /*if ( res )
         m_EtatCondition = ec_True;
@@ -474,10 +260,20 @@ bool Noeud::TesterConditions()
     return res;
 }
 
-
-void Noeud::ChangerChrono( int ms )
+void AppelCallback::ChargerArgumentsBdd()
 {
-    m_MsChrono = ms;
+    QString req_str = "SELECT * FROM d_CallbackArgument WHERE est_a_callback_id = " + QString::number(m_BDD_FonctId);
+    QSqlQuery query(req_str);
+    while (query.next())
+    {
+        // un argument issu de la BDD ne peut être que une référence à une carac du jeu ou une valeur string enregistrée brute
+        QString argCaracId = query.value("caracIdParam").toString();
+        if ( argCaracId != "") {
+            this->m_ArgumentsCaracId.push_back(argCaracId);
+        } else {
+            this->m_ArgumentsParValeur.push_back(query.value("valeurBrute").toString());
+        }
+    }
 }
 
 

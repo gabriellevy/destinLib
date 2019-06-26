@@ -30,10 +30,10 @@ void GenEvt::ChargerEffetsBdd(Evt* evtDest)
 void GenEvt::AjouterASelectionneurEvt(Evt* evt, int selectionneur_bdd_id)
 {
     // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
-    for ( SelectionneurDEvenement* sel: SelectionneurDEvenement::s_TousLesSelectionneurs)
+    for ( SelectionneurDeNoeud* sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
     {
         if ( sel->m_BddId == selectionneur_bdd_id) {
-            sel->m_Evts.push_back(evt);
+            sel->m_Noeuds.push_back(evt);
             return;
         }
     }
@@ -47,9 +47,9 @@ void GenEvt::AjouterASelectionneurEvt(Evt* evt, int selectionneur_bdd_id)
         int bdd_id = query.value("id").toInt();
         QString intitule = query.value("intitule").toString();
 
-        SelectionneurDEvenement* sel = new SelectionneurDEvenement(intitule, bdd_id);
-        sel->m_Evts.push_back(evt);
-        SelectionneurDEvenement::s_TousLesSelectionneurs.push_back(sel);
+        SelectionneurDeNoeud* sel = new SelectionneurDeNoeud(intitule, bdd_id);
+        sel->m_Noeuds.push_back(evt);
+        SelectionneurDeNoeud::s_TousLesSelectionneurs.push_back(sel);
     }
 }
 
@@ -212,5 +212,24 @@ void GenEvt::ChargerChoixBdd(Effet* effet)
        // récupération de la partie noeud :
        choix->AppliquerValeurDeNoeudBDD( query.value("est_un_noeud_id").toInt());
     }
+}
+
+Effet* GenEvt::AjouterEffetSelecteurDEvt(Evt* evtDest, QVector<Noeud*> noeudsDestination, QString id, QString text)
+{
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
+
+    // vérification et ajout des noeuds destination
+    for (int i = 0; i < noeudsDestination.length() ; ++i) {
+        Noeud* noeud = noeudsDestination.at(i);
+        Q_ASSERT_X( noeud->GetProba() > 0 ,
+                    "Tentative d'ajouter un neud sans probabilité à un sélecteur de noeud via probabilité...",
+                    "GenEvt::AjouterEffetSelecteurDEvt");
+
+        effet->m_SelectionneurDeNoeud->m_Noeuds.push_back(noeud);
+    }
+
+    return AjouterEffet(effet, evtDest);
 }
 

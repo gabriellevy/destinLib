@@ -15,7 +15,7 @@ Effet::Effet(Evt* evt, QString id,
          QString text,
          QString imgPath) :
     //QWidget(parent),
-    Noeud(id, "", text),
+    NoeudNarratif(id, "", text),
     m_Evt(evt)
     //ui(new Ui::Effet)
 {

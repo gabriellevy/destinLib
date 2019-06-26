@@ -1,9 +1,9 @@
 #include "execnoeud.h"
 #include "univers.h"
 #include <QMovie>
-#include "noeud.h"
+#include "noeudnarratif.h"
 
-ExecNoeud::ExecNoeud(Noeud* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
+ExecNoeud::ExecNoeud(NoeudNarratif* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
 {
 
 }

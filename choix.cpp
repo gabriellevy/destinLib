@@ -13,7 +13,7 @@
 }*/
 
 Choix::Choix(Effet* ParentEffet, QString text, QString cheminImg) :
-        Noeud(),
+        NoeudNarratif(),
         m_ParentEffet(ParentEffet),
         m_CheminImg(cheminImg)
 {
