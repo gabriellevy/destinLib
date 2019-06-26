@@ -63,6 +63,8 @@ public:
      */
     Effet* AjouterEffetSelecteurDEvt(Evt* evt, QVector<Noeud*> noeudsDestination, QString id = "", QString text = "");
 
+    Noeud* GenererNoeudModificateurCarac(QString caracId, QString nouvelleValeur, QList<Condition*> conditions);
+
 private:
 
     // événement en cours de génération par cet objet

@@ -222,7 +222,7 @@ bool Univers::LancerEvtEtOuEffetCourant()
         return false;
 
     evt_actuel->LancerNoeud();
-    effet_actuel->LancerNoeud();
+    //effet_actuel->LancerNoeud();
 
     //m_Histoire->RafraichirAffichageEvtEtOuEffet( evt_actuel, effet_actuel );
     return true;

@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class NoeudNarratif;
+class Noeud;
 
 class ExecNoeud : public QWidget
 {
@@ -21,7 +22,7 @@ public:
      * @param afficherNoeud : si true la fonction affiche le texte et les images du noeud
      * @param lancerNoeudSuivantSiRienAAfiicher : si true la fonction exécute automatiquement le noeud suivant si il n'y a rien à afficher
      */
-    virtual void ExecuterActionsNoeud(/*bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true*/);
+    virtual void ExecuterActionsNoeud(Noeud* noeudAExecuter = nullptr/*bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true*/);
 
     /**
      * @brief S'exécute quand l'exécutyion de l'aventure arrive à ce noeud

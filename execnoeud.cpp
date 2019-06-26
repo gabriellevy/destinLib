@@ -23,21 +23,29 @@ void ExecNoeud::FinExecutionNoeud()
    //m_EtatCondition = ec_NonTeste;
 }
 
-void ExecNoeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)
+void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)
 {
+    bool executionNoeudNarratif = false; // si false il s'agit seulement de l'exécution d'un noeud de base qui change juste des caracs (par exemple)
+    if ( noeudAExecuter == nullptr) {
+        noeudAExecuter = m_Noeud; // cas le plus courant
+        executionNoeudNarratif = true;
+    }
+
     // si il y un champs de temps, il s'écoule :
     // pour le noeud courant
-    this->m_Noeud->AjouterDuree( m_Noeud->m_Duree );
-    // pour l'aventure complète
-    Univers::ME->AjouterDuree(m_Noeud->m_Duree);
-    // si on est en mode aléatoire, le temps s'écoule aussi pour le noeud histoire qui a fait appel à l'aléatoire
-    if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire)
-        Univers::ME->GetExecHistoire()->AjouterDureeAEffetHistoireCourant(m_Noeud->m_Duree);
+    if ( executionNoeudNarratif ) {
+        this->m_Noeud->AjouterDuree( m_Noeud->m_Duree );
+        // pour l'aventure complète
+        Univers::ME->AjouterDuree(m_Noeud->m_Duree);
+        // si on est en mode aléatoire, le temps s'écoule aussi pour le noeud histoire qui a fait appel à l'aléatoire
+        if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire)
+            Univers::ME->GetExecHistoire()->AjouterDureeAEffetHistoireCourant(m_Noeud->m_Duree);
+    }
 
     // maj du perso :
-    if ( m_Noeud->m_ChangePerso != QLatin1String(""))
+    if ( noeudAExecuter->m_ChangePerso != QLatin1String(""))
     {
-        IPerso::GetPersoInterface()->ChangerPersoCourant(m_Noeud->m_ChangePerso);
+        IPerso::GetPersoInterface()->ChangerPersoCourant(noeudAExecuter->m_ChangePerso);
     }
 
     /*int index = 0;
@@ -47,7 +55,7 @@ void ExecNoeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuiva
         Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }*/
 
-    foreach(AppelCallback* appel, m_Noeud->m_FonctionsAppellees)
+    foreach(AppelCallback* appel, noeudAExecuter->m_FonctionsAppellees)
     {
         Univers::ME->GetExecHistoire()->AppelerFonctionCallback(
                     appel->m_NomFonction,
@@ -57,19 +65,19 @@ void ExecNoeud::ExecuterActionsNoeud(/*bool afficherNoeud, bool lancerNoeudSuiva
     }
 
     // maj des caracs
-    if ( m_Noeud->m_SetCaracs.size()>0)
+    if ( noeudAExecuter->m_SetCaracs.size()>0)
     {
         IPerso* perso = Univers::ME->GetPersoInterface();
-        for ( int i = 0 ; i < m_Noeud->m_SetCaracs.size() ; ++i)
+        for ( int i = 0 ; i < noeudAExecuter->m_SetCaracs.size() ; ++i)
         {
-            Univers::ME->GetExecHistoire()->AppliquerCarac(*m_Noeud->m_SetCaracs[i] );
+            Univers::ME->GetExecHistoire()->AppliquerCarac(*noeudAExecuter->m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }
 
     // mise à jour de l'état de la partie :
-    if ( m_Noeud->m_NouvelEtatPartie != QLatin1String("") )
-        Univers::ME->ChangerEtatPartie(m_Noeud->m_NouvelEtatPartie);
+    if ( noeudAExecuter->m_NouvelEtatPartie != QLatin1String("") )
+        Univers::ME->ChangerEtatPartie(noeudAExecuter->m_NouvelEtatPartie);
 
     /*if (this->AQuelqueChoseAAfficher() && afficherNoeud)
     {

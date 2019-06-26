@@ -91,7 +91,7 @@ Effet* GenEvt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire,
     effet->m_Id = id;
     effet->m_Text = text;
     effet->AjouterRetireurACarac(caracId, valeurRetire);
-    return AjouterEffet(effet, evtDest);
+    return effet;
 }
 
 Effet* GenEvt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text, QString id, Evt* evtDest)
@@ -100,7 +100,15 @@ Effet* GenEvt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleVa
     effet->m_Id = id;
     effet->m_Text = text;
     effet->AjouterChangeurDeCarac(caracId, nouvelleValeur);
-    return AjouterEffet(effet, evtDest);
+    return effet;
+}
+
+Noeud* GenEvt::GenererNoeudModificateurCarac(QString caracId, QString nouvelleValeur, QList<Condition*> conditions)
+{
+    Noeud* noeud = new Noeud();
+    noeud->AjouterChangeurDeCarac(caracId, nouvelleValeur);
+    noeud->m_Conditions.append( conditions );
+    return noeud;
 }
 
 Effet* GenEvt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id, Evt* evtDest)
@@ -108,7 +116,7 @@ Effet* GenEvt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee
     Effet* effet = this->AjouterEffetVide(evtDest);
     effet->m_Id = id;
     effet->AjouterAjouteurACarac(caracId, valeurAjoutee);
-    return AjouterEffet(effet, evtDest);
+    return effet;
 }
 
 Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id, Evt* evtDest)
@@ -117,7 +125,7 @@ Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id
     effet->m_Id = id;
     effet->m_Text = text;
     effet->m_ImgPath = cheminImg;
-    return AjouterEffet(effet, evtDest);
+    return effet;
 }
 
 Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
@@ -129,8 +137,7 @@ Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString va
     effet->m_ImgPath = cheminImg;
 
     effet->AjouterGlisseur(valeur_min, valeur_max, valeur_depart, carac_id);
-
-    return AjouterEffet(effet, evtDest);
+    return effet;
 }
 
 Effet* GenEvt::AjouterEffetChangementPerso(QString persoId, QString text, QString cheminImg, QString id, Evt* evtDest)
@@ -148,7 +155,7 @@ Effet* GenEvt::AjouterEffetTest(QString caracId, Comparateur comparateur, QStrin
     Effet* effet = this->AjouterEffetVide(evtDest);
     effet->m_Id = id;
     effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
-    return AjouterEffet(effet, evtDest);
+    return effet;
 }
 
 Evt* GenEvt::GenererEvt(QString id, QString nom)
@@ -230,6 +237,6 @@ Effet* GenEvt::AjouterEffetSelecteurDEvt(Evt* evtDest, QVector<Noeud*> noeudsDes
         effet->m_SelectionneurDeNoeud->m_Noeuds.push_back(noeud);
     }
 
-    return AjouterEffet(effet, evtDest);
+    return effet;
 }
 

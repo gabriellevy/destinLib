@@ -406,15 +406,19 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
         Noeud* noeudSuivant = noeud->m_SelectionneurDeNoeud->DeterminerEvtSuivant();
 
         Evt* evSuivant = dynamic_cast<Evt*>(noeudSuivant);
-        if ( evSuivant == nullptr ) {
-            Effet* effetSuivant = dynamic_cast<Effet*>(noeudSuivant);
-            Q_ASSERT_X( effetSuivant != nullptr, "noeud suivant n'étant ni un effet ni un evt !!", "ExecHistoire::AppliquerGoTo");
-            this->GoToEffetId(effetSuivant->m_Id);
-        } else {
+        if ( evSuivant != nullptr ) {
             this->SetCurrentEvtId(evSuivant->m_Id);
+            ilYAgoto = true;
+        } else {
+            Effet* effetSuivant = dynamic_cast<Effet*>(noeudSuivant);
+            if ( evSuivant != nullptr ) {
+                this->GoToEffetId(effetSuivant->m_Id);
+                ilYAgoto = true;
+            } else {
+                Noeud* noeudAExecuter = dynamic_cast<Noeud*>(noeudSuivant);
+                this->m_ExecNoeudActuel->ExecuterActionsNoeud(noeudAExecuter);
+            }
         }
-
-        ilYAgoto = true;
     }
 
     return ilYAgoto;
@@ -801,7 +805,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
     }
     if ( evtChangement )
     {
-        this->SetExecEvtActuel(evt);
+        //this->SetExecEvtActuel(evt);
         // the point of the following takeWidget is to avoid the destruction of the previous evt by the setWidget call just after
         /*QWidget* evt = */ui->histoireScrollArea->takeWidget();
         ui->histoireScrollArea->setWidget(this->m_ExecEvtActuel);
@@ -813,7 +817,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
         QScrollBar* vertScroll = ui->histoireScrollArea->verticalScrollBar();
         vertScroll->setValue(0);
         //this->m_ExecEvtActuel->RafraichirAffichageEffet(exec_effet);
-        this->m_ExecEvtActuel->SetExecEffet(exec_effet);
+        //this->m_ExecEvtActuel->SetExecEffet(exec_effet);
     }
 
     if ( evtChangement || effetChangement )
