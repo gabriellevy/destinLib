@@ -53,7 +53,7 @@ public:
     /**
      * @brief dans le cas où cet événement appartiendrait à un système de sélection d'événement on l'y ajoute :
      */
-    void AjouterASelectionneurEvt(Evt* evt, int selectionneur_bdd_id);
+    void AjouterASelectionneurEvt(Evt* evt, Condition* poids, int selectionneur_bdd_id);
 
     /**
      * @brief crée un effet qui lors de son exécution enverra vers un des noeuds passés en paramètres selon leurs probas
@@ -62,9 +62,9 @@ public:
      * @param id : id du noeud à creéer
      * @return effet généré
      */
-    Effet* AjouterEffetSelecteurDEvt(Evt* evt, QVector<Noeud*> noeudsDestination, QString id = "", QString text = "");
+    Effet* AjouterEffetSelecteurDEvt(QVector<NoeudProbable*> noeudsDestination, QString id = "", QString text = "", Evt* evt = nullptr);
 
-    Noeud* GenererNoeudModificateurCarac(QString caracId, QString nouvelleValeur, QList<Condition*> conditions);
+    Noeud* GenererNoeudModificateurCarac(QString caracId, QString nouvelleValeur, QList<Condition*> conditions = {});
 
 private:
 

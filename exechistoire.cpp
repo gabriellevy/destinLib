@@ -813,7 +813,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
     }
     if ( effetChangement )
     {
-        ExecEffet* exec_effet = this->m_ExecEvtActuel->SetExecEffet(effet);
+        /*ExecEffet* exec_effet = */this->m_ExecEvtActuel->SetExecEffet(effet);
         QScrollBar* vertScroll = ui->histoireScrollArea->verticalScrollBar();
         vertScroll->setValue(0);
         //this->m_ExecEvtActuel->RafraichirAffichageEffet(exec_effet);

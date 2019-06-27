@@ -27,13 +27,13 @@ void GenEvt::ChargerEffetsBdd(Evt* evtDest)
     }
 }
 
-void GenEvt::AjouterASelectionneurEvt(Evt* evt, int selectionneur_bdd_id)
+void GenEvt::AjouterASelectionneurEvt(Evt* evt, Condition* poids, int selectionneur_bdd_id)
 {
     // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
     for ( SelectionneurDeNoeud* sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
     {
         if ( sel->m_BddId == selectionneur_bdd_id) {
-            sel->m_Noeuds.push_back(evt);
+            sel->m_NoeudsProbables.push_back(new NoeudProbable(evt, poids));
             return;
         }
     }
@@ -48,7 +48,7 @@ void GenEvt::AjouterASelectionneurEvt(Evt* evt, int selectionneur_bdd_id)
         QString intitule = query.value("intitule").toString();
 
         SelectionneurDeNoeud* sel = new SelectionneurDeNoeud(intitule, bdd_id);
-        sel->m_Noeuds.push_back(evt);
+        sel->m_NoeudsProbables.push_back(new NoeudProbable(evt, poids));
         SelectionneurDeNoeud::s_TousLesSelectionneurs.push_back(sel);
     }
 }
@@ -230,18 +230,18 @@ void GenEvt::ChargerChoixBdd(Effet* effet)
     }
 }
 
-Effet* GenEvt::AjouterEffetSelecteurDEvt(Evt* evtDest, QVector<Noeud*> noeudsDestination, QString id, QString text)
+Effet* GenEvt::AjouterEffetSelecteurDEvt(QVector<NoeudProbable*> noeudsDestination, QString id, QString text, Evt* evtDest)
 {
     Effet* effet = this->AjouterEffetSelectionneurDeNoeud(id, text, evtDest);
 
     // vérification et ajout des noeuds destination
     for (int i = 0; i < noeudsDestination.length() ; ++i) {
-        Noeud* noeud = noeudsDestination.at(i);
-        Q_ASSERT_X( noeud->GetProba() > 0 ,
+        NoeudProbable* noeudProbable = noeudsDestination.at(i);
+        /*Q_ASSERT_X( noeudProbable->m_PoidsProba->m_Proba > 0 ,
                     "Tentative d'ajouter un neud sans probabilité à un sélecteur de noeud via probabilité...",
                     "GenEvt::AjouterEffetSelecteurDEvt");
-
-        effet->m_SelectionneurDeNoeud->m_Noeuds.push_back(noeud);
+*/
+        effet->m_SelectionneurDeNoeud->m_NoeudsProbables.push_back(noeudProbable);
     }
 
     return effet;
