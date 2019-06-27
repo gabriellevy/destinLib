@@ -22,6 +22,9 @@ class SetCarac;
  */
 class DPerso
 {
+protected :
+    virtual void RafraichirAffichage();
+
 public:
     DPerso(QString id = "", QString nom = "", QString description = "", QString CheminImagePortrait = "");
     // c'estd ans cette focntion qu'il faut initialiser les caracs du perso, pas dans le constructeur
@@ -35,6 +38,8 @@ public:
     QVector<QString> m_CaracsAAfficher = {};
 
     QVector<Theme*> m_Themes;
+
+    friend class IPerso;
 };
 
 class ExecHistoire;

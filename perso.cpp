@@ -148,8 +148,15 @@ void IPerso::InitialiserPerso()
     }
 }
 
+void DPerso::RafraichirAffichage()
+{
+
+}
+
 void IPerso::RafraichirAffichage()
 {
+    this->GetPersoCourant()->RafraichirAffichage();
+
     // portrait
     if ( myImageLabel == nullptr )
     {
