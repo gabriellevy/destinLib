@@ -492,7 +492,13 @@ void ExecHistoire::AppliquerCarac(SetCarac setCarac)
             switch(setCarac.m_ModifCaracType)
             {
             case ModifCaracType::SetCarac : {
-                this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur = setCarac.GetValeur();
+                Carac* carac = this->m_Histoire->m_Caracs[i];
+                carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
+
+                if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
+                    carac->m_Img.load(carac->m_DataCarac.m_Valeur);
+                }
+
                 break;
             }
             case ModifCaracType::AddToCarac : {

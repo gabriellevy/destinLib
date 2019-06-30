@@ -38,6 +38,8 @@ public:
     QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
 
     DPerso* GetPersoCourant();
+
+    Carac* GetCarac(QString idCarac);
 };
 
 #endif // HISTOIRE_H

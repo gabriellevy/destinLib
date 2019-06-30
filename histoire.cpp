@@ -21,3 +21,12 @@ DPerso* Hist::GetPersoCourant()
 {
     return Univers::ME->GetPersoInterface()->GetPersoCourant();
 }
+
+Carac* Hist::GetCarac(QString idCarac)
+{
+    for (int i = 0 ; m_Caracs.length() ; ++i) {
+        if ( m_Caracs[i]->m_DataCarac.m_Id == idCarac)
+            return m_Caracs[i];
+    }
+    return nullptr;
+}

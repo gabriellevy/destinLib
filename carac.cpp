@@ -29,7 +29,8 @@ Carac::Carac(QString Id, QString Intitule, QString Valeur, QString CheminImg, QS
 {
     ui->setupUi(this);
 
-    m_Img.load(CheminImg);
+    if ( CheminImg != "")
+     m_Img.load(CheminImg);
 }
 
 Jauge::Jauge(QString Id, QString Intitule, double Minimum, double Maximum, double ValeurDepart, QString Img, QString Description, QWidget *parent)
@@ -96,10 +97,13 @@ void Carac::Afficher()
             }
 
         }break;
-        case MODE_AFFICHAGE::ma_Img:{
+        case MODE_AFFICHAGE::ma_Img:
+        case MODE_AFFICHAGE::ma_ImgValeur:
+        {
             if ( !AfficherImage() )
             {
-                 qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image : " <<m_DataCarac.m_Id.toStdString().c_str();
+                 qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image. Id : " <<m_DataCarac.m_Id.toStdString().c_str()
+                        << " - Valeur : " << m_DataCarac.m_Valeur.toStdString().c_str();
             }
             //AfficherIntitule();
 
@@ -200,6 +204,7 @@ QString Carac::SetValeurACaracId(QString idCarac, QString valeurSet)
 {
     Q_ASSERT_X(Univers::ME->GetExecHistoire() != nullptr, "Exec histoire non initialisée !","Carac::SetValeurACaracId" );
     Univers::ME->GetExecHistoire()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
+
     return Carac::GetCaracValue(idCarac);
 }
 

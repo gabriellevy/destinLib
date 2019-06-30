@@ -13,6 +13,7 @@ enum MODE_AFFICHAGE {
     //ta_Deduit, // pas précisé dans le json donc déduit des autres caractéristiques (cf code)
     ma_Binaire, // seul l'intitulé est affiché si la carac n'est pas égale à 0 ou ""
     ma_Img, // image seulement (et infobulle si il y a une description)
+    ma_ImgValeur, // image seulement (et infobulle si il y a une description) mais l'adresse de l'mage est dans la valeur
     ma_Texte, // mode par défaut
     ma_Nombre,
     ma_Jauge // sous forme de jauge => possible seulement si on a défini une valeur maximum de cette valeur
@@ -38,7 +39,6 @@ class Carac : public QWidget
     Q_OBJECT
 
 protected:
-    QPixmap m_Img;
 
 public:
     explicit Carac(QWidget *parent = nullptr);
@@ -61,6 +61,7 @@ public:
     static int AJouterValeurACaracId(QString idCarac, int valeurAjoutee);
     static int RetirerValeurACaracId(QString idCarac, int valeurRetiree);
     static QString SetValeurACaracId(QString idCarac, QString valeurSet);
+    QPixmap m_Img;
 
 private:
     Ui::Carac *ui;
