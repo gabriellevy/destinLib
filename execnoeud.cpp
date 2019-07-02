@@ -64,6 +64,10 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
         Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }
 
+    if ( noeudAExecuter->m_CallbackDisplay != nullptr) {
+        noeudAExecuter->m_CallbackDisplay();
+    }
+
     // maj des caracs
     if ( noeudAExecuter->m_SetCaracs.size()>0)
     {
@@ -93,6 +97,8 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
 
 void ExecNoeud::LancerNoeud()
 {
+    this->ExecuterActionsNoeud();
+
     if ( this->m_Noeud->AQuelqueChoseAAfficher() && this->m_Noeud->m_TypeNoeud != TypeNoeud::etn_Choix)
         this->AfficherNoeud();
 
@@ -104,8 +110,6 @@ void ExecNoeud::LancerNoeud()
        if ( Univers::ME->m_Reglages.m_SonOn )
            Univers::ME->m_Lecteur->play();
     }
-
-    this->ExecuterActionsNoeud();
 
     bool transition_auto = this->GestionTransition( );
 

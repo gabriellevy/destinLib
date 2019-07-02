@@ -119,7 +119,7 @@ void NoeudNarratif::ChargerFonctionsCallbacksBdd()
 
 bool NoeudNarratif::AQuelqueChoseAAfficher()
 {
-    return (m_Text != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "");
+    return (m_Text != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "" || m_CallbackDisplay != nullptr);
 }
 
 

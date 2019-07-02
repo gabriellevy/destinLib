@@ -93,6 +93,8 @@ public:
     QVector<AppelCallback*> m_FonctionsAppellees;
     QVector<AppelCallback*> m_FonctionsDeTest;
 
+    std::function<void()> m_CallbackDisplay = nullptr; // callback de base appelée au début de l'exécution de l'effet et qui affecte l'affichage (texte, image...)
+
 
 protected:
 };

@@ -137,6 +137,16 @@ Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id
     return effet;
 }
 
+Effet* GenEvt::AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay, QString text, QString cheminImg, QString id, Evt* evtDest)
+{
+    Effet* effet = this->AjouterEffetVide(evtDest);
+    effet->m_Id = id;
+    effet->m_Text = text;
+    effet->m_ImgPath = cheminImg;
+    effet->m_CallbackDisplay = callbackDisplay;
+    return effet;
+}
+
 Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
                                     QString carac_id, QString cheminImg, QString id, Evt* evtDest )
 {

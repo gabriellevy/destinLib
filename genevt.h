@@ -24,6 +24,7 @@ public:
     Effet* AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetNarration(QString text, QString cheminImg = "", QString id = "", Evt* evtDest = nullptr);
+    Effet* AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay, QString text = "", QString cheminImg = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetChangementPerso(QString persoId, QString text, QString cheminImg = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetTest(QString caracId, Comparateur comparateur, QString valeur, QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetVide(Evt* evtDest = nullptr);
