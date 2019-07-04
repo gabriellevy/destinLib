@@ -9,22 +9,6 @@ GenHistoire::~GenHistoire()
 {
 }
 
-Hist* GenHistoire::GenererHistoire()
-{
-    return m_HistoireGeneree;
-}
-void GenHistoire::GenererPersos()
-{
-
-}
-void GenHistoire::GenererThemes()
-{
-
-}
-void GenHistoire::GenererFonctionsCallback()
-{
-
-}
 
 EvtAleatoire* GenHistoire::AjouterEvtAleatoire(QString id, QString nom)
 {

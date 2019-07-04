@@ -57,9 +57,10 @@ void Univers::LancerHistoire(Hist* histoire, QWidget* /* parent*/, QString /*pre
 
 Hist* Univers::ExecuterGenerateurHistoire()
 {
-    m_Histoire = new Hist("titre inconu : vous devriez surclasser 'ExecuterGenerateurHistoire'");
-    m_GenHistoire = new GenHistoire(m_Histoire);
-    m_GenHistoire->GenererHistoire();
+    // structure typoqie à copier dans votre fonction surclassée ExecuterGenerateurHistoire :
+    //m_Histoire = new Hist("titre inconu : vous devriez surclasser 'ExecuterGenerateurHistoire'");
+    //m_GenHistoire = new GenHistoire(m_Histoire);
+    //m_GenHistoire->GenererHistoire();
     return m_Histoire;
 }
 

@@ -13,17 +13,18 @@ class GenHistoire
 protected:
     GenEvt* m_GenerateurEvt = nullptr;
 
-    virtual void GenererCaracs() {}
+    // fonction dans laquelle sont créées les caracs importantes du jeu
+    // (obligatoire pour celles qui sont affichées, les autres peuvent être créées autrement)
+    virtual void GenererCaracs() = 0;
 
 public:
     GenHistoire(Hist* histoireGeneree);
     virtual ~GenHistoire();
 
     Hist* m_HistoireGeneree = nullptr;
-    virtual Hist* GenererHistoire();
-    virtual void GenererPersos();
-    virtual void GenererThemes();
-    virtual void GenererFonctionsCallback(); // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
+    virtual Hist* GenererHistoire() = 0;
+    virtual void GenererPersos() {}
+    virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
 
 
     Evt* AjouterEvt(QString id, QString nom);
