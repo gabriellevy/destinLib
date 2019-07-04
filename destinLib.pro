@@ -30,6 +30,7 @@ SOURCES += \
     execnoeud.cpp \
     genevt.cpp \
     genhistoirebdd.cpp \
+    gestionnairecarac.cpp \
         main.cpp \
     noeudnarratif.cpp \
     perso.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
     execnoeud.h \
     genevt.h \
     genhistoirebdd.h \
+    gestionnairecarac.h \
     noeudnarratif.h \
     perso.h \
     carac.h \

@@ -55,12 +55,6 @@ public:
 
     DCarac m_DataCarac;
 
-    // focntions raccourcis de convénience :
-    static QString GetCaracValue(QString id);
-    static int GetCaracValueAsInt(QString id);
-    static int AJouterValeurACaracId(QString idCarac, int valeurAjoutee);
-    static int RetirerValeurACaracId(QString idCarac, int valeurRetiree);
-    static QString SetValeurACaracId(QString idCarac, QString valeurSet);
     QPixmap m_Img;
 
 private:

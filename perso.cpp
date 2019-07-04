@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include "univers.h"
 #include "aspectratiolabel.h"
+#include "gestionnairecarac.h"
 
 DPerso::DPerso(QString id, QString nom, QString description, QString CheminImagePortrait)
     :m_Id(id), m_Nom(nom), m_Description(description), m_CheminImagePortrait(CheminImagePortrait)
@@ -102,7 +103,7 @@ DPerso* IPerso::GetPersoCourant()
                 }
 
                 carac->DeterminerModeAffichage(m_TypeAffichage);
-                Univers::ME->GetHistoire()->m_Caracs.append(carac);
+                GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.append(carac);
             }
         }
 
@@ -170,7 +171,7 @@ void IPerso::RafraichirAffichage()
     }
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
-    QVector<Carac*> caracs = Univers::ME->GetHistoire()->m_Caracs;
+    QVector<Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs;
     // caracs
     for ( int i = 0; i < caracs.size() ; ++i)
     {

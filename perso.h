@@ -9,7 +9,6 @@
 #include "aspectratiolabel.h"
 #include <QPixmap>
 #include <QVector>
-#include "theme.h"
 
 namespace Ui {
 class Perso;
@@ -37,12 +36,11 @@ public:
     QPixmap m_ImagePortrait;
     QVector<QString> m_CaracsAAfficher = {};
 
-    QVector<Theme*> m_Themes;
-
     friend class IPerso;
 };
 
 class ExecHistoire;
+class GestionnaireCarac;
 
 /**
  * @brief Class permettant d'afficher le persos mais contenant aussi toutes les données et caractéristiques de tous les personnages affichables
@@ -55,6 +53,8 @@ class IPerso : public QWidget
     static QString s_IdPersoActif;
 
 protected:
+
+    GestionnaireCarac* m_GestionnaireCarac = nullptr;
     QHash<QString, DPerso*> m_Persos;
 
 public:

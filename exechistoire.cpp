@@ -9,6 +9,7 @@
 #include "histoire.h"
 #include "execevt.h"
 #include "execeffet.h"
+#include "gestionnairecarac.h"
 
 ExecHistoire::ExecHistoire(Hist* histoire, QWidget *parent) :
     QWidget(parent),
@@ -463,10 +464,10 @@ QString ExecHistoire::GetCaracValue(QString caracId)
 {
     QString val = "";
 
-    for ( int i = 0; i < this->m_Histoire->m_Caracs.size() ; i++)
+    for ( int i = 0; i < GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.size() ; i++)
     {
-        if ( this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Id == caracId)
-            return this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur;
+        if ( GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Id == caracId)
+            return GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur;
     }
 
     return val;
@@ -474,9 +475,9 @@ QString ExecHistoire::GetCaracValue(QString caracId)
 
 bool ExecHistoire::CetteCaracExisteDeja(QString id)
 {
-    for ( int i = 0; i < this->m_Histoire->m_Caracs.size() ; ++i)
+    for ( int i = 0; i < GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.size() ; ++i)
     {
-        if ( this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Id == id)
+        if ( GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Id == id)
             return true;
     }
     return false;
@@ -485,14 +486,14 @@ bool ExecHistoire::CetteCaracExisteDeja(QString id)
 void ExecHistoire::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = false;
-    for ( int i = 0; i < this->m_Histoire->m_Caracs.size() ; ++i)
+    for ( int i = 0; i < GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.size() ; ++i)
     {
-        if ( this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Id == setCarac.m_CaracId)
+        if ( GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Id == setCarac.m_CaracId)
         {
             switch(setCarac.m_ModifCaracType)
             {
             case ModifCaracType::SetCarac : {
-                Carac* carac = this->m_Histoire->m_Caracs[i];
+                Carac* carac = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i];
                 carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
 
                 if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
@@ -502,15 +503,15 @@ void ExecHistoire::AppliquerCarac(SetCarac setCarac)
                 break;
             }
             case ModifCaracType::AddToCarac : {
-                double valeur = this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
+                double valeur = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
                 valeur += setCarac.GetValeur().toDouble();
-                this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
+                GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
                 break;
             }
             case ModifCaracType::RetireDeCarac : {
-                double valeur = this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
+                double valeur = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
                 valeur -= setCarac.GetValeur().toDouble();
-                this->m_Histoire->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
+                GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
                 break;
             }
             }
@@ -524,7 +525,7 @@ void ExecHistoire::AppliquerCarac(SetCarac setCarac)
         Carac* carac = new Carac;
         carac->m_DataCarac.m_Id = setCarac.m_CaracId;
         carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
-        this->m_Histoire->m_Caracs.append(carac);
+        GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.append(carac);
     }
 }
 

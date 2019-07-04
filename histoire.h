@@ -3,9 +3,7 @@
 
 #include "evt.h"
 #include "evtaleatoire.h"
-#include "carac.h"
 #include <QVector>
-#include "theme.h"
 #include "perso.h"
 
 /**
@@ -17,12 +15,6 @@ class Hist
 public:
     Hist(QString titre);
 
-    void AppliquerTheme(Theme* theme);
-
-    // caracs actuelles du joueur
-    QVector<Carac*> m_Caracs;
-
-    QVector<Theme*> m_Themes;
     QString m_Titre = "Titre inconnu";
 
     QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
@@ -38,8 +30,6 @@ public:
     QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
 
     DPerso* GetPersoCourant();
-
-    Carac* GetCarac(QString idCarac);
 };
 
 #endif // HISTOIRE_H
