@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QFont>
 #include <QVector>
-#include "theme.h"
 #include "perso.h"
 #include "histoire.h"
 #include "exechistoire.h"
@@ -84,8 +83,6 @@ public:
 
     QMediaPlayer* m_Lecteur;
     Reglages m_Reglages;
-
-    QVector<Theme*> m_Themes;
 
     /**
      * @brief AppliquerFond

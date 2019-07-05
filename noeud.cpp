@@ -71,13 +71,6 @@ Noeud::Noeud(QString id):Noeud()
         m_GoToEffetId = objJson["go_to_effet"].toString();
     }
 
-    if ( objJson.contains("themes") && objJson["themes"].isArray())
-    {
-        QJsonArray themes = objJson["themes"].toArray();
-        for ( int i = 0; i < themes.size(); ++i)
-            m_Themes.append(themes[i].toString());
-    }
-
     if ( objJson.contains("set_carac") && objJson["set_carac"].isArray())
     {
         QJsonArray set_caracs = objJson["set_carac"].toArray();

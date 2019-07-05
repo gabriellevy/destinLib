@@ -207,7 +207,7 @@ void NoeudNarratif::ChargerSetCaracBdd()
         setC->m_ValeurRandom = query.value("m_ValeurRandom").toString();
         setC->m_ValeurMin = query.value("m_ValeurMin").toString();
         setC->m_ValeurMax = query.value("m_ValeurMax").toString();
-        setC->m_ValeurCarac = query.value("m_ValeurCarac").toString();
+        setC->m_IdValeurCaracCopie = query.value("m_ValeurCarac").toString();
         setC->m_ValeurRandom = query.value("m_ValeurRandom").toString();
     }
 }

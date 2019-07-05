@@ -54,21 +54,6 @@ ExecHistoire::~ExecHistoire()
 
 /*void Histoire::Generer(QJsonObject aventure)
 {
-    if ( aventure.contains("themes") )
-    {
-        if ( aventure["themes"].isArray() )
-        {
-            QJsonArray jsonArrayThemes = aventure["themes"].toArray();
-
-            for ( int i = 0; i < jsonArrayThemes.size(); ++i)
-            {
-                this->m_Histoire->m_Themes.append(jsonArrayThemes[i].toObject()["valeur"].toString());
-            }
-        }
-        else
-            QMessageBox::warning(Univers::ME, "erreur", "Le champs themes doit être un tableau de thèmes !");
-    }
-
     // récupération des différents types d'événements :
     if ( aventure.contains("evts") && aventure["evts"].isArray())
     {

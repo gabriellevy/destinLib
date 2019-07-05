@@ -64,11 +64,6 @@ public:
     //EtatCondition m_EtatCondition = ec_NonTeste;
     virtual bool TesterConditions();
 
-    /**
-     * @return true si ce noeud possède dans m_Themes au moins u ndes thèems du paramètre
-     */
-    //bool AUnDeCesThemes(QList<QString> themes);
-
     // modifier caracs
     SetCarac* AjouterRetireurACarac(QString id, QString valeur);
     SetCarac* AjouterAjouteurACarac(QString id, QString valeur);

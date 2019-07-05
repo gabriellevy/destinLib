@@ -15,32 +15,9 @@ class Perso;
 }
 
 class SetCarac;
-
-/**
- * @brief DPerso signifie "data perso". C'est un contenant des données principales d'un personnage indépendandemment du système d'interface qui est l'essentiel de ce fichier
- */
-class DPerso
-{
-protected :
-    virtual void RafraichirAffichage();
-
-public:
-    DPerso(QString id = "", QString nom = "", QString description = "", QString CheminImagePortrait = "");
-    // c'estd ans cette focntion qu'il faut initialiser les caracs du perso, pas dans le constructeur
-    virtual void InitialiserPerso();
-
-    QString m_Id;
-    QString m_Nom;
-    QString m_Description = "";
-    QString m_CheminImagePortrait = "";
-    QPixmap m_ImagePortrait;
-    QVector<QString> m_CaracsAAfficher = {};
-
-    friend class IPerso;
-};
-
 class ExecHistoire;
 class GestionnaireCarac;
+class DPerso;
 
 /**
  * @brief Class permettant d'afficher le persos mais contenant aussi toutes les données et caractéristiques de tous les personnages affichables

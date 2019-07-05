@@ -3,7 +3,6 @@
 
 #include "effet.h"
 #include <QVector>
-#include "theme.h"
 
 
 enum TypeEvt {
@@ -25,8 +24,6 @@ public:
 
     QVector<Effet*> m_Effets;
     Effet* TrouverEffet(QString id);
-
-    QVector<Theme*> m_Themes;
 
     QString m_CheminImgFond;
 

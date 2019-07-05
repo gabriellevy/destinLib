@@ -5,12 +5,6 @@
 #include "aspectratiolabel.h"
 #include "gestionnairecarac.h"
 
-DPerso::DPerso(QString id, QString nom, QString description, QString CheminImagePortrait)
-    :m_Id(id), m_Nom(nom), m_Description(description), m_CheminImagePortrait(CheminImagePortrait)
-{
-
-}
-
 IPerso::IPerso(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Perso)
@@ -25,11 +19,6 @@ QString IPerso::s_IdPersoActif = "";
 IPerso* IPerso::GetPersoInterface()
 {
     return IPerso::s_PersosInterface;
-}
-
-DPerso* IPerso::GetPersoCourant()
-{
-    return m_Persos[IPerso::s_IdPersoActif];
 }
 
 /*void IPerso::Rafraichir(QJsonArray persos)
@@ -116,16 +105,13 @@ DPerso* IPerso::GetPersoCourant()
 
 void IPerso::AjouterPersoJouable(DPerso* perso)
 {
-    IPerso::GetPersoInterface()->m_Persos.insert(perso->m_Id, perso);
+    IPerso::GetPersoInterface()->m_Persos.insert(
+                perso->GetId(),
+                perso);
 
     // par défaut le perso joué est le prmeir ajouté
     if ( s_IdPersoActif == "" )
-       s_IdPersoActif = perso->m_Id;
-}
-
-const DPerso* IPerso::GetPerso(QString id)
-{
-    return m_Persos[id];
+       s_IdPersoActif = perso->GetId();
 }
 
 
@@ -149,11 +135,6 @@ void IPerso::InitialiserPerso()
     }
 }
 
-void DPerso::RafraichirAffichage()
-{
-
-}
-
 void IPerso::RafraichirAffichage()
 {
     this->GetPersoCourant()->RafraichirAffichage();
@@ -161,14 +142,16 @@ void IPerso::RafraichirAffichage()
     // portrait
     if ( myImageLabel == nullptr )
     {
-        if ( GetPersoCourant()->m_CheminImagePortrait != "" )
+        QString cheminImg = GestionnaireCarac::GetCaracValue(GestionnaireCarac::CARAC_CHEMIN_PORTRAIT);
+        if ( cheminImg != "" )
         {
-            GetPersoCourant()->m_ImagePortrait.load(GetPersoCourant()->m_CheminImagePortrait);
+            GetPersoCourant()->m_ImagePortrait.load(cheminImg);
             ui->imagePortrait->setPixmap(GetPersoCourant()->m_ImagePortrait);
         }
-
-        ui->portraitLabel->setText(GetPersoCourant()->m_Nom);
     }
+
+    ui->portraitLabel->setText(
+                GestionnaireCarac::GetCaracValue(GestionnaireCarac::CARAC_NOM));
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
     QVector<Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs;

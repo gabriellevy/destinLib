@@ -30,7 +30,7 @@ SetCarac::SetCarac(QJsonObject obj, ModifCaracType modifCaracType, QString valeu
     }
     else if ( obj.contains("valeur_carac") && obj["valeur_carac"].isString() )
     {
-        m_ValeurCarac = obj["valeur_carac"].toString();
+        m_IdValeurCaracCopie = obj["valeur_carac"].toString();
     }
     else if ( obj.contains("valeur_min") && obj["valeur_min"].isString() &&
               obj.contains("valeur_max") && obj["valeur_max"].isString())
@@ -93,9 +93,9 @@ QString SetCarac::GetValeur()
         int valeur = m_ValeurMin.toInt() + qrand()%(m_ValeurMax.toInt() - m_ValeurMin.toInt());
         return QString::number(valeur);
     }
-    else if ( m_ValeurCarac != "nexistepas*µ£$" )
+    else if ( m_IdValeurCaracCopie != "nexistepas*µ£$" )
     {
-        QString valeurStr = Univers::ME->GetExecHistoire()->GetCaracValue(m_ValeurCarac);
+        QString valeurStr = Univers::ME->GetExecHistoire()->GetCaracValue(m_IdValeurCaracCopie);
         if ( valeurStr == "" )
             valeurStr = "0";
         int valeur =  valeurStr.toInt();

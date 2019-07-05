@@ -2,6 +2,7 @@
 #include "ui_carac.h"
 #include "univers.h"
 #include <QDebug>
+#include "gestionnairecarac.h"
 
 DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description)
 {
