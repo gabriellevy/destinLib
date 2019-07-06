@@ -56,12 +56,12 @@ class GestionnaireCarac
     GestionnaireCarac();
     static GestionnaireCarac* ME;
 
+    // caracs actuelles du joueur
+    QMap<QString, Carac*> m_Caracs;
+
 public:
 
     Carac* GetCarac(QString idCarac);
-
-    // caracs actuelles du joueur
-    QVector<Carac*> m_Caracs;
 
     // focntions raccourcis de convénience :
     static GestionnaireCarac* GetGestionnaireCarac();
@@ -71,6 +71,11 @@ public:
     static int AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee);
     static int RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree);
     static QString SetValeurACaracId(const QString& idCarac,const  QString& valeurSet);
+    bool CetteCaracExisteDeja(QString id);
+    void AppliquerCarac(SetCarac setCarac);
+    void AjouterCarac(Carac* carac);
+
+    QMap<QString, Carac*> GetCaracs();
 
     static QString CARAC_NOM;
     static QString CARAC_PERSO_ID;

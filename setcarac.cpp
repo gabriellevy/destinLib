@@ -2,6 +2,7 @@
 #include "perso.h"
 #include "univers.h"
 #include <QDebug>
+#include "gestionnairecarac.h"
 
 SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeur)
 {
@@ -95,7 +96,7 @@ QString SetCarac::GetValeur()
     }
     else if ( m_IdValeurCaracCopie != "nexistepas*µ£$" )
     {
-        QString valeurStr = Univers::ME->GetExecHistoire()->GetCaracValue(m_IdValeurCaracCopie);
+        QString valeurStr = GestionnaireCarac::GetGestionnaireCarac()->GetCaracValue(m_IdValeurCaracCopie);
         if ( valeurStr == "" )
             valeurStr = "0";
         int valeur =  valeurStr.toInt();

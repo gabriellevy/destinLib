@@ -5,6 +5,7 @@
 #include "univers.h"
 #include <QMovie>
 #include <QTimer>
+#include "gestionnairecarac.h"
 
 ExecEffet::ExecEffet(ExecEvt* exec_evt, Effet* effet, QWidget *parent):
     ExecNoeud(effet, parent),
@@ -211,7 +212,7 @@ void ExecEffet::valeurGlisseurAChange()
     SetCarac setCarac(ModifCaracType::SetCarac,
                       GetEffet()->m_Glisseur->m_IdCaracAssociee,
                       QString::number(ui->glisseur->value()));
-    Univers::ME->GetExecHistoire()->AppliquerCarac(setCarac);
+    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(setCarac);
 }
 
 

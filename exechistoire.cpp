@@ -445,7 +445,7 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
     return nullptr;
 }*/
 
-QString ExecHistoire::GetCaracValue(QString caracId)
+/*QString ExecHistoire::GetCaracValue(QString caracId)
 {
     QString val = "";
 
@@ -456,63 +456,7 @@ QString ExecHistoire::GetCaracValue(QString caracId)
     }
 
     return val;
-}
-
-bool ExecHistoire::CetteCaracExisteDeja(QString id)
-{
-    for ( int i = 0; i < GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.size() ; ++i)
-    {
-        if ( GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Id == id)
-            return true;
-    }
-    return false;
-}
-
-void ExecHistoire::AppliquerCarac(SetCarac setCarac)
-{
-    bool trouve = false;
-    for ( int i = 0; i < GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.size() ; ++i)
-    {
-        if ( GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Id == setCarac.m_CaracId)
-        {
-            switch(setCarac.m_ModifCaracType)
-            {
-            case ModifCaracType::SetCarac : {
-                Carac* carac = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i];
-                carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
-
-                if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
-                    carac->m_Img.load(carac->m_DataCarac.m_Valeur);
-                }
-
-                break;
-            }
-            case ModifCaracType::AddToCarac : {
-                double valeur = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
-                valeur += setCarac.GetValeur().toDouble();
-                GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
-                break;
-            }
-            case ModifCaracType::RetireDeCarac : {
-                double valeur = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur.toDouble();
-                valeur -= setCarac.GetValeur().toDouble();
-                GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur = QString::number(valeur);
-                break;
-            }
-            }
-            trouve = true;
-            return;
-        }
-    }
-
-    if (!trouve)
-    {
-        Carac* carac = new Carac;
-        carac->m_DataCarac.m_Id = setCarac.m_CaracId;
-        carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
-        GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.append(carac);
-    }
-}
+}*/
 
 
 ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)

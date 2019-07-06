@@ -2,6 +2,7 @@
 #include "univers.h"
 #include <QMovie>
 #include "noeudnarratif.h"
+#include "gestionnairecarac.h"
 
 ExecNoeud::ExecNoeud(NoeudNarratif* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
 {
@@ -74,7 +75,7 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
         IPerso* perso = Univers::ME->GetPersoInterface();
         for ( int i = 0 ; i < noeudAExecuter->m_SetCaracs.size() ; ++i)
         {
-            Univers::ME->GetExecHistoire()->AppliquerCarac(*noeudAExecuter->m_SetCaracs[i] );
+            GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(*noeudAExecuter->m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }

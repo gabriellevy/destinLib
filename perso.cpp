@@ -154,23 +154,26 @@ void IPerso::RafraichirAffichage()
                 GestionnaireCarac::GetCaracValue(GestionnaireCarac::CARAC_NOM));
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
-    QVector<Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->m_Caracs;
+    QMap<QString, Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();
     // caracs
-    for ( int i = 0; i < caracs.size() ; ++i)
-    {
-        caracs[i]->hide();
+    QMap<QString, Carac*>::const_iterator i = caracs.constBegin();
+    while (i != caracs.constEnd()) {
+        i.value()->hide();
+        ++i;
     }
+
     if ( caracs.size() > 0 )
     {
-        for ( int i = 0; i < caracs.size() ; ++i)
-        {
-            if ( caracs[i]->bAffichable())
+        i = caracs.constBegin();
+        while (i != caracs.constEnd()) {
+            if ( i.value()->bAffichable())
             {
-                caracs[i]->Afficher();
-                ui->caracsLayout2->addWidget(caracs[i]);
-                ui->caracsLayout2->setAlignment(caracs[i], Qt::AlignLeft);
-                caracs[i]->show();
+                i.value()->Afficher();
+                ui->caracsLayout2->addWidget(i.value());
+                ui->caracsLayout2->setAlignment(i.value(), Qt::AlignLeft);
+                i.value()->show();
             }
+            ++i;
         }
     }
 

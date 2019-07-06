@@ -89,14 +89,11 @@ public:
      */
     //int& GetIndexEffetConcerne();
 
-    bool CetteCaracExisteDeja(QString id);
-    void AppliquerCarac(SetCarac setCarac);
-
     /**
      * @brief GetCaracValue
      * @return valeur de cette carac pour le perso. "" si cette carac n'existe pas
      */
-    QString GetCaracValue(QString caracId);
+    //QString GetCaracValue(QString caracId);
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 

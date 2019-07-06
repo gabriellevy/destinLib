@@ -21,30 +21,81 @@ GestionnaireCarac* GestionnaireCarac::GetGestionnaireCarac()
 
 QString GestionnaireCarac::GetCaracValue(QString id)
 {
-    Q_ASSERT_X(Univers::ME->GetExecHistoire() != nullptr, "Exec histoire non initialisée !","Carac::SetValeurACaracId" );
-    return Univers::ME->GetExecHistoire()->GetCaracValue(id);
+    if ( !GestionnaireCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
+        return "";
+    return GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.m_Valeur;
+}
+
+void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
+{
+    bool trouve = this->CetteCaracExisteDeja(setCarac.m_CaracId);
+
+    Carac* carac;
+    if ( trouve )
+    {
+        carac = m_Caracs[setCarac.m_CaracId];
+    }
+    else {
+        carac = new Carac;
+        carac->m_DataCarac.m_Id = setCarac.m_CaracId;
+        carac->m_DataCarac.m_Valeur = "0";
+        m_Caracs[setCarac.m_CaracId] = carac;
+    }
+
+    switch(setCarac.m_ModifCaracType)
+    {
+    case ModifCaracType::SetCarac : {
+        carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
+
+        if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
+            carac->m_Img.load(carac->m_DataCarac.m_Valeur);
+        }
+    }break;
+    case ModifCaracType::AddToCarac : {
+        double valeur = carac->m_DataCarac.m_Valeur.toDouble();
+        valeur += setCarac.GetValeur().toDouble();
+        carac->m_DataCarac.m_Valeur = QString::number(valeur);
+
+    }break;
+    case ModifCaracType::RetireDeCarac : {
+        double valeur = carac->m_DataCarac.m_Valeur.toDouble();
+        valeur -= setCarac.GetValeur().toDouble();
+        carac->m_DataCarac.m_Valeur = QString::number(valeur);
+
+    }break;
+    }
+}
+
+void GestionnaireCarac::AjouterCarac(Carac* carac)
+{
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
 int GestionnaireCarac::GetCaracValueAsInt(QString id)
 {
-    return Univers::ME->GetExecHistoire()->GetCaracValue(id).toInt();
+    return GestionnaireCarac::GetCaracValue(id).toInt();
+}
+
+bool GestionnaireCarac::CetteCaracExisteDeja(QString id)
+{
+    return m_Caracs.contains(id);
 }
 
 void GestionnaireCarac::AppliquerSetCarac(const SetCarac& setCarac)
 {
-    Univers::ME->GetExecHistoire()->AppliquerCarac(setCarac);
+    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(setCarac);
 }
 
 int GestionnaireCarac::AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee)
 {
-    Univers::ME->GetExecHistoire()->AppliquerCarac(
+    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(
                 SetCarac(ModifCaracType::AddToCarac, idCarac, QString::number(valeurAjoutee)));
     return GestionnaireCarac::GetCaracValueAsInt(idCarac);
 }
 
 int GestionnaireCarac::RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree)
 {
-    Univers::ME->GetExecHistoire()->AppliquerCarac(
+    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(
                 SetCarac(ModifCaracType::RetireDeCarac, idCarac, QString::number(valeurRetiree)));
     return GestionnaireCarac::GetCaracValueAsInt(idCarac);
 }
@@ -52,17 +103,15 @@ int GestionnaireCarac::RetirerValeurACaracId(const QString& idCarac, const int& 
 QString GestionnaireCarac::SetValeurACaracId(const QString& idCarac, const QString& valeurSet)
 {
     Q_ASSERT_X(Univers::ME->GetExecHistoire() != nullptr, "Exec histoire non initialisée !","Carac::SetValeurACaracId" );
-    Univers::ME->GetExecHistoire()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
+    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
 
     return GestionnaireCarac::GetCaracValue(idCarac);
 }
 
 Carac* GestionnaireCarac::GetCarac(QString idCarac)
 {
-    for (int i = 0 ; m_Caracs.length() ; ++i) {
-        if ( m_Caracs[i]->m_DataCarac.m_Id == idCarac)
-            return m_Caracs[i];
-    }
+    return m_Caracs[idCarac];
+
     return nullptr;
 }
 
@@ -114,6 +163,11 @@ QString DPerso::GetId()
 DPerso* IPerso::GetPersoCourant()
 {
     return m_Persos[IPerso::s_IdPersoActif];
+}
+
+QMap<QString, Carac*> GestionnaireCarac::GetCaracs()
+{
+    return this->m_Caracs;
 }
 
 

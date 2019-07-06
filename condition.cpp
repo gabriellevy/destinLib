@@ -2,6 +2,7 @@
 #include "perso.h"
 #include "univers.h"
 #include <QSqlQuery>
+#include "gestionnairecarac.h"
 
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
 {
@@ -76,7 +77,7 @@ bool Condition::Tester()
                     Univers::ME->GetExecHistoire()->EffetActuel(true)->GetTempEcoule());
     }
     else
-        valeurCarac = Univers::ME->GetExecHistoire()->GetCaracValue(m_CaracId);
+        valeurCarac = GestionnaireCarac::GetCaracValue(m_CaracId);
 
     switch (m_Comparateur) {
     case c_Egal:

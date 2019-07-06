@@ -87,6 +87,9 @@
             <bold>true</bold>
            </font>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color : rgbargb(255, 255, 255, 200)</string>
+          </property>
           <property name="text">
            <string>Nom du héros</string>
           </property>

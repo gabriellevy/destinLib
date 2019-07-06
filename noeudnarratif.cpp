@@ -1,6 +1,7 @@
 #include "noeudnarratif.h"
 #include "univers.h"
 #include <QSqlQuery>
+#include "gestionnairecarac.h"
 
 NoeudNarratif::NoeudNarratif()
 {
@@ -93,7 +94,7 @@ QString NoeudNarratif::TexteAAfficher()
        else
        {
            // est forcément une variable à remplacer
-           texteFinal += Univers::ME->GetExecHistoire()->GetCaracValue(list.at(i));
+           texteFinal += GestionnaireCarac::GetCaracValue(list.at(i));
        }
     }
 
