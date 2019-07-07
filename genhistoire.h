@@ -27,7 +27,7 @@ public:
     virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
 
 
-    Evt* AjouterEvt(QString id, QString nom);
+    Evt* AjouterEvt(QString id, QString nom = "");
     EvtAleatoire* AjouterEvtAleatoire(QString id, QString nom);
 };
 

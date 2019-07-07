@@ -8,10 +8,12 @@
 
 class GenEvt
 {
+private:
+    Evt* GenererEvt(QString id, QString nom);
+
 public:
     GenEvt();
 
-    Evt* GenererEvt(QString id, QString nom);
     EvtAleatoire* GenererEvtAleatoire(QString id, QString nom);
 
     // pointeur sur le dernier événement généré. Par défaut, tous les effets ajoutés le seront à cet événement sauf si on ajoute un autre événement en paramètre
@@ -72,6 +74,7 @@ private:
     // événement en cours de génération par cet objet
     //Evt* m_EvtGenere;
 
+    friend class GenHistoire;
 };
 
 #endif // GENEVT_H

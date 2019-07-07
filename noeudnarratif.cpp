@@ -109,8 +109,7 @@ void NoeudNarratif::ChargerFonctionsCallbacksBdd()
     QSqlQuery query(req_str);
     while (query.next())
     {
-       AppelCallback* appel = new AppelCallback();
-       appel->m_NomFonction = query.value("fonction_id").toString();
+       AppelCallback* appel = new AppelCallback(query.value("fonction_id").toString());
        appel->m_BDD_FonctId = query.value("id").toInt();
 
        appel->ChargerArgumentsBdd();
@@ -136,8 +135,7 @@ void NoeudNarratif::ChargerFonctionsTestCallbacksBdd()
     QSqlQuery query(req_str);
     while (query.next())
     {
-       AppelCallback* appel = new AppelCallback();
-       appel->m_NomFonction = query.value("fonction_id").toString();
+       AppelCallback* appel = new AppelCallback(query.value("fonction_id").toString());
        appel->m_BDD_FonctId = query.value("id").toInt();
 
        appel->ChargerArgumentsBdd();

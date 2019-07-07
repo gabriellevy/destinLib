@@ -24,13 +24,13 @@ enum MODE_AFFICHAGE {
  */
 class DCarac
 {
-    QString m_Description;
 public:
     DCarac(QString Id = "", QString Intitule = "", QString Valeur = "", QString Description = "");
 
     QString m_Id;
     QString m_Intitule;
     QString m_Valeur;
+    QString m_Description;
     QString GetDescription() {return m_Description;}
 };
 
@@ -56,6 +56,7 @@ public:
     DCarac m_DataCarac;
 
     QPixmap m_Img;
+    void SetImg(QString CheminImg);
 
 private:
     Ui::Carac *ui;

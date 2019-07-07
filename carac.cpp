@@ -34,6 +34,12 @@ Carac::Carac(QString Id, QString Intitule, QString Valeur, QString CheminImg, QS
      m_Img.load(CheminImg);
 }
 
+void Carac::SetImg(QString CheminImg)
+{
+    if ( CheminImg != "")
+     m_Img.load(CheminImg);
+}
+
 Jauge::Jauge(QString Id, QString Intitule, double Minimum, double Maximum, double ValeurDepart, QString Img, QString Description, QWidget *parent)
     : Carac(Id, Intitule, "", Img, Description, MODE_AFFICHAGE::ma_Jauge, parent)
 {

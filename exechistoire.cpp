@@ -461,6 +461,7 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 
 ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)
 {
+    Noeud* noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud;
     if ( noeudActuel != nullptr)
         this->m_ExecNoeudActuel = noeudActuel;
 
@@ -582,7 +583,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     if ( this->m_ExecNoeudActuel == nullptr)
         this->m_ExecNoeudActuel = GetExecEffetActuel();
 
-    if ( this->m_ExecNoeudActuel != nullptr)
+    if ( this->m_ExecNoeudActuel != nullptr && noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud)
         afficheNoeud = true;
 
     /*if ( evtActuel == nullptr)
@@ -620,6 +621,9 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     // note : ce peut être un Effet au sens objet mais aussi un simple noeud, un else par exemple ou un Evt
     if ( afficheNoeud )
     {
+        Q_ASSERT_X(noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud,
+                   "On tourne en boucle : le noeud lancé l'était déjà !",
+                   "ExecHistoire::DeterminerPuisLancerNoeudSuivant");
         this->m_ExecNoeudActuel->LancerNoeud();
     } else {
         // le noeud courant était invalide et on n'a asp trouvé de else valide, on cherche le suivant
@@ -680,8 +684,8 @@ ExecEvt* ExecHistoire::SetExecEvtActuel(Evt* evt)
             this->m_ExecNoeudActuel = this->m_ExecEvtActuel;
             return this->m_ExecEvtActuel;
         }
-        QString msg = "Tentative de alncer un événement déjà lancé : " + evt->m_Id;
-        Q_ASSERT_X(this->m_ExecEvtActuel->GetEvt() == evt, msg.toStdString().c_str(), "ExecHistoire::SetEvtActuel");
+        /*QString msg = "Tentative de lancer un événement déjà lancé : " + evt->m_Id;
+        Q_ASSERT_X(this->m_ExecEvtActuel->GetEvt() == evt, msg.toStdString().c_str(), "ExecHistoire::SetEvtActuel");*/
 
         m_ExecEvtActuel->hide();
         //delete this->m_ExecEvtActuel;

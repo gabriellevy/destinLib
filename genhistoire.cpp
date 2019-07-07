@@ -19,6 +19,8 @@ EvtAleatoire* GenHistoire::AjouterEvtAleatoire(QString id, QString nom)
 
 Evt* GenHistoire::AjouterEvt(QString id, QString nom)
 {
+    if ( nom == "")
+        nom = id;
     Evt* evt = this->m_GenerateurEvt->GenererEvt(id, nom);
     m_HistoireGeneree->m_Evts.push_back(evt);
     return evt;

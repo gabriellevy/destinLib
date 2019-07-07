@@ -158,6 +158,9 @@ void IPerso::RafraichirAffichage()
     // caracs
     QMap<QString, Carac*>::const_iterator i = caracs.constBegin();
     while (i != caracs.constEnd()) {
+        Q_ASSERT_X( i.value() != nullptr,
+                    "Carac Inconnue",
+                    " IPerso::RafraichirAffichage");
         i.value()->hide();
         ++i;
     }

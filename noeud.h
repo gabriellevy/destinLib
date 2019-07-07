@@ -15,6 +15,9 @@ class Noeud;
  */
 struct AppelCallback {
     int m_BDD_FonctId;
+
+    AppelCallback(QString fonction):m_NomFonction(fonction) {}
+
     QString m_NomFonction;
     QVector<QString> m_ArgumentsCaracId;
     QVector<QString> m_ArgumentsParValeur;
