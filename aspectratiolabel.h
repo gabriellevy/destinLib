@@ -12,8 +12,8 @@ public:
     explicit AspectRatioLabel(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
     ~AspectRatioLabel();
     QPixmap scaledPixmap() const;
-    virtual int heightForWidth( int width ) const;
-    virtual QSize sizeHint() const;
+    virtual int heightForWidth( int width ) const override;
+    virtual QSize sizeHint() const override;
 
 public slots:
     void setPixmap(const QPixmap& pm);

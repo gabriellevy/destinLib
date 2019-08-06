@@ -2,6 +2,7 @@
 #include "perso.h"
 #include "univers.h"
 #include <QSqlQuery>
+#include <QtMath>
 #include "gestionnairecarac.h"
 
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
@@ -113,7 +114,8 @@ bool Condition::Tester()
     }
 
     // une condition doit soit reposer sur les proba soit sur une valeur fixe
-    if ( retour && abs(m_Proba  + 1.0) > 0.00001)
+    float val =static_cast<float>(m_Proba)  + 1.0f;
+    if ( retour && (qFabs(val) > 0.00001) )
     //if ( fabs(m_Proba + 1) <= 0.0001)
     {
         double resProba = (double(qrand()%1000))/1000;

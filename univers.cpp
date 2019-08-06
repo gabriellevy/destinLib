@@ -61,6 +61,7 @@ Hist* Univers::ExecuterGenerateurHistoire()
     //m_Histoire = new Hist("titre inconu : vous devriez surclasser 'ExecuterGenerateurHistoire'");
     //m_GenHistoire = new GenHistoire(m_Histoire);
     //m_GenHistoire->GenererHistoire();
+    Q_ASSERT_X(true, "Cette focntion devrait être surclassée !!", "Univers::ExecuterGenerateurHistoire");
     return m_Histoire;
 }
 
