@@ -34,6 +34,7 @@ void ExecChoix::RafraichirAffichageLayouts(int largeur, int)
 void ExecChoix::AfficherNoeud()
 {
     ui->bouton->setText(m_Choix->TexteAAfficher() );
+    ui->bouton->setFont( *Univers::BASE_FONT);
 
     if ( !m_Img.isNull() )
     {

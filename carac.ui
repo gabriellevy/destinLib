@@ -48,9 +48,6 @@
        <property name="autoFillBackground">
         <bool>false</bool>
        </property>
-       <property name="title">
-        <string/>
-       </property>
        <property name="checkable">
         <bool>false</bool>
        </property>
@@ -79,11 +76,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="labelValeur">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
+             <widget class="QLabel" name="labelValeur"/>
             </item>
             <item>
              <widget class="QProgressBar" name="jaugeCarac">
