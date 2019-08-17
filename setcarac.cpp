@@ -3,6 +3,8 @@
 #include "univers.h"
 #include <QDebug>
 #include "gestionnairecarac.h"
+#include <chrono>
+#include <random>
 
 SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeur)
 {
@@ -81,17 +83,22 @@ QString SetCarac::GetQStringFromModifCaracType(ModifCaracType mct)
 
 QString SetCarac::GetValeur()
 {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+
     if ( m_Valeur != "nexistepas*µ£$")
         return m_Valeur;
     else if ( m_ValeurRandom != "nexistepas*µ£$" )
     {
-        int valeur = qrand()%m_ValeurRandom.toInt();
-        return QString::number(valeur);
+        std::uniform_int_distribution<int> distribution(0, m_ValeurRandom.toInt());
+
+        return QString::number(distribution(generator));
     }
     else if ( m_ValeurMin != "nexistepas*µ£$" && m_ValeurMax != "nexistepas*µ£$")
     {
         Q_ASSERT_X( m_ValeurMax.toInt() > m_ValeurMin.toInt(), "GetValeur", "Valeur max doit être supérieur à valeur min !!");
-        int valeur = m_ValeurMin.toInt() + qrand()%(m_ValeurMax.toInt() - m_ValeurMin.toInt());
+        std::uniform_int_distribution<int> distribution(0, m_ValeurMax.toInt() - m_ValeurMin.toInt());
+        int valeur = m_ValeurMin.toInt() + distribution(generator);
         return QString::number(valeur);
     }
     else if ( m_IdValeurCaracCopie != "nexistepas*µ£$" )

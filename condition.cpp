@@ -4,6 +4,8 @@
 #include <QSqlQuery>
 #include <QtMath>
 #include "gestionnairecarac.h"
+#include <chrono>
+#include <random>
 
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
 {
@@ -118,7 +120,11 @@ bool Condition::Tester()
     if ( retour && (qFabs(val) > 0.00001) )
     //if ( fabs(m_Proba + 1) <= 0.0001)
     {
-        double resProba = (double(qrand()%1000))/1000;
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine generator(seed);
+        std::uniform_int_distribution<int> distribution(0, 1000);
+
+        double resProba = (double(distribution(generator)))/1000;
 
         retour = resProba <= CalculerProbaFinale();
     }

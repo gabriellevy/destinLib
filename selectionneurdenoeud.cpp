@@ -2,6 +2,8 @@
 #include "noeud.h"
 #include "evt.h"
 #include <QDebug>
+#include <chrono>
+#include <random>
 
 QList<SelectionneurDeNoeud*> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 
@@ -35,8 +37,12 @@ Noeud* SelectionneurDeNoeud::DeterminerEvtSuivant()
                  "DeterminerEvtAleatoire",
                  txt.toStdString().c_str() );
 
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0, RAND_MAX);
+
     // sélectionner un de ces événements (en fonction de leur proba) et l'exécuter :
-    float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);// entre 0 et 1
+    float r = static_cast <float> (distribution(generator)) / static_cast <float> (RAND_MAX);// entre 0 et 1
     double probaIndicator = static_cast<double>(r) * totalDesProbas;
     double totalCourantDesProbas = 0;
     Noeud* noeudChoisi = nullptr;
