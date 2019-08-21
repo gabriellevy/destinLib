@@ -56,6 +56,7 @@ SOURCES += \
     selectionneurdevenement.cpp \
     genhistoire.cpp \
     exechistoire.cpp \
+    aleatoire.cpp \
     histoire.cpp
 
 HEADERS += \
@@ -90,6 +91,7 @@ HEADERS += \
     selectionneurdevenement.h \
     genhistoire.h \
     exechistoire.h \
+    aleatoire.h \
     histoire.h
 
 FORMS += \

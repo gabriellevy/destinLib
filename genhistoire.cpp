@@ -1,4 +1,5 @@
 #include "genhistoire.h"
+#include "aleatoire.h"
 
 GenHistoire::GenHistoire(Hist* histoireGeneree):m_HistoireGeneree(histoireGeneree)
 {
