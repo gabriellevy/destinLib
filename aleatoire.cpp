@@ -24,8 +24,8 @@ Aleatoire* Aleatoire::GetAl()
 
 int Aleatoire::EntierEntreAEtB(int A, int B)
 {
-    int val1 = m_Distribution(m_Generateur);
-    //qDebug() << "val1 : " << val1;
+    if ( (B-A) <= 0)
+        return 0;
     return A + ( m_Distribution(m_Generateur) ) % (B-A);
 }
 
