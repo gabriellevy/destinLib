@@ -27,4 +27,9 @@ Evt* GenHistoire::AjouterEvt(QString id, QString nom)
     return evt;
 }
 
+void GenHistoire::FinGenerationHistoire()
+{
+    delete m_GenerateurEvt;
+}
+
 

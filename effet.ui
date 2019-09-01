@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>131</height>
+    <width>355</width>
+    <height>189</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,9 +15,6 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color : rgbargb(238, 238, 236, 200)</string>

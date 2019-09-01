@@ -202,11 +202,22 @@ Choix* GenEvt::AjouterChoixVide(Effet* effetDest)
 }
 
 
-Choix* GenEvt::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, Effet* effetDest)
+Choix* GenEvt::AjouterChoixAjouteurACarac(QString text, QString carac, QString valeur, QString go_to_effet_id, Effet* effetDest)
+{
+    Choix* choix = AjouterChoixVide(effetDest);
+    choix->m_Text = text;
+    choix->AjouterAjouteurACarac(carac, valeur);
+    choix->m_GoToEffetId = go_to_effet_id;
+    return choix;
+}
+
+
+Choix* GenEvt::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, QString go_to_effet_id, Effet* effetDest)
 {
     Choix* choix = AjouterChoixVide(effetDest);
     choix->m_Text = text;
     choix->AjouterChangeurDeCarac(carac, valeur);
+    choix->m_GoToEffetId = go_to_effet_id;
     return choix;
 }
 

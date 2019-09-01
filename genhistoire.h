@@ -12,8 +12,9 @@ class GenHistoire
 {
 protected:
 
-    // fonction dans laquelle sont créées les caracs importantes du jeu
-    // (obligatoire pour celles qui sont affichées, les autres peuvent être créées autrement)
+    // génère toutes les caracs qui peuvent être visualisées par le joueur (d'autres caracs peuvent être générées et invisibles n'importe quand dans l'aventure)
+    // les caracs peuvent aussi être initialisée via  la fonction DPerso::InitialiserPerso()
+    // essayer de créer les caracs de perso dans InitialiserPerso et celle du monde ici (même si d'un point de vue technique elles sont identiques au final)
     virtual void GenererCaracs() = 0;
 
 public:
@@ -23,6 +24,7 @@ public:
     GenEvt* m_GenerateurEvt = nullptr;
     Hist* m_HistoireGeneree = nullptr;
     virtual Hist* GenererHistoire() = 0;
+    virtual void FinGenerationHistoire();
     virtual void GenererPersos() = 0;
     virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
 

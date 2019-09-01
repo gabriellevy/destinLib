@@ -6,6 +6,10 @@
 #include "evt.h"
 #include "evtaleatoire.h"
 
+/**
+ * @brief cette classe contient toutes les fonctions pour créer un événement et ses effets internes.
+ * Elle ne doit être utilisée que dans la pahse génération de l'aventure donc au tout début.
+ */
 class GenEvt
 {
 private:
@@ -21,8 +25,6 @@ public:
     // pointeur sur le dernier effet généré. Par défaut les ajouts à un effet (choix par exemple) le seront à celui ci sauf si un autre est précisé en paramètre
     Effet* m_DernierEffetGenere;
 
-    // fonction intermédiaire d'ajout d'effet qui doit être appelée par toutes les fonctions d'ajout d'effets plus spécifiques ci après
-    Effet* AjouterEffet(Effet* effet, Evt* evtDest = nullptr);
     Effet* AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetNarration(QString text, QString cheminImg = "", QString id = "", Evt* evtDest = nullptr);
@@ -37,7 +39,8 @@ public:
 
     // fonctions intermédiaires d'ajouts de choix dans les effets :
     Choix* AjouterChoixVide(Effet* effetDest = nullptr);
-    Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, Effet* effetDest = nullptr);
+    Choix* AjouterChoixAjouteurACarac(QString text, QString carac, QString valeur, QString go_to_effet_id = "", Effet* effetDest = nullptr);
+    Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, QString go_to_effet_id = "", Effet* effetDest = nullptr);
     Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg = "", Effet* effetDest = nullptr);
 
     /**
@@ -75,6 +78,9 @@ private:
     //Evt* m_EvtGenere;
 
     friend class GenHistoire;
+
+    // fonction intermédiaire d'ajout d'effet qui doit être appelée par toutes les fonctions d'ajout d'effets publiques plus spécifiques
+    Effet* AjouterEffet(Effet* effet, Evt* evtDest = nullptr);
 };
 
 #endif // GENEVT_H
