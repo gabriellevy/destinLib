@@ -62,7 +62,7 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
                     appel->m_NomFonction,
                     appel->m_ArgumentsCaracId,
                     appel->m_ArgumentsParValeur);
-        Univers::ME->GetPersoInterface()->RafraichirAffichage();
+        Univers::ME->RafraichirAffichage();
     }
 
     if ( noeudAExecuter->m_CallbackDisplay != nullptr) {

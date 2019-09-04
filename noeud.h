@@ -17,6 +17,9 @@ struct AppelCallback {
     int m_BDD_FonctId;
 
     AppelCallback(QString fonction):m_NomFonction(fonction) {}
+    AppelCallback(QString fonction, QVector<QString> argumentsCaracId, QVector<QString> argumentsParValeur)
+        :m_NomFonction(fonction), m_ArgumentsCaracId(argumentsCaracId), m_ArgumentsParValeur(argumentsParValeur)
+    {}
 
     QString m_NomFonction;
     QVector<QString> m_ArgumentsCaracId;

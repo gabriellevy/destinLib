@@ -26,6 +26,14 @@ public:
      * Elle ont un identifiant unique (égal à leur nom) qui permet de les référence en base de données par exemple
      * le premier paramètre QVector<QString> correspond à l'id des carac qu'on doit passer à la fonction en paramètre
      * le 2ème correspond à des valeurs "brutes"
+     *
+     * exemple d'utilisation "élaborée" :
+     * this->m_HistoireGeneree->m_CallbackFunctions["NomArbitraireDeFonction"] = [](QVector<QString>, QVector<QString>) {
+        Effet* effetActuel = UMo::ME->GetExecHistoire()->GetExecEffetActuel()->GetEffet();
+        effetActuel->m_Text = "Nouveau texte hahahah";
+        effetActuel->m_GoToEffetId = "UneAutreFonction";
+        return true;
+    };
      */
     QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
 

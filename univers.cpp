@@ -12,11 +12,12 @@ const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
 QString Univers::CHEMIN = "";
 Univers* Univers::ME;
 
-Univers::Univers(QWidget *parent, ModeAffichage modeAffichage):QMainWindow(parent),
-    ui(new Ui::Univers), m_ModeAffichage(modeAffichage)
+Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool persoAffiche):QMainWindow(parent),
+    ui(new Ui::Univers), m_ModeAffichage(modeAffichage), m_PersoAffiche(persoAffiche)
 {
     InstallerInterface();
-    m_Perso = new IPerso(ui->persoWidget);
+    if ( m_PersoAffiche )
+        m_Perso = new IPerso(ui->persoWidget);
 }
 
 void Univers::LancerHistoire(Hist* histoire, QWidget* /* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
@@ -25,12 +26,17 @@ void Univers::LancerHistoire(Hist* histoire, QWidget* /* parent*/, QString /*pre
 
     this->AfficherHistoire(ui->histoireWidget);
 
-    m_Perso->InitialiserPerso();
-    m_Perso->RafraichirAffichage();
+   if ( m_PersoAffiche ) {
+        m_Perso->InitialiserPerso();
+        m_Perso->RafraichirAffichage();
 
-    // positionner l'interface
-    ui->persoWidget->layout()->addWidget(m_Perso);
-    m_Perso->show();
+        // positionner l'interface
+        ui->persoWidget->layout()->addWidget(m_Perso);
+        m_Perso->show();
+   }
+   else {
+       ui->persoWidget->hide();
+   }
 
     m_Lecteur = new QMediaPlayer;
 
@@ -214,6 +220,12 @@ GenHistoire* Univers::GetGenHistoire()
 IPerso* Univers::GetPersoInterface()
 {
     return m_Perso;
+}
+
+void Univers::RafraichirAffichage()
+{
+    if ( m_PersoAffiche)
+        m_Perso->RafraichirAffichage();
 }
 
 bool Univers::LancerEvtEtOuEffetCourant()

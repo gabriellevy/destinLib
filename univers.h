@@ -27,7 +27,7 @@ enum ModeAffichage {
 };
 
 /**
- * @brief Fenêtre principale du jeu
+ * @brief Fenêtre principale du jeu et point de référence de base pour l'accès à tous les éléments des différentes histoires
  */
 class Univers : public QMainWindow
 {
@@ -47,11 +47,12 @@ protected:
     IPerso* m_Perso;
     float m_Duree;
     Ui::Univers *ui;
+    bool m_PersoAffiche = true; // colonne personnage affiché ou non
 
     void InstallerInterface();
 
 public:
-    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu);
+    explicit Univers(QWidget *parent = nullptr, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, bool persoAffiche = true);
     //explicit Univers(QString cheminAventure, ModeAffichage modeAffichage = ModeAffichage::ema_Jeu, QString firstEvt = "", QString premierEffet = "", QWidget *parent = nullptr);
     virtual ~Univers();
 
@@ -98,6 +99,8 @@ public:
     void AppliquerTheme(QColor fond);
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
+
+    void RafraichirAffichage();
 
 public slots:
     // déclenche l'effet de base si aucun n'a été spécifiquement choisi par l'utilisateur (si n'y avait qu'un suivant potentiel)
