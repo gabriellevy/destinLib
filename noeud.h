@@ -48,7 +48,6 @@ public:
     explicit Noeud();
     virtual ~Noeud();
 
-    QString m_NouvelEtatPartie = "";
     TypeNoeud m_TypeNoeud;
     QString m_ChangePerso = ""; // à l'exécution de ce noeud on change de personnage principal joué par le joueur pour le remplacer par celui qui a cet id
     QString m_Id = "";

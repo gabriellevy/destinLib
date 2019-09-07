@@ -79,21 +79,6 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
         }
         perso->RafraichirAffichage();
     }
-
-    // mise à jour de l'état de la partie :
-    if ( noeudAExecuter->m_NouvelEtatPartie != QLatin1String("") )
-        Univers::ME->ChangerEtatPartie(noeudAExecuter->m_NouvelEtatPartie);
-
-    /*if (this->AQuelqueChoseAAfficher() && afficherNoeud)
-    {
-        Aventure::ME->AfficherEvtEtOuEffetCourant();
-    }
-    else if ( lancerNoeudSuivantSiRienAAfiicher)
-    {
-        Histoire* hist = Aventure::ME->GetHistoire();
-
-        hist->DeterminerPuisExecuterEffetSuivant(this);
-    }*/
 }
 
 void ExecNoeud::LancerNoeud()
@@ -114,7 +99,7 @@ void ExecNoeud::LancerNoeud()
 
     bool transition_auto = this->GestionTransition( );
 
-    if (!transition_auto || Univers::ME->GetEtatPartie() == EP_FinPartie)
+    if (!transition_auto)
         Univers::ME->GetExecHistoire()->RafraichirAffichageEvtEtOuEffet( nullptr, nullptr );
 }
 

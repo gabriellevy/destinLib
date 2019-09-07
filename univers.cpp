@@ -114,61 +114,7 @@ void Univers::InstallerInterface()
 
     Univers::ME = this;
 
-    this->SetEtatPartie(EP_Chargement);
     m_Duree = 0.0f;
-}
-
-/*bool Univers::ExtraireAventure(QString cheminAventure)
-{
-    QFile fichier(cheminAventure);
-    Univers::CHEMIN = cheminAventure.left(cheminAventure.lastIndexOf('/') +1);
-
-    if ( !fichier.open(QIODevice::ReadOnly))
-    {
-        QMessageBox::warning(this, "erreur", "Impossible d'ouvrir le fichier aventure !");
-        return false;
-    }
-
-    QByteArray avData = fichier.readAll();
-
-    m_AvJson = QJsonDocument::fromJson(avData).object();
-
-    return true;
-}*/
-
-/*void Univers::LancerAventure(QString premierEvt, QString premierEffet)
-{
-    if ( m_AvJson.contains("titre") && m_AvJson["titre"].isString() )
-        this->setWindowTitle(m_AvJson["titre"].toString());
-    else
-        QMessageBox::warning(this, "erreur", "Pas de titre dans ce fichier !");
-
-    if ( m_AvJson.contains("heros") && m_AvJson["heros"].isArray() )
-    {
-        m_Perso->Rafraichir(m_AvJson["heros"].toArray());
-    }
-    else
-        QMessageBox::warning(this, "erreur", "Pas de heros dans ce fichier aventure !");
-
-    m_Histoire->Generer(m_AvJson);
-
-    if ( premierEvt != "" )
-        m_Histoire->SetCurrentEvtId( premierEvt ) ;
-    if ( premierEffet!= "" )
-        m_Histoire->SetEffetIndex(m_Histoire->DeterminerIndexEffet(premierEffet) );
-
-    m_EtatPartie = EP_Deroulement;
-    LancerEvtEtOuEffetCourant();
-}*/
-
-bool Univers::EstEnModeHistoire()
-{
-    return (Univers::ME->GetEtatPartie() == EP_Deroulement);
-}
-
-void Univers::SetEtatPartie(EtatPartie etat)
-{
-    m_EtatPartie = etat;
 }
 
 TypeEvt Univers::GetTypeEvtActuel()
@@ -179,27 +125,9 @@ TypeEvt Univers::GetTypeEvtActuel()
     return TE_Base;
 }
 
-EtatPartie Univers::GetEtatPartie()
-{
-    return m_EtatPartie;
-}
-
 void Univers::AjouterDuree(float duree)
 {
     m_Duree += duree;
-}
-
-EtatPartie Univers::ChangerEtatPartie(QString nouvelEtatPartie)
-{
-    if (nouvelEtatPartie == "fin_de_partie" )
-        this->SetEtatPartie(EP_FinPartie);
-    else
-    {
-        QString msg = "Nouvel état de partie non reconnu : " + nouvelEtatPartie ;
-        Q_ASSERT_X(false, "ChangerEtatPartie", msg.toStdString().c_str());
-    }
-
-    return m_EtatPartie;
 }
 
 ExecHistoire* Univers::GetExecHistoire()

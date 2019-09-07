@@ -112,7 +112,6 @@ ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
     // premier lancement
     if ( this->m_ExecEvtActuel == nullptr)
     {
-        Univers::ME->SetEtatPartie(EP_Deroulement);
         if ( this->m_Histoire->m_Evts.count() < 1)
         {
             QMessageBox::warning(Univers::ME, "erreur dans Evt* Histoire::EvtActuel()", "Il n'y a aucun événement dans l'histoire !");
@@ -476,11 +475,6 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
         this->m_ExecNoeudActuel = this->m_ExecEvtActuel->GetExecEffetActuel();
         noeud_suivant_trouve = true;
     }
-
-    // il n'y a pas d'effet suivant si on n'est pas en état de partie "Histoire"
-    // note => je ne comprends même plus ce que ça veut dire. Si je refais ce fameux mode histoire il faudra le documenter dans le wiki...
-    if ( Univers::ME->GetEtatPartie() != EP_Deroulement )
-        return nullptr;
 
     Evt* evtActuel = EvtActuel();
     //Evt* oldEvtActuel = EvtActuel();

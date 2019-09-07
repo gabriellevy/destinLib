@@ -35,9 +35,6 @@ class Univers : public QMainWindow
 
 protected:
     QJsonObject m_AvJson;
-    EtatPartie m_EtatPartie;
-    //bool ExtraireAventure(QString cheminAventure);
-    //void LancerAventure(QString premierEvt = "", QString premierEffet = "");
 
     // utiliser le générateur de base éventuellement mais en général il faudra le surclasser je pense
     GenHistoire* m_GenHistoire = nullptr;
@@ -69,18 +66,15 @@ public:
     static Univers* ME;
     ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;
 
+    // getters setters
     Hist* GetHistoire();
     ExecHistoire* GetExecHistoire();
     GenHistoire* GetGenHistoire();
     IPerso* GetPersoInterface();
-    void SetEtatPartie(EtatPartie etat);
     void SetTypeEvt(TypeEvt typeEvt);
     TypeEvt GetTypeEvtActuel();
-    EtatPartie GetEtatPartie();
-    void AjouterDuree(float duree);
-    bool EstEnModeHistoire();
 
-    EtatPartie ChangerEtatPartie(QString nouvelEtatPartie);
+    void AjouterDuree(float duree);
 
     QMediaPlayer* m_Lecteur;
     Reglages m_Reglages;

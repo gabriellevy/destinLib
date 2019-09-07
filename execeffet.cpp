@@ -93,8 +93,7 @@ bool ExecEffet::GestionTransition()
         }
     }
 
-    if ( !est_ce_que_l_interface_vers_suite_est_affichee &&
-         (Univers::ME->EstEnModeHistoire()) )
+    if ( !est_ce_que_l_interface_vers_suite_est_affichee )
     {
         // si l'effet est dans une boucle while il doit s'afficher encore tant que la condition sera remplie
         /*if ( m_RepeatWhileConditions.size() > 0 &&
