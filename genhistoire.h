@@ -18,7 +18,7 @@ protected:
     virtual void GenererCaracs() = 0;
 
 public:
-    GenHistoire(Hist* histoireGeneree);
+    GenHistoire();
     virtual ~GenHistoire();
 
     GenEvt* m_GenerateurEvt = nullptr;

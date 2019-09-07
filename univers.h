@@ -10,6 +10,7 @@
 #include "genhistoire.h"
 #include "reglages.h"
 #include <QMediaPlayer>
+#include <QHash>
 
 namespace Ui {
 class Univers;
@@ -36,15 +37,19 @@ class Univers : public QMainWindow
 protected:
     QJsonObject m_AvJson;
 
-    // utiliser le générateur de base éventuellement mais en général il faudra le surclasser je pense
-    GenHistoire* m_GenHistoire = nullptr;
-    // interfaces/widgets
+    // Un générateurt d'histoire par histoire (donc il peut y en avoir plusieurs par univers si on veut plusieurs histoires)
+    QHash<QString, GenHistoire*> m_GensHistoire;
+
+    // histoire actuellement exécutée si il y en a une
     Hist* m_Histoire = nullptr;
+
+    // interfaces/widgets
     ExecHistoire* m_ExecHistoire = nullptr;
     IPerso* m_Perso;
-    float m_Duree;
     Ui::Univers *ui;
-    bool m_PersoAffiche = true; // colonne personnage affiché ou non
+
+    float m_Duree;
+    bool m_PersoAffiche = true; // colonne personnage affichée ou non
 
     void InstallerInterface();
 
@@ -54,8 +59,8 @@ public:
     virtual ~Univers();
 
     void AfficherHistoire(QWidget *parent = nullptr);
-    virtual Hist* ExecuterGenerateurHistoire();
-    virtual void LancerHistoire(Hist* histoire, QWidget *parent = nullptr, QString premierEvt = "", QString premierEffet = "", bool BarreDeCote = true);
+    Hist* GenererUneHistoire(QString histoireId);
+    virtual void LancerHistoire(QString idHistoire, QWidget *parent = nullptr, QString premierEvt = "", QString premierEffet = "", bool BarreDeCote = true);
 
     // cette fonction m'a l'air hautement dispensable => à virer si je me décide à remettre au propre le déroulement des actions
     bool LancerEvtEtOuEffetCourant();
@@ -69,7 +74,7 @@ public:
     // getters setters
     Hist* GetHistoire();
     ExecHistoire* GetExecHistoire();
-    GenHistoire* GetGenHistoire();
+    GenHistoire* GetGenHistoire(QString histoireId);
     IPerso* GetPersoInterface();
     void SetTypeEvt(TypeEvt typeEvt);
     TypeEvt GetTypeEvtActuel();

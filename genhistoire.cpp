@@ -1,9 +1,10 @@
 #include "genhistoire.h"
 #include "aleatoire.h"
 
-GenHistoire::GenHistoire(Hist* histoireGeneree):m_HistoireGeneree(histoireGeneree)
+GenHistoire::GenHistoire()
 {
     m_GenerateurEvt = new GenEvt();
+    m_HistoireGeneree = new Hist("titre inconu : vous devriez surclasser la constructeur de GenHistoire pour éditer ces valeurs");
 }
 
 GenHistoire::~GenHistoire()

@@ -13,16 +13,18 @@ QString Univers::CHEMIN = "";
 Univers* Univers::ME;
 
 Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool persoAffiche):QMainWindow(parent),
-    ui(new Ui::Univers), m_ModeAffichage(modeAffichage), m_PersoAffiche(persoAffiche)
+    ui(new Ui::Univers), m_PersoAffiche(persoAffiche), m_ModeAffichage(modeAffichage)
 {
     InstallerInterface();
     if ( m_PersoAffiche )
         m_Perso = new IPerso(ui->persoWidget);
 }
 
-void Univers::LancerHistoire(Hist* histoire, QWidget* /* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
+void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
 {
-    this->m_ExecHistoire = new ExecHistoire(histoire);
+    this->m_Histoire = this->GenererUneHistoire(idHistoire);
+
+    this->m_ExecHistoire = new ExecHistoire(this->m_Histoire);
 
     this->AfficherHistoire(ui->histoireWidget);
 
@@ -61,13 +63,14 @@ void Univers::LancerHistoire(Hist* histoire, QWidget* /* parent*/, QString /*pre
     //this->m_ExecHistoire->GetExecEvtActuel();
 }
 
-Hist* Univers::ExecuterGenerateurHistoire()
+
+
+Hist* Univers::GenererUneHistoire(QString histoireId)
 {
-    // structure typoqie à copier dans votre fonction surclassée ExecuterGenerateurHistoire :
-    //m_Histoire = new Hist("titre inconu : vous devriez surclasser 'ExecuterGenerateurHistoire'");
-    //m_GenHistoire = new GenHistoire(m_Histoire);
-    //m_GenHistoire->GenererHistoire();
-    Q_ASSERT_X(true, "Cette focntion devrait être surclassée !!", "Univers::ExecuterGenerateurHistoire");
+    Q_ASSERT_X(m_GensHistoire.contains(histoireId), "Impossible de générer l'histoire 'histoireId' !!", "Univers::GenererUneHistoire");
+
+    m_Histoire = m_GensHistoire[histoireId]->GenererHistoire();
+
     return m_Histoire;
 }
 
@@ -140,9 +143,9 @@ Hist* Univers::GetHistoire()
     return m_Histoire;
 }
 
-GenHistoire* Univers::GetGenHistoire()
+GenHistoire* Univers::GetGenHistoire(QString idHistoire)
 {
-    return m_GenHistoire;
+    return m_GensHistoire[idHistoire];
 }
 
 IPerso* Univers::GetPersoInterface()
@@ -160,7 +163,7 @@ bool Univers::LancerEvtEtOuEffetCourant()
 {
     ExecEvt* evt_actuel = m_ExecHistoire->GetExecEvtActuel();
     ExecEffet* effet_actuel = m_ExecHistoire->GetExecEffetActuel();
-    if ( evt_actuel == nullptr || evt_actuel == 0 || effet_actuel == 0 || effet_actuel == nullptr)
+    if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == nullptr || effet_actuel == nullptr)
         return false;
 
     evt_actuel->LancerNoeud();
