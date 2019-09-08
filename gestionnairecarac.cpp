@@ -71,6 +71,12 @@ void GestionnaireCarac::AjouterCarac(Carac* carac)
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
+void GestionnaireCarac::AjouterCaracNombre(QString idCarac)
+{
+    Carac* carac = new Carac(idCarac, idCarac, "", "", "", MODE_AFFICHAGE::ma_Nombre);
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+}
+
 int GestionnaireCarac::GetCaracValueAsInt(QString id)
 {
     return GestionnaireCarac::GetCaracValue(id).toInt();

@@ -40,9 +40,10 @@ public:
     DPerso(QString id, QString nom, QString description, QString CheminImagePortrait);
     virtual ~DPerso() {}
     // c'estd ans cette focntion qu'il faut initialiser les caracs du perso, pas dans le constructeur
+    // note : penser à utiliser m_CaracsAAfficher.push_back("id de la carac") quand on veut qu'une carac donnée soit affichée
     virtual void InitialiserPerso();
     QPixmap m_ImagePortrait;
-    QVector<QString> m_CaracsAAfficher = {};
+    //QVector<QString> m_CaracsAAfficher = {};
 
     void MajNom(QString nouveauNom);
     void MajCheminImage(QString nouveauNom);
@@ -74,6 +75,10 @@ public:
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);
     void AjouterCarac(Carac* carac);
+    /**
+     * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
+     */
+    void AjouterCaracNombre(QString idCarac);
 
     QMap<QString, Carac*> GetCaracs();
 
