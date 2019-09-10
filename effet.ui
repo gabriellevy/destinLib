@@ -115,6 +115,11 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QWidget" name="lancerDeWidget" native="true">
+        <layout class="QVBoxLayout" name="lancerDeLayout"/>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="glisseur_layout">
         <property name="spacing">
          <number>3</number>

@@ -1,5 +1,6 @@
 #include "execeffet.h"
 #include "execchoix.h"
+#include "execlancerde.h"
 #include "execevt.h"
 #include "ui_effet.h"
 #include "univers.h"
@@ -131,6 +132,7 @@ void ExecEffet::AfficherNoeud()
         ui->titreEffet->setText(GetEffet()->m_Nom);
     }
 
+    // affichage du texte
     ui->texteEffet->hide();
     if ( GetEffet()->TexteAAfficher() != "")
     {
@@ -142,6 +144,7 @@ void ExecEffet::AfficherNoeud()
 
     ui->imageLabel->hide();
 
+    // affichage image/ film
     bool afficheImg = !m_Img.isNull();
     bool afficheFilm = (m_Film != nullptr);
     if ( afficheImg || afficheFilm )
@@ -169,6 +172,12 @@ void ExecEffet::AfficherNoeud()
         }
     }
 
+    // affichage du lancement de dé
+    if ( GetEffet()->m_LancerDe != nullptr )
+    {
+        //this->SetExecLancerDe(exec_lancer_de);
+    }
+
     // déclenchement du chrono pour cet effet si il en a un :
     if ( GetEffet()->m_MsChrono != -1 )
     {
@@ -176,6 +185,28 @@ void ExecEffet::AfficherNoeud()
     }
 
     Univers::ME->GetExecHistoire()->GetExecEvtActuel()->RafraichirAffichageLayouts();
+}
+
+ExecLancerDe* ExecEffet::SetExecLancerDe(ExecLancerDe* exec_lancer_de)
+{
+    if ( this->m_ExecLancerDe == nullptr ||  this->m_ExecLancerDe != exec_lancer_de) {
+        if ( m_ExecLancerDe != nullptr)
+        {
+            //m_ExecLancerDe->NettoyageAffichage();
+            m_ExecLancerDe->hide();
+            ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe);
+        }
+        m_ExecLancerDe = exec_lancer_de;
+        //m_EffetActuel->LancerNoeud();
+
+        ui->lancerDeWidget->layout()->addWidget(m_ExecLancerDe);
+
+        m_ExecLancerDe->show();
+        this->update();
+        m_ExecLancerDe->update();
+    }
+
+    return this->m_ExecLancerDe;
 }
 
 void ExecEffet::GenerationExecChoix()

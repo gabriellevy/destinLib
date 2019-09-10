@@ -34,7 +34,8 @@ enum TypeNoeud {
     etn_NoeudNarratif,
     etn_Effet,
     etn_Evt,
-    etn_Choix
+    etn_Choix,
+    etn_LancerDe
 };
 
 class Noeud// : public QWidget

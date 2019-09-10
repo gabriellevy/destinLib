@@ -2,6 +2,7 @@
 #include "univers.h"
 #include <QSqlQuery>
 #include "gestionnairecarac.h"
+#include "lancerde.h"
 
 NoeudNarratif::NoeudNarratif()
 {
@@ -119,7 +120,8 @@ void NoeudNarratif::ChargerFonctionsCallbacksBdd()
 
 bool NoeudNarratif::AQuelqueChoseAAfficher()
 {
-    return (m_Text != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "" || m_CallbackDisplay != nullptr);
+    return (m_Text != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "" ||
+            m_CallbackDisplay != nullptr || m_LancerDe != nullptr);
 }
 
 

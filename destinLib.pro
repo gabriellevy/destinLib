@@ -31,6 +31,8 @@ SOURCES += \
     genevt.cpp \
     genhistoirebdd.cpp \
     gestionnairecarac.cpp \
+    lancerde.cpp \
+    lancerde.cpp \
         main.cpp \
     noeudnarratif.cpp \
     perso.cpp \
@@ -67,6 +69,8 @@ HEADERS += \
     genevt.h \
     genhistoirebdd.h \
     gestionnairecarac.h \
+    lancerde.h \
+    lancerde.h \
     noeudnarratif.h \
     perso.h \
     carac.h \
@@ -95,6 +99,7 @@ HEADERS += \
     histoire.h
 
 FORMS += \
+    lancerde.ui \
     univers.ui \
     perso.ui \
     histoire.ui \

@@ -3,6 +3,8 @@
 
 #include "noeud.h"
 
+class LancerDe;
+
 class NoeudNarratif : public Noeud
 {
 protected:
@@ -23,6 +25,7 @@ public:
     // testé après exécution : tant que cette condition est vrai le noeud est réexécuté en boucle
     // si il n'y a pas de condition de répétition, on passe à l'effet suivant normalement
     QList<Condition*> m_RepeatWhileConditions;
+    LancerDe* m_LancerDe;
 
     /**
      * @brief TexteAAfficher

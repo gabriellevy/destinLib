@@ -6,6 +6,7 @@
 
 class ExecEvt;
 class ExecChoix;
+class ExecLancerDe;
 
 namespace Ui {
 class Effet;
@@ -26,6 +27,7 @@ public:
     virtual void FinExecutionNoeud();
     void ChargerImage(QString chemin);
     void NettoyageAffichage();
+    ExecLancerDe* SetExecLancerDe(ExecLancerDe* exec_lancer_de);
 
     Effet* GetEffet();
     void AfficherNoeud();
@@ -33,6 +35,7 @@ public:
     void AfficherBoutonSuivant();
 
     ExecEvt* m_ExecEvt = nullptr;
+    ExecLancerDe* m_ExecLancerDe = nullptr;
 
     QList<ExecChoix*> m_ExecChoix;
 

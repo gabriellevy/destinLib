@@ -269,20 +269,6 @@ void AppelCallback::ChargerArgumentsBdd()
     }
 }
 
-
-/*void Noeud::AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg)
-{
-    m_CallbackFunctions.push_back( callback );
-    m_CallbackArguments.push_back( arg);
-}
-
-
-void Noeud::AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg)
-{
-    m_CallbackTestFunctions.push_back( callback);
-    m_CallbackTestArguments.push_back( arg);
-}*/
-
 double Noeud::GetProba()
 {
     float proba = 0;
