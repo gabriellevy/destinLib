@@ -63,7 +63,7 @@
    <item>
     <widget class="QLabel" name="texteLancerDe">
      <property name="text">
-      <string>Résultat du lancer de dé</string>
+      <string/>
      </property>
     </widget>
    </item>

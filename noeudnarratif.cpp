@@ -15,7 +15,7 @@ NoeudNarratif::NoeudNarratif(QString id,
 {
     m_Id = id;
     m_Nom = nom;
-    m_Text = text;
+    m_Texte = text;
 }
 
 bool NoeudNarratif::TesterConditions()
@@ -39,7 +39,7 @@ void NoeudNarratif::AppliquerValeurDeNoeudBDD(int bd_id)
        this->m_Son = query.value("m_Son").toString();
        this->m_GoToEvtId = query.value("m_GoToEvtId").toString();
        this->m_GoToEffetId = query.value("m_GoToEffetId").toString();
-       this->m_Text = query.value("m_Text").toString();
+       this->m_Texte = query.value("m_Text").toString();
        //this->m_CheminImg = query.value("m_CheminImg").toString();
 
         this->ChargerConditionsBdd();
@@ -85,7 +85,7 @@ QString NoeudNarratif::TexteAAfficher()
 {
     QString texteFinal = "";
 
-    QStringList list = m_Text.split("%%%");
+    QStringList list = m_Texte.split("%%%");
     for ( int i = 0 ; i < list.size() ; ++i)
     {
        if ( i %2 == 0)
@@ -120,7 +120,7 @@ void NoeudNarratif::ChargerFonctionsCallbacksBdd()
 
 bool NoeudNarratif::AQuelqueChoseAAfficher()
 {
-    return (m_Text != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "" ||
+    return (m_Texte != "" || this->m_ImgPath != "" || m_Nom != "" || m_FilmPath != "" ||
             m_CallbackDisplay != nullptr || m_LancerDe != nullptr);
 }
 

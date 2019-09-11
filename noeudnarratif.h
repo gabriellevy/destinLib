@@ -19,13 +19,13 @@ public:
     QString m_Nom = "";
     QString m_Son = "";
     float m_Duree;
-    QString m_Text = "";
+    QString m_Texte = "";
     QString m_ImgPath = "";
     QString m_FilmPath = "";
     // testé après exécution : tant que cette condition est vrai le noeud est réexécuté en boucle
     // si il n'y a pas de condition de répétition, on passe à l'effet suivant normalement
     QList<Condition*> m_RepeatWhileConditions;
-    LancerDe* m_LancerDe;
+    LancerDe* m_LancerDe = nullptr;
 
     /**
      * @brief TexteAAfficher

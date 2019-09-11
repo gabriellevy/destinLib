@@ -116,17 +116,6 @@ Evt* ExecEvt::GetEvt()
 
 
 ExecEffet* ExecEvt::SetExecEffet(ExecEffet* exec_effet)
-/*{
-    if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
-        this->RafraichirAffichageEffet(exec_effet);
-        this->m_ExecEffetActuel = exec_effet;
-    }
-
-
-    return this->m_ExecEffetActuel;
-}
-
-void ExecEvt::RafraichirAffichageEffet(ExecEffet* exec_effet)*/
 {
     if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
         if ( m_ExecEffetActuel != nullptr)

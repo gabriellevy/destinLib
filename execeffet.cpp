@@ -35,6 +35,7 @@ void ExecEffet::NettoyageAffichage()
     for ( ExecChoix* choix: this->m_ExecChoix ) {
         this->layout()->removeWidget(choix);
     }
+    ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe);
 }
 
 void ExecEffet::FinExecutionNoeud()
@@ -94,6 +95,23 @@ bool ExecEffet::GestionTransition()
         }
     }
 
+    // si il y a un lancer de dé dans cet effet, l'afficher :
+    if ( GetEffet()->m_LancerDe != nullptr )
+    {
+        // (sauf si il est déjà fini)
+        if ( m_ExecLancerDe != nullptr && !m_ExecLancerDe->m_ResExecution->m_RestAffiche )
+        {
+            //delete m_ExecLancerDe;
+            //m_ExecLancerDe->NettoyageAffichage();
+            //ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe);
+            //m_ExecLancerDe = nullptr;
+        }
+        else {
+            /*this->m_ExecNoeudActuel = */this->SetExecLancerDe(GetEffet()->m_LancerDe);
+            est_ce_que_l_interface_vers_suite_est_affichee = true;
+        }
+    }
+
     if ( !est_ce_que_l_interface_vers_suite_est_affichee )
     {
         // si l'effet est dans une boucle while il doit s'afficher encore tant que la condition sera remplie
@@ -104,6 +122,8 @@ bool ExecEffet::GestionTransition()
             LancerNoeud();
         }
         else*/
+
+
         if ( GetEffet()->AQuelqueChoseAAfficher() )
         {
             AfficherBoutonSuivant();
@@ -117,6 +137,14 @@ bool ExecEffet::GestionTransition()
     }
 
     return !est_ce_que_l_interface_vers_suite_est_affichee;
+}
+
+
+ExecLancerDe* ExecEffet::SetExecLancerDe(LancerDe* lancer_de)
+{
+   if ( this->m_ExecLancerDe == nullptr || this->m_ExecLancerDe->m_LancerDe != lancer_de)
+        return this->SetExecLancerDe(new ExecLancerDe(this, lancer_de));
+   return this->m_ExecLancerDe;
 }
 
 void ExecEffet::AfficherNoeud()
@@ -197,7 +225,7 @@ ExecLancerDe* ExecEffet::SetExecLancerDe(ExecLancerDe* exec_lancer_de)
             ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe);
         }
         m_ExecLancerDe = exec_lancer_de;
-        //m_EffetActuel->LancerNoeud();
+        m_ExecLancerDe->LancerNoeud();
 
         ui->lancerDeWidget->layout()->addWidget(m_ExecLancerDe);
 

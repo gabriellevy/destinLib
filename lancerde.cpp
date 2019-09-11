@@ -1,10 +1,11 @@
 #include "lancerde.h"
 
-LancerDe::LancerDe(Effet* ParentEffet, QString intitule, int nbDes) :
-    NoeudNarratif(),
+LancerDe::LancerDe(Effet* ParentEffet, QString texteBouton, int nbDes,
+    std::function<ResExecutionLancerDe*(int resDe, QVector<QString> params)> callback) :
+    NoeudNarratif("", "", texteBouton),
     m_ParentEffet(ParentEffet),
     m_NbDes(nbDes),
-    m_Intitule(intitule)
+    m_Callback(callback)
 {
     m_TypeNoeud = TypeNoeud::etn_LancerDe;
 }

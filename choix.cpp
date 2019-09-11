@@ -18,7 +18,7 @@ Choix::Choix(Effet* ParentEffet, QString text, QString cheminImg) :
         m_CheminImg(cheminImg)
 {
     m_TypeNoeud = TypeNoeud::etn_Choix;
-    m_Text = text;
+    m_Texte = text;
 }
 
 bool Choix::AQuelqueChoseAAfficher()

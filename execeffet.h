@@ -28,6 +28,7 @@ public:
     void ChargerImage(QString chemin);
     void NettoyageAffichage();
     ExecLancerDe* SetExecLancerDe(ExecLancerDe* exec_lancer_de);
+    ExecLancerDe* SetExecLancerDe(LancerDe* lancer_de);
 
     Effet* GetEffet();
     void AfficherNoeud();

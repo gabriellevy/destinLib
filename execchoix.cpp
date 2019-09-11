@@ -43,7 +43,7 @@ void ExecChoix::AfficherNoeud()
          ui->bouton->setIconSize(m_Img.rect().size());
 
         // si il n'y a pas de texte c'est un bouton uniquement icone
-        if ( m_Choix->m_Text == "")
+        if ( m_Choix->m_Texte == "")
             this->setFixedSize(m_Img.rect().size());
     }
 }
