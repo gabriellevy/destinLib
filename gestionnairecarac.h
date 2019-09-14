@@ -72,6 +72,7 @@ public:
     static int AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee);
     static int RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree);
     static QString SetValeurACaracId(const QString& idCarac,const  QString& valeurSet);
+    static QString SetValeurACaracId(const QString& idCarac,const int& valeurSet);
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);
     void AjouterCarac(Carac* carac);

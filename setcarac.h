@@ -39,6 +39,7 @@ public:
      */
     SetCarac(QJsonObject obj, ModifCaracType modifCaracType, QString valeur = nullptr);
     SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeur);
+    SetCarac(ModifCaracType modifCaracType, QString caracId, int valeur);
 
     static ModifCaracType GetModifCaracTypeFromQString(QString str);
     static QString GetQStringFromModifCaracType(ModifCaracType mct);

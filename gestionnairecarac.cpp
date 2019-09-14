@@ -108,10 +108,14 @@ int GestionnaireCarac::RetirerValeurACaracId(const QString& idCarac, const int& 
 
 QString GestionnaireCarac::SetValeurACaracId(const QString& idCarac, const QString& valeurSet)
 {
-    Q_ASSERT_X(Univers::ME->GetExecHistoire() != nullptr, "Exec histoire non initialisée !","Carac::SetValeurACaracId" );
     GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
 
     return GestionnaireCarac::GetCaracValue(idCarac);
+}
+
+QString GestionnaireCarac::SetValeurACaracId(const QString& idCarac, const int& valeurSet)
+{
+    return SetValeurACaracId(idCarac, QString::number(valeurSet));
 }
 
 Carac* GestionnaireCarac::GetCarac(QString idCarac)

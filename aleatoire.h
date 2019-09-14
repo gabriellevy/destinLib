@@ -23,6 +23,8 @@ public:
 
     // retourne entier entre 0 (inclu) et A (exclu)
     int EntierInferieurA(int A);
+
+    int D6();
 };
 
 #endif // ALEATOIRE_H

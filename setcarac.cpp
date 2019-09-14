@@ -13,6 +13,10 @@ SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, QString valeu
     m_Valeur = valeur;
 }
 
+
+SetCarac::SetCarac(ModifCaracType modifCaracType, QString caracId, int valeur):SetCarac(modifCaracType, caracId, QString::number(valeur))
+{}
+
 SetCarac::SetCarac(QJsonObject obj, ModifCaracType modifCaracType, QString valeur)
 {
     m_ModifCaracType = modifCaracType;

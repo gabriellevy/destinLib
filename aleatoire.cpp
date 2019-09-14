@@ -33,3 +33,9 @@ int Aleatoire::EntierInferieurA(int A)
 {
     return EntierEntreAEtB(0, A-1);
 }
+
+
+int Aleatoire::D6()
+{
+    return EntierEntreAEtB(1, 7);
+}
