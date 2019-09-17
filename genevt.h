@@ -6,6 +6,8 @@
 #include "evt.h"
 #include "evtaleatoire.h"
 
+struct ResExecutionLancerDe;
+
 /**
  * @brief cette classe contient toutes les fonctions pour créer un événement et ses effets internes.
  * Elle ne doit être utilisée que dans la pahse génération de l'aventure donc au tout début.
@@ -42,6 +44,9 @@ public:
     Choix* AjouterChoixAjouteurACarac(QString text, QString carac, QString valeur, QString go_to_effet_id = "", Effet* effetDest = nullptr);
     Choix* AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, QString go_to_effet_id = "", Effet* effetDest = nullptr);
     Choix* AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg = "", Effet* effetDest = nullptr);
+
+    LancerDe* AjouterLancerDe(QString texte, int nbDes, std::function<ResExecutionLancerDe*(int/*, QVector<QString>*/)>,
+               /*QVector<QString> params, */Effet* effet = nullptr);
 
     /**
      * @brief AjouterImgFond

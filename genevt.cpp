@@ -1,5 +1,7 @@
 #include "genevt.h"
 #include <QSqlQuery>
+#include "lancerde.h"
+#include <functional>
 
 GenEvt::GenEvt()
 {
@@ -135,6 +137,20 @@ Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
     return effet;
+}
+
+
+
+LancerDe* GenEvt::AjouterLancerDe(QString texte, int nbDes, std::function<ResExecutionLancerDe*(int)> callback,
+           /*QVector<QString> params, */Effet* effetDest)
+{
+    if ( effetDest == nullptr)
+        effetDest = m_DernierEffetGenere;
+
+    LancerDe* lancerDe = new LancerDe(effetDest, texte, nbDes, callback);
+    effetDest->m_LancerDe = lancerDe;
+
+    return lancerDe;
 }
 
 Effet* GenEvt::AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay, QString text, QString cheminImg, QString id, Evt* evtDest)

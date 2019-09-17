@@ -81,7 +81,7 @@ void ExecLancerDe::ExecuterNoeudSlot()
         m_Res.push_back(Aleatoire::GetAl()->EntierEntreAEtB(0, 6));
     }
 
-    QVector<QString> args = {};
+    //QVector<QString> args = {};
     QString resExec = ui->texteLancerDe->text();
     if ( resExec != "" )
         resExec += "\n\n";
@@ -89,7 +89,7 @@ void ExecLancerDe::ExecuterNoeudSlot()
     if ( m_ResExecution != nullptr)
         delete m_ResExecution;
 
-    m_ResExecution = m_LancerDe->m_Callback(GetTotalRes(), args);
+    m_ResExecution = m_LancerDe->m_Callback(GetTotalRes()/*, args*/);
     resExec += m_ResExecution->m_TexteRes;
 
     ui->texteLancerDe->setText(resExec);
