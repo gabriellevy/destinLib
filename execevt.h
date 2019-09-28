@@ -28,6 +28,7 @@ public:
     virtual void LancerNoeud();
 
     ExecEffet* SetEffetIndex(int index);
+    ExecEffet* SetExecEffet(QString effetId);
     ExecEffet* SetExecEffet(Effet* effet);
     ExecEffet* SetExecEffet(ExecEffet* exec_effet);
     void RafraichirAffichageEffet(ExecEffet* effet);

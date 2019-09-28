@@ -33,6 +33,12 @@ ExecEffet* ExecEvt::SetEffetIndex(int index)
     return this->SetExecEffet(this->GetEvt()->m_Effets[index]);
 }
 
+ExecEffet* ExecEvt::SetExecEffet(QString effetId)
+{
+    Effet* effet = this->GetEvt()->TrouverEffet(effetId);
+    return SetExecEffet(effet);
+}
+
 ExecEffet* ExecEvt::SetExecEffet(Effet* effet)
 {
    if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet)

@@ -20,7 +20,7 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool persoAffiche
         m_Perso = new IPerso(ui->persoWidget);
 }
 
-void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString /*premierEvt*/, QString /*premierEffet*/, bool BarreDeCote)
+void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString premierEvt, QString premierEffet, bool BarreDeCote)
 {
     this->m_Histoire = this->GenererUneHistoire(idHistoire);
 
@@ -57,6 +57,14 @@ void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString /
         ui->histoireWidget->setStyleSheet("background-color : rgb(255,0,0)");
 
     //LancerAventure();
+
+    if ( premierEvt != "" ) {
+        this->GetExecHistoire()->SetCurrentEvtId(premierEvt);
+    }
+
+    if ( premierEffet != "" ) {
+        this->GetExecHistoire()->GetExecEvtActuel()->SetExecEffet(premierEffet);
+    }
 
     LancerEvtEtOuEffetCourant();
     //DeclencherEffetSuivant();

@@ -220,7 +220,7 @@ bool Noeud::TesterConditions()
 {
     /*if ( m_EtatCondition != ec_NonTeste)
     {
-        // cette condition a déjà été testé une fois : on ne la reteste aps car la proba aléatoire pourrait donner des résultat différents cette fois
+        // cette condition a déjà été testé une fois : on ne la reteste pas car la proba aléatoire pourrait donner des résultat différents cette fois
         return ( m_EtatCondition == ec_True);
     }*/
 

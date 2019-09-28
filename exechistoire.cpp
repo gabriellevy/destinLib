@@ -653,7 +653,7 @@ void ExecHistoire::PasserAEffetIndexSuivant()
     if (index >= evtActuel->m_Effets.length())
     {
         // Il n'y a pas d'effet suivant par défaut dans cet événement
-        // on va essayer de apsser à l'événement suivant mais ce n'est pas très "propre"
+        // on va essayer de passer à l'événement suivant mais ce n'est pas très "propre"
         this->PasserAEvtIndexSuivant();
     } else {
         this->m_ExecNoeudActuel = this->m_ExecEvtActuel->SetEffetIndex(index);
