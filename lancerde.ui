@@ -68,11 +68,21 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="bouton">
-     <property name="text">
-      <string>Continuer</string>
+    <layout class="QHBoxLayout" name="horizontalLayoutBoutons"/>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layoutBoutons">
+     <property name="spacing">
+      <number>0</number>
      </property>
-    </widget>
+     <item>
+      <widget class="QPushButton" name="bouton">
+       <property name="text">
+        <string>Continuer</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

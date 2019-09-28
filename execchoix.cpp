@@ -2,12 +2,12 @@
 #include "ui_choix.h"
 #include "univers.h"
 
-ExecChoix::ExecChoix(ExecEffet* execEffet, Choix* choix, QWidget *parent) :
+ExecChoix::ExecChoix(Choix* choix, QWidget *parent) :
     ExecNoeud(choix, parent),
-    m_Choix(choix),
-    m_ExecEffet(execEffet),
-    ui(new Ui::Choix)
+    m_Choix(choix)
 {
+    ui = new Ui::Choix;
+
     ui->setupUi(this);
 
     ui->bouton->setText(choix->TexteAAfficher() );
@@ -21,6 +21,24 @@ ExecChoix::ExecChoix(ExecEffet* execEffet, Choix* choix, QWidget *parent) :
     {
         m_Img.load(m_Choix->m_CheminImg);
     }
+}
+
+ExecChoix::ExecChoix(ExecNoeud*, Choix* choix, QWidget *parent):
+    ExecChoix(choix, parent)
+{
+
+}
+
+ExecChoix::ExecChoix(ExecEffet* execEffet, Choix* choix, QWidget *parent):
+    ExecChoix(choix, parent)
+{
+    m_ExecEffet = execEffet;
+}
+
+ExecChoix::ExecChoix(ExecLancerDe* lancerDe, Choix* choix, QWidget *parent) :
+    ExecChoix(choix, parent)
+{
+    m_ExecLancerDe = lancerDe;
 }
 
 void ExecChoix::RafraichirAffichageLayouts(int largeur, int)

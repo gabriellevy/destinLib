@@ -2,15 +2,8 @@
 #define EFFET_H
 
 #include "noeudnarratif.h"
-#include "choix.h"
 #include "execnoeud.h"
 #include "glisseur.h"
-
-enum OrientationAffichageChoix
-{
-    oac_vertical,
-    oac_horizontal
-};
 class Evt;
 
 class Effet : public NoeudNarratif
@@ -26,9 +19,6 @@ protected:
 public:
     virtual ~Effet() {}
     /*explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);*/
-
-    QList<Choix*> m_Choix;
-    OrientationAffichageChoix m_OrientationAffichageChoix = OrientationAffichageChoix::oac_vertical;
 
     //Effet* GetElse();
     //bool AQuelqueChoseAAfficher();

@@ -2,6 +2,7 @@
 #include "ui_lancerde.h"
 #include "univers.h"
 #include "aleatoire.h"
+#include "execchoix.h"
 
 ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, LancerDe* lancerDe, QWidget *parent) :
     ExecNoeud(lancerDe, parent),
@@ -12,6 +13,7 @@ ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, LancerDe* lancerDe, QWidget *pa
     ui->setupUi(this);
 
     ui->bouton->setText(lancerDe->TexteAAfficher() );
+    m_Noeud = lancerDe;
 
     QObject::connect(ui->bouton, SIGNAL(clicked()),
                      this, SLOT(ExecuterNoeudSlot()));
@@ -32,6 +34,8 @@ void ExecLancerDe::RafraichirAffichageLayouts(int largeur, int)
 
 void ExecLancerDe::AfficherNoeud()
 {
+    ExecNoeud::AfficherNoeud();
+
     ui->bouton->setText(m_LancerDe->TexteAAfficher() );
     ui->bouton->setFont( *Univers::BASE_FONT);
 
@@ -49,12 +53,13 @@ void ExecLancerDe::AfficherNoeud()
 
 bool ExecLancerDe::GestionTransition()
 {
+    ExecNoeud::GestionTransition();
     // tant qu'on a n'a pas de résultat ni de résultat mettant fin au lancer on reste ici :
     if ( m_ResExecution == nullptr || m_ResExecution->m_RestAffiche)
         return false;
 
-    //ExecNoeud::GestionTransition();
     this->m_ExecEffet->GestionTransition();
+
     return true;
 }
 
@@ -72,13 +77,31 @@ int ExecLancerDe::GetTotalRes()
     return res;
 }
 
+void ExecLancerDe::NettoyageAffichage()
+{
+    for ( ExecChoix* choix: this->m_ExecChoix ) {
+        this->layout()->removeWidget(choix);
+    }
+}
+
+
+void ExecLancerDe::AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud)
+{
+    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud);
+}
+
+void ExecLancerDe::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
+{
+    ui->layoutBoutons->layout()->addWidget(execNoeud);
+}
+
 void ExecLancerDe::ExecuterNoeudSlot()
 {
     this->ExecuterActionsNoeud();
 
     m_Res.clear();
     for ( int i = 0 ; i < m_LancerDe->m_NbDes ; ++i) {
-        m_Res.push_back(Aleatoire::GetAl()->EntierEntreAEtB(0, 6));
+        m_Res.push_back(Aleatoire::GetAl()->EntierEntreAEtB(1, 6));
     }
 
     //QVector<QString> args = {};

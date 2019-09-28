@@ -2,6 +2,7 @@
 #include <QSqlQuery>
 #include "lancerde.h"
 #include <functional>
+#include "choix.h"
 
 GenEvt::GenEvt()
 {
@@ -217,6 +218,13 @@ Choix* GenEvt::AjouterChoixVide(Effet* effetDest)
     return choix;
 }
 
+Choix* GenEvt::AjouterChoixVide(LancerDe* lancerDe)
+{
+    Choix* choix = new Choix(lancerDe);
+    lancerDe->m_Choix.push_back(choix);
+    return choix;
+}
+
 
 Choix* GenEvt::AjouterChoixAjouteurACarac(QString text, QString carac, QString valeur, QString go_to_effet_id, Effet* effetDest)
 {
@@ -233,6 +241,15 @@ Choix* GenEvt::AjouterChoixChangeurDeCarac(QString text, QString carac, QString 
     Choix* choix = AjouterChoixVide(effetDest);
     choix->m_Texte = text;
     choix->AjouterChangeurDeCarac(carac, valeur);
+    choix->m_GoToEffetId = go_to_effet_id;
+    return choix;
+}
+
+Choix* GenEvt::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg, LancerDe* lancerDe)
+{
+    Choix* choix = AjouterChoixVide(lancerDe);
+    choix->m_Texte = text;
+    choix->m_CheminImg = cheminImg;
     choix->m_GoToEffetId = go_to_effet_id;
     return choix;
 }

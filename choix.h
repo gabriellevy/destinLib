@@ -24,6 +24,7 @@ class Choix : public NoeudNarratif
 protected:
     //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
     explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "");
+    explicit Choix(LancerDe* lancerDe, QString text="", QString cheminImg = "");
 
 public:
     virtual ~Choix() {}
@@ -33,6 +34,7 @@ public:
      */
     virtual bool AQuelqueChoseAAfficher();
     Effet* m_ParentEffet;
+    LancerDe* m_ParentLancerDe;
 
     // gestion de la bdd :
     int m_BDD_ChoixId = -1;

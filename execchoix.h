@@ -5,6 +5,8 @@
 #include "choix.h"
 
 class ExecEffet;
+class LancerDe;
+class ExecLancerDe;
 
 class ExecChoix : /*public QPushButton, */public ExecNoeud
 {
@@ -13,8 +15,12 @@ class ExecChoix : /*public QPushButton, */public ExecNoeud
 
     Choix* m_Choix;
     ExecEffet* m_ExecEffet = nullptr;
+    ExecLancerDe* m_ExecLancerDe = nullptr;
 
+    explicit ExecChoix(Choix* choix, QWidget *parent = nullptr);
     explicit ExecChoix(ExecEffet* ExecEffet, Choix* choix, QWidget *parent = nullptr);
+    explicit ExecChoix(ExecLancerDe* ExecEffet, Choix* choix, QWidget *parent = nullptr);
+    explicit ExecChoix(ExecNoeud* execNoeud, Choix* choix, QWidget *parent = nullptr);
     virtual ~ExecChoix();
 
     void AfficherNoeud();

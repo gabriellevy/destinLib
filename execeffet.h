@@ -21,7 +21,6 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
     Glisseur* AjouterGlisseur();
-    void GenerationExecChoix();
     bool GestionTransition();
 
     virtual void FinExecutionNoeud();
@@ -38,12 +37,14 @@ public:
     ExecEvt* m_ExecEvt = nullptr;
     ExecLancerDe* m_ExecLancerDe = nullptr;
 
-    QList<ExecChoix*> m_ExecChoix;
-
 public slots:
     //void ExecuterNoeudSlot(bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true);
     void FinChrono();
     void valeurGlisseurAChange();
+
+protected:
+    virtual void AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud);
+    virtual void AjouterAuxBoutonsVertic(ExecNoeud* execNoeud);
 
 private:
     Ui::Effet *ui;

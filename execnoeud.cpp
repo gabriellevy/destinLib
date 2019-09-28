@@ -3,6 +3,7 @@
 #include <QMovie>
 #include "noeudnarratif.h"
 #include "gestionnairecarac.h"
+#include "execchoix.h"
 
 ExecNoeud::ExecNoeud(NoeudNarratif* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
 {
@@ -104,12 +105,54 @@ void ExecNoeud::LancerNoeud()
 }
 
 
+void ExecNoeud::AjouterAuxBoutonsHoriz(ExecNoeud* )
+{
+    Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsHoriz");
+}
+
+void ExecNoeud::AjouterAuxBoutonsVertic(ExecNoeud* )
+{
+    Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsVertic");
+}
+
 bool ExecNoeud::GestionTransition()
 {
-    // commenté à cause des noeuds else (surement entre autres)
-    //Q_ASSERT_X(false, "Noeud::GestionTransition", "Je ne crois pas que la gestion de transition devrait se faire dans Noeud si ?");
-   Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
-   return true;
+    bool est_ce_que_l_interface_vers_suite_est_affichee = false;
+    // si l'effet contient un choix on l'affiche et on considère que le passage vers l'effet suivant est géré par les choix
+    if ( m_ExecChoix.size() > 0 )
+    {
+        for ( int i = 0 ; i < m_ExecChoix.size() ; ++i)
+        {
+            m_ExecChoix[i]->GetExecNoeud()->hide();
+            if ( m_ExecChoix[i]->m_Choix->TesterConditions())
+            {
+                if ( m_Noeud->m_OrientationAffichageChoix == OrientationAffichageChoix::oac_vertical)
+                    AjouterAuxBoutonsVertic(m_ExecChoix[i]->GetExecNoeud());
+                else
+                    AjouterAuxBoutonsHoriz(m_ExecChoix[i]->GetExecNoeud());
+                m_ExecChoix[i]->GetExecNoeud()->AfficherNoeud();
+                m_ExecChoix[i]->GetExecNoeud()->show();
+
+                est_ce_que_l_interface_vers_suite_est_affichee = true;
+            }
+        }
+    }
+    /* pourrait servir à cause des noeuds else => je m'embrouille
+     * if ( !est_ce_que_l_interface_vers_suite_est_affichee )
+    {
+        Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    }*/
+   return !est_ce_que_l_interface_vers_suite_est_affichee;
+}
+
+void ExecNoeud::GenerationExecChoix()
+{
+    if ( this->m_Noeud->m_Choix.length() > 0 &&
+         this->m_ExecChoix.length() < this->m_Noeud->m_Choix.length() ) {
+        for (Choix* choix: this->m_Noeud->m_Choix) {
+            this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
+        }
+    }
 }
 
 void ExecNoeud::RafraichirAffichageLayouts(int , int )
@@ -121,7 +164,5 @@ void ExecNoeud::RafraichirAffichageLayouts(int , int )
 
 void ExecNoeud::AfficherNoeud()
 {
-    // commenté à cause des noeuds else (surement entre autres)
-    /*QString msg = "AfficherNoeud ne doit pas être appelé sur un Noeud mais seulement sur des objets en héritant " ;
-    Q_ASSERT_X(false, "AfficherNoeud", msg.toStdString().c_str() );*/
+    GenerationExecChoix();
 }

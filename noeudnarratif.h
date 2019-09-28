@@ -3,7 +3,14 @@
 
 #include "noeud.h"
 
+enum OrientationAffichageChoix
+{
+    oac_vertical,
+    oac_horizontal
+};
+
 class LancerDe;
+class Choix;
 
 class NoeudNarratif : public Noeud
 {
@@ -26,6 +33,9 @@ public:
     // si il n'y a pas de condition de répétition, on passe à l'effet suivant normalement
     QList<Condition*> m_RepeatWhileConditions;
     LancerDe* m_LancerDe = nullptr;
+    OrientationAffichageChoix m_OrientationAffichageChoix = OrientationAffichageChoix::oac_vertical;
+
+    QList<Choix*> m_Choix;
 
     /**
      * @brief TexteAAfficher

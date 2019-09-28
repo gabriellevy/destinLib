@@ -73,27 +73,7 @@ void ExecEffet::AfficherBoutonSuivant()
 
 bool ExecEffet::GestionTransition()
 {
-    bool est_ce_que_l_interface_vers_suite_est_affichee = false;
-
-    // si l'effet contient un choix on l'affiche et on considère que le passage vers l'effet suivant est géré par les choix
-    if ( m_ExecChoix.size() > 0 )
-    {
-        for ( int i = 0 ; i < m_ExecChoix.size() ; ++i)
-        {
-            m_ExecChoix[i]->GetExecNoeud()->hide();
-            if ( m_ExecChoix[i]->m_Choix->TesterConditions())
-            {
-                if ( GetEffet()->m_OrientationAffichageChoix == OrientationAffichageChoix::oac_vertical)
-                    ui->layoutBoutons->layout()->addWidget(m_ExecChoix[i]->GetExecNoeud());
-                else
-                    ui->horizontalLayoutBoutons->layout()->addWidget(m_ExecChoix[i]->GetExecNoeud());
-                m_ExecChoix[i]->GetExecNoeud()->AfficherNoeud();
-                m_ExecChoix[i]->GetExecNoeud()->show();
-
-                est_ce_que_l_interface_vers_suite_est_affichee = true;
-            }
-        }
-    }
+    bool est_ce_que_l_interface_vers_suite_est_affichee = !ExecNoeud::GestionTransition();
 
     // si il y a un lancer de dé dans cet effet, l'afficher :
     if ( GetEffet()->m_LancerDe != nullptr )
@@ -140,6 +120,16 @@ bool ExecEffet::GestionTransition()
 }
 
 
+void ExecEffet::AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud)
+{
+    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud);
+}
+
+void ExecEffet::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
+{
+    ui->layoutBoutons->layout()->addWidget(execNoeud);
+}
+
 ExecLancerDe* ExecEffet::SetExecLancerDe(LancerDe* lancer_de)
 {
    if ( this->m_ExecLancerDe == nullptr || this->m_ExecLancerDe->m_LancerDe != lancer_de)
@@ -149,7 +139,7 @@ ExecLancerDe* ExecEffet::SetExecLancerDe(LancerDe* lancer_de)
 
 void ExecEffet::AfficherNoeud()
 {
-    GenerationExecChoix();
+    ExecNoeud::AfficherNoeud();
 
     // cette fonction peut être appelée pour rafraichir un affichage donc on cache tout avant de le réafficher éventuellement
     ui->titreEffet->hide();
@@ -235,16 +225,6 @@ ExecLancerDe* ExecEffet::SetExecLancerDe(ExecLancerDe* exec_lancer_de)
     }
 
     return this->m_ExecLancerDe;
-}
-
-void ExecEffet::GenerationExecChoix()
-{
-    if ( this->GetEffet()->m_Choix.length() > 0 &&
-         this->m_ExecChoix.length() < this->GetEffet()->m_Choix.length() ) {
-        for (Choix* choix: this->GetEffet()->m_Choix) {
-            this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
-        }
-    }
 }
 
 

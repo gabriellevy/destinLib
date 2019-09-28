@@ -5,6 +5,7 @@
 
 class NoeudNarratif;
 class Noeud;
+class ExecChoix;
 
 class ExecNoeud : public QWidget
 {
@@ -16,6 +17,8 @@ public:
 
     QPixmap m_Img;
     QMovie* m_Film = nullptr;
+
+    QList<ExecChoix*> m_ExecChoix;
 
     /**
      * @brief exécute tout ce qui est défini dans ce noeud (changements de caracs, go to un autre effet etc...
@@ -40,10 +43,15 @@ public:
     virtual bool GestionTransition();
 
     virtual void FinExecutionNoeud();
+    virtual void GenerationExecChoix();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
     NoeudNarratif* m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
+
+protected:
+    virtual void AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud);
+    virtual void AjouterAuxBoutonsVertic(ExecNoeud* execNoeud);
 
 private:
     //Ui::Noeud *ui;

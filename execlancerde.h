@@ -33,6 +33,10 @@ public:
     // résultat final de l'exécution de la fonction callback du lancer de dé
     ResExecutionLancerDe* m_ResExecution = nullptr;
 
+protected:
+    virtual void AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud);
+    virtual void AjouterAuxBoutonsVertic(ExecNoeud* execNoeud);
+
 private:
     Ui::LancerDe *ui;
 
