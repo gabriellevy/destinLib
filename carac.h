@@ -25,13 +25,24 @@ enum MODE_AFFICHAGE {
 class DCarac
 {
 public:
-    DCarac(QString Id = "", QString Intitule = "", QString Valeur = "", QString Description = "");
+    DCarac(QString Id = "", QString Intitule = "", QString Valeur = "", QString Description = "", QString valeurMin = "", QString valeurMax = "");
 
     QString m_Id;
     QString m_Intitule;
-    QString m_Valeur;
     QString m_Description;
+    QString m_ValeurMin = "";
+    QString m_ValeurMax = "";
     QString GetDescription() {return m_Description;}
+
+    double SetValeur(double nouvValeur);
+    QString SetValeur(QString nouvValeur);
+    QString GetValeur(){return m_Valeur;}
+    int GetValeurInt(){return m_Valeur.toInt();}
+    double GetValeurDouble(){return m_Valeur.toDouble();}
+    bool AUneValeur() {return m_Valeur != "";}
+
+private:
+    QString m_Valeur;
 };
 
 class Carac : public QWidget
@@ -42,7 +53,8 @@ protected:
 
 public:
     explicit Carac(QWidget *parent = nullptr);
-    Carac(QString Id, QString Intitule, QString Valeur, QString Img, QString Description, MODE_AFFICHAGE ModeAffichage, QWidget *parent = nullptr);
+    Carac(QString Id, QString Intitule, QString Valeur, QString Img, QString Description, MODE_AFFICHAGE ModeAffichage,
+          QWidget *parent = nullptr, QString valeurMin = "", QString valeurMax = "");
     ~Carac();
 
     MODE_AFFICHAGE m_ModeAffichage; // de quelle manière est affichée cette carac dans l'interface personnage

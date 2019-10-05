@@ -4,12 +4,34 @@
 #include <QDebug>
 #include "gestionnairecarac.h"
 
-DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description)
+DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description, QString valeurMin, QString valeurMax) :
+    m_Id(Id), m_Intitule(Intitule), m_Valeur(Valeur), m_Description(Description), m_ValeurMin(valeurMin), m_ValeurMax(valeurMax)
+{}
+
+
+
+double DCarac::SetValeur(double nouvValeur)
 {
-    m_Valeur = Valeur;
-    m_Id = Id;
-    m_Intitule = Intitule;
-    m_Description = Description;
+    SetValeur(QString::number(nouvValeur));
+
+    return GetValeurDouble();
+}
+
+QString DCarac::SetValeur(QString nouvValeur)
+{
+    m_Valeur = nouvValeur;
+
+    // valeurs affectables limitées par valeur min et valeur max
+    if ( m_ValeurMax != "" ) {
+        if ( m_Valeur.toDouble() > m_ValeurMax.toDouble())
+            m_Valeur = m_ValeurMax;
+    }
+    if ( m_ValeurMin != "" ) {
+        if ( m_Valeur.toDouble() < m_ValeurMin.toDouble())
+            m_Valeur = m_ValeurMin;
+    }
+
+    return m_Valeur;
 }
 
 Carac::Carac(QWidget *parent) :
@@ -22,10 +44,11 @@ Carac::Carac(QWidget *parent) :
     m_ModeAffichage = MODE_AFFICHAGE::Ma_Cache;
 }
 
-Carac::Carac(QString Id, QString Intitule, QString Valeur, QString CheminImg, QString Description, MODE_AFFICHAGE ModeAffichage, QWidget *parent) :
+Carac::Carac(QString Id, QString Intitule, QString Valeur, QString CheminImg, QString Description, MODE_AFFICHAGE ModeAffichage,
+             QWidget *parent, QString valeurMin, QString valeurMax) :
     QWidget(parent),
     m_ModeAffichage(ModeAffichage),
-    m_DataCarac(Id, Intitule, Valeur, Description),
+    m_DataCarac(Id, Intitule, Valeur, Description, valeurMin, valeurMax),
     ui(new Ui::Carac)
 {
     ui->setupUi(this);
@@ -41,12 +64,12 @@ void Carac::SetImg(QString CheminImg)
 }
 
 Jauge::Jauge(QString Id, QString Intitule, double Minimum, double Maximum, double ValeurDepart, QString Img, QString Description, QWidget *parent)
-    : Carac(Id, Intitule, "", Img, Description, MODE_AFFICHAGE::ma_Jauge, parent)
+    : Carac(Id, Intitule, "", Img, Description, MODE_AFFICHAGE::ma_Jauge, parent, QString::number(Minimum), QString::number(Maximum))
 {
     m_ValeursJauge.m_Minimum = Minimum;
     m_ValeursJauge.m_Maximum = Maximum;
     m_ValeursJauge.m_ValeurDepart = ValeurDepart;
-    m_DataCarac.m_Valeur = QString::number(static_cast<int>(ValeurDepart));
+    m_DataCarac.SetValeur(QString::number(static_cast<int>(ValeurDepart)));
 }
 
 void Carac::DeterminerModeAffichage(QString modeAffichage)
@@ -84,7 +107,7 @@ void Jauge::SetValeursJauge(double Minimum, double Maximum)
 {
     m_ValeursJauge.m_Minimum = Minimum;
     m_ValeursJauge.m_Maximum = Maximum;
-    m_ValeursJauge.m_ValeurDepart = m_DataCarac.m_Valeur.toDouble();
+    m_ValeursJauge.m_ValeurDepart = m_DataCarac.GetValeurDouble();
     m_ValeursJauge.m_IdCaracAssociee = m_DataCarac.m_Id;
 }
 
@@ -110,7 +133,7 @@ void Carac::Afficher()
             if ( !AfficherImage() )
             {
                  qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image. Id : " <<m_DataCarac.m_Id.toStdString().c_str()
-                        << " - Valeur : " << m_DataCarac.m_Valeur.toStdString().c_str();
+                        << " - Valeur : " << m_DataCarac.GetValeur().toStdString().c_str();
             }
             //AfficherIntitule();
 
@@ -123,7 +146,7 @@ void Carac::Afficher()
             ui->jaugeCarac->setRange(
                         static_cast<int>((static_cast<Jauge*>(this))->m_ValeursJauge.m_Minimum),
                         static_cast<int>((static_cast<Jauge*>(this))->m_ValeursJauge.m_Maximum));
-            ui->jaugeCarac->setValue(m_DataCarac.m_Valeur.toInt());
+            ui->jaugeCarac->setValue(m_DataCarac.GetValeur().toInt());
             if ( !afficheImage)
             {
                 ui->jaugeCarac->update();
@@ -183,11 +206,11 @@ bool Carac::AfficherIntitule()
 
 bool Carac::AfficherValeur()
 {
-    if ( m_DataCarac.m_Valeur != "" )
+    if ( m_DataCarac.AUneValeur() )
     {
         ui->labelValeur->show();
         ui->labelValeur->setFont( *Univers::BASE_FONT);
-        ui->labelValeur->setText(m_DataCarac.m_Valeur);
+        ui->labelValeur->setText(m_DataCarac.GetValeur());
         ui->labelValeur->setToolTip(this->GetCaracDescription());
         return true;
     }
@@ -233,7 +256,7 @@ bool Carac::bAffichable()
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
         return true;
 
-    return (m_DataCarac.m_Valeur != "" /*&& m_DataCarac.m_Valeur != "0"*/ && m_ModeAffichage != MODE_AFFICHAGE::Ma_Cache);
+    return (m_DataCarac.AUneValeur() /*&& m_DataCarac.m_Valeur != "0"*/ && m_ModeAffichage != MODE_AFFICHAGE::Ma_Cache);
 }
 
 Carac::~Carac()

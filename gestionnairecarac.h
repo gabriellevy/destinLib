@@ -79,7 +79,7 @@ public:
     /**
      * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
      */
-    void AjouterCaracNombre(QString idCarac);
+    void AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax);
 
     QMap<QString, Carac*> GetCaracs();
 

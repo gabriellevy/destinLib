@@ -23,7 +23,7 @@ QString GestionnaireCarac::GetCaracValue(QString id)
 {
     if ( !GestionnaireCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
         return "";
-    return GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.m_Valeur;
+    return GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
 }
 
 void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
@@ -38,29 +38,29 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
     else {
         carac = new Carac;
         carac->m_DataCarac.m_Id = setCarac.m_CaracId;
-        carac->m_DataCarac.m_Valeur = "0";
+        carac->m_DataCarac.SetValeur("0");
         m_Caracs[setCarac.m_CaracId] = carac;
     }
 
     switch(setCarac.m_ModifCaracType)
     {
     case ModifCaracType::SetCarac : {
-        carac->m_DataCarac.m_Valeur = setCarac.GetValeur();
+        carac->m_DataCarac.SetValeur(setCarac.GetValeur());
 
         if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
-            carac->m_Img.load(carac->m_DataCarac.m_Valeur);
+            carac->m_Img.load(carac->m_DataCarac.GetValeur());
         }
     }break;
     case ModifCaracType::AddToCarac : {
-        double valeur = carac->m_DataCarac.m_Valeur.toDouble();
+        double valeur = carac->m_DataCarac.GetValeurDouble();
         valeur += setCarac.GetValeur().toDouble();
-        carac->m_DataCarac.m_Valeur = QString::number(valeur);
+        carac->m_DataCarac.SetValeur(valeur);
 
     }break;
     case ModifCaracType::RetireDeCarac : {
-        double valeur = carac->m_DataCarac.m_Valeur.toDouble();
+        double valeur = carac->m_DataCarac.GetValeurDouble();
         valeur -= setCarac.GetValeur().toDouble();
-        carac->m_DataCarac.m_Valeur = QString::number(valeur);
+        carac->m_DataCarac.SetValeur(valeur);
 
     }break;
     }
@@ -71,9 +71,11 @@ void GestionnaireCarac::AjouterCarac(Carac* carac)
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
-void GestionnaireCarac::AjouterCaracNombre(QString idCarac)
+void GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
 {
-    Carac* carac = new Carac(idCarac, idCarac, "0", "", idCarac, MODE_AFFICHAGE::ma_Nombre);
+    Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
+                             "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
+                             QString::number(valMin), QString::number(valMax));
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 

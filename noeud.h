@@ -72,7 +72,9 @@ public:
 
     // modifier caracs
     SetCarac* AjouterRetireurACarac(QString id, QString valeur);
+    SetCarac* AjouterRetireurACarac(QString id, int valeur);
     SetCarac* AjouterAjouteurACarac(QString id, QString valeur);
+    SetCarac* AjouterAjouteurACarac(QString id, int valeur);
     SetCarac* AjouterChangeurDeCarac(QString id, QString valeur);
     SetCarac* AjouterSetCaracTrue(QString id);
     Condition* AjouterCondition( QString caracId, Comparateur comparateur, QString valeur);

@@ -149,6 +149,13 @@ Noeud::Noeud(QString id):Noeud()
     }
 }*/
 
+SetCarac* Noeud::AjouterRetireurACarac(QString id, int valeur)
+{
+    SetCarac* set_carac = new SetCarac(ModifCaracType::RetireDeCarac, id, QString::number(valeur));
+    m_SetCaracs.append(set_carac);
+    return set_carac;
+}
+
 SetCarac* Noeud::AjouterRetireurACarac(QString id, QString valeur)
 {
     SetCarac* set_carac = new SetCarac(ModifCaracType::RetireDeCarac, id, valeur);
@@ -161,6 +168,11 @@ SetCarac* Noeud::AjouterAjouteurACarac(QString id, QString valeur)
     SetCarac* set_carac = new SetCarac(ModifCaracType::AddToCarac, id, valeur);
     m_SetCaracs.append(set_carac);
     return set_carac;
+}
+
+SetCarac* Noeud::AjouterAjouteurACarac(QString id, int valeur)
+{
+    return AjouterAjouteurACarac(id, QString::number(valeur));
 }
 
 SetCarac* Noeud::AjouterChangeurDeCarac(QString id, QString valeur)
