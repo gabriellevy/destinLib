@@ -107,7 +107,7 @@ void ExecLancerDe::ExecuterNoeudSlot()
     //QVector<QString> args = {};
     QString resExec = ui->texteLancerDe->text();
     if ( resExec != "" )
-        resExec += "\n\n";
+        resExec += "\n";
 
     if ( m_ResExecution != nullptr)
         delete m_ResExecution;
