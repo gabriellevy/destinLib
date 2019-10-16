@@ -73,10 +73,10 @@ void ExecEffet::AfficherBoutonSuivant()
 
 bool ExecEffet::GestionTransition()
 {
-    bool est_ce_que_l_interface_vers_suite_est_affichee = !ExecNoeud::GestionTransition();
+    bool est_ce_que_l_interface_vers_suite_est_affichee = false;
 
-    // si il y a un lancer de dé dans cet effet, l'afficher :
-    if ( GetEffet()->m_LancerDe != nullptr )
+    // si il y a un lancer de dé dans cet effet, l'afficher : (prioritaire sur les choix)
+    if ( !est_ce_que_l_interface_vers_suite_est_affichee && GetEffet()->m_LancerDe != nullptr )
     {
         // (sauf si il est déjà fini)
         if ( m_ExecLancerDe != nullptr && !m_ExecLancerDe->m_ResExecution->m_RestAffiche )
@@ -91,6 +91,9 @@ bool ExecEffet::GestionTransition()
             est_ce_que_l_interface_vers_suite_est_affichee = true;
         }
     }
+
+    if ( !est_ce_que_l_interface_vers_suite_est_affichee )
+        est_ce_que_l_interface_vers_suite_est_affichee = !ExecNoeud::GestionTransition();
 
     if ( !est_ce_que_l_interface_vers_suite_est_affichee )
     {
