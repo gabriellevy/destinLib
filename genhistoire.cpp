@@ -5,6 +5,13 @@ GenHistoire::GenHistoire()
 {
     m_GenerateurEvt = new GenEvt();
     m_HistoireGeneree = new Hist("titre inconu : vous devriez surclasser la constructeur de GenHistoire pour éditer ces valeurs");
+    ME = this;
+}
+
+GenHistoire* GenHistoire::ME = nullptr;
+GenHistoire* GenHistoire::GetGenHistoire()
+{
+    return ME;
 }
 
 GenHistoire::~GenHistoire()

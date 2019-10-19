@@ -17,9 +17,13 @@ protected:
     // essayer de créer les caracs de perso dans InitialiserPerso et celle du monde ici (même si d'un point de vue technique elles sont identiques au final)
     virtual void GenererCaracs() = 0;
 
+    static GenHistoire* ME;
+
 public:
     GenHistoire();
     virtual ~GenHistoire();
+
+    static GenHistoire* GetGenHistoire();
 
     GenEvt* m_GenerateurEvt = nullptr;
     Hist* m_HistoireGeneree = nullptr;
