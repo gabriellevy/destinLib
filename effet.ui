@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>355</width>
-    <height>189</height>
+    <width>457</width>
+    <height>265</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -100,6 +100,33 @@
     </layout>
    </item>
    <item>
+    <widget class="QWidget" name="lancerDeWidget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="lancerDeLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="layoutBoutons" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -114,27 +141,6 @@
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QWidget" name="lancerDeWidget" native="true">
-        <layout class="QVBoxLayout" name="lancerDeLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-        </layout>
-       </widget>
-      </item>
       <item>
        <layout class="QHBoxLayout" name="glisseur_layout">
         <property name="spacing">

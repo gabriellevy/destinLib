@@ -6,6 +6,7 @@
 class ExecNoeud;
 class ExecEffet;
 class ExecEvt;
+class ExecLancerDe;
 class Effet;
 class Hist;
 class Noeud;
@@ -63,6 +64,7 @@ public:
      */
     ExecEvt* GetExecEvtActuel(bool forceHistoireMode = false);
     ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
+    ExecLancerDe* GetExecLancerDeActuel();
     Evt* EvtActuel(bool forceHistoireMode = false);
     Effet* EffetActuel(bool forceHistoireMode = false);
     ExecEvt* SetExecEvtActuel(Evt* evt);

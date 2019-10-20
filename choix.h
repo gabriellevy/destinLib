@@ -43,6 +43,7 @@ public:
     QString m_CheminImg;
 
     friend class GenEvt;
+    friend class ExecLancerDe;
 
 };
 

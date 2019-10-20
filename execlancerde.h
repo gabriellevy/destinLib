@@ -22,6 +22,7 @@ public:
 
     //virtual void FinExecutionNoeud();
     void NettoyageAffichage();
+    ExecChoix* AjoutChoixGoToEffet(QString texte, QString idDest);
 
     void AfficherNoeud();
 

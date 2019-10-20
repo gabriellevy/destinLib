@@ -262,6 +262,11 @@ Effet* ExecHistoire::EffetActuel(bool forceHistoireMode)
     return this->GetExecEffetActuel(forceHistoireMode)->GetEffet();
 }
 
+ExecLancerDe* ExecHistoire::GetExecLancerDeActuel()
+{
+    return this->m_ExecEvtActuel->GetExecLancerDeActuel();
+}
+
 ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
 {
     return this->m_ExecEvtActuel->GetExecEffetActuel();

@@ -95,6 +95,15 @@ void ExecLancerDe::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
     ui->layoutBoutons->layout()->addWidget(execNoeud);
 }
 
+ExecChoix* ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
+{
+    Choix* choix = new Choix(this->m_LancerDe, texte);
+    choix->m_GoToEffetId = idDest;
+    ExecChoix* exec = new ExecChoix(this, choix, this);
+    this->m_ExecChoix.push_back(exec);
+    return exec;
+}
+
 void ExecLancerDe::ExecuterNoeudSlot()
 {
     this->ExecuterActionsNoeud();

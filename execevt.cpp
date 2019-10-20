@@ -28,6 +28,14 @@ ExecEffet* ExecEvt::GetExecEffetActuel()
     return this->m_ExecEffetActuel;
 }
 
+ExecLancerDe* ExecEvt::GetExecLancerDeActuel()
+{
+    if ( this->m_ExecEffetActuel == nullptr)
+        this->SetEffetIndex(0);
+
+    return this->m_ExecEffetActuel->m_ExecLancerDe;
+}
+
 ExecEffet* ExecEvt::SetEffetIndex(int index)
 {
     return this->SetExecEffet(this->GetEvt()->m_Effets[index]);

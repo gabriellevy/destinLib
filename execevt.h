@@ -5,6 +5,7 @@
 #include "execnoeud.h"
 
 class ExecEffet;
+class ExecLancerDe;
 
 namespace Ui {
 class Evt;
@@ -23,6 +24,7 @@ public:
     void Clean();
 
     ExecEffet* GetExecEffetActuel();
+    ExecLancerDe* GetExecLancerDeActuel();
 
     virtual bool GestionTransition();
     virtual void LancerNoeud();
