@@ -3,10 +3,10 @@
 
 #include "execnoeud.h"
 #include "choix.h"
+#include "execlancerde.h"
 
 class ExecEffet;
 class LancerDe;
-class ExecLancerDe;
 
 class ExecChoix : /*public QPushButton, */public ExecNoeud
 {

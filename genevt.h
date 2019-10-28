@@ -2,11 +2,10 @@
 #define GENEVT_H
 
 #include <QString>
-
-#include "evt.h"
+#include "condition.h"
 #include "evtaleatoire.h"
 
-struct ResExecutionLancerDe;
+class ResExecutionLancerDe;
 
 /**
  * @brief cette classe contient toutes les fonctions pour créer un événement et ses effets internes.
@@ -19,6 +18,7 @@ private:
 
 public:
     GenEvt();
+    virtual ~GenEvt() {}
 
     EvtAleatoire* GenererEvtAleatoire(QString id, QString nom);
 

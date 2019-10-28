@@ -2,7 +2,6 @@
 #include "univers.h"
 #include <QSqlQuery>
 #include "gestionnairecarac.h"
-#include "lancerde.h"
 #include "choix.h"
 
 NoeudNarratif::NoeudNarratif()

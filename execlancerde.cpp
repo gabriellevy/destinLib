@@ -2,6 +2,7 @@
 #include "ui_lancerde.h"
 #include "univers.h"
 #include "aleatoire.h"
+#include "execeffet.h"
 #include "execchoix.h"
 
 ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, LancerDe* lancerDe, QWidget *parent) :

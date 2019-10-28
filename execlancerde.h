@@ -9,12 +9,16 @@ namespace Ui {
 class LancerDe;
 }
 
+struct ResExecutionLancerDe;
+class ExecEffet;
+class LancerDe;
+
 class ExecLancerDe : public ExecNoeud
 {
     Q_OBJECT
 
 public:
-    explicit ExecLancerDe(ExecEffet* exec_effet, LancerDe* effet, QWidget *parent = nullptr);
+    ExecLancerDe(ExecEffet* exec_effet, LancerDe* effet, QWidget *parent = nullptr);
     virtual ~ExecLancerDe();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);

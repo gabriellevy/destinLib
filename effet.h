@@ -4,6 +4,7 @@
 #include "noeudnarratif.h"
 #include "execnoeud.h"
 #include "glisseur.h"
+#include "choix.h"
 class Evt;
 
 class Effet : public NoeudNarratif

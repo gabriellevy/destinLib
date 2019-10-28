@@ -5,7 +5,7 @@
 #include "gestionnairecarac.h"
 
 DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description, QString valeurMin, QString valeurMax) :
-    m_Id(Id), m_Intitule(Intitule), m_Valeur(Valeur), m_Description(Description), m_ValeurMin(valeurMin), m_ValeurMax(valeurMax)
+    m_Id(Id), m_Intitule(Intitule), m_Description(Description), m_ValeurMin(valeurMin), m_ValeurMax(valeurMax), m_Valeur(Valeur)
 {}
 
 

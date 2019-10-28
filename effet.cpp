@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <QSqlQuery>
+#include "../destinLib/choix.h"
 
 Effet::Effet(Evt* evt) :
     m_Evt(evt)

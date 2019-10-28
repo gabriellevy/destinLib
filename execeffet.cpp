@@ -1,12 +1,13 @@
 #include "execeffet.h"
 #include "execchoix.h"
-#include "execlancerde.h"
 #include "execevt.h"
 #include "ui_effet.h"
 #include "univers.h"
 #include <QMovie>
 #include <QTimer>
 #include "gestionnairecarac.h"
+#include "execlancerde.h"
+#include "lancerde.h"
 
 ExecEffet::ExecEffet(ExecEvt* exec_evt, Effet* effet, QWidget *parent):
     ExecNoeud(effet, parent),

@@ -1,8 +1,8 @@
 #include "genevt.h"
 #include <QSqlQuery>
-#include "lancerde.h"
 #include <functional>
-#include "choix.h"
+#include "lancerde.h"
+#include "evtaleatoire.h"
 
 GenEvt::GenEvt()
 {
@@ -142,8 +142,10 @@ Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id
 
 
 
-LancerDe* GenEvt::AjouterLancerDe(QString texte, int nbDes, std::function<ResExecutionLancerDe*(int)> callback,
-           /*QVector<QString> params, */Effet* effetDest)
+LancerDe* GenEvt::AjouterLancerDe(QString texte,
+                                  int nbDes,
+                                  std::function<ResExecutionLancerDe*(int)> callback,
+                                  Effet* effetDest)
 {
     if ( effetDest == nullptr)
         effetDest = m_DernierEffetGenere;
