@@ -63,7 +63,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>youpi je suis une tooltip !!</string>
+             <string/>
             </property>
             <property name="text">
              <string/>

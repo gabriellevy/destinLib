@@ -26,6 +26,14 @@ QString GestionnaireCarac::GetCaracValue(QString id)
     return GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
 }
 
+bool GestionnaireCarac::IsCaracTrue(QString id)
+{
+    if ( !GestionnaireCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
+        return false;
+    QString val = GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
+    return val != "" && val != "0";
+}
+
 void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = this->CetteCaracExisteDeja(setCarac.m_CaracId);

@@ -73,6 +73,7 @@ public:
     static int RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree);
     static QString SetValeurACaracId(const QString& idCarac,const  QString& valeurSet);
     static QString SetValeurACaracId(const QString& idCarac,const int& valeurSet);
+    static bool IsCaracTrue(QString id); // retourne true si cette carac est possédée par le personnage cad différente de null ou 0
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);
     void AjouterCarac(Carac* carac);

@@ -23,10 +23,10 @@ class Choix : public NoeudNarratif
 {
 protected:
     //explicit Choix(QJsonObject choixJson, QWidget *parent = nullptr);
-    explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "");
     explicit Choix(LancerDe* lancerDe, QString text="", QString cheminImg = "");
 
 public:
+    explicit Choix(Effet* ParentEffet, QString text="", QString cheminImg = "");
     virtual ~Choix() {}
 
     /**
