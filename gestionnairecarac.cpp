@@ -196,7 +196,6 @@ void DPerso::RafraichirAffichage()
     Appliquer();
 }
 
-
 QString DPerso::GetValeurCarac(QString id)
 {
     return GestionnaireCarac::GetCaracValue(id);

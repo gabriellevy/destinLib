@@ -49,8 +49,8 @@ public:
     void MajCheminImage(QString nouveauNom);
     QString GetId();
 
-    QString GetValeurCarac(QString id);
-    int GetValeurCaracAsInt(QString id);
+    virtual QString GetValeurCarac(QString id);
+    virtual int GetValeurCaracAsInt(QString id);
 
     friend class IPerso;
 };
