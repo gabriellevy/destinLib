@@ -80,7 +80,7 @@ bool Condition::Tester()
                     Univers::ME->GetExecHistoire()->EffetActuel(true)->GetTempEcoule());
     }
     else
-        valeurCarac = GestionnaireCarac::GetCaracValue(m_CaracId);
+        valeurCarac = IPerso::GetPersoCourant()->GetValeurCarac(m_CaracId);
 
     switch (m_Comparateur) {
     case c_Egal:

@@ -107,7 +107,7 @@ QString SetCarac::GetValeur()
     }
     else if ( m_IdValeurCaracCopie != "nexistepas*µ£$" )
     {
-        QString valeurStr = GestionnaireCarac::GetGestionnaireCarac()->GetCaracValue(m_IdValeurCaracCopie);
+        QString valeurStr = IPerso::GetPersoCourant()->GetValeurCarac(m_IdValeurCaracCopie);
         if ( valeurStr == "" )
             valeurStr = "0";
         int valeur =  valeurStr.toInt();

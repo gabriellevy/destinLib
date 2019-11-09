@@ -135,23 +135,31 @@ void IPerso::InitialiserPerso()
     }
 }
 
+
+DPerso* IPerso::GetPersoCourant()
+{
+    IPerso* iPerso = IPerso::GetPersoInterface();
+    iPerso->GetPerso(IPerso::s_IdPersoActif);
+}
+
 void IPerso::RafraichirAffichage()
 {
-    this->GetPersoCourant()->RafraichirAffichage();
+    DPerso* persoCourant = m_Persos[IPerso::s_IdPersoActif];
+    persoCourant->RafraichirAffichage();
 
     // portrait
     if ( myImageLabel == nullptr )
     {
-        QString cheminImg = GestionnaireCarac::GetCaracValue(GestionnaireCarac::CARAC_CHEMIN_PORTRAIT);
+        QString cheminImg = persoCourant->GetValeurCarac(GestionnaireCarac::CARAC_CHEMIN_PORTRAIT);
         if ( cheminImg != "" )
         {
-            GetPersoCourant()->m_ImagePortrait.load(cheminImg);
-            ui->imagePortrait->setPixmap(GetPersoCourant()->m_ImagePortrait);
+            persoCourant->m_ImagePortrait.load(cheminImg);
+            ui->imagePortrait->setPixmap(persoCourant->m_ImagePortrait);
         }
     }
 
     ui->portraitLabel->setText(
-                GestionnaireCarac::GetCaracValue(GestionnaireCarac::CARAC_NOM));
+                persoCourant->GetValeurCarac(GestionnaireCarac::CARAC_NOM));
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
     QMap<QString, Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();

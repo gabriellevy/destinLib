@@ -44,7 +44,7 @@ public:
     void RafraichirAffichage();
 
     // accesseur vers le perso courant (qui est toujours unique)
-    DPerso* GetPersoCourant();
+    static DPerso* GetPersoCourant();
     const DPerso* GetPerso(QString id);
     static IPerso* GetPersoInterface();
     static void AjouterPersoJouable(DPerso* perso);

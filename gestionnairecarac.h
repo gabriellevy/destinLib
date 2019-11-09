@@ -49,16 +49,22 @@ public:
     void MajCheminImage(QString nouveauNom);
     QString GetId();
 
+    QString GetValeurCarac(QString id);
+    int GetValeurCaracAsInt(QString id);
+
     friend class IPerso;
 };
 
 class GestionnaireCarac
 {
+private:
     GestionnaireCarac();
     static GestionnaireCarac* ME;
 
     // caracs actuelles du joueur
     QMap<QString, Carac*> m_Caracs;
+    static QString GetCaracValue(QString id);
+    static int GetCaracValueAsInt(QString id);
 
 public:
 
@@ -66,8 +72,6 @@ public:
 
     // focntions raccourcis de convénience :
     static GestionnaireCarac* GetGestionnaireCarac();
-    static QString GetCaracValue(QString id);
-    static int GetCaracValueAsInt(QString id);
     static void AppliquerSetCarac(const SetCarac& setCarac);
     static int AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee);
     static int RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree);
@@ -88,6 +92,8 @@ public:
     static QString CARAC_PERSO_ID;
     static QString CARAC_DESCRIPTION;
     static QString CARAC_CHEMIN_PORTRAIT;
+
+    friend class DPerso;
 };
 
 #endif // GESTIONNAIRECARAC_H

@@ -95,7 +95,7 @@ QString NoeudNarratif::TexteAAfficher()
        else
        {
            // est forcément une variable à remplacer
-           texteFinal += GestionnaireCarac::GetCaracValue(list.at(i));
+           texteFinal += IPerso::GetPersoCourant()->GetValeurCarac(list.at(i));
        }
     }
 

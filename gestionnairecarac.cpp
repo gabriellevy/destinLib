@@ -180,11 +180,6 @@ QString DPerso::GetId()
     return "id introuvable !!";
 }
 
-DPerso* IPerso::GetPersoCourant()
-{
-    return m_Persos[IPerso::s_IdPersoActif];
-}
-
 QMap<QString, Carac*> GestionnaireCarac::GetCaracs()
 {
     return this->m_Caracs;
@@ -199,6 +194,17 @@ const DPerso* IPerso::GetPerso(QString id)
 void DPerso::RafraichirAffichage()
 {
     Appliquer();
+}
+
+
+QString DPerso::GetValeurCarac(QString id)
+{
+    return GestionnaireCarac::GetCaracValue(id);
+}
+
+int DPerso::GetValeurCaracAsInt(QString id)
+{
+    return GestionnaireCarac::GetCaracValueAsInt(id);
 }
 
 MultiSetterDeCarac::MultiSetterDeCarac()
