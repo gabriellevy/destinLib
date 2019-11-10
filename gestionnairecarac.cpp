@@ -186,11 +186,6 @@ QMap<QString, Carac*> GestionnaireCarac::GetCaracs()
 }
 
 
-const DPerso* IPerso::GetPerso(QString id)
-{
-    return m_Persos[id];
-}
-
 void DPerso::RafraichirAffichage()
 {
     Appliquer();

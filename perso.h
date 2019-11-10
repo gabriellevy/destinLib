@@ -45,7 +45,7 @@ public:
 
     // accesseur vers le perso courant (qui est toujours unique)
     static DPerso* GetPersoCourant();
-    const DPerso* GetPerso(QString id);
+    DPerso* GetPerso(QString id) const;
     static IPerso* GetPersoInterface();
     static void AjouterPersoJouable(DPerso* perso);
 

@@ -18,6 +18,7 @@ QString IPerso::s_IdPersoActif = "";
 
 IPerso* IPerso::GetPersoInterface()
 {
+    Q_ASSERT_X(IPerso::s_PersosInterface != nullptr, "IPerso mal initialisé", "IPerso::GetPersoInterface");
     return IPerso::s_PersosInterface;
 }
 
@@ -136,10 +137,15 @@ void IPerso::InitialiserPerso()
 }
 
 
+DPerso* IPerso::GetPerso(QString id) const
+{
+    return m_Persos[id];
+}
+
 DPerso* IPerso::GetPersoCourant()
 {
     IPerso* iPerso = IPerso::GetPersoInterface();
-    iPerso->GetPerso(IPerso::s_IdPersoActif);
+    return iPerso->GetPerso(IPerso::s_IdPersoActif);
 }
 
 void IPerso::RafraichirAffichage()
