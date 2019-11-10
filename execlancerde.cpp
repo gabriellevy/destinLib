@@ -18,6 +18,13 @@ ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, LancerDe* lancerDe, QWidget *pa
 
     QObject::connect(ui->bouton, SIGNAL(clicked()),
                      this, SLOT(ExecuterNoeudSlot()));
+
+    m_ImgDe[0].load(":/images/des/1.png");
+    m_ImgDe[1].load(":/images/des/2.png");
+    m_ImgDe[2].load(":/images/des/3.png");
+    m_ImgDe[3].load(":/images/des/4.png");
+    m_ImgDe[4].load(":/images/des/5.png");
+    m_ImgDe[5].load(":/images/des/6.png");
 }
 
 ExecLancerDe::~ExecLancerDe()
@@ -105,27 +112,52 @@ ExecChoix* ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
     return exec;
 }
 
+void ExecLancerDe::ChangerIntituleBouton(QString texte)
+{
+    ui->bouton->setText(texte);
+}
+
 void ExecLancerDe::ExecuterNoeudSlot()
 {
     this->ExecuterActionsNoeud();
 
+    // calcul des résultats de dés
     m_Res.clear();
     for ( int i = 0 ; i < m_LancerDe->m_NbDes ; ++i) {
         m_Res.push_back(Aleatoire::GetAl()->EntierEntreAEtB(1, 6));
     }
 
-    //QVector<QString> args = {};
     QString resExec = ui->texteLancerDe->text();
     if ( resExec != "" )
         resExec += "\n";
+        //resExec = "";
 
+    // nettoyage des restes des lancers précédents
     if ( m_ResExecution != nullptr)
         delete m_ResExecution;
+    ui->de1->clear();
+    ui->de2->clear();
+    ui->de3->clear();
+    ui->de4->clear();
+    ui->de5->clear();
+    ui->de6->clear();
 
     m_ResExecution = m_LancerDe->m_Callback(GetTotalRes()/*, args*/);
     resExec += m_ResExecution->m_TexteRes;
 
+    // afficher le résultat
     ui->texteLancerDe->setText(resExec);
+    for ( int i = 0 ; i < m_Res.length() ; ++i) {
+        int res = m_Res[i];
+        switch(i+1) {
+        case 1 : ui->de1->setPixmap(m_ImgDe[res-1]); break;
+        case 2 : ui->de2->setPixmap(m_ImgDe[res-1]); break;
+        case 3 : ui->de3->setPixmap(m_ImgDe[res-1]); break;
+        case 4 : ui->de4->setPixmap(m_ImgDe[res-1]); break;
+        case 5 : ui->de5->setPixmap(m_ImgDe[res-1]); break;
+        case 6 : ui->de6->setPixmap(m_ImgDe[res-1]); break;
+        }
+    }
 
     // l'exécution est terminée : on cache le bouton et on repasse la responsabilité de la transition à l'effet "père"
     if ( !m_ResExecution->m_RestAffiche) {

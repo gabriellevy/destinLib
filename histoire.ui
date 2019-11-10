@@ -31,12 +31,6 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QWidget" name="histoireLayout" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>0</number>
@@ -55,18 +49,6 @@
       </property>
       <item>
        <widget class="QScrollArea" name="histoireScrollArea">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>1030</width>
-          <height>900</height>
-         </size>
-        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
@@ -90,12 +72,6 @@
            <width>282</width>
            <height>82</height>
           </rect>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>1030</width>
-           <height>900</height>
-          </size>
          </property>
         </widget>
        </widget>

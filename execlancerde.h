@@ -27,6 +27,7 @@ public:
     //virtual void FinExecutionNoeud();
     void NettoyageAffichage();
     ExecChoix* AjoutChoixGoToEffet(QString texte, QString idDest);
+    void ChangerIntituleBouton(QString texte);
 
     void AfficherNoeud();
 
@@ -47,6 +48,8 @@ private:
 
     // résultat final de chaque dé lancé
     QVector<int> m_Res;
+
+    QPixmap m_ImgDe[6];// images des 6 faces de dés
 
 public slots:
     void ExecuterNoeudSlot();

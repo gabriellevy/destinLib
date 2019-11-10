@@ -10,49 +10,46 @@
     <height>208</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="desLayout">
      <item>
-      <widget class="AspectRatioLabel" name="de1">
+      <widget class="QLabel" name="de1">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="AspectRatioLabel" name="de2">
+      <widget class="QLabel" name="de2">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="AspectRatioLabel" name="de3">
+      <widget class="QLabel" name="de3">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="AspectRatioLabel" name="de5">
+      <widget class="QLabel" name="de4">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="AspectRatioLabel" name="de6">
+      <widget class="QLabel" name="de5">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="AspectRatioLabel" name="de4">
+      <widget class="QLabel" name="de6">
        <property name="text">
         <string/>
        </property>
@@ -62,8 +59,20 @@
    </item>
    <item>
     <widget class="QLabel" name="texteLancerDe">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -86,13 +95,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>AspectRatioLabel</class>
-   <extends>QLabel</extends>
-   <header>aspectratiolabel.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
