@@ -1,10 +1,12 @@
 #include "genhistoire.h"
 #include "aleatoire.h"
 
-GenHistoire::GenHistoire()
+GenHistoire::GenHistoire(QString titre)
 {
     m_GenerateurEvt = new GenEvt();
-    m_HistoireGeneree = new Hist("titre inconu : vous devriez surclasser la constructeur de GenHistoire pour éditer ces valeurs");
+    if ( titre == "" )
+        titre = "titre inconu : vous devriez surclasser la constructeur de GenHistoire pour éditer ces valeurs";
+    m_HistoireGeneree = new Hist(titre);
     ME = this;
 }
 

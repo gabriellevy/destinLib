@@ -20,7 +20,7 @@ protected:
     static GenHistoire* ME;
 
 public:
-    GenHistoire();
+    GenHistoire(QString titre = "");
     virtual ~GenHistoire();
 
     static GenHistoire* GetGenHistoire();
