@@ -5,7 +5,7 @@
 #include "condition.h"
 #include "evtaleatoire.h"
 
-class ResExecutionLancerDe;
+struct ResExecutionLancerDe;
 
 /**
  * @brief cette classe contient toutes les fonctions pour créer un événement et ses effets internes.
