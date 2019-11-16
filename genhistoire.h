@@ -33,6 +33,8 @@ public:
     virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
 
     // fonctions racourci :
+    Effet* AjouterEffetGoToEffet(QString idEffetDest, QString id = "", Evt* evt = nullptr);
+    Effet* AjouterEffetGoToEvt(QString idEvtDest, QString id = "", Evt* evt = nullptr);
     Effet* AjouterEffetNarration(QString text, QString cheminImg = "", QString id = "", Evt* evt = nullptr);
     Choix* AjouterChoixAjouteurACarac(QString texte, QString carac, QString valeur, QString go_to_effet_id = "", Effet* effet = nullptr);
     Choix* AjouterChoixGoToEffet(QString texte, QString go_to_effet_id, QString cheminImg = "", Effet* effetDest = nullptr);

@@ -4,6 +4,9 @@
 #include "gestionnairecarac.h"
 #include "choix.h"
 
+
+int NoeudNarratif::NOEUD_ID_COMPTEUR = 0;
+
 NoeudNarratif::NoeudNarratif()
 {
     m_TypeNoeud = TypeNoeud::etn_NoeudNarratif;
@@ -13,6 +16,10 @@ NoeudNarratif::NoeudNarratif(QString id,
       QString nom,
       QString text):NoeudNarratif()
 {
+    // chaque noeud narratif doit avoir un id unique
+    if ( id == "" ) {
+        id = QString::number(NOEUD_ID_COMPTEUR++);
+    }
     m_Id = id;
     m_Nom = nom;
     m_Texte = text;

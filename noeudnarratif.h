@@ -74,7 +74,8 @@ public:
 
 
     friend class GenEvt;
-
+private:
+    static int NOEUD_ID_COMPTEUR;
 };
 
 #endif // NOEUDNARRATIF_H

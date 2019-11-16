@@ -15,64 +15,13 @@ Effet::Effet(Evt* evt) :
 Effet::Effet(Evt* evt, QString id,
          QString text,
          QString imgPath) :
-    //QWidget(parent),
     NoeudNarratif(id, "", text),
     m_Evt(evt)
-    //ui(new Ui::Effet)
 {
-
-    /*ui->setupUi(this);
-    ui->boutonContinuer->hide();
-    ui->glisseur->hide();
-    ui->labelGlisseur->hide();*/
     m_Glisseur = nullptr;
     m_ImgPath = imgPath;
     m_TypeNoeud = TypeNoeud::etn_Effet;
 }
-
-/*Effet::Effet(QJsonObject effetJson, QWidget *parent) :
-    QWidget(parent),
-    Noeud(effetJson),
-    ui(new Ui::Effet)
-{
-    ui->setupUi(this);
-    ui->boutonContinuer->hide();
-    ui->glisseur->hide();
-    ui->labelGlisseur->hide();
-    m_Glisseur = nullptr;
-
-    // A FAIRE transférer ça dans afficher noeud ?
-    if ( effetJson.contains("glisseur") && effetJson["glisseur"].isObject())
-    {
-        QJsonObject jsonGlisseur = effetJson["glisseur"].toObject();
-
-        ui->glisseur->show();
-        ui->labelGlisseur->show();
-
-        m_Glisseur = new Glisseur(jsonGlisseur);
-
-        ui->glisseur->setMinimum(static_cast<int>(m_Glisseur->m_Minimum));
-        ui->glisseur->setMaximum(static_cast<int>(m_Glisseur->m_Maximum));
-        ui->glisseur->setSliderPosition(static_cast<int>(m_Glisseur->m_ValeurDepart));
-        ui->labelGlisseur->setNum(m_Glisseur->m_ValeurDepart);
-        connect(ui->glisseur,SIGNAL(valueChanged(int)),this,SLOT(valeurGlisseurAChange(int)));
-    }
-
-
-    if ( effetJson.contains("else") && effetJson["else"].isObject())
-    {
-        m_ElseNoeud = new Effet(effetJson["else"].toObject());
-        m_ElseNoeud->ui = ui;
-    }
-}*/
-
-/*Effet* Effet::AjouterElse(QString text)
-{
-    m_ElseNoeud = new Effet(this->m_Evt);
-    m_ElseNoeud->m_Text = text;
-    //m_ElseNoeud->ui = ui;
-    return m_ElseNoeud;
-}*/
 
 Glisseur* Effet::AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id)
 {

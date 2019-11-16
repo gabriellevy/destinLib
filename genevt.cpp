@@ -77,19 +77,18 @@ Effet* GenEvt::AjouterEffet(Effet* effet, Evt* evtDest)
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetVide(Evt* evtDest)
+Effet* GenEvt::AjouterEffetVide(Evt* evtDest, QString id)
 {
     if ( evtDest == nullptr)
         evtDest = m_DernierEvtGenere;
-    Effet* effet = new Effet(evtDest);
+    Effet* effet = new Effet(evtDest, id);
 
     return AjouterEffet(effet, evtDest);
 }
 
 Effet* GenEvt::AjouterEffetSelectionneurDeNoeud(QString id, QString text, Evt* evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_SelectionneurDeNoeud = new SelectionneurDeNoeud(id);
     return effet;
@@ -108,8 +107,7 @@ Effet* GenEvt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire,
 
 Effet* GenEvt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text, QString id, Evt* evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->AjouterChangeurDeCarac(caracId, nouvelleValeur);
     return effet;
@@ -125,16 +123,14 @@ Noeud* GenEvt::GenererNoeudModificateurCarac(QString caracId, QString nouvelleVa
 
 Effet* GenEvt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id, Evt* evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->AjouterAjouteurACarac(caracId, valeurAjoutee);
     return effet;
 }
 
 Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id, Evt* evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
     return effet;
@@ -158,8 +154,7 @@ LancerDe* GenEvt::AjouterLancerDe(QString texte,
 
 Effet* GenEvt::AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay, QString text, QString cheminImg, QString id, Evt* evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
     effet->m_CallbackDisplay = callbackDisplay;
@@ -169,8 +164,7 @@ Effet* GenEvt::AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay
 Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
                                     QString carac_id, QString cheminImg, QString id, Evt* evtDest )
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
 
@@ -190,8 +184,7 @@ Effet* GenEvt::AjouterEffetChangementPerso(QString persoId, QString text, QStrin
 
 Effet* GenEvt::AjouterEffetTest(QString caracId, Comparateur comparateur, QString valeur, QString id, Evt* evtDest )
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
-    effet->m_Id = id;
+    Effet* effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
     return effet;
 }

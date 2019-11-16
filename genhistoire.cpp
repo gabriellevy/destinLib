@@ -42,7 +42,24 @@ void GenHistoire::FinGenerationHistoire()
     delete m_GenerateurEvt;
 }
 
-// fonctions racourci :
+/**
+/**  fonctions racourci
+/**  */
+
+Effet* GenHistoire::AjouterEffetGoToEvt(QString idEvtDest, QString id, Evt* evt)
+{
+    Effet* effet = m_GenerateurEvt->AjouterEffetVide(evt, id);
+    effet->m_GoToEvtId = idEvtDest;
+    return effet;
+}
+
+Effet* GenHistoire::AjouterEffetGoToEffet(QString idEffetDest, QString id, Evt* evt)
+{
+    Effet* effet = m_GenerateurEvt->AjouterEffetVide(evt, id);
+    effet->m_GoToEffetId = idEffetDest;
+    return effet;
+}
+
 Effet* GenHistoire::AjouterEffetNarration(QString text, QString cheminImg, QString id, Evt* evt)
 {
     return m_GenerateurEvt->AjouterEffetNarration(text, cheminImg, id, evt);

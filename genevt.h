@@ -33,7 +33,7 @@ public:
     Effet* AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay, QString text = "", QString cheminImg = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetChangementPerso(QString persoId, QString text, QString cheminImg = "", QString id = "", Evt* evtDest = nullptr);
     Effet* AjouterEffetTest(QString caracId, Comparateur comparateur, QString valeur, QString id = "", Evt* evtDest = nullptr);
-    Effet* AjouterEffetVide(Evt* evtDest = nullptr);
+    Effet* AjouterEffetVide(Evt* evtDest = nullptr, QString id = "");
     Effet* AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
                                 QString carac_id, QString cheminImg = "", QString id = "", Evt* evtDest = nullptr );
     Effet* AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id = "", Evt* evtDest = nullptr);
