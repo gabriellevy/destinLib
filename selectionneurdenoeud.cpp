@@ -10,7 +10,7 @@ QList<SelectionneurDeNoeud*> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 SelectionneurDeNoeud::SelectionneurDeNoeud(QString intitule, int bdd_id):m_BddId(bdd_id), m_Intitule(intitule)
 {}
 
-Noeud* SelectionneurDeNoeud::DeterminerEvtSuivant()
+Noeud* SelectionneurDeNoeud::DeterminerEvtSuivant()// pourquoi pas DeterminerNoeudSuivant en fait ?
 {
     QList<NoeudProbable*> noeudsPossibles;
     double totalDesProbas = 0;

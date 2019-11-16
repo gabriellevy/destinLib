@@ -401,7 +401,7 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
             ilYAgoto = true;
         } else {
             Effet* effetSuivant = dynamic_cast<Effet*>(noeudSuivant);
-            if ( evSuivant != nullptr ) {
+            if ( effetSuivant != nullptr ) {
                 this->GoToEffetId(effetSuivant->m_Id);
                 ilYAgoto = true;
             } else {
