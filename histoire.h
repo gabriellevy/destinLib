@@ -6,6 +6,16 @@
 #include <QVector>
 #include "perso.h"
 
+
+enum ModeDeroulement : int {
+    Aucun,
+    Normal,
+    // les effets défilent selon la valeur m_MsDuree qui leur est affectée (il faudrait leur en affecter une de base ?)
+    // les boutons sont cachés
+    Automatique ,
+    Fini // plus de défilement ni de boutons
+};
+
 /**
  * @brief Cette classe est une pure structure de données. Elle fait le lien entre GenHistoire qui la créée et ExecHistoire qui l'exécute
  * elle est donc tout aussi indépendante de la manière dont elle est générée ou exécutée
@@ -20,6 +30,9 @@ public:
     QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
     QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
     QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
+
+    ModeDeroulement m_ModeDeroulement = Normal;
+    int m_MsDureeDefilement = -1; // utilisé seulement en mode de déroulement automatique
 
     /**
      * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime

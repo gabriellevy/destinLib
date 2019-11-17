@@ -29,6 +29,8 @@ struct AppelCallback {
 
 };
 
+enum ModeDeroulement : int;
+
 enum TypeNoeud {
     etn_Noeud,
     etn_NoeudNarratif,
@@ -57,6 +59,7 @@ public:
     SelectionneurDeNoeud* m_SelectionneurDeNoeud = nullptr;
     QString m_GoToEffetId = "";
     QList<SetCarac*> m_SetCaracs;
+    ModeDeroulement m_ChangeurModeDeroulement; // ce noeud une fois exécuté change le mode de déroulement de l'histoire
 
     // condition à respecter pour exécuter ce noeud (si il y en a une)
     QList<Condition*> m_Conditions;

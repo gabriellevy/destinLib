@@ -33,6 +33,10 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
         executionNoeudNarratif = true;
     }
 
+    if ( noeudAExecuter->m_ChangeurModeDeroulement != ModeDeroulement::Aucun) {
+        Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement = noeudAExecuter->m_ChangeurModeDeroulement;
+    }
+
     // si il y un champs de temps, il s'écoule :
     // pour le noeud courant
     if ( executionNoeudNarratif ) {
@@ -147,11 +151,15 @@ bool ExecNoeud::GestionTransition()
 
 void ExecNoeud::GenerationExecChoix()
 {
-    if ( this->m_Noeud->m_Choix.length() > 0 &&
-         this->m_ExecChoix.length() < this->m_Noeud->m_Choix.length() ) {
-        for (Choix* choix: this->m_Noeud->m_Choix) {
-            this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
+    // pas de choix en mode automatique :
+    if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement != ModeDeroulement::Automatique) {
+        if ( this->m_Noeud->m_Choix.length() > 0 &&
+             this->m_ExecChoix.length() < this->m_Noeud->m_Choix.length() ) {
+            for (Choix* choix: this->m_Noeud->m_Choix) {
+                this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
+            }
         }
+
     }
 }
 

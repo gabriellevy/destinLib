@@ -43,8 +43,8 @@ void GenHistoire::FinGenerationHistoire()
 }
 
 /**
-/**  fonctions racourci
-/**  */
+**  fonctions racourci
+**  */
 
 Effet* GenHistoire::AjouterEffetGoToEvt(QString idEvtDest, QString id, Evt* evt)
 {

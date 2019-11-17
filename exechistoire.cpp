@@ -51,36 +51,6 @@ ExecHistoire::~ExecHistoire()
     delete ui;
 }
 
-
-/*void Histoire::Generer(QJsonObject aventure)
-{
-    // récupération des différents types d'événements :
-    if ( aventure.contains("evts") && aventure["evts"].isArray())
-    {
-        QJsonArray jsonArrayEvts = aventure["evts"].toArray();
-
-        for ( int i = 0; i < jsonArrayEvts.size(); ++i)
-        {
-            Evt* evt = new Evt(jsonArrayEvts[i].toObject());
-            this->m_Histoire->m_Evts.append(evt);
-        }
-    }
-    else
-        QMessageBox::warning(Univers::ME, "erreur", "Pas d'événement dans l'aventure !");
-
-    if ( aventure.contains("evts_conditionnels") && aventure["evts_conditionnels"].isArray())
-    {
-        QJsonArray jsonArrayEvts = aventure["evts_conditionnels"].toArray();
-
-        for ( int i = 0; i < jsonArrayEvts.size(); ++i)
-        {
-            Evt* evt = new Evt(jsonArrayEvts[i].toObject());
-            this->m_Histoire->m_EvtsConditionnels.append(evt);
-        }
-    }
-
-}*/
-
 Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
 {
     for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
@@ -120,12 +90,6 @@ ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
         // si un événement s'appelle 'Debut' alors c'est que c'est le premiers, sinon on commence simplement au premier événement :
         this->SetExecEvtActuel(this->GetEvtSelonId("Debut"));
 
-        /*m_CurrentEvtId = "Debut";
-        Evt* prochainEvt = this->EvtActuel(forceHistoireMode);
-        if ( prochainEvt != nullptr)
-            return prochainEvt;
-        else m_CurrentEvtId = "";*/
-
         if ( this->m_ExecEvtActuel == nullptr )
             this->SetCurrentEvtId(this->m_Histoire->m_Evts.at(0)->m_Id);
 
@@ -135,56 +99,7 @@ ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
     if ( this->m_ExecEvtActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
         return static_cast<ExecEvt*>(this->m_ExecEvtActuel);
 
-    /*if ( this->m_ExecEvtActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Effet)
-    {
-        ExecEffet* effetActuel = static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
-        return effetActuel->m_ExecEvt;
-    }*/
-
-    /*if ( this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Choix)
-    {
-        ExecChoix* choixActuel = static_cast<ExecChoix*>(this->m_ExecNoeudActuel);
-        return choixActuel->m_ExecEffet->m_ExecEvt;
-    }*/
-
-    //Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
     Q_ASSERT_X(true, "Pas d'événement actuel : bizarre", "Histoire::EvtActuel");
-
-
-    /*QString idATrouver = m_CurrentEvtId;
-
-    if ( forceHistoireMode || Univers::ME->GetTypeEvtActuel() == TE_Base )
-    {
-        // puis recherche de l'id actuel parmi tous les tableaux d'événements
-        for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
-        {
-            if ( this->m_Histoire->m_Evts[i]->m_Id == idATrouver)
-                return this->m_Histoire->m_Evts[i];
-        }
-    }
-    else if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
-    {
-        idATrouver = m_CurrentConditionnelEvtId;
-
-        for ( int i = 0; i < this->m_Histoire->m_EvtsConditionnels.size(); ++i)
-        {
-            if ( this->m_Histoire->m_EvtsConditionnels[i]->m_Id == idATrouver)
-                return this->m_Histoire->m_EvtsConditionnels[i];
-        }
-    }
-
-    // dans les modes non histoire il y a quand même un événement actuel qui peut encore se trouver dans les événements histoire ou aléatoires :
-    for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
-    {
-        if ( this->m_Histoire->m_Evts[i]->m_Id == idATrouver)
-            return this->m_Histoire->m_Evts[i];
-    }
-
-    for ( int i = 0; i < this->m_Histoire->m_EvtsConditionnels.size(); ++i)
-    {
-        if ( this->m_Histoire->m_EvtsConditionnels[i]->m_Id == m_CurrentEvtId)
-            return this->m_Histoire->m_EvtsConditionnels[i];
-    }*/
 
     return this->m_ExecEvtActuel;
 }
@@ -465,6 +380,9 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 
 ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)
 {
+    if ( m_Histoire->m_ModeDeroulement == ModeDeroulement::Fini)
+        return nullptr;
+
     Noeud* noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud;
     if ( noeudActuel != nullptr)
         this->m_ExecNoeudActuel = noeudActuel;
@@ -482,23 +400,6 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     }
 
     Evt* evtActuel = EvtActuel();
-    //Evt* oldEvtActuel = EvtActuel();
-
-    // les événements conditionnels, si leurs conditions sont remplies, sont immédiatement lancés :
-    /*for ( int y = 0 ; y < this->m_Histoire->m_EvtsConditionnels.size() ; ++y)
-    {
-        if ( this->m_Histoire->m_EvtsConditionnels[y]->TesterConditions())
-        {
-            this->SetCurrentEvtId(this->m_Histoire->m_EvtsConditionnels[y]->m_Id);
-            this->m_NoeudActuel = EffetActuel();
-            evtActuel = EvtActuel();
-            effet_suivant_trouve = true;
-        }
-    }*/
-
-    // si le noeud doit se répéter on bloque le passage auto à l'effet suivant mais les actions et go to s'appliquent normalement
-    /*bool repeter = ( noeudActuel->m_RepeatWhileConditions.size() > 0 &&
-               Condition::TesterTableauDeConditions(noeudActuel->m_RepeatWhileConditions) );*/
 
     // déterminer si l'effet actuel contenait des 'go to' qui conditionnent le prochain événement ou effet :
     if ( !noeud_suivant_trouve )
@@ -534,49 +435,6 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
         noeud_suivant_trouve = (this->m_ExecNoeudActuel != nullptr);
     }
 
-    // on ne passe pas à l'effet suivant si il y a un while qui force à y rester :
-    /*if ( !effet_suivant_trouve && !repeter )
-    {
-        // effet suivant tout simplement :
-        noeudActuel = GetEffetDindexSuivant( noeudActuel);
-        if ( noeudActuel != nullptr)
-            effet_suivant_trouve = true;
-
-        if ( !effet_suivant_trouve )
-        {
-            // il n'y a pas d'effet suivant => evt suivant
-
-            // si on était en mode aléatoire événement suivant signifie simplement retour en mode normal
-            if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire ||
-                Univers::ME->GetTypeEvtActuel() == TE_Conditionnel
-                 )
-            {
-                noeudActuel = EffetActuel();
-                evtActuel = EvtActuel();
-
-                noeudActuel = TesterSiEffetEstLancableOuSonElse( noeudActuel);
-                if ( noeudActuel== nullptr)
-                    noeudActuel = GetEffetDindexSuivant( noeudActuel);
-            }
-            else
-            {
-                qDebug()<<"Attention il n'est pas recommandé de passer ainsi dun événement à l'autre sans un go_to_evt. evt id : " <<evtActuel->m_Id.toStdString().c_str();
-                GetIndexEffetConcerne() = 0;
-                int indexEvtActuel = DeterminerIndexEvt(m_CurrentEvtId);
-                indexEvtActuel++;
-                if ( indexEvtActuel >= this->m_Histoire->m_Evts.size())
-                {
-                    qDebug()<<"Impossible de trouver un événement suivant pour: evt id : " <<evtActuel->m_Id.toStdString().c_str();
-                }
-                qDebug()<<"Effet* Histoire::DeterminerEtActiverEffetSuivant(). indexEvtActuel : "<< indexEvtActuel;
-                this->SetCurrentEvtId(this->m_Histoire->m_Evts[indexEvtActuel]->m_Id);
-
-                evtActuel = EvtActuel();
-            }
-
-        }
-    }*/
-
     bool afficheNoeud = false;
 
     if ( this->m_ExecNoeudActuel == nullptr)
@@ -585,36 +443,10 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     if ( this->m_ExecNoeudActuel != nullptr && noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud)
         afficheNoeud = true;
 
-    /*if ( evtActuel == nullptr)
-        evtActuel = EvtActuel();*/
-
-    /*if ( oldEvtActuel != evtActuel )
-    {
-        // on est entré dans un nouvel événement => on exécute ses actions puis on passera à celles du premier effet si il y en a un
-        //m_EffetIndex = -1;
-        // si l'effet courant va être exécuté il se chargera d'afficher les élément de l'événement et/ou de alncer l'effet suivant dnc on se contente d'excuter le noeud
-        evtActuel->LancerNoeud();
-    }*/
-
     // on fait le test de condition une seule fois juste avant d'effectuer les effets :
     while ( !this->m_ExecNoeudActuel->m_Noeud->TesterConditions())
     {
         afficheNoeud = false; // de toute façon le noeud actuel n'est pas lançable : on doit passer au suivant
-
-        /* else désactivé jusqu'à nouvel ordre
-         * if ( this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Effet)
-        {
-            Effet* effet = dynamic_cast<Effet*>(this->m_ExecNoeudActuel);
-            if ( effet->GetElse() != nullptr)
-            {
-                this->m_ExecNoeudActuel = dynamic_cast<Effet*>(this->m_ExecNoeudActuel)->GetElse();
-                afficheNoeud = true;
-            } else {
-                break;
-            }
-        } else {
-            break;
-        }*/
     }
 
     // note : ce peut être un Effet au sens objet mais aussi un simple noeud, un else par exemple ou un Evt
@@ -625,16 +457,13 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
                    "ExecHistoire::DeterminerPuisLancerNoeudSuivant");
         this->m_ExecNoeudActuel->LancerNoeud();
     } else {
-        // le noeud courant était invalide et on n'a asp trouvé de else valide, on cherche le suivant
+        // le noeud courant était invalide et on n'a pas trouvé de else valide, on cherche le suivant
         return this->DeterminerPuisLancerNoeudSuivant(this->m_ExecNoeudActuel, false);
     }
 
     switch (this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud) {
     case TypeNoeud::etn_Evt: this->m_ExecEvtActuel = static_cast<ExecEvt*>(this->m_ExecNoeudActuel);
         break;
-    /* a priori pas nécessaire :
-     * case TypeNoeud::etn_Choix: this->m_ExecEvtActuel->m_ExecEffetActuel->m_ExecChoix = static_cast<ExecChoix*>(this->m_ExecNoeudActuel);
-        break;*/
     case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->SetExecEffet(static_cast<ExecEffet*>(this->m_ExecNoeudActuel));
         break;
     default:
@@ -643,13 +472,6 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
 
     return this->m_ExecNoeudActuel;
 }
-
-/*int& Histoire::GetIndexEffetConcerne()
-{
-   if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel)
-        return m_EffetConditionnelIndex;
-   return  m_EffetIndex;
-}*/
 
 void ExecHistoire::PasserAEffetIndexSuivant()
 {

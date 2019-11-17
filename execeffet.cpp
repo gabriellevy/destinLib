@@ -200,7 +200,13 @@ void ExecEffet::AfficherNoeud()
         //this->SetExecLancerDe(exec_lancer_de);
     }
 
+    Hist* hist = Univers::ME->GetExecHistoire()->m_Histoire;
     // déclenchement du chrono pour cet effet si il en a un :
+    if ( GetEffet()->m_MsChrono == -1 &&
+         (hist->m_ModeDeroulement == ModeDeroulement::Automatique && hist->m_MsDureeDefilement != -1 ))
+    {
+        GetEffet()->m_MsChrono = hist->m_MsDureeDefilement;
+    }
     if ( GetEffet()->m_MsChrono != -1 )
     {
         QTimer::singleShot(GetEffet()->m_MsChrono, this, SLOT(FinChrono()));
