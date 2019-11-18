@@ -128,6 +128,11 @@ QString GestionnaireCarac::SetValeurACaracId(const QString& idCarac, const int& 
     return SetValeurACaracId(idCarac, QString::number(valeurSet));
 }
 
+QString GestionnaireCarac::EffacerValeurACaracId(const QString& idCarac)
+{
+    return SetValeurACaracId(idCarac, "");
+}
+
 Carac* GestionnaireCarac::GetCarac(QString idCarac)
 {
     return m_Caracs[idCarac];

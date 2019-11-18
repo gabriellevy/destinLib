@@ -279,7 +279,7 @@ int ExecHistoire::DeterminerIndexEffet(QString idEffet)
             return i;
         }
     }
-    QString msg = "Recherche d'un effet qui n'existe pas ! id effet : " + idEffet + " - id evt : " + evtActuel->m_Id;
+    QString msg = "Recherche d'un effet qui n'existe pas ! id effet introuvable : " + idEffet + " - id evt : " + evtActuel->m_Id;
     Q_ASSERT_X(false, "aventure", msg.toStdString().c_str());
     return -1;
 }

@@ -85,17 +85,6 @@ public:
      */
     void SetCurrentEvtId(QString);
     void AjouterDureeAEffetHistoireCourant(float duree);
-    /**
-     * @brief GetIndexEffetConcerne
-     * @return référence vers l'index d'effet normal ou aléatoire selon le mode dans lequel on se trouve à ce moment
-     */
-    //int& GetIndexEffetConcerne();
-
-    /**
-     * @brief GetCaracValue
-     * @return valeur de cette carac pour le perso. "" si cette carac n'existe pas
-     */
-    //QString GetCaracValue(QString caracId);
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
