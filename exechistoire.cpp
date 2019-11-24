@@ -308,7 +308,7 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 
     if ( noeud->m_SelectionneurDeNoeud != nullptr)
     {
-        Noeud* noeudSuivant = noeud->m_SelectionneurDeNoeud->DeterminerEvtSuivant();
+        Noeud* noeudSuivant = noeud->m_SelectionneurDeNoeud->DeterminerNoeudSuivant();
 
         Evt* evSuivant = dynamic_cast<Evt*>(noeudSuivant);
         if ( evSuivant != nullptr ) {

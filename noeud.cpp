@@ -64,14 +64,24 @@ Condition* Noeud::AjouterCondition( QString caracId, Comparateur comparateur, QS
     return condition;
 }
 
-Condition* Noeud::AjouterConditionProba( double proba)
+Condition* Noeud::AjouterConditionProbaPure( double proba)
 {
-    Condition* conditionProba = new Condition( proba );
+    Condition* conditionProba = new Condition( proba, p_Pure );
 
     m_Conditions.append(conditionProba);
 
     return conditionProba;
 }
+
+Condition* Noeud::AjouterConditionProbaRelative(double proba)
+{
+    Condition* conditionProba = new Condition( proba, p_Relative );
+
+    m_Conditions.append(conditionProba);
+
+    return conditionProba;
+}
+
 Noeud::~Noeud()
 {
     while (!m_Conditions.isEmpty())

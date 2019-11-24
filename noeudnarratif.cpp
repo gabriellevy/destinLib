@@ -174,7 +174,7 @@ void NoeudNarratif::ChargerConditionsBdd()
                        query.value("m_Valeur").toString());
        } else {
             // condition à base de proba
-           cond = this->AjouterConditionProba(proba);
+           cond = this->AjouterConditionProbaPure(proba); // TODO : faux
            cond->m_CaracId = query.value("m_CaracId").toString();
            cond->m_Comparateur = comparateur;
            cond->m_Valeur = query.value("m_Valeur").toString();

@@ -8,19 +8,13 @@
 #include <random>
 
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
-{
-
-}
+{}
 
 Condition::Condition(QString caracId, QString valeur, Comparateur comparateur):m_CaracId(caracId), m_Valeur(valeur), m_Comparateur(comparateur)
-{
+{}
 
-}
-
-Condition::Condition(double proba):m_Proba(proba)
-{
-
-}
+Condition::Condition(double proba, TypeProba typeProba):m_TypeProba(typeProba), m_Proba(proba)
+{}
 
 double Condition::CalculerProbaFinale()
 {
@@ -115,21 +109,29 @@ bool Condition::Tester()
         break;
     }
 
-    // une condition doit soit reposer sur les proba soit sur une valeur fixe
-    float val =static_cast<float>(m_Proba)  + 1.0f;
-    if ( retour && (qFabs(val) > 0.00001) )
-    //if ( fabs(m_Proba + 1) <= 0.0001)
+    // seules les probas pures sont utilisées comme testeuses d'exécution :
+    if ( m_TypeProba == TypeProba::p_Pure)
     {
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::default_random_engine generator(seed);
-        std::uniform_int_distribution<int> distribution(0, 1000);
+        double val = m_Proba  + 1.0;
+        if ( retour && (qFabs(val) > 0.00001) )
+        //if ( fabs(m_Proba + 1) <= 0.0001)
+        {
+            long long seed = std::chrono::system_clock::now().time_since_epoch().count();
+            std::default_random_engine generator(seed);
+            std::uniform_int_distribution<int> distribution(0, 1000);
 
-        double resProba = (double(distribution(generator)))/1000;
+            double resProba = (double(distribution(generator)))/1000;
 
-        retour = resProba <= CalculerProbaFinale();
+            retour = resProba <= CalculerProbaFinale();
+        }
     }
 
     return retour;
+}
+
+bool Condition::IsProbaPure()
+{
+    return m_TypeProba == p_Pure;
 }
 
 void Condition::ChargerModifProbaBdd()

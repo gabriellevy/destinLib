@@ -30,7 +30,7 @@ public:
     * note : les conditions classiques, qu'elles soient de proba ou pas, sont à mettre sur le noeud lui même, pas dans le poids associé
     * */
     QList<NoeudProbable*> m_NoeudsProbables = {};
-    Noeud* DeterminerEvtSuivant();
+    Noeud* DeterminerNoeudSuivant();
 
     // liste utilisées pour faciliter les chargements depuis la bdd
     static QList<SelectionneurDeNoeud*> s_TousLesSelectionneurs;

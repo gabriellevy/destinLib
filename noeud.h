@@ -81,7 +81,8 @@ public:
     SetCarac* AjouterChangeurDeCarac(QString id, QString valeur);
     SetCarac* AjouterSetCaracTrue(QString id);
     Condition* AjouterCondition( QString caracId, Comparateur comparateur, QString valeur);
-    Condition* AjouterConditionProba( double proba);
+    Condition* AjouterConditionProbaPure( double proba);
+    Condition* AjouterConditionProbaRelative( double proba);
     //Noeud* AjouterElse(QString text = "");
 
     // function qui sera exécutée lors de l'exécution de ce noeud
