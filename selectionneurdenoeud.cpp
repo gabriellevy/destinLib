@@ -44,7 +44,7 @@ Noeud* SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerN
     }
 
 
-    //2. si aucun proba ure n'est trouvée, on cherche parmi les probas relatives
+    //2. si aucun proba pure n'est trouvée, on cherche parmi les probas relatives
     // (et tant qu'il y en a au moins une il y aura bien un noeud sélectionné)
     QList<NoeudProbable*> noeudsPossibles;
     double totalDesProbas = 0;
@@ -64,7 +64,7 @@ Noeud* SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerN
         }
     }
 
-    QString txt = "Aucun evt trouvé dans le sélectionneur d'événement ";
+    QString txt = "Aucun evt trouvé dans le sélectionneur d'événement : " + this->m_Intitule;
     Q_ASSERT_X(  noeudsPossibles.size() > 0,
                  "DeterminerEvtAleatoire",
                  txt.toStdString().c_str() );
