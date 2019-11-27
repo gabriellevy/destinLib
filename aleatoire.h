@@ -25,6 +25,8 @@ public:
     int EntierInferieurA(int A);
 
     int D6();
+
+    double Entre0Et1();
 };
 
 #endif // ALEATOIRE_H

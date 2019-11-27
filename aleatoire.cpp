@@ -14,6 +14,13 @@ Aleatoire::Aleatoire()
 }
 
 
+double Aleatoire::Entre0Et1()
+{
+    double val = static_cast<double>(m_Distribution(m_Generateur)) / static_cast<double>(std::numeric_limits<int>::max());
+
+    return val;
+}
+
 
 Aleatoire* Aleatoire::GetAl()
 {
