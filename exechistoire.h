@@ -88,6 +88,8 @@ public:
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
+    static Effet* GetEffetActuel();
+
 private:
     Ui::Histoire *ui;
 };
