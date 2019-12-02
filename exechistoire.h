@@ -63,7 +63,7 @@ public:
      * @return événement actuellement exécuté par le joueur
      */
     ExecEvt* GetExecEvtActuel(bool forceHistoireMode = false);
-    ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
+    static ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
     ExecLancerDe* GetExecLancerDeActuel();
     Evt* EvtActuel(bool forceHistoireMode = false);
     Effet* EffetActuel(bool forceHistoireMode = false);

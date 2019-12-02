@@ -189,7 +189,7 @@ ExecLancerDe* ExecHistoire::GetExecLancerDeActuel()
 
 ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
 {
-    return this->m_ExecEvtActuel->GetExecEffetActuel();
+    return Univers::ME->GetExecHistoire()->m_ExecEvtActuel->GetExecEffetActuel();
     /*if ( this->m_ExecEvtActuel->m_ExecEffetActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
     {
         return static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
