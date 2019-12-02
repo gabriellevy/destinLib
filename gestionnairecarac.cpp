@@ -87,6 +87,13 @@ void GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valM
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
+void GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
+{
+    Carac* carac = new Carac(idCarac, idCarac, valeur,
+                             "", idCarac, MODE_AFFICHAGE::ma_Texte);
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+}
+
 int GestionnaireCarac::GetCaracValueAsInt(QString id)
 {
     return GestionnaireCarac::GetCaracValue(id).toInt();
@@ -216,4 +223,66 @@ void MultiSetterDeCarac::Appliquer()
     for (int i = 0 ; i < this->m_SetCaracs.length() ; ++i ) {
         GestionnaireCarac::AppliquerSetCarac(*m_SetCaracs[i]);
     }
+}
+
+void DPerso::AppliquerSetCarac(const SetCarac& setCarac)
+{
+    ExecutionPreChangeCarac();
+    GestionnaireCarac::AppliquerSetCarac(setCarac);
+    ExecutionPostChangeCarac();
+}
+
+int DPerso::AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee)
+{
+    ExecutionPreChangeCarac();
+    int res = GestionnaireCarac::AJouterValeurACaracId(idCarac, valeurAjoutee);
+    ExecutionPostChangeCarac();
+    return res;
+}
+
+void DPerso::ExecutionPostChangeCarac()
+{
+
+}
+
+void DPerso::ExecutionPreChangeCarac()
+{
+
+}
+
+int DPerso::RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree)
+{
+    ExecutionPreChangeCarac();
+    int res = GestionnaireCarac::RetirerValeurACaracId(idCarac, valeurRetiree);
+    ExecutionPostChangeCarac();
+    return res;
+}
+
+QString DPerso::SetValeurACaracId(const QString& idCarac,const  QString& valeurSet)
+{
+    ExecutionPreChangeCarac();
+    QString res = GestionnaireCarac::SetValeurACaracId(idCarac, valeurSet);
+    ExecutionPostChangeCarac();
+    return res;
+}
+
+QString DPerso::SetValeurACaracId(const QString& idCarac,const int& valeurSet)
+{
+    ExecutionPreChangeCarac();
+    QString res = GestionnaireCarac::SetValeurACaracId(idCarac, valeurSet);
+    ExecutionPostChangeCarac();
+    return res;
+}
+
+QString DPerso::EffacerValeurACaracId(const QString& idCarac)
+{
+    ExecutionPreChangeCarac();
+    QString res = GestionnaireCarac::EffacerValeurACaracId(idCarac);
+    ExecutionPostChangeCarac();
+    return res;
+}
+
+bool DPerso::IsCaracTrue(QString id)
+{
+    return GestionnaireCarac::IsCaracTrue(id);
 }

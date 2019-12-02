@@ -90,6 +90,9 @@ NoeudNarratif::~NoeudNarratif()
 
 QString NoeudNarratif::TexteAAfficher()
 {
+    if ( m_Texte == "" )
+        return "";
+
     QString texteFinal = "";
 
     QStringList list = m_Texte.split("%%%");

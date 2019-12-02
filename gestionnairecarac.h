@@ -26,6 +26,7 @@ public:
  * @brief DPerso signifie "data perso". C'est un contenant des caracs principales d'un personnage
  * C'est essentiellement utile pour gérer le changement de personnage en cours d'aventure et rendre plus intuitif l'initialisation
  * d'un personnage mais techniquement ce n'est qu'un intermédiaire avec le Gestionnaire de Carac
+ * L 'avantage est qu'on peut le surclasser pour contrôler les getter et setter de caracs en overloadant les foncitons correspondantes
  */
 class DPerso : public MultiSetterDeCarac
 {
@@ -52,6 +53,17 @@ public:
     virtual QString GetValeurCarac(QString id);
     virtual int GetValeurCaracAsInt(QString id);
 
+
+    virtual void ExecutionPostChangeCarac(); //  fonction à surclasser pour effectuer des actions après une maj de carac
+    virtual void ExecutionPreChangeCarac(); //  fonction à surclasser pour effectuer des actions avant une maj de carac
+    void AppliquerSetCarac(const SetCarac& setCarac);
+    int AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee);
+    int RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree);
+    QString SetValeurACaracId(const QString& idCarac,const  QString& valeurSet);
+    QString SetValeurACaracId(const QString& idCarac,const int& valeurSet);
+    QString EffacerValeurACaracId(const QString& idCarac);
+    bool IsCaracTrue(QString id);
+
     friend class IPerso;
 };
 
@@ -65,13 +77,6 @@ private:
     QMap<QString, Carac*> m_Caracs;
     static QString GetCaracValue(QString id);
     static int GetCaracValueAsInt(QString id);
-
-public:
-
-    Carac* GetCarac(QString idCarac);
-
-    // focntions raccourcis de convénience :
-    static GestionnaireCarac* GetGestionnaireCarac();
     static void AppliquerSetCarac(const SetCarac& setCarac);
     static int AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee);
     static int RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree);
@@ -81,11 +86,13 @@ public:
     static bool IsCaracTrue(QString id); // retourne true si cette carac est possédée par le personnage cad différente de null ou 0
     bool CetteCaracExisteDeja(QString id);
     void AppliquerCarac(SetCarac setCarac);
-    void AjouterCarac(Carac* carac);
-    /**
-     * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
-     */
-    void AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
+
+public:
+
+    Carac* GetCarac(QString idCarac);
+
+    // focntions raccourcis de convénience :
+    static GestionnaireCarac* GetGestionnaireCarac();
 
     QMap<QString, Carac*> GetCaracs();
 
@@ -94,7 +101,16 @@ public:
     static QString CARAC_DESCRIPTION;
     static QString CARAC_CHEMIN_PORTRAIT;
 
+    // fonctions d'ajouts de caracs à l'aventure (essentiellement utile pour les paramétrer et déterminer sous quelle forme elles sont affichées)
+    void AjouterCarac(Carac* carac);
+    /**
+     * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
+     */
+    void AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
+    void AjouterCaracString(QString idCarac, QString valeur = "");
+
     friend class DPerso;
+    friend class MultiSetterDeCarac;
 };
 
 #endif // GESTIONNAIRECARAC_H

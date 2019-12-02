@@ -46,3 +46,10 @@ int Aleatoire::D6()
 {
     return EntierEntreAEtB(1, 7);
 }
+
+int Aleatoire::GetIndexSelonPoids(QList<double> poids)
+{
+    // à afire un jour ! mais peut être avec une fonction de calcul de poids en param et un Template T
+    return -1;
+
+}

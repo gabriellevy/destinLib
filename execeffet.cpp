@@ -257,10 +257,9 @@ void ExecEffet::ChargerImage(QString chemin)
 
 void ExecEffet::valeurGlisseurAChange()
 {
-    SetCarac setCarac(ModifCaracType::SetCarac,
-                      GetEffet()->m_Glisseur->m_IdCaracAssociee,
-                      QString::number(ui->glisseur->value()));
-    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(setCarac);
+    IPerso::GetPersoCourant()->SetValeurACaracId(
+                GetEffet()->m_Glisseur->m_IdCaracAssociee,
+                QString::number(ui->glisseur->value()));
 }
 
 

@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <random>
+#include <QList>
 
 class Aleatoire
 {
@@ -27,6 +28,7 @@ public:
     int D6();
 
     double Entre0Et1();
+    int GetIndexSelonPoids(QList<double> poids);
 };
 
 #endif // ALEATOIRE_H

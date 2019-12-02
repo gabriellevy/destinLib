@@ -6,9 +6,7 @@
 #include "execchoix.h"
 
 ExecNoeud::ExecNoeud(NoeudNarratif* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
-{
-
-}
+{}
 
 /*ExecNoeud::~ExecNoeud()
 {
@@ -80,7 +78,7 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
         IPerso* perso = Univers::ME->GetPersoInterface();
         for ( int i = 0 ; i < noeudAExecuter->m_SetCaracs.size() ; ++i)
         {
-            GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(*noeudAExecuter->m_SetCaracs[i] );
+            IPerso::GetPersoCourant()->AppliquerSetCarac(*noeudAExecuter->m_SetCaracs[i] );
         }
         perso->RafraichirAffichage();
     }
