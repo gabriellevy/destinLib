@@ -55,7 +55,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="AspectRatioLabel" name="imageCarac">
+           <widget class="QLabel" name="imageCarac">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -108,13 +108,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>AspectRatioLabel</class>
-   <extends>QLabel</extends>
-   <header>aspectratiolabel.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

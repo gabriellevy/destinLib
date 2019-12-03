@@ -51,7 +51,7 @@
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="AspectRatioLabel" name="imageLabel">
+      <widget class="QLabel" name="imageLabel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -186,13 +186,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>AspectRatioLabel</class>
-   <extends>QLabel</extends>
-   <header>aspectratiolabel.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
