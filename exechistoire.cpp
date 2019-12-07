@@ -449,7 +449,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
         afficheNoeud = true;
 
     // on fait le test de condition une seule fois juste avant d'effectuer les effets :
-    while ( !this->m_ExecNoeudActuel->m_Noeud->TesterConditions())
+    if ( !this->m_ExecNoeudActuel->m_Noeud->TesterConditions())
     {
         afficheNoeud = false; // de toute façon le noeud actuel n'est pas lançable : on doit passer au suivant
     }

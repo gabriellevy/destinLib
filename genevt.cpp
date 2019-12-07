@@ -81,6 +81,13 @@ Effet* GenEvt::AjouterEffetVide(Evt* evtDest, QString id)
 {
     if ( evtDest == nullptr)
         evtDest = m_DernierEvtGenere;
+
+    if ( id != "" ) {
+        QString msg = "Cet id d'effet est déjà présent dans cet événement : " + id + ".";
+        Q_ASSERT_X(evtDest->TrouverEffet(id) == nullptr,
+                   msg.toStdString().c_str(),
+                   "GenEvt::AjouterEffetVide");
+    }
     Effet* effet = new Effet(evtDest, id);
 
     return AjouterEffet(effet, evtDest);
