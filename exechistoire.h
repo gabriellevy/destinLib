@@ -16,6 +16,17 @@ namespace Ui {
 class Histoire;
 }
 
+struct Historique {
+    QList<QString> m_Textes;
+    QString GetHistoriqueTotalAsStr() {
+        QString final = "";
+        for ( int i = m_Textes.length()-1 ; i >-1 ; --i) {
+            final += m_Textes[i] + "\n ---- \n";
+        }
+        return final;
+    }
+};
+
 /**
  * @brief Classe qui gère le déroulement et l'affichage de toute l'histoire du jeu
  */
@@ -46,6 +57,7 @@ public:
     ~ExecHistoire();
 
     Hist* m_Histoire;
+    Historique m_Historique;
 
     virtual QString GetTitre();
     //Evt* m_CurrentEvt = nullptr;

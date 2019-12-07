@@ -569,6 +569,12 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
             m_DernierEffetAffiche = effet;
         }
     }
+
+    // en mode automatique on rafraîchit toujours tout :
+    if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement == ModeDeroulement::Automatique ) {
+        evtChangement = effetChangement = true;
+    }
+
     if ( evtChangement )
     {
         //this->SetExecEvtActuel(evt);

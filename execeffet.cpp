@@ -155,12 +155,20 @@ void ExecEffet::AfficherNoeud()
     }
 
     // affichage du texte
+    QString prevTexte = ui->texteEffet->text();
     ui->texteEffet->hide();
     if ( GetEffet()->TexteAAfficher() != "")
     {
         ui->texteEffet->show();
         ui->texteEffet->setFont( *Univers::BASE_FONT);
-        ui->texteEffet->setText(GetEffet()->TexteAAfficher());
+        if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement == ModeDeroulement::Automatique ) {
+            Univers::ME->GetExecHistoire()->m_Historique.m_Textes.push_back(GetEffet()->TexteAAfficher());
+            ui->texteEffet->setText(
+                        Univers::ME->GetExecHistoire()->m_Historique.GetHistoriqueTotalAsStr());
+        }
+        else {
+            ui->texteEffet->setText(GetEffet()->TexteAAfficher());
+        }
         ui->texteEffet->setWordWrap(true);
     }
 
@@ -182,16 +190,21 @@ void ExecEffet::AfficherNoeud()
         }
 
         // réduction de l'image à la taille de la fenêtre si elle est plus large :
-        int largeurImg = this->width() - 25; //25 pixels environ à cause de la barre de défilement à droite...
+        /*int largeurImg = this->width() - 25; //25 pixels environ à cause de la barre de défilement à droite...
         if ( (afficheImg &&  m_Img.width() > largeurImg)
            || (afficheFilm &&  m_Film->scaledSize().width() > largeurImg) )
         {
             int w = largeurImg;
             int h = ui->imageLabel->heightForWidth(w);
             QSize AdjustSize = QSize(w, h);
-            ui->imageLabel->setMinimumSize(AdjustSize);
-            ui->imageLabel->setMaximumSize(AdjustSize);
-        }
+            if ( w != -1 && h != -1 ) {
+                ui->imageLabel->setMinimumSize(AdjustSize);
+                ui->imageLabel->setMaximumSize(AdjustSize);
+            }
+            else {
+
+            }
+        }*/
     }
 
     // affichage du lancement de dé
