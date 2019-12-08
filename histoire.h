@@ -9,11 +9,17 @@
 
 enum ModeDeroulement : int {
     Aucun,
-    Normal,
+    Normal, // un bouton à cliquer pour apsser à l'effet suivant
     // les effets défilent selon la valeur m_MsDuree qui leur est affectée (il faudrait leur en affecter une de base ?)
     // les boutons sont cachés
-    Automatique ,
-    Fini // plus de défilement ni de boutons
+    Automatique
+};
+
+enum PhaseDeroulement : int {
+    epd_Aucun,
+    epd_Construction,
+    epd_Deroulement,
+    epd_Fini // plus de défilement ni de boutons
 };
 
 /**
@@ -32,6 +38,7 @@ public:
     QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
 
     ModeDeroulement m_ModeDeroulement = Normal;
+    PhaseDeroulement m_PhaseDeroulement = epd_Aucun;
     int m_MsDureeDefilement = -1; // utilisé seulement en mode de déroulement automatique
 
     /**

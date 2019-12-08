@@ -8,6 +8,7 @@
 Noeud::Noeud():m_TypeNoeud(TypeNoeud::etn_Noeud)
 {
     m_ChangeurModeDeroulement = ModeDeroulement::Aucun;
+    m_ChangeurPhaseDeroulement = PhaseDeroulement::epd_Aucun;
 }
 
 Noeud::Noeud(QString id):Noeud()

@@ -385,7 +385,7 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 
 ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)
 {
-    if ( m_Histoire->m_ModeDeroulement == ModeDeroulement::Fini)
+    if ( m_Histoire->m_PhaseDeroulement == PhaseDeroulement::epd_Fini)
         return nullptr;
 
     Noeud* noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud;

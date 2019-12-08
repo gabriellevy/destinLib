@@ -34,6 +34,9 @@ void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, 
     if ( noeudAExecuter->m_ChangeurModeDeroulement != ModeDeroulement::Aucun) {
         Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement = noeudAExecuter->m_ChangeurModeDeroulement;
     }
+    if ( noeudAExecuter->m_ChangeurPhaseDeroulement != PhaseDeroulement::epd_Aucun) {
+        Univers::ME->GetExecHistoire()->m_Histoire->m_PhaseDeroulement = noeudAExecuter->m_ChangeurPhaseDeroulement;
+    }
 
     // si il y un champs de temps, il s'écoule :
     // pour le noeud courant

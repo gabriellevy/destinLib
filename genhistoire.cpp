@@ -20,6 +20,10 @@ GenHistoire::~GenHistoire()
 {
 }
 
+Hist* GenHistoire::GenererHistoire()
+{
+    m_HistoireGeneree->m_PhaseDeroulement = PhaseDeroulement::epd_Construction;
+}
 
 EvtAleatoire* GenHistoire::AjouterEvtAleatoire(QString id, QString nom)
 {

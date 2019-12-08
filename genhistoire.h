@@ -27,7 +27,7 @@ public:
 
     GenEvt* m_GenerateurEvt = nullptr;
     Hist* m_HistoireGeneree = nullptr;
-    virtual Hist* GenererHistoire() = 0;
+    virtual Hist* GenererHistoire();
     virtual void FinGenerationHistoire();
     virtual void GenererPersos() = 0;
     virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête

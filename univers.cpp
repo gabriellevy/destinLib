@@ -66,6 +66,7 @@ void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString p
         this->GetExecHistoire()->GetExecEvtActuel()->SetExecEffet(premierEffet);
     }
 
+    m_Histoire->m_PhaseDeroulement = PhaseDeroulement::epd_Deroulement;
     LancerEvtEtOuEffetCourant();
     //DeclencherEffetSuivant();
     //this->m_ExecHistoire->GetExecEvtActuel();
