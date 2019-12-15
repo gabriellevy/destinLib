@@ -70,9 +70,11 @@ public:
     QPixmap m_Img;
     void SetImg(QString CheminImg);
 
-private:
+protected :
     Ui::Carac *ui;
-    bool AfficherValeur();
+
+private:
+    virtual bool AfficherValeur();
     bool AfficherImage();
     bool AfficherIntitule();
 };
