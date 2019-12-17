@@ -33,7 +33,7 @@ int Aleatoire::EntierEntreAEtB(int A, int B)
 {
     if ( (B-A) <= 0)
         return 0;
-    return A + ( m_Distribution(m_Generateur) ) % (B-A);
+    return A + ( m_Distribution(m_Generateur) ) % (B-A + 1);
 }
 
 int Aleatoire::EntierInferieurA(int A)
