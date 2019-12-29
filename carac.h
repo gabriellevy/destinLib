@@ -13,9 +13,10 @@ enum MODE_AFFICHAGE {
     //ta_Deduit, // pas précisé dans le json donc déduit des autres caractéristiques (cf code)
     ma_Binaire, // seul l'intitulé est affiché si la carac n'est pas égale à 0 ou ""
     ma_Img, // image seulement (et infobulle si il y a une description)
-    ma_ImgValeur, // image seulement (et infobulle si il y a une description) mais l'adresse de l'mage est dans la valeur
+    ma_ImgValeur, // image seulement (et infobulle si il y a une description) mais l'adresse de l'image est dans la valeur
     ma_Texte, // mode par défaut
     ma_Nombre,
+    ma_NombreSupZero, // affiché comme nombre amis seulement si la valeur est supérieure à 0
     ma_Jauge // sous forme de jauge => possible seulement si on a défini une valeur maximum de cette valeur
 };
 

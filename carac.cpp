@@ -153,7 +153,13 @@ void Carac::Afficher()
             }
 
         }break;
+        case MODE_AFFICHAGE::ma_NombreSupZero:
         case MODE_AFFICHAGE::ma_Nombre:{
+        if ( m_ModeAffichage == ma_NombreSupZero && m_DataCarac.GetValeurInt() <= 0) {
+            ui->caracBox->hide();
+            return ;
+        }
+
         if (AfficherIntitule())
         {
             AfficherValeur();

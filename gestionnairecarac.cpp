@@ -79,19 +79,21 @@ void GestionnaireCarac::AjouterCarac(Carac* carac)
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
-void GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
+Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
 {
     Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
                              "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
                              QString::number(valMin), QString::number(valMax));
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    return carac;
 }
 
-void GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
+Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    return carac;
 }
 
 int GestionnaireCarac::GetCaracValueAsInt(QString id)
