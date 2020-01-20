@@ -47,11 +47,6 @@ SOURCES += \
     choix.cpp \
     condition.cpp \
     glisseur.cpp \
-    tyranides.cpp \
-    genestealer.cpp \
-    cultegenestealer.cpp \
-    reinenorne.cpp \
-    invasionkraken.cpp \
     reglages.cpp \
     theme.cpp \
     univers.cpp \
@@ -84,11 +79,6 @@ HEADERS += \
     choix.h \
     condition.h \
     glisseur.h \
-    tyranides.h \
-    genestealer.h \
-    cultegenestealer.h \
-    reinenorne.h \
-    invasionkraken.h \
     reglages.h \
     theme.h \
     univers.h \
@@ -115,8 +105,7 @@ FORMS += \
 #INCLUDEPATH += $$PWD/../build-DestinDesigner-Desktop_Qt_5_9_3_MSVC2017_64bit-Debug/debug
 #DEPENDPATH += $$PWD/../build-DestinDesigner-Desktop_Qt_5_9_3_MSVC2017_64bit-Debug/debug
 
-RESOURCES += \
-    tyranides.qrc
+RESOURCES +=
 
 DISTFILES += \
     Aventures/Warhammer 40000/Tyranides/EspritDeLaRuche.jpg \
