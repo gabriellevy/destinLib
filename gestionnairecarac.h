@@ -64,6 +64,8 @@ public:
     QString EffacerValeurACaracId(const QString& idCarac);
     bool IsCaracTrue(QString id);
 
+    static DPerso* GetDPersoJoue();
+
     friend class IPerso;
 };
 

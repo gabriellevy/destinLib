@@ -172,6 +172,12 @@ void DPerso::MajNom(QString nouveauNom)
     }
 }
 
+
+DPerso* DPerso::GetDPersoJoue()
+{
+    return Univers::ME->GetPersoInterface()->GetPersoCourant();
+}
+
 void DPerso::MajCheminImage(QString chemin)
 {
     for (int i = 0 ; i < this->m_SetCaracs.length() ; ++i ) {
