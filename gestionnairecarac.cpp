@@ -1,7 +1,7 @@
 #include "gestionnairecarac.h"
 
-#include "univers.h"
-#include "setcarac.h"
+#include "abs/univers.h"
+#include "abs/setcarac.h"
 
 GestionnaireCarac::GestionnaireCarac()
 {

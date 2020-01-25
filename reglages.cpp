@@ -1,7 +1,7 @@
 #include "reglages.h"
-#include "univers.h"
-#include "execeffet.h"
-#include "execevt.h"
+#include "abs/univers.h"
+#include "exec/execeffet.h"
+#include "exec/execevt.h"
 
 Reglages::Reglages()
 {

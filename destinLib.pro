@@ -22,81 +22,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+include(gen/gen.pri)
+include(abs/abs.pri)
+include(exec/exec.pri)
 
 SOURCES += \
-    execchoix.cpp \
-    execeffet.cpp \
-    execevt.cpp \
-    execnoeud.cpp \
-    genevt.cpp \
-    genhistoirebdd.cpp \
     gestionnairecarac.cpp \
-    lancerde.cpp \
-    lancerde.cpp \
-        main.cpp \
-    noeudnarratif.cpp \
-    perso.cpp \
-    carac.cpp \
+    main.cpp \
     aspectratiolabel.cpp \
     dbmanager.cpp \
-    evt.cpp \
-    evtaleatoire.cpp \
-    effet.cpp \
-    noeud.cpp \
-    setcarac.cpp \
-    choix.cpp \
-    condition.cpp \
     glisseur.cpp \
     reglages.cpp \
-    theme.cpp \
-    univers.cpp \
-    selectionneurdevenement.cpp \
-    genhistoire.cpp \
-    exechistoire.cpp \
-    aleatoire.cpp \
-    histoire.cpp
+    aleatoire.cpp
 
 HEADERS += \
-    execchoix.h \
-    execeffet.h \
-    execevt.h \
-    execnoeud.h \
-    genevt.h \
-    genhistoirebdd.h \
     gestionnairecarac.h \
-    lancerde.h \
-    lancerde.h \
-    noeudnarratif.h \
-    perso.h \
-    carac.h \
     aspectratiolabel.h \
     dbmanager.h \
-    evt.h \
-    evtaleatoire.h \
-    effet.h \
-    noeud.h \
-    setcarac.h \
-    choix.h \
-    condition.h \
     glisseur.h \
     reglages.h \
-    theme.h \
-    univers.h \
-    selectionneurdevenement.h \
-    genhistoire.h \
-    exechistoire.h \
-    aleatoire.h \
-    histoire.h
-
-FORMS += \
-    lancerde.ui \
-    univers.ui \
-    perso.ui \
-    histoire.ui \
-    carac.ui \
-    evt.ui \
-    effet.ui \
-    choix.ui
+    aleatoire.h
 
 #win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-DestinDesigner-Desktop_Qt_5_9_3_MSVC2017_64bit-Debug/release/ -ldestinwidgetsplugind
 #else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-DestinDesigner-Desktop_Qt_5_9_3_MSVC2017_64bit-Debug/debug/ -ldestinwidgetsplugind
@@ -105,31 +50,3 @@ FORMS += \
 #INCLUDEPATH += $$PWD/../build-DestinDesigner-Desktop_Qt_5_9_3_MSVC2017_64bit-Debug/debug
 #DEPENDPATH += $$PWD/../build-DestinDesigner-Desktop_Qt_5_9_3_MSVC2017_64bit-Debug/debug
 
-RESOURCES +=
-
-DISTFILES += \
-    Aventures/Warhammer 40000/Tyranides/EspritDeLaRuche.jpg \
-    Aventures/Warhammer 40000/Tyranides/genestealer_attaque.jpg \
-    Aventures/Warhammer 40000/Tyranides/Genestealers_atterissage.jpg \
-    Aventures/Warhammer 40000/Tyranides/GenestealerSpaceHulk.jpg \
-    Aventures/Warhammer 40000/Tyranides/icone_logements_détruits.jpg \
-    Aventures/Warhammer 40000/Tyranides/Incursions_Tyranides.jpg \
-    Aventures/Warhammer 40000/Tyranides/logements_détruits.jpg \
-    Aventures/Warhammer 40000/Tyranides/MagusPortrait.jpg \
-    Aventures/Warhammer 40000/Tyranides/Patriarche.jpg \
-    Aventures/Warhammer 40000/Tyranides/PrimusPortrait.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteCitoyen.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteCultiste.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteGenestealer.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteHybride1.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteHybride2.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteHybride3.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteHybride4.jpg \
-    Aventures/Warhammer 40000/Tyranides/TeteInséminé.jpg \
-    Aventures/Warhammer 40000/Tyranides/ruche_lamos.png \
-    Aventures/Warhammer 40000/Tyranides/TeteCitoyen.jpg \
-    Aventures/Warhammer 40000/Tyranides/entrepot.jpg \
-    Aventures/Warhammer 40000/Tyranides/ichar4.jpg \
-    Aventures/Warhammer 40000/Tyranides/larnarno.jpg \
-    Aventures/Warhammer 40000/Tyranides/Miral.jpg \
-    Aventures/Warhammer 40000/Tyranides/Salem.jpg

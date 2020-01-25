@@ -1,7 +1,7 @@
 #ifndef GESTIONNAIRECARAC_H
 #define GESTIONNAIRECARAC_H
 
-#include "carac.h"
+#include "abs/carac.h"
 #include <QString>
 #include <QMap>
 
