@@ -17,6 +17,11 @@ void GenHistoireBdd::ChargerBDD(QString cheminBDD)
     }
 }
 
+GenHistoireBdd::~GenHistoireBdd()
+{
+
+}
+
 void GenHistoireBdd::ChargerEvtsBdd()
 {
     QSqlQuery query("SELECT * FROM d_Evt");

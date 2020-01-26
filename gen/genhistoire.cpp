@@ -18,6 +18,9 @@ GenHistoire* GenHistoire::GetGenHistoire()
 
 GenHistoire::~GenHistoire()
 {
+    if ( m_GenerateurEvt != nullptr)
+        delete m_GenerateurEvt;
+    m_GenerateurEvt= nullptr;
 }
 
 Hist* GenHistoire::GenererHistoire()
@@ -44,7 +47,7 @@ Evt* GenHistoire::AjouterEvt(QString id, QString nom)
 
 void GenHistoire::FinGenerationHistoire()
 {
-    delete m_GenerateurEvt;
+
 }
 
 /**

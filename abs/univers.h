@@ -65,6 +65,8 @@ public:
     // cette fonction m'a l'air hautement dispensable => à virer si je me décide à remettre au propre le déroulement des actions
     bool LancerEvtEtOuEffetCourant();
 
+    void NettoyageGenerateurs();
+
     const static QFont* BASE_FONT;
     const static QFont* TITRE_FONT;
     static QString CHEMIN;

@@ -74,11 +74,22 @@ void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString p
 
 
 
+void Univers::NettoyageGenerateurs()
+{
+    QHash<QString, GenHistoire*>::iterator i = m_GensHistoire.begin();
+    while (i != m_GensHistoire.end()) {
+        i = m_GensHistoire.erase(i);
+    }
+}
+
 Hist* Univers::GenererUneHistoire(QString histoireId)
 {
     Q_ASSERT_X(m_GensHistoire.contains(histoireId), "Impossible de générer l'histoire 'histoireId' !!", "Univers::GenererUneHistoire");
 
     m_Histoire = m_GensHistoire[histoireId]->GenererHistoire();
+
+    // on considère qu'un instance du jeu ne lancera jamais plus d'un type d'histoire et donc on supprime les générateurs quand une est générée
+    NettoyageGenerateurs();
 
     return m_Histoire;
 }

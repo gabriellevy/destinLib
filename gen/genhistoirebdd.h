@@ -13,6 +13,7 @@ protected:
 
 public:
     GenHistoireBdd(QString titre);
+    virtual ~GenHistoireBdd();
 
     DbManager m_Db;
 
