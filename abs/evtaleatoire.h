@@ -14,13 +14,14 @@
 class EvtAleatoire : public Evt
 {
 protected:
+
+public:
     explicit EvtAleatoire(QString id,
                       QString nom);
 
-public:
     virtual ~EvtAleatoire() {}
 
-    Effet* DeterminerEffetAleatoire();
+    std::shared_ptr<Effet> DeterminerEffetAleatoire();
 
     friend class GenEvt;
 };

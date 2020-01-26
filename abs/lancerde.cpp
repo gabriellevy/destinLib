@@ -1,6 +1,6 @@
 #include "lancerde.h"
 
-LancerDe::LancerDe(Effet* ParentEffet, QString texteBouton, int nbDes,
+LancerDe::LancerDe(std::shared_ptr<Effet> ParentEffet, QString texteBouton, int nbDes,
     std::function<ResExecutionLancerDe*(int resDe/*, QVector<QString> params*/)> callback) :
     NoeudNarratif("", "", texteBouton),
     m_ParentEffet(ParentEffet),

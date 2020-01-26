@@ -2,6 +2,7 @@
 #define EXECHISTOIRE_H
 
 #include "../abs/perso.h"
+#include <memory>
 
 class ExecNoeud;
 class ExecEffet;
@@ -36,11 +37,11 @@ class ExecHistoire : public QWidget
 
 protected:
 
-    Evt* m_DernierEvtAffiche = nullptr;
-    Effet* m_DernierEffetAffiche = nullptr;
+    std::shared_ptr<Evt> m_DernierEvtAffiche = nullptr;
+    std::shared_ptr<Effet> m_DernierEffetAffiche = nullptr;
 
     int DeterminerIndexEvt(QString idEvt);
-    int CalculerIndex(Evt* evtATrouver);
+    int CalculerIndex(std::shared_ptr<Evt> evtATrouver);
 
     // repérage d'événement courant et effet courant en mode histoire normal
     //QString m_CurrentEvtId;
@@ -77,30 +78,30 @@ public:
     ExecEvt* GetExecEvtActuel(bool forceHistoireMode = false);
     static ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
     ExecLancerDe* GetExecLancerDeActuel();
-    Evt* EvtActuel(bool forceHistoireMode = false);
-    Effet* EffetActuel(bool forceHistoireMode = false);
-    ExecEvt* SetExecEvtActuel(Evt* evt);
+    std::shared_ptr<Evt> EvtActuel(bool forceHistoireMode = false);
+    std::shared_ptr<Effet> EffetActuel(bool forceHistoireMode = false);
+    ExecEvt* SetExecEvtActuel(std::shared_ptr<Evt> evt);
 
     ExecNoeud* DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel = nullptr, bool noeudActuelEstValide = true);
-    Noeud* GetEffetDindexSuivant(Noeud* noeudActuel);
-    Noeud* TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel);
+    std::shared_ptr<Noeud> GetEffetDindexSuivant(std::shared_ptr<Noeud> noeudActuel);
+    std::shared_ptr<Noeud> TesterSiEffetEstLancableOuSonElse(std::shared_ptr<Noeud> noeudActuel);
     // si les événements sont issues de la bdd ils ont un id qui permet de les extraire :
-    Evt* GetEvtSelonBddId(int id);
-    Evt* GetEvtSelonId(QString idATrouver);
-    bool AppliquerGoTo(Noeud* noeud);
+    std::shared_ptr<Evt> GetEvtSelonBddId(int id);
+    std::shared_ptr<Evt> GetEvtSelonId(QString idATrouver);
+    bool AppliquerGoTo(std::shared_ptr<Noeud> noeud);
 
-    void RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet);
+    void RafraichirAffichageEvtEtOuEffet(std::shared_ptr<Evt> evt, std::shared_ptr<Effet> effet);
 
     void SetEffetIndex(int index);
     /**
-     * @brief trouve l'événement correspondant aà l'id en paramètre et en fait le noeud actuel
+     * @brief trouve l'événement correspondant à l'id en paramètre et en fait le noeud actuel
      */
     void SetCurrentEvtId(QString);
     void AjouterDureeAEffetHistoireCourant(float duree);
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
-    static Effet* GetEffetActuel();
+    static std::shared_ptr<Effet> GetEffetActuel();
 
 private:
     Ui::Histoire *ui;

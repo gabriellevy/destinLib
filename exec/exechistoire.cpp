@@ -11,6 +11,8 @@
 #include "execeffet.h"
 #include "../gestionnairecarac.h"
 
+using std::shared_ptr;
+
 ExecHistoire::ExecHistoire(Hist* histoire, QWidget *parent) :
     QWidget(parent),
     m_Histoire(histoire),
@@ -51,7 +53,7 @@ ExecHistoire::~ExecHistoire()
     delete ui;
 }
 
-Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
+shared_ptr<Evt> ExecHistoire::GetEvtSelonId(QString idATrouver)
 {
     for ( int i = 0; i < this->m_Histoire->m_Evts.size(); ++i)
     {
@@ -72,7 +74,7 @@ Evt* ExecHistoire::GetEvtSelonId(QString idATrouver)
     return nullptr;
 }
 
-Evt* ExecHistoire::EvtActuel(bool forceHistoireMode)
+std::shared_ptr<Evt> ExecHistoire::EvtActuel(bool forceHistoireMode)
 {
     return this->GetExecEvtActuel(forceHistoireMode)->GetEvt();
 }
@@ -114,21 +116,21 @@ bool ExecHistoire::AppelerFonctionCallback(QString fonction, QVector<QString> ca
 
 void ExecHistoire::SetCurrentEvtId(QString id)
 {
-    for (Evt* evt: this->m_Histoire->m_Evts)
+    for (std::shared_ptr<Evt> evt: this->m_Histoire->m_Evts)
     {
         if ( evt->m_Id == id) {
             this->SetExecEvtActuel(evt);
             return;
         }
     }
-    for (Evt* evt: this->m_Histoire->m_EvtsAleatoires)
+    for (std::shared_ptr<Evt> evt: this->m_Histoire->m_EvtsAleatoires)
     {
         if ( evt->m_Id == id) {
             this->SetExecEvtActuel(evt);
             return;
         }
     }
-    for (Evt* evt: this->m_Histoire->m_EvtsConditionnels)
+    for (std::shared_ptr<Evt> evt: this->m_Histoire->m_EvtsConditionnels)
     {
         if ( evt->m_Id == id) {
             this->SetExecEvtActuel(evt);
@@ -159,10 +161,10 @@ int ExecHistoire::DeterminerIndexEvt(QString idEvt)
     return -1;
 }
 
-int ExecHistoire::CalculerIndex(Evt* evtATrouver)
+int ExecHistoire::CalculerIndex(std::shared_ptr<Evt> evtATrouver)
 {
     int index =0;
-    for ( Evt* evt: this->m_Histoire->m_Evts)
+    for ( std::shared_ptr<Evt> evt: this->m_Histoire->m_Evts)
     {
         if ( evt == evtATrouver)
             return index;
@@ -172,12 +174,12 @@ int ExecHistoire::CalculerIndex(Evt* evtATrouver)
     return -1;
 }
 
-Effet* ExecHistoire::EffetActuel(bool forceHistoireMode)
+std::shared_ptr<Effet> ExecHistoire::EffetActuel(bool forceHistoireMode)
 {
     return this->GetExecEffetActuel(forceHistoireMode)->GetEffet();
 }
 
-Effet* ExecHistoire::GetEffetActuel()
+std::shared_ptr<Effet> ExecHistoire::GetEffetActuel()
 {
     return Univers::ME->GetExecHistoire()->EffetActuel(false);
 }
@@ -247,7 +249,7 @@ ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
 
 void ExecHistoire::SetEffetIndex(int index)
 {
-    Evt* evtActuel = this->EvtActuel();
+    std::shared_ptr<Evt> evtActuel = this->EvtActuel();
     Q_ASSERT_X(index<evtActuel->m_Effets.length(), "index impossible pour cet événement", "Histoire::SetEffetIndex");
     this->m_ExecNoeudActuel = m_ExecEvtActuel->SetEffetIndex(index);
     //GetIndexEffetConcerne() = index;
@@ -261,7 +263,7 @@ void ExecHistoire::GoToEffetId(QString idEffet)
 
 int ExecHistoire::DeterminerIndexEffet(QString idEffet)
 {
-    Evt* evtActuel = EvtActuel();
+    std::shared_ptr<Evt> evtActuel = EvtActuel();
 
     if ( idEffet == QLatin1String("pas_fait") ||
          idEffet == QLatin1String("pas_encore_fait") ||
@@ -289,7 +291,7 @@ int ExecHistoire::DeterminerIndexEffet(QString idEffet)
     return -1;
 }
 
-bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
+bool ExecHistoire::AppliquerGoTo(std::shared_ptr<Noeud> noeud)
 {
     bool ilYAgoto = false;
     if ( noeud->m_GoToEvtId != QLatin1String("") )
@@ -313,19 +315,19 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
 
     if ( noeud->m_SelectionneurDeNoeud != nullptr)
     {
-        Noeud* noeudSuivant = noeud->m_SelectionneurDeNoeud->DeterminerNoeudSuivant();
+        std::shared_ptr<Noeud> noeudSuivant = noeud->m_SelectionneurDeNoeud->DeterminerNoeudSuivant();
 
-        Evt* evSuivant = dynamic_cast<Evt*>(noeudSuivant);
+        shared_ptr<Evt> evSuivant = std::dynamic_pointer_cast<Evt>(noeudSuivant);
         if ( evSuivant != nullptr ) {
             this->SetCurrentEvtId(evSuivant->m_Id);
             ilYAgoto = true;
         } else {
-            Effet* effetSuivant = dynamic_cast<Effet*>(noeudSuivant);
+            std::shared_ptr<Effet> effetSuivant = std::dynamic_pointer_cast<Effet>(noeudSuivant);
             if ( effetSuivant != nullptr ) {
                 this->GoToEffetId(effetSuivant->m_Id);
                 ilYAgoto = true;
             } else {
-                Noeud* noeudAExecuter = dynamic_cast<Noeud*>(noeudSuivant);
+                shared_ptr<Noeud> noeudAExecuter = std::dynamic_pointer_cast<Noeud>(noeudSuivant);
                 this->m_ExecNoeudActuel->ExecuterActionsNoeud(noeudAExecuter);
             }
         }
@@ -334,61 +336,12 @@ bool ExecHistoire::AppliquerGoTo(Noeud* noeud)
     return ilYAgoto;
 }
 
-/*Noeud* Histoire::TesterSiEffetEstLancableOuSonElse(Noeud* noeudActuel)
-{
-    if ( noeudActuel->TesterConditions())
-    {
-        return noeudActuel;
-    }
-    else
-    {
-        noeudActuel = EffetActuel()->GetElse();
-        if ( noeudActuel != nullptr)
-            return noeudActuel;
-    }
-    return nullptr;
-}*/
-
-/*Noeud* Histoire::GetEffetDindexSuivant(Noeud* noeudActuel)
-{
-    Evt* evtActuel = EvtActuel();
-    while ( GetIndexEffetConcerne() < evtActuel->m_Effets.size() )
-    {
-        noeudActuel = EffetActuel();
-
-        noeudActuel = TesterSiEffetEstLancableOuSonElse( noeudActuel);
-
-        if ( noeudActuel != nullptr)
-        {
-             return noeudActuel;
-        }
-        else {
-            GetIndexEffetConcerne()++;
-        }
-    }
-    return nullptr;
-}*/
-
-/*QString ExecHistoire::GetCaracValue(QString caracId)
-{
-    QString val = "";
-
-    for ( int i = 0; i < GestionnaireCarac::GetGestionnaireCarac()->m_Caracs.size() ; i++)
-    {
-        if ( GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Id == caracId)
-            return GestionnaireCarac::GetGestionnaireCarac()->m_Caracs[i]->m_DataCarac.m_Valeur;
-    }
-
-    return val;
-}*/
-
-
 ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)
 {
     if ( m_Histoire->m_PhaseDeroulement == PhaseDeroulement::epd_Fini)
         return nullptr;
 
-    Noeud* noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud;
+    std::shared_ptr<Noeud> noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud;
     if ( noeudActuel != nullptr)
         this->m_ExecNoeudActuel = noeudActuel;
 
@@ -404,7 +357,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
         noeud_suivant_trouve = true;
     }
 
-    Evt* evtActuel = EvtActuel();
+    std::shared_ptr<Evt> evtActuel = EvtActuel();
 
     // déterminer si l'effet actuel contenait des 'go to' qui conditionnent le prochain événement ou effet :
     if ( !noeud_suivant_trouve )
@@ -432,7 +385,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     // on est peut-être dans un événement aléatoire dont il faut sélectionner un effet ?
     if ( evtActuel->m_TypeEvenement == TE_Aleatoire)
     {
-        Effet* effetAleatoire = (static_cast<EvtAleatoire*>(evtActuel))->DeterminerEffetAleatoire();
+        std::shared_ptr<Effet> effetAleatoire = (std::static_pointer_cast<EvtAleatoire>(evtActuel))->DeterminerEffetAleatoire();
         this->m_ExecNoeudActuel = this->m_ExecEvtActuel->SetExecEffet(effetAleatoire);
 
         //SetEffetIndex( evtActuel->m_Effets.indexOf(static_cast<Effet*>(this->m_ExecNoeudActuel)));
@@ -481,7 +434,7 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
 void ExecHistoire::PasserAEffetIndexSuivant()
 {
     int index = this->EffetActuel()->CalculerIndex() + 1;
-    Evt* evtActuel = this->EvtActuel();
+    shared_ptr<Evt> evtActuel = this->EvtActuel();
     if (index >= evtActuel->m_Effets.length())
     {
         // Il n'y a pas d'effet suivant par défaut dans cet événement
@@ -502,7 +455,7 @@ void ExecHistoire::PasserAEvtIndexSuivant()
     this->SetExecEvtActuel( this->m_Histoire->m_Evts[index] );
 }
 
-ExecEvt* ExecHistoire::SetExecEvtActuel(Evt* evt)
+ExecEvt* ExecHistoire::SetExecEvtActuel(shared_ptr<Evt> evt)
 {
     if ( this->m_ExecEvtActuel != nullptr) {
 
@@ -524,15 +477,15 @@ ExecEvt* ExecHistoire::SetExecEvtActuel(Evt* evt)
 
 void ExecHistoire::AjouterDureeAEffetHistoireCourant(float duree)
 {
-    Effet* effet = EffetActuel(true);
+    std::shared_ptr<Effet> effet = EffetActuel(true);
     Q_ASSERT_X(effet!= nullptr, "effet == nullptr", "Effet actuel d'histoire introuvable ! ");
-    Evt* evt = EvtActuel(true);
+    shared_ptr<Evt> evt = EvtActuel(true);
     Q_ASSERT_X(evt!= nullptr, "effet == nullptr", "Événement actuel d'histoire introuvable ! ");
     effet->AjouterDuree(duree);
     evt->AjouterDuree(duree);
 }
 
-void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
+void ExecHistoire::RafraichirAffichageEvtEtOuEffet(shared_ptr<Evt> evt, std::shared_ptr<Effet> effet)
 {
     if ( evt == nullptr) evt = EvtActuel();
     if ( effet == nullptr ) effet = EffetActuel();
@@ -596,9 +549,9 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(Evt* evt, Effet* effet)
         this->update();
 }
 
-Evt* ExecHistoire::GetEvtSelonBddId(int id)
+shared_ptr<Evt> ExecHistoire::GetEvtSelonBddId(int id)
 {
-    for ( Evt* evt: this->m_Histoire->m_Evts)
+    for ( shared_ptr<Evt> evt: this->m_Histoire->m_Evts)
     {
         if ( evt->m_BDD_EvtId == id)
             return evt;

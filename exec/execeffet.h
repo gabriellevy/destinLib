@@ -16,7 +16,7 @@ class ExecEffet : public ExecNoeud
 {
     Q_OBJECT
 public:
-    ExecEffet(ExecEvt* exec_evt, Effet* effet, QWidget *parent = nullptr);
+    ExecEffet(ExecEvt* exec_evt, std::shared_ptr<Effet> effet, QWidget *parent = nullptr);
     virtual ~ExecEffet();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
@@ -27,9 +27,9 @@ public:
     void ChargerImage(QString chemin);
     void NettoyageAffichage();
     ExecLancerDe* SetExecLancerDe(ExecLancerDe* exec_lancer_de);
-    ExecLancerDe* SetExecLancerDe(LancerDe* lancer_de);
+    ExecLancerDe* SetExecLancerDe(std::shared_ptr<LancerDe> lancer_de);
 
-    Effet* GetEffet();
+    std::shared_ptr<Effet> GetEffet();
     void AfficherNoeud();
 
     void AfficherBoutonSuivant();

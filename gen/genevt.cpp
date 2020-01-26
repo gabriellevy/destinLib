@@ -5,13 +5,13 @@
 #include "../abs/noeudnarratif.h"
 #include "../abs/evtaleatoire.h"
 
-GenEvt::GenEvt()
-{
+using std::shared_ptr;
+using std::make_shared;
 
-}
+GenEvt::GenEvt() {}
 
 
-void GenEvt::ChargerEffetsBdd(Evt* evtDest)
+void GenEvt::ChargerEffetsBdd(std::shared_ptr<Evt> evtDest)
 {
     QSqlQuery query("SELECT * FROM d_Effet WHERE appartient_a_evt_id = " +
                     QString::number(evtDest->m_BDD_EvtId) +
@@ -20,7 +20,7 @@ void GenEvt::ChargerEffetsBdd(Evt* evtDest)
     {
        int bd_id = query.value("id").toInt();
 
-       Effet* effet = this->AjouterEffetVide(evtDest);
+       std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest);
        effet->m_BDD_EffetId = bd_id;
        effet->m_ImgPath = query.value("m_CheminImg").toString();
 
@@ -31,13 +31,13 @@ void GenEvt::ChargerEffetsBdd(Evt* evtDest)
     }
 }
 
-void GenEvt::AjouterASelectionneurEvt(Evt* evt, Condition* poids, int selectionneur_bdd_id)
+void GenEvt::AjouterASelectionneurEvt(std::shared_ptr<Evt> evt, Condition* poids, int selectionneur_bdd_id)
 {
     // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
     for ( SelectionneurDeNoeud* sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
     {
         if ( sel->m_BddId == selectionneur_bdd_id) {
-            sel->m_NoeudsProbables.push_back(new NoeudProbable(evt, poids));
+            sel->m_NoeudsProbables.push_back(std::make_shared<NoeudProbable>(evt, poids));
             return;
         }
     }
@@ -52,19 +52,19 @@ void GenEvt::AjouterASelectionneurEvt(Evt* evt, Condition* poids, int selectionn
         QString intitule = query.value("intitule").toString();
 
         SelectionneurDeNoeud* sel = new SelectionneurDeNoeud(intitule, bdd_id);
-        sel->m_NoeudsProbables.push_back(new NoeudProbable(evt, poids));
+        sel->m_NoeudsProbables.push_back(std::make_shared<NoeudProbable>(evt, poids));
         SelectionneurDeNoeud::s_TousLesSelectionneurs.push_back(sel);
     }
 }
 
-void GenEvt::AjouterImgFond(Evt* evt, QString fond)
+void GenEvt::AjouterImgFond(std::shared_ptr<Evt> evt, QString fond)
 {
     if ( fond != "") {
         evt->m_CheminImgFond = fond;
     }
 }
 
-Effet* GenEvt::AjouterEffet(Effet* effet, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffet(std::shared_ptr<Effet> effet, std::shared_ptr<Evt> evtDest)
 {
     if ( evtDest == nullptr )
         evtDest = m_DernierEvtGenere;
@@ -78,7 +78,7 @@ Effet* GenEvt::AjouterEffet(Effet* effet, Evt* evtDest)
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetVide(Evt* evtDest, QString id)
+std::shared_ptr<Effet> GenEvt::AjouterEffetVide(std::shared_ptr<Evt> evtDest, QString id)
 {
     if ( evtDest == nullptr)
         evtDest = m_DernierEvtGenere;
@@ -89,33 +89,35 @@ Effet* GenEvt::AjouterEffetVide(Evt* evtDest, QString id)
                    msg.toStdString().c_str(),
                    "GenEvt::AjouterEffetVide");
     }
-    Effet* effet = new Effet(evtDest, id);
+    std::shared_ptr<Effet> effet = std::make_shared<Effet>(evtDest, id);
 
     return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetSelectionneurDeNoeud(QString id, QString text, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffetSelectionneurDeNoeud(QString id, QString text, std::shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_SelectionneurDeNoeud = new SelectionneurDeNoeud(id);
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetRetireurACarac(QString caracId, QString valeurRetire, QString text, QString id, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffetRetireurACarac(
+        QString caracId, QString valeurRetire, QString text, QString id, std::shared_ptr<Evt> evtDest)
 {
     if ( evtDest == nullptr)
         evtDest = m_DernierEvtGenere;
-    Effet* effet = this->AjouterEffetVide(evtDest);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest);
     effet->m_Id = id;
     effet->m_Texte = text;
     effet->AjouterRetireurACarac(caracId, valeurRetire);
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetModificateurCarac(QString caracId, QString nouvelleValeur, QString text, QString id, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffetModificateurCarac(
+        QString caracId, QString nouvelleValeur, QString text, QString id, std::shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->AjouterChangeurDeCarac(caracId, nouvelleValeur);
     return effet;
@@ -129,16 +131,18 @@ Noeud* GenEvt::GenererNoeudModificateurCarac(QString caracId, QString nouvelleVa
     return noeud;
 }
 
-Effet* GenEvt::AjouterEffetAjouteurACarac(QString caracId, QString valeurAjoutee, QString id, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffetAjouteurACarac(
+        QString caracId, QString valeurAjoutee, QString id, std::shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->AjouterAjouteurACarac(caracId, valeurAjoutee);
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffetNarration(
+        QString text, QString cheminImg, QString id, std::shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
     return effet;
@@ -146,33 +150,35 @@ Effet* GenEvt::AjouterEffetNarration(QString text, QString cheminImg, QString id
 
 
 
-LancerDe* GenEvt::AjouterLancerDe(QString texte,
+std::shared_ptr<LancerDe> GenEvt::AjouterLancerDe(QString texte,
                                   int nbDes,
                                   std::function<ResExecutionLancerDe*(int)> callback,
-                                  Effet* effetDest)
+                                  std::shared_ptr<Effet> effetDest)
 {
     if ( effetDest == nullptr)
         effetDest = m_DernierEffetGenere;
 
-    LancerDe* lancerDe = new LancerDe(effetDest, texte, nbDes, callback);
+    std::shared_ptr<LancerDe> lancerDe = make_shared<LancerDe>(effetDest, texte, nbDes, callback);
     effetDest->m_LancerDe = lancerDe;
 
     return lancerDe;
 }
 
-Effet* GenEvt::AjouterEffetCallbackDisplay(std::function<void()> callbackDisplay, QString text, QString cheminImg, QString id, Evt* evtDest)
+shared_ptr<Effet> GenEvt::AjouterEffetCallbackDisplay(
+        std::function<void()> callbackDisplay, QString text, QString cheminImg, QString id, shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
     effet->m_CallbackDisplay = callbackDisplay;
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
-                                    QString carac_id, QString cheminImg, QString id, Evt* evtDest )
+std::shared_ptr<Effet> GenEvt::AjouterEffetGlisseur(
+        QString text, QString valeur_min, QString valeur_max, QString valeur_depart,
+        QString carac_id, QString cheminImg, QString id, std::shared_ptr<Evt> evtDest )
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
 
@@ -180,9 +186,10 @@ Effet* GenEvt::AjouterEffetGlisseur(QString text, QString valeur_min, QString va
     return effet;
 }
 
-Effet* GenEvt::AjouterEffetChangementPerso(QString persoId, QString text, QString cheminImg, QString id, Evt* evtDest)
+std::shared_ptr<Effet> GenEvt::AjouterEffetChangementPerso(
+        QString persoId, QString text, QString cheminImg, QString id, std::shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetVide(evtDest);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest);
     effet->m_Id = id;
     effet->m_Texte = text;
     effet->m_ImgPath = cheminImg;
@@ -190,48 +197,49 @@ Effet* GenEvt::AjouterEffetChangementPerso(QString persoId, QString text, QStrin
     return AjouterEffet(effet, evtDest);
 }
 
-Effet* GenEvt::AjouterEffetTest(QString caracId, Comparateur comparateur, QString valeur, QString id, Evt* evtDest )
+std::shared_ptr<Effet> GenEvt::AjouterEffetTest(
+        QString caracId, Comparateur comparateur, QString valeur, QString id, std::shared_ptr<Evt> evtDest )
 {
-    Effet* effet = this->AjouterEffetVide(evtDest, id);
+    std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
     return effet;
 }
 
-Evt* GenEvt::GenererEvt(QString id, QString nom)
+std::shared_ptr<Evt> GenEvt::GenererEvt(QString id, QString nom)
 {
-    Evt* evt = new Evt(id, nom);
+    std::shared_ptr<Evt> evt = std::make_shared<Evt>(id, nom);
     m_DernierEvtGenere = evt;
     return evt;
 }
 
-EvtAleatoire* GenEvt::GenererEvtAleatoire(QString id, QString nom)
+shared_ptr<EvtAleatoire> GenEvt::GenererEvtAleatoire(QString id, QString nom)
 {
-    EvtAleatoire* evt = new EvtAleatoire(id, nom);
+    shared_ptr<EvtAleatoire> evt = make_shared<EvtAleatoire>(id, nom);
     m_DernierEvtGenere = evt;
     return evt;
 }
 
-Choix* GenEvt::AjouterChoixVide(Effet* effetDest)
+std::shared_ptr<Choix> GenEvt::AjouterChoixVide(std::shared_ptr<Effet> effetDest)
 {
     if ( effetDest == nullptr)
         effetDest = m_DernierEffetGenere;
 
-    Choix* choix = new Choix(effetDest);
+    std::shared_ptr<Choix> choix = make_shared<Choix>(effetDest);
     effetDest->m_Choix.push_back(choix);
     return choix;
 }
 
-Choix* GenEvt::AjouterChoixVide(LancerDe* lancerDe)
+std::shared_ptr<Choix> GenEvt::AjouterChoixVide(std::shared_ptr<LancerDe> lancerDe)
 {
-    Choix* choix = new Choix(lancerDe);
+    std::shared_ptr<Choix> choix = make_shared<Choix>(lancerDe);
     lancerDe->m_Choix.push_back(choix);
     return choix;
 }
 
 
-Choix* GenEvt::AjouterChoixAjouteurACarac(QString text, QString carac, QString valeur, QString go_to_effet_id, Effet* effetDest)
+std::shared_ptr<Choix> GenEvt::AjouterChoixAjouteurACarac(QString text, QString carac, QString valeur, QString go_to_effet_id, std::shared_ptr<Effet> effetDest)
 {
-    Choix* choix = AjouterChoixVide(effetDest);
+    std::shared_ptr<Choix> choix = AjouterChoixVide(effetDest);
     choix->m_Texte = text;
     choix->AjouterAjouteurACarac(carac, valeur);
     choix->m_GoToEffetId = go_to_effet_id;
@@ -239,34 +247,34 @@ Choix* GenEvt::AjouterChoixAjouteurACarac(QString text, QString carac, QString v
 }
 
 
-Choix* GenEvt::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, QString go_to_effet_id, Effet* effetDest)
+std::shared_ptr<Choix> GenEvt::AjouterChoixChangeurDeCarac(QString text, QString carac, QString valeur, QString go_to_effet_id, std::shared_ptr<Effet> effetDest)
 {
-    Choix* choix = AjouterChoixVide(effetDest);
+    std::shared_ptr<Choix> choix = AjouterChoixVide(effetDest);
     choix->m_Texte = text;
     choix->AjouterChangeurDeCarac(carac, valeur);
     choix->m_GoToEffetId = go_to_effet_id;
     return choix;
 }
 
-Choix* GenEvt::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg, LancerDe* lancerDe)
+std::shared_ptr<Choix> GenEvt::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg, std::shared_ptr<LancerDe> lancerDe)
 {
-    Choix* choix = AjouterChoixVide(lancerDe);
+    std::shared_ptr<Choix> choix = AjouterChoixVide(lancerDe);
     choix->m_Texte = text;
     choix->m_CheminImg = cheminImg;
     choix->m_GoToEffetId = go_to_effet_id;
     return choix;
 }
 
-Choix* GenEvt::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg, Effet* effetDest)
+std::shared_ptr<Choix> GenEvt::AjouterChoixGoToEffet(QString text, QString go_to_effet_id, QString cheminImg, std::shared_ptr<Effet> effetDest)
 {
-    Choix* choix = AjouterChoixVide(effetDest);
+    std::shared_ptr<Choix> choix = AjouterChoixVide(effetDest);
     choix->m_Texte = text;
     choix->m_CheminImg = cheminImg;
     choix->m_GoToEffetId = go_to_effet_id;
     return choix;
 }
 
-void GenEvt::ChargerChoixBdd(Effet* effet)
+void GenEvt::ChargerChoixBdd(std::shared_ptr<Effet> effet)
 {
     if ( effet == nullptr)
         effet = m_DernierEffetGenere;
@@ -279,7 +287,7 @@ void GenEvt::ChargerChoixBdd(Effet* effet)
     {
        int bd_id = query.value("id").toInt();
 
-       Choix* choix = this->AjouterChoixVide(effet);
+       std::shared_ptr<Choix> choix = this->AjouterChoixVide(effet);
        choix->m_BDD_ChoixId = bd_id;
 
        // récupération de la partie noeud :
@@ -287,13 +295,14 @@ void GenEvt::ChargerChoixBdd(Effet* effet)
     }
 }
 
-Effet* GenEvt::AjouterEffetSelecteurDEvt(QVector<NoeudProbable*> noeudsDestination, QString id, QString text, Evt* evtDest)
+shared_ptr<Effet> GenEvt::AjouterEffetSelecteurDEvt(
+        QVector<shared_ptr<NoeudProbable>> noeudsDestination, QString id, QString text, shared_ptr<Evt> evtDest)
 {
-    Effet* effet = this->AjouterEffetSelectionneurDeNoeud(id, text, evtDest);
+    std::shared_ptr<Effet> effet = this->AjouterEffetSelectionneurDeNoeud(id, text, evtDest);
 
     // vérification et ajout des noeuds destination
     for (int i = 0; i < noeudsDestination.length() ; ++i) {
-        NoeudProbable* noeudProbable = noeudsDestination.at(i);
+        shared_ptr<NoeudProbable> noeudProbable = noeudsDestination.at(i);
         /*Q_ASSERT_X( noeudProbable->m_PoidsProba->m_Proba > 0 ,
                     "Tentative d'ajouter un neud sans probabilité à un sélecteur de noeud via probabilité...",
                     "GenEvt::AjouterEffetSelecteurDEvt");

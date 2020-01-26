@@ -5,30 +5,30 @@
 #include "../exec/execnoeud.h"
 #include "../glisseur.h"
 #include "choix.h"
+#include <memory>
+
 class Evt;
 
 class Effet : public NoeudNarratif
 {
-    //Effet* m_ElseNoeud = nullptr;
 protected:
-    explicit Effet(Evt* evt);
-    explicit Effet(Evt* evt,
-                   QString id,
-             QString text = "",
-             QString imgPath = "");
 
 public:
+    explicit Effet(std::shared_ptr<Evt> evt);
+    explicit Effet(std::shared_ptr<Evt> evt,
+                 QString id,
+                 QString text = "",
+                 QString imgPath = "");
+
     virtual ~Effet() {}
     /*explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);*/
 
-    //Effet* GetElse();
     //bool AQuelqueChoseAAfficher();
     void SupprimerTousLesChoix();
-    //Effet* AjouterElse(QString text);
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
     int CalculerIndex();
 
-    Evt* m_Evt;
+    std::shared_ptr<Evt> m_Evt;
     Glisseur* m_Glisseur = nullptr;
 
     // gestion de la bdd :

@@ -29,18 +29,18 @@ Hist* GenHistoire::GenererHistoire()
     return m_HistoireGeneree;
 }
 
-EvtAleatoire* GenHistoire::AjouterEvtAleatoire(QString id, QString nom)
+std::shared_ptr<EvtAleatoire> GenHistoire::AjouterEvtAleatoire(QString id, QString nom)
 {
-    EvtAleatoire* evt = this->m_GenerateurEvt->GenererEvtAleatoire(id, nom);
+    std::shared_ptr<EvtAleatoire> evt = this->m_GenerateurEvt->GenererEvtAleatoire(id, nom);
     m_HistoireGeneree->m_EvtsAleatoires.push_back(evt);
     return evt;
 }
 
-Evt* GenHistoire::AjouterEvt(QString id, QString nom)
+std::shared_ptr<Evt> GenHistoire::AjouterEvt(QString id, QString nom)
 {
     if ( nom == "")
         nom = id;
-    Evt* evt = this->m_GenerateurEvt->GenererEvt(id, nom);
+    std::shared_ptr<Evt> evt = this->m_GenerateurEvt->GenererEvt(id, nom);
     m_HistoireGeneree->m_Evts.push_back(evt);
     return evt;
 }
@@ -54,31 +54,31 @@ void GenHistoire::FinGenerationHistoire()
 **  fonctions racourci
 **  */
 
-Effet* GenHistoire::AjouterEffetGoToEvt(QString idEvtDest, QString id, Evt* evt)
+std::shared_ptr<Effet> GenHistoire::AjouterEffetGoToEvt(QString idEvtDest, QString id, std::shared_ptr<Evt> evt)
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetVide(evt, id);
+    std::shared_ptr<Effet> effet = m_GenerateurEvt->AjouterEffetVide(evt, id);
     effet->m_GoToEvtId = idEvtDest;
     return effet;
 }
 
-Effet* GenHistoire::AjouterEffetGoToEffet(QString idEffetDest, QString id, Evt* evt)
+std::shared_ptr<Effet> GenHistoire::AjouterEffetGoToEffet(QString idEffetDest, QString id, std::shared_ptr<Evt> evt)
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetVide(evt, id);
+    std::shared_ptr<Effet> effet = m_GenerateurEvt->AjouterEffetVide(evt, id);
     effet->m_GoToEffetId = idEffetDest;
     return effet;
 }
 
-Effet* GenHistoire::AjouterEffetNarration(QString text, QString cheminImg, QString id, Evt* evt)
+std::shared_ptr<Effet> GenHistoire::AjouterEffetNarration(QString text, QString cheminImg, QString id, std::shared_ptr<Evt> evt)
 {
     return m_GenerateurEvt->AjouterEffetNarration(text, cheminImg, id, evt);
 }
 
-Choix* GenHistoire::AjouterChoixAjouteurACarac(QString texte, QString carac, QString valeur, QString go_to_effet_id, Effet* effet)
+std::shared_ptr<Choix> GenHistoire::AjouterChoixAjouteurACarac(QString texte, QString carac, QString valeur, QString go_to_effet_id, std::shared_ptr<Effet> effet)
 {
     return m_GenerateurEvt->AjouterChoixAjouteurACarac(texte, carac, valeur, go_to_effet_id, effet);
 }
 
-Choix* GenHistoire::AjouterChoixGoToEffet(QString texte, QString go_to_effet_id, QString cheminImg, Effet* effetDest)
+std::shared_ptr<Choix> GenHistoire::AjouterChoixGoToEffet(QString texte, QString go_to_effet_id, QString cheminImg, std::shared_ptr<Effet> effetDest)
 {
     return m_GenerateurEvt->AjouterChoixGoToEffet(texte, go_to_effet_id, cheminImg, effetDest);
 }

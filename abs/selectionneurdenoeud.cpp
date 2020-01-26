@@ -10,7 +10,7 @@ QList<SelectionneurDeNoeud*> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 SelectionneurDeNoeud::SelectionneurDeNoeud(QString intitule, int bdd_id):m_BddId(bdd_id), m_Intitule(intitule)
 {}
 
-Noeud* SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerNoeudSuivant en fait ?
+std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerNoeudSuivant en fait ?
 {
     // mise en place système de nombre aléatoire
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -23,7 +23,7 @@ Noeud* SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerN
     double totalprobaParcouru = 0;
     for ( int i = 0 ; i < m_NoeudsProbables.size() ; ++i)
     {
-        Noeud* noeud = m_NoeudsProbables[i]->m_Noeud;
+        std::shared_ptr<Noeud> noeud = m_NoeudsProbables[i]->m_Noeud;
         if ( m_NoeudsProbables[i]->m_PoidsProba->IsProbaPure() )
         {
             totalprobaParcouru += m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale();
@@ -46,7 +46,7 @@ Noeud* SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerN
 
     //2. si aucun proba pure n'est trouvée, on cherche parmi les probas relatives
     // (et tant qu'il y en a au moins une il y aura bien un noeud sélectionné)
-    QList<NoeudProbable*> noeudsPossibles;
+    QList<std::shared_ptr<NoeudProbable>> noeudsPossibles;
     double totalDesProbas = 0;
     for ( int i = 0 ; i < m_NoeudsProbables.size() ; ++i)
     {
@@ -73,7 +73,7 @@ Noeud* SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerN
     float r = static_cast <float> (distribution(generator)) / static_cast <float> (RAND_MAX);// entre 0 et 1
     double probaIndicator = static_cast<double>(r) * totalDesProbas;
     double totalCourantDesProbas = 0;
-    Noeud* noeudChoisi = nullptr;
+    std::shared_ptr<Noeud> noeudChoisi = nullptr;
 
     for ( int j = 0; j < noeudsPossibles.size() ; ++j )
     {

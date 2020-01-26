@@ -12,9 +12,9 @@ EvtAleatoire::EvtAleatoire(QString id,
 }
 
 
-Effet* EvtAleatoire::DeterminerEffetAleatoire()
+std::shared_ptr<Effet> EvtAleatoire::DeterminerEffetAleatoire()
 {
-    QList<Effet*> effetsPossibles;
+    QList<std::shared_ptr<Effet>> effetsPossibles;
     double totalDesProbas = 0;
     for ( int i = 0 ; i < m_Effets.size() ; ++i)
     {
@@ -39,7 +39,7 @@ Effet* EvtAleatoire::DeterminerEffetAleatoire()
     float r = static_cast <float> (distribution(generator)) / static_cast <float> (RAND_MAX);// entre 0 et 1
     double probaIndicator = static_cast<double>(r) * totalDesProbas;
     double totalCourantDesProbas = 0;
-    Effet* effetchoisi = nullptr;
+    std::shared_ptr<Effet> effetchoisi = nullptr;
 
     for ( int j = 0; j < effetsPossibles.size() ; ++j )
     {

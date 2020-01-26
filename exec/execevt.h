@@ -3,6 +3,7 @@
 
 #include "../abs/evt.h"
 #include "execnoeud.h"
+#include <memory>
 
 class ExecEffet;
 class ExecLancerDe;
@@ -18,7 +19,7 @@ class ExecEvt : public ExecNoeud
     ExecEffet* m_ExecEffetActuel = nullptr;
 
 public:
-    ExecEvt(Evt* evt, QWidget *parent = nullptr);
+    ExecEvt(std::shared_ptr<Evt> evt, QWidget *parent = nullptr);
     virtual ~ExecEvt();
 
     void Clean();
@@ -31,14 +32,14 @@ public:
 
     ExecEffet* SetEffetIndex(int index);
     ExecEffet* SetExecEffet(QString effetId);
-    ExecEffet* SetExecEffet(Effet* effet);
+    ExecEffet* SetExecEffet(std::shared_ptr<Effet> effet);
     ExecEffet* SetExecEffet(ExecEffet* exec_effet);
     void RafraichirAffichageEffet(ExecEffet* effet);
     void AfficherNoeud();
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
-    Evt* GetEvt();
+    std::shared_ptr<Evt> GetEvt();
 
 private:
     Ui::Evt *ui;

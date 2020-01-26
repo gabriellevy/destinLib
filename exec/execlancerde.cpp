@@ -5,7 +5,10 @@
 #include "execeffet.h"
 #include "execchoix.h"
 
-ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, LancerDe* lancerDe, QWidget *parent) :
+using std::shared_ptr;
+using std::make_shared;
+
+ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, std::shared_ptr<LancerDe> lancerDe, QWidget *parent) :
     ExecNoeud(lancerDe, parent),
     m_LancerDe(lancerDe),
     m_ExecEffet(execEffet),
@@ -105,7 +108,7 @@ void ExecLancerDe::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
 
 ExecChoix* ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
 {
-    Choix* choix = new Choix(this->m_LancerDe, texte);
+    shared_ptr<Choix> choix = make_shared<Choix>(this->m_LancerDe, texte);
     choix->m_GoToEffetId = idDest;
     ExecChoix* exec = new ExecChoix(this, choix, this);
     this->m_ExecChoix.push_back(exec);

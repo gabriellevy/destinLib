@@ -3,7 +3,9 @@
 #include "ui_evt.h"
 #include "execeffet.h"
 
-ExecEvt::ExecEvt( Evt* evt, QWidget *parent) :
+using std::shared_ptr;
+
+ExecEvt::ExecEvt( shared_ptr<Evt> evt, QWidget *parent) :
     ExecNoeud (evt, parent),
     ui(new Ui::Evt)
 {
@@ -43,11 +45,11 @@ ExecEffet* ExecEvt::SetEffetIndex(int index)
 
 ExecEffet* ExecEvt::SetExecEffet(QString effetId)
 {
-    Effet* effet = this->GetEvt()->TrouverEffet(effetId);
+    std::shared_ptr<Effet> effet = this->GetEvt()->TrouverEffet(effetId);
     return SetExecEffet(effet);
 }
 
-ExecEffet* ExecEvt::SetExecEffet(Effet* effet)
+ExecEffet* ExecEvt::SetExecEffet(shared_ptr<Effet> effet)
 {
    if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet)
         return this->SetExecEffet(new ExecEffet(this, effet));
@@ -122,9 +124,9 @@ void ExecEvt::LancerNoeud()
     Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
-Evt* ExecEvt::GetEvt()
+shared_ptr<Evt> ExecEvt::GetEvt()
 {
-    return static_cast<Evt*>(m_Noeud);
+    return std::static_pointer_cast<Evt>(m_Noeud);
 }
 
 

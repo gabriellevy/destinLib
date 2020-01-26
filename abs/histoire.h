@@ -33,9 +33,9 @@ public:
 
     QString m_Titre = "Titre inconnu";
 
-    QVector<Evt*> m_Evts;// événements de base (aventure elle-même)
-    QVector<Evt*> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
-    QVector<Evt*> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
+    QVector<std::shared_ptr<Evt>> m_Evts;// événements de base (aventure elle-même)
+    QVector<std::shared_ptr<Evt>> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
+    QVector<std::shared_ptr<Evt>> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
 
     ModeDeroulement m_ModeDeroulement = Normal;
     PhaseDeroulement m_PhaseDeroulement = epd_Aucun;

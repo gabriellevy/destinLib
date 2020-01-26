@@ -15,9 +15,9 @@ Evt::Evt(QString id,
 }
 
 
-Effet* Evt::TrouverEffet(QString id)
+std::shared_ptr<Effet> Evt::TrouverEffet(QString id)
 {
-    foreach(Effet* effet, m_Effets)
+    foreach(std::shared_ptr<Effet> effet, m_Effets)
     {
         if ( effet->m_Id == id)
             return effet;

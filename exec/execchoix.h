@@ -4,6 +4,7 @@
 #include "execnoeud.h"
 #include "../abs/choix.h"
 #include "execlancerde.h"
+#include <memory>
 
 class ExecEffet;
 class LancerDe;
@@ -13,14 +14,18 @@ class ExecChoix : /*public QPushButton, */public ExecNoeud
     Q_OBJECT
  public:
 
-    Choix* m_Choix;
+    std::shared_ptr<Choix> m_Choix;
     ExecEffet* m_ExecEffet = nullptr;
     ExecLancerDe* m_ExecLancerDe = nullptr;
 
-    explicit ExecChoix(Choix* choix, QWidget *parent = nullptr);
-    explicit ExecChoix(ExecEffet* ExecEffet, Choix* choix, QWidget *parent = nullptr);
-    explicit ExecChoix(ExecLancerDe* ExecEffet, Choix* choix, QWidget *parent = nullptr);
-    explicit ExecChoix(ExecNoeud* execNoeud, Choix* choix, QWidget *parent = nullptr);
+    explicit ExecChoix(
+            std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+    explicit ExecChoix(
+            ExecEffet* ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+    explicit ExecChoix(
+            ExecLancerDe* ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+    explicit ExecChoix(
+            ExecNoeud* execNoeud, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     virtual ~ExecChoix();
 
     void AfficherNoeud();

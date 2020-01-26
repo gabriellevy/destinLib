@@ -2,6 +2,7 @@
 #define EXECNOEUD_H
 
 #include <QWidget>
+#include <memory>
 
 class NoeudNarratif;
 class Noeud;
@@ -12,7 +13,7 @@ class ExecNoeud : public QWidget
     Q_OBJECT
 
 public:
-    ExecNoeud(NoeudNarratif* noeud, QWidget* parent = nullptr);
+    ExecNoeud(std::shared_ptr<NoeudNarratif> noeud, QWidget* parent = nullptr);
     virtual ~ExecNoeud() {}
 
     QPixmap m_Img;
@@ -25,7 +26,8 @@ public:
      * @param afficherNoeud : si true la fonction affiche le texte et les images du noeud
      * @param lancerNoeudSuivantSiRienAAfiicher : si true la fonction exécute automatiquement le noeud suivant si il n'y a rien à afficher
      */
-    virtual void ExecuterActionsNoeud(Noeud* noeudAExecuter = nullptr/*bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true*/);
+    virtual void ExecuterActionsNoeud(
+            std::shared_ptr<Noeud> noeudAExecuter = nullptr/*bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true*/);
 
     /**
      * @brief S'exécute quand l'exécutyion de l'aventure arrive à ce noeud
@@ -47,7 +49,7 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
-    NoeudNarratif* m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
+    std::shared_ptr<NoeudNarratif> m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
 
 protected:
     virtual void AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud);

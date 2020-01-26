@@ -1,10 +1,10 @@
 #include "genhistoirebdd.h"
 #include "../abs/condition.h"
 
-GenHistoireBdd::GenHistoireBdd(QString titre):GenHistoire (titre)
-{
+using std::shared_ptr;
 
-}
+GenHistoireBdd::GenHistoireBdd(QString titre):GenHistoire (titre)
+{}
 
 void GenHistoireBdd::ChargerBDD(QString cheminBDD)
 {
@@ -29,7 +29,7 @@ void GenHistoireBdd::ChargerEvtsBdd()
     {
        int bd_id = query.value("id").toInt();
 
-       Evt* evt = AjouterEvt("evt vide", "et sans nom");
+       shared_ptr<Evt> evt = AjouterEvt("evt vide", "et sans nom");
        this->m_GenerateurEvt->AjouterImgFond(evt, query.value("m_CheminImgFond").toString());
        evt->m_BDD_EvtId = bd_id;
        QString TypeEvenement = query.value("m_TypeEvenement").toString();

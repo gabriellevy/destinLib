@@ -4,6 +4,7 @@
 #include <QString>
 #include "../abs/histoire.h"
 #include "genevt.h"
+#include <memory>
 
 /**
  * @brief Class servant à générer toute l'histoire du jeu destin. Une fois cette exécution terminée elle renvoie un objet ExecHistoire à exécutee t n'est plus utilisée.
@@ -33,14 +34,19 @@ public:
     virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête
 
     // fonctions racourci :
-    Effet* AjouterEffetGoToEffet(QString idEffetDest, QString id = "", Evt* evt = nullptr);
-    Effet* AjouterEffetGoToEvt(QString idEvtDest, QString id = "", Evt* evt = nullptr);
-    Effet* AjouterEffetNarration(QString text, QString cheminImg = "", QString id = "", Evt* evt = nullptr);
-    Choix* AjouterChoixAjouteurACarac(QString texte, QString carac, QString valeur, QString go_to_effet_id = "", Effet* effet = nullptr);
-    Choix* AjouterChoixGoToEffet(QString texte, QString go_to_effet_id, QString cheminImg = "", Effet* effetDest = nullptr);
+    std::shared_ptr<Effet> AjouterEffetGoToEffet(
+            QString idEffetDest, QString id = "", std::shared_ptr<Evt> evt = nullptr);
+    std::shared_ptr<Effet> AjouterEffetGoToEvt(
+            QString idEvtDest, QString id = "", std::shared_ptr<Evt> evt = nullptr);
+    std::shared_ptr<Effet> AjouterEffetNarration(
+            QString text, QString cheminImg = "", QString id = "", std::shared_ptr<Evt> evt = nullptr);
+    std::shared_ptr<Choix> AjouterChoixAjouteurACarac(
+            QString texte, QString carac, QString valeur, QString go_to_effet_id = "", std::shared_ptr<Effet> effet = nullptr);
+    std::shared_ptr<Choix> AjouterChoixGoToEffet(
+            QString texte, QString go_to_effet_id, QString cheminImg = "", std::shared_ptr<Effet> effetDest = nullptr);
 
-    Evt* AjouterEvt(QString id, QString nom = "");
-    EvtAleatoire* AjouterEvtAleatoire(QString id, QString nom);
+    std::shared_ptr<Evt> AjouterEvt(QString id, QString nom = "");
+    std::shared_ptr<EvtAleatoire> AjouterEvtAleatoire(QString id, QString nom);
 };
 
 #endif // GENHISTOIRE_H

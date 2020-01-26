@@ -18,7 +18,7 @@ class ExecLancerDe : public ExecNoeud
     Q_OBJECT
 
 public:
-    ExecLancerDe(ExecEffet* exec_effet, LancerDe* effet, QWidget *parent = nullptr);
+    ExecLancerDe(ExecEffet* exec_effet, std::shared_ptr<LancerDe> effet, QWidget *parent = nullptr);
     virtual ~ExecLancerDe();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
@@ -31,7 +31,7 @@ public:
 
     void AfficherNoeud();
 
-    LancerDe* m_LancerDe = nullptr;
+    std::shared_ptr<LancerDe> m_LancerDe = nullptr;
     ExecEffet* m_ExecEffet = nullptr;
     ExecNoeud* GetExecNoeud();
     int GetTotalRes();

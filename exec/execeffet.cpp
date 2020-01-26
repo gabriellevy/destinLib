@@ -9,7 +9,7 @@
 #include "execlancerde.h"
 #include "../abs/lancerde.h"
 
-ExecEffet::ExecEffet(ExecEvt* exec_evt, Effet* effet, QWidget *parent):
+ExecEffet::ExecEffet(ExecEvt* exec_evt, std::shared_ptr<Effet> effet, QWidget *parent):
     ExecNoeud(effet, parent),
     m_ExecEvt(exec_evt),
     ui(new Ui::Effet)
@@ -47,10 +47,10 @@ void ExecEffet::FinExecutionNoeud()
         m_ElseNoeud->FinExecutionNoeud();*/
 }
 
-Effet* ExecEffet::GetEffet()
+std::shared_ptr<Effet> ExecEffet::GetEffet()
 {
     if ( m_Noeud != nullptr)
-        return static_cast<Effet*>(m_Noeud);
+        return std::static_pointer_cast<Effet>(m_Noeud);
     else return nullptr;
 }
 
@@ -134,7 +134,7 @@ void ExecEffet::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
     ui->layoutBoutons->layout()->addWidget(execNoeud);
 }
 
-ExecLancerDe* ExecEffet::SetExecLancerDe(LancerDe* lancer_de)
+ExecLancerDe* ExecEffet::SetExecLancerDe(std::shared_ptr<LancerDe> lancer_de)
 {
    if ( this->m_ExecLancerDe == nullptr || this->m_ExecLancerDe->m_LancerDe != lancer_de)
         return this->SetExecLancerDe(new ExecLancerDe(this, lancer_de));

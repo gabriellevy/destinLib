@@ -2,6 +2,7 @@
 #define NOEUDNARRATIF_H
 
 #include "noeud.h"
+#include <memory>
 
 enum OrientationAffichageChoix
 {
@@ -32,10 +33,10 @@ public:
     // testé après exécution : tant que cette condition est vrai le noeud est réexécuté en boucle
     // si il n'y a pas de condition de répétition, on passe à l'effet suivant normalement
     QList<Condition*> m_RepeatWhileConditions;
-    LancerDe* m_LancerDe = nullptr;
+    std::shared_ptr<LancerDe> m_LancerDe = nullptr;
     OrientationAffichageChoix m_OrientationAffichageChoix = OrientationAffichageChoix::oac_vertical;
 
-    QList<Choix*> m_Choix;
+    QList<std::shared_ptr<Choix>> m_Choix;
 
     /**
      * @brief TexteAAfficher

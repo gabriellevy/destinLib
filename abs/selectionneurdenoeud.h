@@ -1,16 +1,17 @@
 #ifndef SELECTIONNEURDEVENEMENT_H
 #define SELECTIONNEURDEVENEMENT_H
 #include <QList>
+#include <memory>
 
 class Noeud;
 class Evt;
 class Condition;
 
 struct NoeudProbable {
-    Noeud* m_Noeud;
+    std::shared_ptr<Noeud> m_Noeud;
     Condition* m_PoidsProba;
 
-    NoeudProbable(Noeud* noeud, Condition* poids):m_Noeud(noeud), m_PoidsProba(poids) {}
+    NoeudProbable(std::shared_ptr<Noeud> noeud, Condition* poids):m_Noeud(noeud), m_PoidsProba(poids) {}
 };
 
 /**
@@ -29,8 +30,8 @@ public:
     * plus le poids est haut plus la proba est grande (proportionnellement)
     * note : les conditions classiques, qu'elles soient de proba ou pas, sont à mettre sur le noeud lui même, pas dans le poids associé
     * */
-    QList<NoeudProbable*> m_NoeudsProbables = {};
-    Noeud* DeterminerNoeudSuivant();
+    QList<std::shared_ptr<NoeudProbable>> m_NoeudsProbables = {};
+    std::shared_ptr<Noeud> DeterminerNoeudSuivant();
 
     // liste utilisées pour faciliter les chargements depuis la bdd
     static QList<SelectionneurDeNoeud*> s_TousLesSelectionneurs;

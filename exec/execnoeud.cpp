@@ -5,7 +5,9 @@
 #include "../gestionnairecarac.h"
 #include "execchoix.h"
 
-ExecNoeud::ExecNoeud(NoeudNarratif* noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
+using std::shared_ptr;
+
+ExecNoeud::ExecNoeud(std::shared_ptr<NoeudNarratif> noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
 {}
 
 /*ExecNoeud::~ExecNoeud()
@@ -23,7 +25,7 @@ void ExecNoeud::FinExecutionNoeud()
    //m_EtatCondition = ec_NonTeste;
 }
 
-void ExecNoeud::ExecuterActionsNoeud(Noeud* noeudAExecuter/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)
+void ExecNoeud::ExecuterActionsNoeud(shared_ptr<Noeud> noeudAExecuter)
 {
     bool executionNoeudNarratif = false; // si false il s'agit seulement de l'exécution d'un noeud de base qui change juste des caracs (par exemple)
     if ( noeudAExecuter == nullptr) {
@@ -156,7 +158,7 @@ void ExecNoeud::GenerationExecChoix()
     if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement != ModeDeroulement::Automatique) {
         if ( this->m_Noeud->m_Choix.length() > 0 &&
              this->m_ExecChoix.length() < this->m_Noeud->m_Choix.length() ) {
-            for (Choix* choix: this->m_Noeud->m_Choix) {
+            for (std::shared_ptr<Choix> choix: this->m_Noeud->m_Choix) {
                 this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
             }
         }

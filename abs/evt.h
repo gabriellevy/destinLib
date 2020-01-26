@@ -15,15 +15,15 @@ class Evt : public NoeudNarratif
 {
 protected:
     //explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);
-    explicit Evt(QString id, QString nom);
 
 public:
+    explicit Evt(QString id, QString nom);
     virtual ~Evt() {}
 
     TypeEvt m_TypeEvenement;
 
-    QVector<Effet*> m_Effets;
-    Effet* TrouverEffet(QString id);
+    QVector<std::shared_ptr<Effet>> m_Effets;
+    std::shared_ptr<Effet> TrouverEffet(QString id);
 
     QString m_CheminImgFond;
 

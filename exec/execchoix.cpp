@@ -2,7 +2,7 @@
 #include "ui_choix.h"
 #include "../abs/univers.h"
 
-ExecChoix::ExecChoix(Choix* choix, QWidget *parent) :
+ExecChoix::ExecChoix(std::shared_ptr<Choix> choix, QWidget *parent) :
     ExecNoeud(choix, parent),
     m_Choix(choix)
 {
@@ -23,19 +23,19 @@ ExecChoix::ExecChoix(Choix* choix, QWidget *parent) :
     }
 }
 
-ExecChoix::ExecChoix(ExecNoeud*, Choix* choix, QWidget *parent):
+ExecChoix::ExecChoix(ExecNoeud*, std::shared_ptr<Choix> choix, QWidget *parent):
     ExecChoix(choix, parent)
 {
 
 }
 
-ExecChoix::ExecChoix(ExecEffet* execEffet, Choix* choix, QWidget *parent):
+ExecChoix::ExecChoix(ExecEffet* execEffet, std::shared_ptr<Choix> choix, QWidget *parent):
     ExecChoix(choix, parent)
 {
     m_ExecEffet = execEffet;
 }
 
-ExecChoix::ExecChoix(ExecLancerDe* lancerDe, Choix* choix, QWidget *parent) :
+ExecChoix::ExecChoix(ExecLancerDe* lancerDe, std::shared_ptr<Choix> choix, QWidget *parent) :
     ExecChoix(choix, parent)
 {
     m_ExecLancerDe = lancerDe;
