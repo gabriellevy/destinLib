@@ -13,12 +13,14 @@ struct ResExecutionLancerDe;
 class ExecEffet;
 class LancerDe;
 
-class ExecLancerDe : public ExecNoeud
+class ExecLancerDe : public ExecNoeud,
+        my_enable_shared_from_this<ExecLancerDe>
 {
     Q_OBJECT
 
 public:
-    ExecLancerDe(ExecEffet* exec_effet, std::shared_ptr<LancerDe> effet, QWidget *parent = nullptr);
+    using my_enable_shared_from_this<ExecLancerDe>::shared_from_this;
+    ExecLancerDe(std::shared_ptr<ExecEffet> exec_effet, std::shared_ptr<LancerDe> effet, QWidget *parent = nullptr);
     virtual ~ExecLancerDe();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
@@ -26,22 +28,22 @@ public:
 
     //virtual void FinExecutionNoeud();
     void NettoyageAffichage();
-    ExecChoix* AjoutChoixGoToEffet(QString texte, QString idDest);
+    std::shared_ptr<ExecChoix> AjoutChoixGoToEffet(QString texte, QString idDest);
     void ChangerIntituleBouton(QString texte);
 
     void AfficherNoeud();
 
     std::shared_ptr<LancerDe> m_LancerDe = nullptr;
-    ExecEffet* m_ExecEffet = nullptr;
-    ExecNoeud* GetExecNoeud();
+    std::shared_ptr<ExecEffet> m_ExecEffet = nullptr;
+    std::shared_ptr<ExecNoeud> GetExecNoeud();
     int GetTotalRes();
 
     // résultat final de l'exécution de la fonction callback du lancer de dé
-    ResExecutionLancerDe* m_ResExecution = nullptr;
+    std::shared_ptr<ResExecutionLancerDe> m_ResExecution = nullptr;
 
 protected:
-    virtual void AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud);
-    virtual void AjouterAuxBoutonsVertic(ExecNoeud* execNoeud);
+    virtual void AjouterAuxBoutonsHoriz(std::shared_ptr<ExecNoeud> execNoeud);
+    virtual void AjouterAuxBoutonsVertic(std::shared_ptr<ExecNoeud> execNoeud);
 
 private:
     Ui::LancerDe *ui;

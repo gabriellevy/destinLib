@@ -5,7 +5,6 @@
 #include "../exec/execnoeud.h"
 #include "../glisseur.h"
 #include "choix.h"
-#include <memory>
 
 class Evt;
 
@@ -21,9 +20,7 @@ public:
                  QString imgPath = "");
 
     virtual ~Effet() {}
-    /*explicit Effet(QJsonObject effetJson, QWidget *parent = nullptr);*/
 
-    //bool AQuelqueChoseAAfficher();
     void SupprimerTousLesChoix();
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
     int CalculerIndex();

@@ -3,6 +3,9 @@
 #include "abs/univers.h"
 #include "abs/setcarac.h"
 
+using std::make_shared;
+using std::shared_ptr;
+
 GestionnaireCarac::GestionnaireCarac()
 {
 
@@ -38,13 +41,13 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = this->CetteCaracExisteDeja(setCarac.m_CaracId);
 
-    Carac* carac;
+    shared_ptr<Carac> carac;
     if ( trouve )
     {
         carac = m_Caracs[setCarac.m_CaracId];
     }
     else {
-        carac = new Carac;
+        carac = make_shared<Carac>();
         carac->m_DataCarac.m_Id = setCarac.m_CaracId;
         carac->m_DataCarac.SetValeur("0");
         m_Caracs[setCarac.m_CaracId] = carac;
@@ -74,23 +77,23 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
     }
 }
 
-void GestionnaireCarac::AjouterCarac(Carac* carac)
+void GestionnaireCarac::AjouterCarac(shared_ptr<Carac> carac)
 {
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
+shared_ptr<Carac> GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
 {
-    Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
+    shared_ptr<Carac> carac = make_shared<Carac>(idCarac, idCarac, QString::number(valeur),
                              "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
                              QString::number(valMin), QString::number(valMax));
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
+shared_ptr<Carac> GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
 {
-    Carac* carac = new Carac(idCarac, idCarac, valeur,
+    shared_ptr<Carac> carac = make_shared<Carac>(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     return carac;
@@ -142,7 +145,7 @@ QString GestionnaireCarac::EffacerValeurACaracId(const QString& idCarac)
     return SetValeurACaracId(idCarac, "");
 }
 
-Carac* GestionnaireCarac::GetCarac(QString idCarac)
+shared_ptr<Carac> GestionnaireCarac::GetCarac(QString idCarac)
 {
     return m_Caracs[idCarac];
 
@@ -157,10 +160,10 @@ QString GestionnaireCarac::CARAC_CHEMIN_PORTRAIT = "PersoCheminPortrait";
 
 DPerso::DPerso(QString id, QString nom, QString description, QString CheminImagePortrait)
 {
-    this->m_SetCaracs.push_back( new SetCarac(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_PERSO_ID, id));
-    this->m_SetCaracs.push_back( new SetCarac(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_NOM, nom));
-    this->m_SetCaracs.push_back( new SetCarac(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_DESCRIPTION, description));
-    this->m_SetCaracs.push_back( new SetCarac(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_CHEMIN_PORTRAIT, CheminImagePortrait));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_PERSO_ID, id));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_NOM, nom));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_DESCRIPTION, description));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_CHEMIN_PORTRAIT, CheminImagePortrait));
 }
 
 
@@ -173,7 +176,7 @@ void DPerso::MajNom(QString nouveauNom)
 }
 
 
-DPerso* DPerso::GetDPersoJoue()
+shared_ptr<DPerso> DPerso::GetDPersoJoue()
 {
     return Univers::ME->GetPersoInterface()->GetPersoCourant();
 }
@@ -200,7 +203,7 @@ QString DPerso::GetId()
     return "id introuvable !!";
 }
 
-QMap<QString, Carac*> GestionnaireCarac::GetCaracs()
+QMap<QString, shared_ptr<Carac>> GestionnaireCarac::GetCaracs()
 {
     return this->m_Caracs;
 }

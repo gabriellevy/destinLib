@@ -31,10 +31,10 @@ void GenEvt::ChargerEffetsBdd(std::shared_ptr<Evt> evtDest)
     }
 }
 
-void GenEvt::AjouterASelectionneurEvt(std::shared_ptr<Evt> evt, Condition* poids, int selectionneur_bdd_id)
+void GenEvt::AjouterASelectionneurEvt(shared_ptr<Evt> evt, shared_ptr<Condition> poids, int selectionneur_bdd_id)
 {
     // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
-    for ( SelectionneurDeNoeud* sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
+    for ( shared_ptr<SelectionneurDeNoeud> sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
     {
         if ( sel->m_BddId == selectionneur_bdd_id) {
             sel->m_NoeudsProbables.push_back(std::make_shared<NoeudProbable>(evt, poids));
@@ -51,7 +51,7 @@ void GenEvt::AjouterASelectionneurEvt(std::shared_ptr<Evt> evt, Condition* poids
         int bdd_id = query.value("id").toInt();
         QString intitule = query.value("intitule").toString();
 
-        SelectionneurDeNoeud* sel = new SelectionneurDeNoeud(intitule, bdd_id);
+        shared_ptr<SelectionneurDeNoeud> sel = make_shared<SelectionneurDeNoeud>(intitule, bdd_id);
         sel->m_NoeudsProbables.push_back(std::make_shared<NoeudProbable>(evt, poids));
         SelectionneurDeNoeud::s_TousLesSelectionneurs.push_back(sel);
     }
@@ -98,7 +98,7 @@ std::shared_ptr<Effet> GenEvt::AjouterEffetSelectionneurDeNoeud(QString id, QStr
 {
     std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
     effet->m_Texte = text;
-    effet->m_SelectionneurDeNoeud = new SelectionneurDeNoeud(id);
+    effet->m_SelectionneurDeNoeud = make_shared<SelectionneurDeNoeud>(id);
     return effet;
 }
 
@@ -123,9 +123,10 @@ std::shared_ptr<Effet> GenEvt::AjouterEffetModificateurCarac(
     return effet;
 }
 
-Noeud* GenEvt::GenererNoeudModificateurCarac(QString caracId, QString nouvelleValeur, QList<Condition*> conditions)
+shared_ptr<Noeud> GenEvt::GenererNoeudModificateurCarac(
+        QString caracId, QString nouvelleValeur, QList<shared_ptr<Condition>> conditions)
 {
-    Noeud* noeud = new Noeud();
+    shared_ptr<Noeud> noeud = make_shared<Noeud>();
     noeud->AjouterChangeurDeCarac(caracId, nouvelleValeur);
     noeud->m_Conditions.append( conditions );
     return noeud;
@@ -152,7 +153,7 @@ std::shared_ptr<Effet> GenEvt::AjouterEffetNarration(
 
 std::shared_ptr<LancerDe> GenEvt::AjouterLancerDe(QString texte,
                                   int nbDes,
-                                  std::function<ResExecutionLancerDe*(int)> callback,
+                                  std::function<shared_ptr<ResExecutionLancerDe>(int)> callback,
                                   std::shared_ptr<Effet> effetDest)
 {
     if ( effetDest == nullptr)
@@ -201,7 +202,7 @@ std::shared_ptr<Effet> GenEvt::AjouterEffetTest(
         QString caracId, Comparateur comparateur, QString valeur, QString id, std::shared_ptr<Evt> evtDest )
 {
     std::shared_ptr<Effet> effet = this->AjouterEffetVide(evtDest, id);
-    effet->m_Conditions.push_back(new Condition(caracId, valeur, comparateur));
+    effet->m_Conditions.push_back(make_shared<Condition>(caracId, valeur, comparateur));
     return effet;
 }
 

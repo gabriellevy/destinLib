@@ -9,9 +9,9 @@ class Condition;
 
 struct NoeudProbable {
     std::shared_ptr<Noeud> m_Noeud;
-    Condition* m_PoidsProba;
+    std::shared_ptr<Condition> m_PoidsProba;
 
-    NoeudProbable(std::shared_ptr<Noeud> noeud, Condition* poids):m_Noeud(noeud), m_PoidsProba(poids) {}
+    NoeudProbable(std::shared_ptr<Noeud> noeud, std::shared_ptr<Condition> poids):m_Noeud(noeud), m_PoidsProba(poids) {}
 };
 
 /**
@@ -34,7 +34,7 @@ public:
     std::shared_ptr<Noeud> DeterminerNoeudSuivant();
 
     // liste utilisées pour faciliter les chargements depuis la bdd
-    static QList<SelectionneurDeNoeud*> s_TousLesSelectionneurs;
+    static QList<std::shared_ptr<SelectionneurDeNoeud>> s_TousLesSelectionneurs;
     int m_BddId;
     QString m_Intitule;
 };

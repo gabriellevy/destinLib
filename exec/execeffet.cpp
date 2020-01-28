@@ -9,7 +9,10 @@
 #include "execlancerde.h"
 #include "../abs/lancerde.h"
 
-ExecEffet::ExecEffet(ExecEvt* exec_evt, std::shared_ptr<Effet> effet, QWidget *parent):
+using std::shared_ptr;
+using std::make_shared;
+
+ExecEffet::ExecEffet(shared_ptr<ExecEvt> exec_evt, std::shared_ptr<Effet> effet, QWidget *parent):
     ExecNoeud(effet, parent),
     m_ExecEvt(exec_evt),
     ui(new Ui::Effet)
@@ -33,10 +36,10 @@ void ExecEffet::NettoyageAffichage()
 {
     /*while ( QWidget* w = findChild<QWidget*>() )
         delete w;*/
-    for ( ExecChoix* choix: this->m_ExecChoix ) {
-        this->layout()->removeWidget(choix);
+    for ( shared_ptr<ExecChoix> choix: this->m_ExecChoix ) {
+        this->layout()->removeWidget(choix.get());
     }
-    ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe);
+    ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe.get());
 }
 
 void ExecEffet::FinExecutionNoeud()
@@ -61,7 +64,7 @@ ExecEffet::~ExecEffet()
 
 void ExecEffet::FinChrono()
 {
-    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(ExecEffet::shared_from_this());
 }
 
 void ExecEffet::AfficherBoutonSuivant()
@@ -115,7 +118,7 @@ bool ExecEffet::GestionTransition()
         }
         else
         {
-            Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+            Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(ExecNoeud::shared_from_this());
             return false;
         }
     }
@@ -124,20 +127,20 @@ bool ExecEffet::GestionTransition()
 }
 
 
-void ExecEffet::AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud)
+void ExecEffet::AjouterAuxBoutonsHoriz(shared_ptr<ExecNoeud> execNoeud)
 {
-    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud);
+    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud.get());
 }
 
-void ExecEffet::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
+void ExecEffet::AjouterAuxBoutonsVertic(shared_ptr<ExecNoeud> execNoeud)
 {
-    ui->layoutBoutons->layout()->addWidget(execNoeud);
+    ui->layoutBoutons->layout()->addWidget(execNoeud.get());
 }
 
-ExecLancerDe* ExecEffet::SetExecLancerDe(std::shared_ptr<LancerDe> lancer_de)
+shared_ptr<ExecLancerDe> ExecEffet::SetExecLancerDe(std::shared_ptr<LancerDe> lancer_de)
 {
    if ( this->m_ExecLancerDe == nullptr || this->m_ExecLancerDe->m_LancerDe != lancer_de)
-        return this->SetExecLancerDe(new ExecLancerDe(this, lancer_de));
+        return this->SetExecLancerDe(make_shared<ExecLancerDe>(ExecEffet::shared_from_this(), lancer_de));
    return this->m_ExecLancerDe;
 }
 
@@ -213,7 +216,7 @@ void ExecEffet::AfficherNoeud()
         //this->SetExecLancerDe(exec_lancer_de);
     }
 
-    Hist* hist = Univers::ME->GetExecHistoire()->m_Histoire;
+    shared_ptr<Hist> hist = Univers::ME->GetExecHistoire()->m_Histoire;
     // déclenchement du chrono pour cet effet si il en a un :
     if ( GetEffet()->m_MsChrono == -1 &&
          (hist->m_ModeDeroulement == ModeDeroulement::Automatique && hist->m_MsDureeDefilement != -1 ))
@@ -228,19 +231,19 @@ void ExecEffet::AfficherNoeud()
     Univers::ME->GetExecHistoire()->GetExecEvtActuel()->RafraichirAffichageLayouts();
 }
 
-ExecLancerDe* ExecEffet::SetExecLancerDe(ExecLancerDe* exec_lancer_de)
+shared_ptr<ExecLancerDe> ExecEffet::SetExecLancerDe(shared_ptr<ExecLancerDe> exec_lancer_de)
 {
     if ( this->m_ExecLancerDe == nullptr ||  this->m_ExecLancerDe != exec_lancer_de) {
         if ( m_ExecLancerDe != nullptr)
         {
             //m_ExecLancerDe->NettoyageAffichage();
             m_ExecLancerDe->hide();
-            ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe);
+            ui->lancerDeWidget->layout()->removeWidget(m_ExecLancerDe.get());
         }
         m_ExecLancerDe = exec_lancer_de;
         m_ExecLancerDe->LancerNoeud();
 
-        ui->lancerDeWidget->layout()->addWidget(m_ExecLancerDe);
+        ui->lancerDeWidget->layout()->addWidget(m_ExecLancerDe.get());
 
         m_ExecLancerDe->show();
         this->update();

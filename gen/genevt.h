@@ -4,7 +4,6 @@
 #include <QString>
 #include "../abs/condition.h"
 #include "../abs/evtaleatoire.h"
-#include <memory>
 
 struct ResExecutionLancerDe;
 
@@ -59,7 +58,9 @@ public:
     std::shared_ptr<Choix> AjouterChoixGoToEffet(
             QString text, QString go_to_effet_id, QString cheminImg, std::shared_ptr<LancerDe> lancerDe);
 
-    std::shared_ptr<LancerDe> AjouterLancerDe(QString texte, int nbDes, std::function<ResExecutionLancerDe*(int/*, QVector<QString>*/)>,
+    std::shared_ptr<LancerDe> AjouterLancerDe(
+            QString texte, int nbDes,
+            std::function<std::shared_ptr<ResExecutionLancerDe>(int/*, QVector<QString>*/)>,
                /*QVector<QString> params, */std::shared_ptr<Effet> effet = nullptr);
 
     /**
@@ -78,7 +79,7 @@ public:
     /**
      * @brief dans le cas où cet événement appartiendrait à un système de sélection d'événement on l'y ajoute :
      */
-    void AjouterASelectionneurEvt(std::shared_ptr<Evt> evt, Condition* poids, int selectionneur_bdd_id);
+    void AjouterASelectionneurEvt(std::shared_ptr<Evt> evt, std::shared_ptr<Condition> poids, int selectionneur_bdd_id);
 
     /**
      * @brief crée un effet qui lors de son exécution enverra vers un des noeuds passés en paramètres selon leurs probas
@@ -92,7 +93,8 @@ public:
             QString id = "", QString text = "",
             std::shared_ptr<Evt> evt = nullptr);
 
-    Noeud* GenererNoeudModificateurCarac(QString caracId, QString nouvelleValeur, QList<Condition*> conditions = {});
+    std::shared_ptr<Noeud> GenererNoeudModificateurCarac(
+            QString caracId, QString nouvelleValeur, QList<std::shared_ptr<Condition>> conditions = {});
 
 private:
 

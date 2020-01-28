@@ -5,7 +5,7 @@
 #include <chrono>
 #include <random>
 
-QList<SelectionneurDeNoeud*> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
+QList<std::shared_ptr<SelectionneurDeNoeud>> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 
 SelectionneurDeNoeud::SelectionneurDeNoeud(QString intitule, int bdd_id):m_BddId(bdd_id), m_Intitule(intitule)
 {}

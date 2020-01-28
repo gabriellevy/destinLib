@@ -6,6 +6,7 @@
 #include "execchoix.h"
 
 using std::shared_ptr;
+using std::make_shared;
 
 ExecNoeud::ExecNoeud(std::shared_ptr<NoeudNarratif> noeud, QWidget* parent):QWidget (parent), m_Noeud(noeud)
 {}
@@ -64,7 +65,7 @@ void ExecNoeud::ExecuterActionsNoeud(shared_ptr<Noeud> noeudAExecuter)
         Univers::ME->GetPersoInterface()->RafraichirAffichage();
     }*/
 
-    foreach(AppelCallback* appel, noeudAExecuter->m_FonctionsAppellees)
+    foreach(shared_ptr<AppelCallback> appel, noeudAExecuter->m_FonctionsAppellees)
     {
         Univers::ME->GetExecHistoire()->AppelerFonctionCallback(
                     appel->m_NomFonction,
@@ -80,7 +81,7 @@ void ExecNoeud::ExecuterActionsNoeud(shared_ptr<Noeud> noeudAExecuter)
     // maj des caracs
     if ( noeudAExecuter->m_SetCaracs.size()>0)
     {
-        IPerso* perso = Univers::ME->GetPersoInterface();
+        shared_ptr<IPerso> perso = Univers::ME->GetPersoInterface();
         for ( int i = 0 ; i < noeudAExecuter->m_SetCaracs.size() ; ++i)
         {
             IPerso::GetPersoCourant()->AppliquerSetCarac(*noeudAExecuter->m_SetCaracs[i] );
@@ -112,12 +113,12 @@ void ExecNoeud::LancerNoeud()
 }
 
 
-void ExecNoeud::AjouterAuxBoutonsHoriz(ExecNoeud* )
+void ExecNoeud::AjouterAuxBoutonsHoriz(shared_ptr<ExecNoeud> )
 {
     Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsHoriz");
 }
 
-void ExecNoeud::AjouterAuxBoutonsVertic(ExecNoeud* )
+void ExecNoeud::AjouterAuxBoutonsVertic(shared_ptr<ExecNoeud> )
 {
     Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsVertic");
 }
@@ -159,7 +160,7 @@ void ExecNoeud::GenerationExecChoix()
         if ( this->m_Noeud->m_Choix.length() > 0 &&
              this->m_ExecChoix.length() < this->m_Noeud->m_Choix.length() ) {
             for (std::shared_ptr<Choix> choix: this->m_Noeud->m_Choix) {
-                this->m_ExecChoix.push_back(new ExecChoix(this, choix, this));
+                this->m_ExecChoix.push_back(make_shared<ExecChoix>(ExecNoeud::shared_from_this(), choix, this));
             }
         }
 

@@ -3,6 +3,7 @@
 #include <QString>
 #include <QJsonObject>
 #include <QList>
+#include <memory>
 
 enum Comparateur {
     c_Egal,
@@ -27,11 +28,6 @@ enum TypeProba {
     p_Relative
 };
 
-/*enum EtatCondition {
-    ec_NonTeste, // cette condition n'a pas encore été testée durant cette itération
-    ec_True,
-    ec_False
-};*/
 
 class Condition;
 
@@ -39,7 +35,7 @@ class ModifProba
 {
 public:
     double m_Valeur = 0.0;
-    QList<Condition*> m_Conditions;
+    QList<std::shared_ptr<Condition>> m_Conditions;
     int m_BDD_Id;
 
     ModifProba(double valeur);
@@ -57,7 +53,7 @@ public:
     Condition(QString caracId, QString valeur, Comparateur comparateur);
     Condition(double proba, TypeProba typeProba);
 
-    QList<ModifProba*> m_ModifsProba;
+    QList<std::shared_ptr<ModifProba>> m_ModifsProba;
     QString m_CaracId;
     //double m_ValeurNombre; // valeur à comparer si il s'agit d'un nombre
     QString m_Valeur = "0"; // valeur à comparer si il s'agit d'une chaîne de caractères
@@ -78,14 +74,14 @@ public:
      * @brief Récupère toutes les conditions du noeud json et les ajoute dans la liste de conditions passée en référence
      * @return
      */
-    static void RemplirListeCondition( QJsonObject objJson, QList<Condition*> &conditions, bool conditionsWhile);
+    static void RemplirListeCondition( QJsonObject objJson, QList<std::shared_ptr<Condition>> &conditions, bool conditionsWhile);
 
-    static Condition* CreerConditionDepuisObject(QString balise, QJsonObject obj);
+    static std::shared_ptr<Condition> CreerConditionDepuisObject(QString balise, QJsonObject obj);
 
-    static bool TesterTableauDeConditions(QList<Condition*> &conditions);
+    static bool TesterTableauDeConditions(QList<std::shared_ptr<Condition>> &conditions);
 
-    ModifProba* AjouterModifProba(double valeur, QList<Condition*> conditions);
-    ModifProba* AjouterModifProbaVide();
+    std::shared_ptr<ModifProba> AjouterModifProba(double valeur, QList<std::shared_ptr<Condition>> conditions);
+    std::shared_ptr<ModifProba> AjouterModifProbaVide();
 
     // concertisseur string/Comparateur
     static Comparateur GetComparateurFromStr(QString compStr);

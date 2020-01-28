@@ -4,6 +4,7 @@
 #include <chrono>
 #include <random>
 #include <QList>
+#include <memory>
 
 class Aleatoire
 {

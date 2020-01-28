@@ -7,6 +7,9 @@
 #include "../exec/execeffet.h"
 #include "../exec/execevt.h"
 
+using std::shared_ptr;
+using std::make_shared;
+
 const QFont* Univers::BASE_FONT = new QFont("Verdana", 10);
 const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
 QString Univers::CHEMIN = "";
@@ -17,14 +20,14 @@ Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool persoAffiche
 {
     InstallerInterface();
     if ( m_PersoAffiche )
-        m_Perso = new IPerso(ui->persoWidget);
+        m_Perso = make_shared<IPerso>(ui->persoWidget);
 }
 
 void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString premierEvt, QString premierEffet, bool BarreDeCote)
 {
     this->m_Histoire = this->GenererUneHistoire(idHistoire);
 
-    this->m_ExecHistoire = new ExecHistoire(this->m_Histoire);
+    this->m_ExecHistoire = make_shared<ExecHistoire>(this->m_Histoire);
 
     this->AfficherHistoire(ui->histoireWidget);
 
@@ -33,7 +36,7 @@ void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString p
         m_Perso->RafraichirAffichage();
 
         // positionner l'interface
-        ui->persoWidget->layout()->addWidget(m_Perso);
+        ui->persoWidget->layout()->addWidget(m_Perso.get());
         m_Perso->show();
    }
    else {
@@ -76,13 +79,13 @@ void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString p
 
 void Univers::NettoyageGenerateurs()
 {
-    QHash<QString, GenHistoire*>::iterator i = m_GensHistoire.begin();
+    QHash<QString, shared_ptr<GenHistoire>>::iterator i = m_GensHistoire.begin();
     while (i != m_GensHistoire.end()) {
         i = m_GensHistoire.erase(i);
     }
 }
 
-Hist* Univers::GenererUneHistoire(QString histoireId)
+shared_ptr<Hist> Univers::GenererUneHistoire(QString histoireId)
 {
     Q_ASSERT_X(m_GensHistoire.contains(histoireId), "Impossible de générer l'histoire 'histoireId' !!", "Univers::GenererUneHistoire");
 
@@ -98,7 +101,7 @@ Hist* Univers::GenererUneHistoire(QString histoireId)
 void Univers::AfficherHistoire(QWidget *parent)
 {
     this->setWindowTitle(m_ExecHistoire->GetTitre());
-    parent->layout()->addWidget(m_ExecHistoire);
+    parent->layout()->addWidget(m_ExecHistoire.get());
 }
 
 void Univers::AppliquerFond(QString urlImageFond)
@@ -153,22 +156,22 @@ void Univers::AjouterDuree(float duree)
     m_Duree += duree;
 }
 
-ExecHistoire* Univers::GetExecHistoire()
+shared_ptr<ExecHistoire> Univers::GetExecHistoire()
 {
     return m_ExecHistoire;
 }
 
-Hist* Univers::GetHistoire()
+shared_ptr<Hist> Univers::GetHistoire()
 {
     return m_Histoire;
 }
 
-GenHistoire* Univers::GetGenHistoire(QString idHistoire)
+shared_ptr<GenHistoire> Univers::GetGenHistoire(QString idHistoire)
 {
     return m_GensHistoire[idHistoire];
 }
 
-IPerso* Univers::GetPersoInterface()
+shared_ptr<IPerso> Univers::GetPersoInterface()
 {
     return m_Perso;
 }
@@ -181,8 +184,8 @@ void Univers::RafraichirAffichage()
 
 bool Univers::LancerEvtEtOuEffetCourant()
 {
-    ExecEvt* evt_actuel = m_ExecHistoire->GetExecEvtActuel();
-    ExecEffet* effet_actuel = m_ExecHistoire->GetExecEffetActuel();
+    shared_ptr<ExecEvt> evt_actuel = m_ExecHistoire->GetExecEvtActuel();
+    shared_ptr<ExecEffet> effet_actuel = m_ExecHistoire->GetExecEffetActuel();
     if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == nullptr || effet_actuel == nullptr)
         return false;
 

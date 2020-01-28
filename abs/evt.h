@@ -13,9 +13,6 @@ enum TypeEvt {
 
 class Evt : public NoeudNarratif
 {
-protected:
-    //explicit Evt(QJsonObject evtJson, QWidget *parent = nullptr);
-
 public:
     explicit Evt(QString id, QString nom);
     virtual ~Evt() {}

@@ -8,7 +8,7 @@
 using std::shared_ptr;
 using std::make_shared;
 
-ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, std::shared_ptr<LancerDe> lancerDe, QWidget *parent) :
+ExecLancerDe::ExecLancerDe(shared_ptr<ExecEffet> execEffet, std::shared_ptr<LancerDe> lancerDe, QWidget *parent) :
     ExecNoeud(lancerDe, parent),
     m_LancerDe(lancerDe),
     m_ExecEffet(execEffet),
@@ -74,9 +74,9 @@ bool ExecLancerDe::GestionTransition()
     return true;
 }
 
-ExecNoeud* ExecLancerDe::GetExecNoeud()
+shared_ptr<ExecNoeud> ExecLancerDe::GetExecNoeud()
 {
-    return static_cast<ExecNoeud*>(this);
+    return std::static_pointer_cast<ExecNoeud>(ExecLancerDe::shared_from_this());
 }
 
 int ExecLancerDe::GetTotalRes()
@@ -90,27 +90,27 @@ int ExecLancerDe::GetTotalRes()
 
 void ExecLancerDe::NettoyageAffichage()
 {
-    for ( ExecChoix* choix: this->m_ExecChoix ) {
-        this->layout()->removeWidget(choix);
+    for ( shared_ptr<ExecChoix> choix: this->m_ExecChoix ) {
+        this->layout()->removeWidget(choix.get());
     }
 }
 
 
-void ExecLancerDe::AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud)
+void ExecLancerDe::AjouterAuxBoutonsHoriz(shared_ptr<ExecNoeud> execNoeud)
 {
-    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud);
+    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud.get());
 }
 
-void ExecLancerDe::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
+void ExecLancerDe::AjouterAuxBoutonsVertic(shared_ptr<ExecNoeud> execNoeud)
 {
-    ui->layoutBoutons->layout()->addWidget(execNoeud);
+    ui->layoutBoutons->layout()->addWidget(execNoeud.get());
 }
 
-ExecChoix* ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
+shared_ptr<ExecChoix> ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
 {
     shared_ptr<Choix> choix = make_shared<Choix>(this->m_LancerDe, texte);
     choix->m_GoToEffetId = idDest;
-    ExecChoix* exec = new ExecChoix(this, choix, this);
+    shared_ptr<ExecChoix> exec = make_shared<ExecChoix>(ExecNoeud::shared_from_this(), choix, this);
     this->m_ExecChoix.push_back(exec);
     return exec;
 }
@@ -136,8 +136,10 @@ void ExecLancerDe::ExecuterNoeudSlot()
         //resExec = "";
 
     // nettoyage des restes des lancers précédents
-    if ( m_ResExecution != nullptr)
-        delete m_ResExecution;
+    /*if ( m_ResExecution != nullptr)
+        delete m_ResExecution;*/
+    m_ResExecution = nullptr;
+
     ui->de1->clear();
     ui->de2->clear();
     ui->de3->clear();

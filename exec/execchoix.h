@@ -4,28 +4,29 @@
 #include "execnoeud.h"
 #include "../abs/choix.h"
 #include "execlancerde.h"
-#include <memory>
 
 class ExecEffet;
 class LancerDe;
 
-class ExecChoix : /*public QPushButton, */public ExecNoeud
+class ExecChoix : public ExecNoeud,
+        my_enable_shared_from_this<ExecChoix>
 {
     Q_OBJECT
  public:
+    using my_enable_shared_from_this<ExecChoix>::shared_from_this;
 
     std::shared_ptr<Choix> m_Choix;
-    ExecEffet* m_ExecEffet = nullptr;
-    ExecLancerDe* m_ExecLancerDe = nullptr;
+    std::shared_ptr<ExecEffet> m_ExecEffet = nullptr;
+    std::shared_ptr<ExecLancerDe> m_ExecLancerDe = nullptr;
 
     explicit ExecChoix(
             std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     explicit ExecChoix(
-            ExecEffet* ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+            std::shared_ptr<ExecEffet> ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     explicit ExecChoix(
-            ExecLancerDe* ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+            std::shared_ptr<ExecLancerDe> ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     explicit ExecChoix(
-            ExecNoeud* execNoeud, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+            std::shared_ptr<ExecNoeud> execNoeud, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     virtual ~ExecChoix();
 
     void AfficherNoeud();
@@ -34,13 +35,13 @@ class ExecChoix : /*public QPushButton, */public ExecNoeud
     //void LancerNoeud();
     bool GestionTransition();
 
-    ExecNoeud* GetExecNoeud();
+    std::shared_ptr<ExecNoeud> GetExecNoeud();
 
 private:
     Ui::Choix *ui;
 
 public slots:
-    void ExecuterNoeudSlot(/*bool afficherNoeud = true, bool lancerNoeudSuivantSiRienAAfiicher = true*/);
+    void ExecuterNoeudSlot();
 };
 
 #endif // EXECCHOIX_H

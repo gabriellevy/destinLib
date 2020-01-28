@@ -2,7 +2,6 @@
 #define NOEUDNARRATIF_H
 
 #include "noeud.h"
-#include <memory>
 
 enum OrientationAffichageChoix
 {
@@ -26,13 +25,13 @@ public:
 
     QString m_Nom = "";
     QString m_Son = "";
-    float m_Duree;
+    double m_Duree;
     QString m_Texte = "";
     QString m_ImgPath = "";
     QString m_FilmPath = "";
     // testé après exécution : tant que cette condition est vrai le noeud est réexécuté en boucle
     // si il n'y a pas de condition de répétition, on passe à l'effet suivant normalement
-    QList<Condition*> m_RepeatWhileConditions;
+    QList<std::shared_ptr<Condition>> m_RepeatWhileConditions;
     std::shared_ptr<LancerDe> m_LancerDe = nullptr;
     OrientationAffichageChoix m_OrientationAffichageChoix = OrientationAffichageChoix::oac_vertical;
 
@@ -60,7 +59,7 @@ public:
     double m_TempEcoule;
 
     double GetTempEcoule();
-    void AjouterDuree(float duree);
+    void AjouterDuree(double duree);
 
     // gestion de la bdd :
     int m_BDD_NoeudId;

@@ -8,18 +8,46 @@ class NoeudNarratif;
 class Noeud;
 class ExecChoix;
 
-class ExecNoeud : public QWidget
+/**
+ * cette manière tordue d'ajouter enable_shared_from_this à toutes classes était nécessaire pour éviter
+ * que la fonction shared-from_this soit ambigue (vu qu'héritée et redéfinie pour chaque classe héritant de ExecNoeud)
+ */
+class virtual_enable_shared_from_this:
+   public std::enable_shared_from_this<virtual_enable_shared_from_this>
+{
+public:
+   virtual ~virtual_enable_shared_from_this() {}
+
+    friend class ExecNoeud;
+};
+
+template<class T> class my_enable_shared_from_this :
+    public virtual virtual_enable_shared_from_this
+{
+public:
+   std::shared_ptr<T> shared_from_this()
+   {
+      return std::dynamic_pointer_cast<T>(
+         virtual_enable_shared_from_this::shared_from_this());
+   }
+   virtual ~my_enable_shared_from_this() {}
+};
+
+class ExecNoeud : public QWidget,
+        public my_enable_shared_from_this<ExecNoeud>
 {
     Q_OBJECT
 
 public:
+    using my_enable_shared_from_this<ExecNoeud>::shared_from_this;
+
     ExecNoeud(std::shared_ptr<NoeudNarratif> noeud, QWidget* parent = nullptr);
     virtual ~ExecNoeud() {}
 
     QPixmap m_Img;
     QMovie* m_Film = nullptr;
 
-    QList<ExecChoix*> m_ExecChoix;
+    QList<std::shared_ptr<ExecChoix>> m_ExecChoix;
 
     /**
      * @brief exécute tout ce qui est défini dans ce noeud (changements de caracs, go to un autre effet etc...
@@ -52,11 +80,11 @@ public:
     std::shared_ptr<NoeudNarratif> m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
 
 protected:
-    virtual void AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud);
-    virtual void AjouterAuxBoutonsVertic(ExecNoeud* execNoeud);
+    virtual void AjouterAuxBoutonsHoriz(std::shared_ptr<ExecNoeud> execNoeud);
+    virtual void AjouterAuxBoutonsVertic(std::shared_ptr<ExecNoeud> execNoeud);
 
 private:
-    //Ui::Noeud *ui;
+
 };
 
 #endif // EXECNOEUD_H

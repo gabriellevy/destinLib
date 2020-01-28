@@ -2,7 +2,6 @@
 #define LANCERDE_H
 
 #include "noeudnarratif.h"
-#include <memory>
 
 class Effet;
 class ExecEffet;
@@ -26,14 +25,14 @@ protected:
 public:
     // à passer en protected quand la structure GenEvt sera finie :
     LancerDe(std::shared_ptr<Effet> ParentEffet, QString texteBouton, int nbDes,
-          std::function<ResExecutionLancerDe*(int resDe)> callback);
+          std::function<std::shared_ptr<ResExecutionLancerDe>(int resDe)> callback);
 
     virtual ~LancerDe() {}
 
     virtual bool AQuelqueChoseAAfficher();
     std::shared_ptr<Effet> m_ParentEffet;
     int m_NbDes;
-    std::function<ResExecutionLancerDe*(int resDe/*, QVector<QString> params*/)> m_Callback; // fonction exécutée en fonction du résultat du lancer
+    std::function<std::shared_ptr<ResExecutionLancerDe>(int resDe/*, QVector<QString> params*/)> m_Callback; // fonction exécutée en fonction du résultat du lancer
 
     //friend class GenEvt;
 };

@@ -4,6 +4,8 @@
 #include "../gestionnairecarac.h"
 #include "choix.h"
 
+using std::shared_ptr;
+using std::make_shared;
 
 int NoeudNarratif::NOEUD_ID_COMPTEUR = 0;
 
@@ -67,7 +69,7 @@ void NoeudNarratif::ChargerSelectionneurEvtBdd()
         int bdd_id = query.value("id").toInt();
         QString intitule = query.value("intitule").toString();
         // vérifier si ce sélectionneur a déjà été créé depuis la bdd :
-        for ( SelectionneurDeNoeud* sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
+        for ( shared_ptr<SelectionneurDeNoeud> sel: SelectionneurDeNoeud::s_TousLesSelectionneurs)
         {
             if ( sel->m_BddId == bdd_id) {
                 this->m_SelectionneurDeNoeud = sel;
@@ -76,7 +78,7 @@ void NoeudNarratif::ChargerSelectionneurEvtBdd()
         }
 
         // pas trouvé : on le crée
-        SelectionneurDeNoeud* sel = new SelectionneurDeNoeud(intitule, bdd_id);
+        shared_ptr<SelectionneurDeNoeud> sel = make_shared<SelectionneurDeNoeud>(intitule, bdd_id);
         this->m_SelectionneurDeNoeud = sel;
         SelectionneurDeNoeud::s_TousLesSelectionneurs.push_back(sel);
     }
@@ -84,8 +86,8 @@ void NoeudNarratif::ChargerSelectionneurEvtBdd()
 
 NoeudNarratif::~NoeudNarratif()
 {
-    while (!m_RepeatWhileConditions.isEmpty())
-          delete m_RepeatWhileConditions.takeFirst();
+    /*while (!m_RepeatWhileConditions.isEmpty())
+          delete m_RepeatWhileConditions.takeFirst();*/
 }
 
 QString NoeudNarratif::TexteAAfficher()
@@ -120,7 +122,7 @@ void NoeudNarratif::ChargerFonctionsCallbacksBdd()
     QSqlQuery query(req_str);
     while (query.next())
     {
-       AppelCallback* appel = new AppelCallback(query.value("fonction_id").toString());
+       shared_ptr<AppelCallback> appel = make_shared<AppelCallback>(query.value("fonction_id").toString());
        appel->m_BDD_FonctId = query.value("id").toInt();
 
        appel->ChargerArgumentsBdd();
@@ -147,7 +149,7 @@ void NoeudNarratif::ChargerFonctionsTestCallbacksBdd()
     QSqlQuery query(req_str);
     while (query.next())
     {
-       AppelCallback* appel = new AppelCallback(query.value("fonction_id").toString());
+       shared_ptr<AppelCallback> appel = make_shared<AppelCallback>(query.value("fonction_id").toString());
        appel->m_BDD_FonctId = query.value("id").toInt();
 
        appel->ChargerArgumentsBdd();
@@ -167,7 +169,7 @@ void NoeudNarratif::ChargerConditionsBdd()
        Comparateur comparateur = Condition::GetComparateurFromStr(compStr);
        double proba = query.value("m_Proba").toDouble();
 
-       Condition* cond = nullptr;
+       shared_ptr<Condition> cond = nullptr;
 
        if ( proba <0) {
            // condition de base
@@ -200,7 +202,7 @@ void NoeudNarratif::ChargerSetCaracBdd()
 
         QString idCarac = query.value("m_CaracId").toString();
         QString valeur = query.value("m_Valeur").toString();
-        SetCarac* setC = nullptr;
+        shared_ptr<SetCarac> setC = nullptr;
 
         switch (eType)
         {
@@ -224,7 +226,7 @@ void NoeudNarratif::ChargerSetCaracBdd()
 }
 
 
-void NoeudNarratif::AjouterDuree(float duree)
+void NoeudNarratif::AjouterDuree(double duree)
 {
     m_TempEcoule += duree;
 }

@@ -4,7 +4,6 @@
 #include <QPushButton>
 #include "../exec/execnoeud.h"
 #include "noeudnarratif.h"
-#include <memory>
 
 namespace Ui {
 class Choix;

@@ -5,6 +5,9 @@
 #include <QSqlQuery>
 #include "histoire.h"
 
+using std::shared_ptr;
+using std::make_shared;
+
 Noeud::Noeud():m_TypeNoeud(TypeNoeud::etn_Noeud)
 {
     m_ChangeurModeDeroulement = ModeDeroulement::Aucun;
@@ -16,67 +19,67 @@ Noeud::Noeud(QString id):Noeud()
     m_Id = id;
 }
 
-SetCarac* Noeud::AjouterRetireurACarac(QString id, int valeur)
+std::shared_ptr<SetCarac> Noeud::AjouterRetireurACarac(QString id, int valeur)
 {
-    SetCarac* set_carac = new SetCarac(ModifCaracType::RetireDeCarac, id, QString::number(valeur));
+    std::shared_ptr<SetCarac> set_carac = make_shared<SetCarac>(ModifCaracType::RetireDeCarac, id, QString::number(valeur));
     m_SetCaracs.append(set_carac);
     return set_carac;
 }
 
-SetCarac* Noeud::AjouterRetireurACarac(QString id, QString valeur)
+std::shared_ptr<SetCarac> Noeud::AjouterRetireurACarac(QString id, QString valeur)
 {
-    SetCarac* set_carac = new SetCarac(ModifCaracType::RetireDeCarac, id, valeur);
+    std::shared_ptr<SetCarac> set_carac = make_shared<SetCarac>(ModifCaracType::RetireDeCarac, id, valeur);
     m_SetCaracs.append(set_carac);
     return set_carac;
 }
 
-SetCarac* Noeud::AjouterAjouteurACarac(QString id, QString valeur)
+std::shared_ptr<SetCarac> Noeud::AjouterAjouteurACarac(QString id, QString valeur)
 {
-    SetCarac* set_carac = new SetCarac(ModifCaracType::AddToCarac, id, valeur);
+    std::shared_ptr<SetCarac> set_carac = make_shared<SetCarac>(ModifCaracType::AddToCarac, id, valeur);
     m_SetCaracs.append(set_carac);
     return set_carac;
 }
 
-SetCarac* Noeud::AjouterAjouteurACarac(QString id, int valeur)
+std::shared_ptr<SetCarac> Noeud::AjouterAjouteurACarac(QString id, int valeur)
 {
     return AjouterAjouteurACarac(id, QString::number(valeur));
 }
 
-SetCarac* Noeud::AjouterChangeurDeCarac(QString id, QString valeur)
+std::shared_ptr<SetCarac> Noeud::AjouterChangeurDeCarac(QString id, QString valeur)
 {
-    SetCarac* set_carac = new SetCarac(ModifCaracType::SetCarac, id, valeur);
+    std::shared_ptr<SetCarac> set_carac = make_shared<SetCarac>(ModifCaracType::SetCarac, id, valeur);
     m_SetCaracs.append(set_carac);
     return set_carac;
 }
 
-SetCarac* Noeud::AjouterSetCaracTrue(QString id)
+std::shared_ptr<SetCarac> Noeud::AjouterSetCaracTrue(QString id)
 {
-    SetCarac* set_carac = new SetCarac(ModifCaracType::SetCarac, id, "1");
+    std::shared_ptr<SetCarac> set_carac = make_shared<SetCarac>(ModifCaracType::SetCarac, id, "1");
     m_SetCaracs.append(set_carac);
     return set_carac;
 }
 
-Condition* Noeud::AjouterCondition( QString caracId, Comparateur comparateur, QString valeur)
+shared_ptr<Condition> Noeud::AjouterCondition( QString caracId, Comparateur comparateur, QString valeur)
 {
-    Condition* condition = new Condition(caracId, valeur, comparateur );
+    shared_ptr<Condition> condition = make_shared<Condition>(caracId, valeur, comparateur );
 
     m_Conditions.append(condition);
 
     return condition;
 }
 
-Condition* Noeud::AjouterConditionProbaPure( double proba)
+shared_ptr<Condition> Noeud::AjouterConditionProbaPure( double proba)
 {
-    Condition* conditionProba = new Condition( proba, p_Pure );
+    shared_ptr<Condition> conditionProba = make_shared<Condition>( proba, p_Pure );
 
     m_Conditions.append(conditionProba);
 
     return conditionProba;
 }
 
-Condition* Noeud::AjouterConditionProbaRelative(double proba)
+shared_ptr<Condition> Noeud::AjouterConditionProbaRelative(double proba)
 {
-    Condition* conditionProba = new Condition( proba, p_Relative );
+    shared_ptr<Condition> conditionProba = make_shared<Condition>( proba, p_Relative );
 
     m_Conditions.append(conditionProba);
 
@@ -85,18 +88,20 @@ Condition* Noeud::AjouterConditionProbaRelative(double proba)
 
 Noeud::~Noeud()
 {
-    while (!m_Conditions.isEmpty())
-          delete m_Conditions.takeFirst();
+    /*while (!m_Conditions.isEmpty())
+          delete m_Conditions.takeFirst();*/
 
     /*while ( m_SetCaracs.size() > 0 )
         delete m_SetCaracs.takeAt(0);*/
+    m_Conditions.clear();
+    m_SetCaracs.clear();
 }
 
 bool Noeud::TesterConditions()
 {
     bool resultatCallback = true;
 
-    foreach(AppelCallback* appel, m_FonctionsDeTest)
+    foreach(shared_ptr<AppelCallback> appel, m_FonctionsDeTest)
     {
        resultatCallback = resultatCallback &&
                Univers::ME->GetExecHistoire()->AppelerFonctionCallback(

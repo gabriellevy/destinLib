@@ -2,6 +2,9 @@
 #include "ui_choix.h"
 #include "../abs/univers.h"
 
+using std::shared_ptr;
+using std::make_shared;
+
 ExecChoix::ExecChoix(std::shared_ptr<Choix> choix, QWidget *parent) :
     ExecNoeud(choix, parent),
     m_Choix(choix)
@@ -23,19 +26,19 @@ ExecChoix::ExecChoix(std::shared_ptr<Choix> choix, QWidget *parent) :
     }
 }
 
-ExecChoix::ExecChoix(ExecNoeud*, std::shared_ptr<Choix> choix, QWidget *parent):
+ExecChoix::ExecChoix(shared_ptr<ExecNoeud>, std::shared_ptr<Choix> choix, QWidget *parent):
     ExecChoix(choix, parent)
 {
 
 }
 
-ExecChoix::ExecChoix(ExecEffet* execEffet, std::shared_ptr<Choix> choix, QWidget *parent):
+ExecChoix::ExecChoix(shared_ptr<ExecEffet> execEffet, std::shared_ptr<Choix> choix, QWidget *parent):
     ExecChoix(choix, parent)
 {
     m_ExecEffet = execEffet;
 }
 
-ExecChoix::ExecChoix(ExecLancerDe* lancerDe, std::shared_ptr<Choix> choix, QWidget *parent) :
+ExecChoix::ExecChoix(shared_ptr<ExecLancerDe> lancerDe, std::shared_ptr<Choix> choix, QWidget *parent) :
     ExecChoix(choix, parent)
 {
     m_ExecLancerDe = lancerDe;
@@ -68,13 +71,13 @@ void ExecChoix::AfficherNoeud()
 
 bool ExecChoix::GestionTransition()
 {
-    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(ExecNoeud::shared_from_this());
     return true;
 }
 
-ExecNoeud* ExecChoix::GetExecNoeud()
+shared_ptr<ExecNoeud> ExecChoix::GetExecNoeud()
 {
-    return static_cast<ExecNoeud*>(this);
+    return std::static_pointer_cast<ExecNoeud>(shared_from_this());
 }
 
 void ExecChoix::ExecuterNoeudSlot(/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)

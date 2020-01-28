@@ -57,7 +57,7 @@ public:
      */
     QMap<QString, std::function<bool(QVector<QString>, QVector<QString>)>> m_CallbackFunctions;
 
-    DPerso* GetPersoCourant();
+    std::shared_ptr<DPerso> GetPersoCourant();
 };
 
 #endif // HISTOIRE_H

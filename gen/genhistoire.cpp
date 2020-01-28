@@ -1,12 +1,15 @@
 #include "genhistoire.h"
 #include "../aleatoire.h"
 
+using std::shared_ptr;
+using std::make_shared;
+
 GenHistoire::GenHistoire(QString titre)
 {
-    m_GenerateurEvt = new GenEvt();
+    m_GenerateurEvt = make_shared<GenEvt>();
     if ( titre == "" )
         titre = "titre inconu : vous devriez surclasser la constructeur de GenHistoire pour éditer ces valeurs";
-    m_HistoireGeneree = new Hist(titre);
+    m_HistoireGeneree = make_shared<Hist>(titre);
     ME = this;
 }
 
@@ -18,12 +21,12 @@ GenHistoire* GenHistoire::GetGenHistoire()
 
 GenHistoire::~GenHistoire()
 {
-    if ( m_GenerateurEvt != nullptr)
-        delete m_GenerateurEvt;
+    /*if ( m_GenerateurEvt != nullptr)
+        delete m_GenerateurEvt;*/
     m_GenerateurEvt= nullptr;
 }
 
-Hist* GenHistoire::GenererHistoire()
+shared_ptr<Hist> GenHistoire::GenererHistoire()
 {
     m_HistoireGeneree->m_PhaseDeroulement = PhaseDeroulement::epd_Construction;
     return m_HistoireGeneree;

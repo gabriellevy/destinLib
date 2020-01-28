@@ -1,12 +1,9 @@
 #include "histoire.h"
 #include "univers.h"
 
-Hist::Hist(QString titre):m_Titre(titre)
-{
+Hist::Hist(QString titre):m_Titre(titre) {}
 
-}
-
-DPerso* Hist::GetPersoCourant()
+std::shared_ptr<DPerso> Hist::GetPersoCourant()
 {
     return Univers::ME->GetPersoInterface()->GetPersoCourant();
 }

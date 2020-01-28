@@ -4,6 +4,7 @@
 #include "abs/carac.h"
 #include <QString>
 #include <QMap>
+#include <memory>
 
 class SetCarac;
 
@@ -13,7 +14,7 @@ class SetCarac;
 class MultiSetterDeCarac
 {
 protected:
-    QVector<SetCarac*> m_SetCaracs = {};
+    QVector<std::shared_ptr<SetCarac>> m_SetCaracs = {};
 
 public:
     MultiSetterDeCarac();
@@ -32,10 +33,6 @@ class DPerso : public MultiSetterDeCarac
 {
 protected :
     virtual void RafraichirAffichage();
-   /* QString m_Id;
-    QString m_Nom;
-    QString m_Description = "";
-    QString m_CheminImagePortrait = "";*/
 
 public:
     DPerso(QString id, QString nom, QString description, QString CheminImagePortrait);
@@ -64,7 +61,7 @@ public:
     QString EffacerValeurACaracId(const QString& idCarac);
     bool IsCaracTrue(QString id);
 
-    static DPerso* GetDPersoJoue();
+    static std::shared_ptr<DPerso> GetDPersoJoue();
 
     friend class IPerso;
 };
@@ -76,7 +73,7 @@ private:
     static GestionnaireCarac* ME;
 
     // caracs actuelles du joueur
-    QMap<QString, Carac*> m_Caracs;
+    QMap<QString, std::shared_ptr<Carac>> m_Caracs;
     static QString GetCaracValue(QString id);
     static int GetCaracValueAsInt(QString id);
     static void AppliquerSetCarac(const SetCarac& setCarac);
@@ -91,12 +88,12 @@ private:
 
 public:
 
-    Carac* GetCarac(QString idCarac);
+    std::shared_ptr<Carac> GetCarac(QString idCarac);
 
-    // focntions raccourcis de convénience :
-    static GestionnaireCarac* GetGestionnaireCarac();
+    // fonctions raccourcis de convénience :
+    static GestionnaireCarac*  GetGestionnaireCarac();
 
-    QMap<QString, Carac*> GetCaracs();
+    QMap<QString, std::shared_ptr<Carac>> GetCaracs();
 
     static QString CARAC_NOM;
     static QString CARAC_PERSO_ID;
@@ -104,12 +101,12 @@ public:
     static QString CARAC_CHEMIN_PORTRAIT;
 
     // fonctions d'ajouts de caracs à l'aventure (essentiellement utile pour les paramétrer et déterminer sous quelle forme elles sont affichées)
-    void AjouterCarac(Carac* carac);
+    void AjouterCarac(std::shared_ptr<Carac> carac);
     /**
      * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
      */
-    Carac* AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
-    Carac* AjouterCaracString(QString idCarac, QString valeur = "");
+    std::shared_ptr<Carac> AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
+    std::shared_ptr<Carac> AjouterCaracString(QString idCarac, QString valeur = "");
 
     friend class DPerso;
     friend class MultiSetterDeCarac;

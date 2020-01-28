@@ -7,6 +7,9 @@
 #include <chrono>
 #include <random>
 
+using std::shared_ptr;
+using std::make_shared;
+
 Condition::Condition():m_CaracId(""), m_Valeur(""), m_Comparateur(c_Egal)
 {}
 
@@ -140,7 +143,7 @@ void Condition::ChargerModifProbaBdd()
     QSqlQuery query(req_str);
     while (query.next())
     {
-       ModifProba* mdfproba = this->AjouterModifProbaVide();
+       shared_ptr<ModifProba> mdfproba = this->AjouterModifProbaVide();
        mdfproba->m_Valeur = query.value("m_Valeur").toDouble();
        mdfproba->m_BDD_Id = query.value("id").toInt();
 
@@ -148,7 +151,7 @@ void Condition::ChargerModifProbaBdd()
     }
 }
 
-void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &conditions, bool conditionsWhile)
+void Condition::RemplirListeCondition( QJsonObject objJson, QList<shared_ptr<Condition>> &conditions, bool conditionsWhile)
 {
     QList<QString> conditionsStrs;// = new QList();
     if ( conditionsWhile)
@@ -170,7 +173,7 @@ void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &c
             QJsonArray conditionsArr = objJson[conditionsStrs[j]].toArray();
             for ( int i = 0; i < conditionsArr.size(); ++i)
             {
-                Condition* condition = Condition::CreerConditionDepuisObject(
+                shared_ptr<Condition> condition = Condition::CreerConditionDepuisObject(
                             conditionsStrs[j], conditionsArr[i].toObject());
                 conditions.append(condition);
             }
@@ -178,31 +181,31 @@ void Condition::RemplirListeCondition( QJsonObject objJson, QList<Condition*> &c
     }
 }
 
-ModifProba* Condition::AjouterModifProbaVide()
+shared_ptr<ModifProba> Condition::AjouterModifProbaVide()
 {
     // les modificateurs de proba sont des conditions dans la condition qui affectent le probabilité de cette dernière :
-    ModifProba* modifproba = new ModifProba();
+    shared_ptr<ModifProba> modifproba = make_shared<ModifProba>();
     m_ModifsProba.append(modifproba);
     return modifproba;
 }
 
-ModifProba* Condition::AjouterModifProba(double valeur, QList<Condition*> conditions)
+shared_ptr<ModifProba> Condition::AjouterModifProba(double valeur, QList<shared_ptr<Condition>> conditions)
 {
     // les modificateurs de proba sont des conditions dans la condition qui affectent le probabilité de cette dernière :
-    ModifProba* modifproba = new ModifProba( valeur);
+    shared_ptr<ModifProba> modifproba = make_shared<ModifProba>( valeur);
     m_ModifsProba.append(modifproba);
     modifproba->m_Conditions = conditions;
     return modifproba;
 }
 
-Condition* Condition::CreerConditionDepuisObject(QString balise, QJsonObject obj)
+shared_ptr<Condition> Condition::CreerConditionDepuisObject(QString balise, QJsonObject obj)
 {
     QString msg = "Tentative de créer une condition sans carac_id ! balise : " + balise;
     Q_ASSERT_X(( obj.contains("carac_id") && obj["carac_id"].isString()),
         "condition",
         msg.toStdString().c_str());
 
-    Condition* condition = new Condition();
+    shared_ptr<Condition> condition = make_shared<Condition>();
     condition->m_CaracId = obj["carac_id"].toString();
     if (balise == "if_false" || balise == "repeat_while_false" )
     {
@@ -276,7 +279,7 @@ Condition* Condition::CreerConditionDepuisObject(QString balise, QJsonObject obj
 }
 
 
-bool Condition::TesterTableauDeConditions(QList<Condition*> &conditions)
+bool Condition::TesterTableauDeConditions(QList<shared_ptr<Condition>> &conditions)
 {
     bool ret = true;
     for ( int i = 0; i < conditions.size(); ++i)
@@ -303,7 +306,7 @@ void ModifProba::ChargerConditionsBdd()
     QSqlQuery query(req_str);
     while (query.next())
     {
-       Condition* cond = new Condition();
+       shared_ptr<Condition> cond = make_shared<Condition>();
 
        int id = query.value("id").toInt();
        QString compStr = query.value("m_Comparateur").toString();

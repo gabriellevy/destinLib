@@ -9,6 +9,7 @@
 #include "../aspectratiolabel.h"
 #include <QPixmap>
 #include <QVector>
+#include <memory>
 
 namespace Ui {
 class Perso;
@@ -31,8 +32,8 @@ class IPerso : public QWidget
 
 protected:
 
-    GestionnaireCarac* m_GestionnaireCarac = nullptr;
-    QHash<QString, DPerso*> m_Persos;
+    std::shared_ptr<GestionnaireCarac> m_GestionnaireCarac = nullptr;
+    QHash<QString, std::shared_ptr<DPerso>> m_Persos;
 
 public:
     explicit IPerso(QWidget *parent = nullptr);
@@ -44,10 +45,10 @@ public:
     void RafraichirAffichage();
 
     // accesseur vers le perso courant (qui est toujours unique)
-    static DPerso* GetPersoCourant();
-    DPerso* GetPerso(QString id) const;
+    static std::shared_ptr<DPerso> GetPersoCourant();
+    std::shared_ptr<DPerso> GetPerso(QString id) const;
     static IPerso* GetPersoInterface();
-    static void AjouterPersoJouable(DPerso* perso);
+    static void AjouterPersoJouable(std::shared_ptr<DPerso> perso);
 
 private:
     Ui::Perso *ui;

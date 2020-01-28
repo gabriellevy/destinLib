@@ -46,22 +46,21 @@ protected:
     // repérage d'événement courant et effet courant en mode histoire normal
     //QString m_CurrentEvtId;
     //int m_EffetIndex; // index de l'effet actuel dans la liste des effets de l'événement actuel
-    ExecNoeud* m_ExecNoeudActuel = nullptr; // 'curseur' pointant sur le noeud précisément exécuté à ce moment, que ce soit un événement, effet, choix
-    ExecEvt* m_ExecEvtActuel = nullptr; // evt actuel (il doit toujours y en avoir un à partir de quand le destin est lancé
+    std::shared_ptr<ExecNoeud> m_ExecNoeudActuel = nullptr; // 'curseur' pointant sur le noeud précisément exécuté à ce moment, que ce soit un événement, effet, choix
+    std::shared_ptr<ExecEvt> m_ExecEvtActuel = nullptr; // evt actuel (il doit toujours y en avoir un à partir de quand le destin est lancé
 
 
     //QString m_CurrentConditionnelEvtId;
     //int m_EffetConditionnelIndex;
 
 public:
-    explicit ExecHistoire(Hist* histoire, QWidget *parent = nullptr);
+    explicit ExecHistoire(std::shared_ptr<Hist> histoire, QWidget *parent = nullptr);
     ~ExecHistoire();
 
-    Hist* m_Histoire;
+    std::shared_ptr<Hist> m_Histoire;
     Historique m_Historique;
 
     virtual QString GetTitre();
-    //Evt* m_CurrentEvt = nullptr;
 
     bool AppelerFonctionCallback(QString fonction, QVector<QString> caracs, QVector<QString> params);
 
@@ -75,14 +74,14 @@ public:
      * @param forceHistoireMode : renvoie l'événement courant de l'histoire, excluant l'événement aléatoire secondaire même si on est en mode aléatoire
      * @return événement actuellement exécuté par le joueur
      */
-    ExecEvt* GetExecEvtActuel(bool forceHistoireMode = false);
-    static ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
-    ExecLancerDe* GetExecLancerDeActuel();
+    std::shared_ptr<ExecEvt> GetExecEvtActuel(bool forceHistoireMode = false);
+    static std::shared_ptr<ExecEffet> GetExecEffetActuel(bool forceHistoireMode = false);
+    std::shared_ptr<ExecLancerDe> GetExecLancerDeActuel();
     std::shared_ptr<Evt> EvtActuel(bool forceHistoireMode = false);
     std::shared_ptr<Effet> EffetActuel(bool forceHistoireMode = false);
-    ExecEvt* SetExecEvtActuel(std::shared_ptr<Evt> evt);
+    std::shared_ptr<ExecEvt> SetExecEvtActuel(std::shared_ptr<Evt> evt);
 
-    ExecNoeud* DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel = nullptr, bool noeudActuelEstValide = true);
+    std::shared_ptr<ExecNoeud> DeterminerPuisLancerNoeudSuivant(std::shared_ptr<ExecNoeud> noeudActuel = nullptr, bool noeudActuelEstValide = true);
     std::shared_ptr<Noeud> GetEffetDindexSuivant(std::shared_ptr<Noeud> noeudActuel);
     std::shared_ptr<Noeud> TesterSiEffetEstLancableOuSonElse(std::shared_ptr<Noeud> noeudActuel);
     // si les événements sont issues de la bdd ils ont un id qui permet de les extraire :

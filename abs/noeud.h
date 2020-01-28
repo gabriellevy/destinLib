@@ -4,10 +4,8 @@
 #include "setcarac.h"
 #include "condition.h"
 #include "selectionneurdenoeud.h"
+#include <memory>
 
-/*namespace Ui {
-class Noeud;
-}*/
 
 /**
  * @brief référence à un appel d'une fonction. Cette fonction est récupéré dans
@@ -47,7 +45,7 @@ protected:
 
 
 public:
-   // explicit Noeud(QJsonObject evtJson/*, QWidget *parent = 0*/);
+
     explicit Noeud(QString id);
     explicit Noeud();
     virtual ~Noeud();
@@ -57,14 +55,14 @@ public:
     QString m_Id = "";
     //QString m_ImgPath = "";
     QString m_GoToEvtId = "";
-    SelectionneurDeNoeud* m_SelectionneurDeNoeud = nullptr;
+    std::shared_ptr<SelectionneurDeNoeud> m_SelectionneurDeNoeud = nullptr;
     QString m_GoToEffetId = "";
-    QList<SetCarac*> m_SetCaracs;
+    QList<std::shared_ptr<SetCarac>> m_SetCaracs;
     ModeDeroulement m_ChangeurModeDeroulement; // ce noeud une fois exécuté change le mode de déroulement de l'histoire
     PhaseDeroulement m_ChangeurPhaseDeroulement; // ce noeud une fois exécuté change la phase de déroulement de l'histoire
 
     // condition à respecter pour exécuter ce noeud (si il y en a une)
-    QList<Condition*> m_Conditions;
+    QList<std::shared_ptr<Condition>> m_Conditions;
 
     // renvoit la proba asscié au noeud (via if_proba et les modif_proba) si il y en a une
     double GetProba();
@@ -76,31 +74,18 @@ public:
     virtual bool TesterConditions();
 
     // modifier caracs
-    SetCarac* AjouterRetireurACarac(QString id, QString valeur);
-    SetCarac* AjouterRetireurACarac(QString id, int valeur);
-    SetCarac* AjouterAjouteurACarac(QString id, QString valeur);
-    SetCarac* AjouterAjouteurACarac(QString id, int valeur);
-    SetCarac* AjouterChangeurDeCarac(QString id, QString valeur);
-    SetCarac* AjouterSetCaracTrue(QString id);
-    Condition* AjouterCondition( QString caracId, Comparateur comparateur, QString valeur);
-    Condition* AjouterConditionProbaPure( double proba);
-    Condition* AjouterConditionProbaRelative( double proba);
-    //Noeud* AjouterElse(QString text = "");
+    std::shared_ptr<SetCarac> AjouterRetireurACarac(QString id, QString valeur);
+    std::shared_ptr<SetCarac> AjouterRetireurACarac(QString id, int valeur);
+    std::shared_ptr<SetCarac> AjouterAjouteurACarac(QString id, QString valeur);
+    std::shared_ptr<SetCarac> AjouterAjouteurACarac(QString id, int valeur);
+    std::shared_ptr<SetCarac> AjouterChangeurDeCarac(QString id, QString valeur);
+    std::shared_ptr<SetCarac> AjouterSetCaracTrue(QString id);
+    std::shared_ptr<Condition> AjouterCondition( QString caracId, Comparateur comparateur, QString valeur);
+    std::shared_ptr<Condition> AjouterConditionProbaPure( double proba);
+    std::shared_ptr<Condition> AjouterConditionProbaRelative( double proba);
 
-    // function qui sera exécutée lors de l'exécution de ce noeud
-    //void AjouterCallback(std::function<void(QVector<QString>)> callback, QVector<QString> arg);
-
-    // function qui déterminera si ce noeud est exécuté (runtime)
-    //void AjouterCallbackDeTest(std::function<bool(QVector<QString>)> callback, QVector<QString> arg);
-
-    // fonctions runtime callbacks. Ce sont des fonctions personnalisables qui sont exécutées lors du jeu, pas à sa préparation
-    /*QVector<std::function<void(QVector<QString>)>> m_CallbackFunctions;
-    QVector<QVector<QString>> m_CallbackArguments;
-    QVector<std::function<bool(QVector<QString>)>> m_CallbackTestFunctions;
-    QVector<QVector<QString>> m_CallbackTestArguments;*/
-
-    QVector<AppelCallback*> m_FonctionsAppellees;
-    QVector<AppelCallback*> m_FonctionsDeTest;
+    QVector<std::shared_ptr<AppelCallback>> m_FonctionsAppellees;
+    QVector<std::shared_ptr<AppelCallback>> m_FonctionsDeTest;
 
     std::function<void()> m_CallbackDisplay = nullptr; // callback de base appelée au début de l'exécution de l'effet et qui affecte l'affichage (texte, image...)
 

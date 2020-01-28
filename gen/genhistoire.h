@@ -4,7 +4,6 @@
 #include <QString>
 #include "../abs/histoire.h"
 #include "genevt.h"
-#include <memory>
 
 /**
  * @brief Class servant à générer toute l'histoire du jeu destin. Une fois cette exécution terminée elle renvoie un objet ExecHistoire à exécutee t n'est plus utilisée.
@@ -26,9 +25,9 @@ public:
 
     static GenHistoire* GetGenHistoire();
 
-    GenEvt* m_GenerateurEvt = nullptr;
-    Hist* m_HistoireGeneree = nullptr;
-    virtual Hist* GenererHistoire();
+    std::shared_ptr<GenEvt> m_GenerateurEvt = nullptr;
+    std::shared_ptr<Hist> m_HistoireGeneree = nullptr;
+    virtual std::shared_ptr<Hist> GenererHistoire();
     virtual void FinGenerationHistoire();
     virtual void GenererPersos() = 0;
     virtual void GenererFonctionsCallback() {} // cette fonction a de bonnes chances d'être vides. Je la laisse en abstraite à implémenter comme pense-bête

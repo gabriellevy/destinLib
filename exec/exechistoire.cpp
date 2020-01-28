@@ -12,8 +12,9 @@
 #include "../gestionnairecarac.h"
 
 using std::shared_ptr;
+using std::make_shared;
 
-ExecHistoire::ExecHistoire(Hist* histoire, QWidget *parent) :
+ExecHistoire::ExecHistoire(shared_ptr<Hist> histoire, QWidget *parent) :
     QWidget(parent),
     m_Histoire(histoire),
     ui(new Ui::Histoire)
@@ -79,7 +80,7 @@ std::shared_ptr<Evt> ExecHistoire::EvtActuel(bool forceHistoireMode)
     return this->GetExecEvtActuel(forceHistoireMode)->GetEvt();
 }
 
-ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
+shared_ptr<ExecEvt> ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
 {
     // premier lancement
     if ( this->m_ExecEvtActuel == nullptr)
@@ -99,7 +100,7 @@ ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
     }
 
     if ( this->m_ExecEvtActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
-        return static_cast<ExecEvt*>(this->m_ExecEvtActuel);
+        return std::static_pointer_cast<ExecEvt>(this->m_ExecEvtActuel);
 
     Q_ASSERT_X(true, "Pas d'événement actuel : bizarre", "Histoire::EvtActuel");
 
@@ -184,12 +185,12 @@ std::shared_ptr<Effet> ExecHistoire::GetEffetActuel()
     return Univers::ME->GetExecHistoire()->EffetActuel(false);
 }
 
-ExecLancerDe* ExecHistoire::GetExecLancerDeActuel()
+shared_ptr<ExecLancerDe> ExecHistoire::GetExecLancerDeActuel()
 {
     return this->m_ExecEvtActuel->GetExecLancerDeActuel();
 }
 
-ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
+shared_ptr<ExecEffet> ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
 {
     return Univers::ME->GetExecHistoire()->m_ExecEvtActuel->GetExecEffetActuel();
     /*if ( this->m_ExecEvtActuel->m_ExecEffetActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
@@ -336,7 +337,7 @@ bool ExecHistoire::AppliquerGoTo(std::shared_ptr<Noeud> noeud)
     return ilYAgoto;
 }
 
-ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel, bool noeudActuelEstValide)
+shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<ExecNoeud> noeudActuel, bool noeudActuelEstValide)
 {
     if ( m_Histoire->m_PhaseDeroulement == PhaseDeroulement::epd_Fini)
         return nullptr;
@@ -420,9 +421,9 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
     }
 
     switch (this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud) {
-    case TypeNoeud::etn_Evt: this->m_ExecEvtActuel = static_cast<ExecEvt*>(this->m_ExecNoeudActuel);
+    case TypeNoeud::etn_Evt: this->m_ExecEvtActuel = std::static_pointer_cast<ExecEvt>(this->m_ExecNoeudActuel);
         break;
-    case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->SetExecEffet(static_cast<ExecEffet*>(this->m_ExecNoeudActuel));
+    case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->SetExecEffet(std::static_pointer_cast<ExecEffet>(this->m_ExecNoeudActuel));
         break;
     default:
         break;
@@ -455,7 +456,7 @@ void ExecHistoire::PasserAEvtIndexSuivant()
     this->SetExecEvtActuel( this->m_Histoire->m_Evts[index] );
 }
 
-ExecEvt* ExecHistoire::SetExecEvtActuel(shared_ptr<Evt> evt)
+shared_ptr<ExecEvt> ExecHistoire::SetExecEvtActuel(shared_ptr<Evt> evt)
 {
     if ( this->m_ExecEvtActuel != nullptr) {
 
@@ -470,7 +471,7 @@ ExecEvt* ExecHistoire::SetExecEvtActuel(shared_ptr<Evt> evt)
         //delete this->m_ExecEvtActuel;
     }
 
-    this->m_ExecNoeudActuel = this->m_ExecEvtActuel = new ExecEvt(evt);
+    this->m_ExecNoeudActuel = this->m_ExecEvtActuel = make_shared<ExecEvt>(evt);
 
     return this->m_ExecEvtActuel;
 }
@@ -506,7 +507,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(shared_ptr<Evt> evt, std::sha
         //affichage du nouveau
         //m_CurrentEvt = evt;
         //m_CurrentEvt->LancerNoeud();
-        ui->histoireLayout->layout()->addWidget(m_ExecEvtActuel);
+        ui->histoireLayout->layout()->addWidget(m_ExecEvtActuel.get());
         //ui->histoireLayout->layout()->addWidget(m_CurrentEvt);
     }
 
@@ -533,7 +534,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(shared_ptr<Evt> evt, std::sha
         //this->SetExecEvtActuel(evt);
         // the point of the following takeWidget is to avoid the destruction of the previous evt by the setWidget call just after
         /*QWidget* evt = */ui->histoireScrollArea->takeWidget();
-        ui->histoireScrollArea->setWidget(this->m_ExecEvtActuel);
+        ui->histoireScrollArea->setWidget(this->m_ExecEvtActuel.get());
         this->m_ExecEvtActuel->show();
     }
     if ( effetChangement )

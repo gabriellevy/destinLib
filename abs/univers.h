@@ -11,6 +11,7 @@
 #include "../reglages.h"
 #include <QMediaPlayer>
 #include <QHash>
+#include <memory>
 
 namespace Ui {
 class Univers;
@@ -38,14 +39,14 @@ protected:
     QJsonObject m_AvJson;
 
     // Un générateurt d'histoire par histoire (donc il peut y en avoir plusieurs par univers si on veut plusieurs histoires)
-    QHash<QString, GenHistoire*> m_GensHistoire;
+    QHash<QString, std::shared_ptr<GenHistoire>> m_GensHistoire;
 
     // histoire actuellement exécutée si il y en a une
-    Hist* m_Histoire = nullptr;
+    std::shared_ptr<Hist> m_Histoire = nullptr;
 
     // interfaces/widgets
-    ExecHistoire* m_ExecHistoire = nullptr;
-    IPerso* m_Perso;
+    std::shared_ptr<ExecHistoire> m_ExecHistoire = nullptr;
+    std::shared_ptr<IPerso> m_Perso;
     Ui::Univers *ui;
 
     float m_Duree;
@@ -59,7 +60,7 @@ public:
     virtual ~Univers();
 
     void AfficherHistoire(QWidget *parent = nullptr);
-    Hist* GenererUneHistoire(QString histoireId);
+    std::shared_ptr<Hist> GenererUneHistoire(QString histoireId);
     virtual void LancerHistoire(QString idHistoire, QWidget *parent = nullptr, QString premierEvt = "", QString premierEffet = "", bool BarreDeCote = true);
 
     // cette fonction m'a l'air hautement dispensable => à virer si je me décide à remettre au propre le déroulement des actions
@@ -74,10 +75,10 @@ public:
     ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;
 
     // getters setters
-    Hist* GetHistoire();
-    ExecHistoire* GetExecHistoire();
-    GenHistoire* GetGenHistoire(QString histoireId);
-    IPerso* GetPersoInterface();
+    std::shared_ptr<Hist> GetHistoire();
+    std::shared_ptr<ExecHistoire> GetExecHistoire();
+    std::shared_ptr<GenHistoire> GetGenHistoire(QString histoireId);
+    std::shared_ptr<IPerso> GetPersoInterface();
     void SetTypeEvt(TypeEvt typeEvt);
     TypeEvt GetTypeEvtActuel();
 

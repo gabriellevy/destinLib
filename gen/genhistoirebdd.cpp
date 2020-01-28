@@ -2,6 +2,7 @@
 #include "../abs/condition.h"
 
 using std::shared_ptr;
+using std::make_shared;
 
 GenHistoireBdd::GenHistoireBdd(QString titre):GenHistoire (titre)
 {}
@@ -46,7 +47,7 @@ void GenHistoireBdd::ChargerEvtsBdd()
        if ( selectionneur_bdd_id > 0 )
            m_GenerateurEvt->AjouterASelectionneurEvt(
                        evt,
-                       new Condition(1.0, TypeProba::p_Relative),
+                       make_shared<Condition>(1.0, TypeProba::p_Relative),
                        selectionneur_bdd_id);// 2ème argument au pif, pas le temps de chercher à comprendre
     }
 }
