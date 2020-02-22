@@ -32,18 +32,6 @@ ExecChoix::ExecChoix(shared_ptr<ExecNoeud>, std::shared_ptr<Choix> choix, QWidge
 
 }
 
-ExecChoix::ExecChoix(shared_ptr<ExecEffet> execEffet, std::shared_ptr<Choix> choix, QWidget *parent):
-    ExecChoix(choix, parent)
-{
-    m_ExecEffet = execEffet;
-}
-
-ExecChoix::ExecChoix(shared_ptr<ExecLancerDe> lancerDe, std::shared_ptr<Choix> choix, QWidget *parent) :
-    ExecChoix(choix, parent)
-{
-    m_ExecLancerDe = lancerDe;
-}
-
 void ExecChoix::RafraichirAffichageLayouts(int largeur, int)
 {
     if( largeur != -1)

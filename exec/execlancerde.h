@@ -34,7 +34,7 @@ public:
     void AfficherNoeud();
 
     std::shared_ptr<LancerDe> m_LancerDe = nullptr;
-    std::shared_ptr<ExecEffet> m_ExecEffet = nullptr;
+    std::weak_ptr<ExecEffet> m_ExecEffet;
     std::shared_ptr<ExecNoeud> GetExecNoeud();
     int GetTotalRes();
 

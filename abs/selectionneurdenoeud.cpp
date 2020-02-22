@@ -23,7 +23,7 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
     double totalprobaParcouru = 0;
     for ( int i = 0 ; i < m_NoeudsProbables.size() ; ++i)
     {
-        std::shared_ptr<Noeud> noeud = m_NoeudsProbables[i]->m_Noeud;
+        std::shared_ptr<Noeud> noeud = m_NoeudsProbables[i]->m_Noeud.lock();
         if ( m_NoeudsProbables[i]->m_PoidsProba->IsProbaPure() )
         {
             totalprobaParcouru += m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale();
@@ -35,7 +35,7 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
             proba = static_cast <double> (distribution(generator)) / static_cast <double> (RAND_MAX);
             if ( proba <= m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale())
             {
-                if ( m_NoeudsProbables[i]->m_Noeud->TesterConditions() )
+                if ( m_NoeudsProbables[i]->m_Noeud.lock()->TesterConditions() )
                 {
                     return noeud;
                 }
@@ -50,7 +50,7 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
     double totalDesProbas = 0;
     for ( int i = 0 ; i < m_NoeudsProbables.size() ; ++i)
     {
-        if ( m_NoeudsProbables[i]->m_Noeud->TesterConditions() )
+        if ( m_NoeudsProbables[i]->m_Noeud.lock()->TesterConditions() )
         {
             double proba = m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale();
             /*Q_ASSERT_X(proba >= 0,
@@ -81,7 +81,7 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
         if ( probaIndicator < totalCourantDesProbas)
         {
             // cet événement est sélectionné :
-            noeudChoisi = noeudsPossibles[j]->m_Noeud;
+            noeudChoisi = noeudsPossibles[j]->m_Noeud.lock();
             break;
         }
     }

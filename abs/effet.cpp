@@ -34,7 +34,7 @@ Glisseur* Effet::AjouterGlisseur(QString valeur_min, QString valeur_max, QString
 int Effet::CalculerIndex()
 {
     int index =0;
-    for ( std::shared_ptr<Effet> effet: this->m_Evt->m_Effets)
+    for ( std::shared_ptr<Effet> effet: this->m_Evt.lock()->m_Effets)
     {
         if ( effet.get() == this)
             return index;

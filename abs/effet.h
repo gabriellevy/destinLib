@@ -25,7 +25,7 @@ public:
     Glisseur* AjouterGlisseur(QString valeur_min, QString valeur_max, QString valeur_depart, QString carac_id);
     int CalculerIndex();
 
-    std::shared_ptr<Evt> m_Evt;
+    std::weak_ptr<Evt> m_Evt;
     Glisseur* m_Glisseur = nullptr;
 
     // gestion de la bdd :

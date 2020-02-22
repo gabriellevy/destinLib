@@ -24,16 +24,13 @@ class Choix : public NoeudNarratif
 protected:
 
 public:
-    explicit Choix(std::shared_ptr<LancerDe> lancerDe, QString text="", QString cheminImg = "");
-    explicit Choix(std::shared_ptr<Effet> parentEffet, QString text="", QString cheminImg = "");
+    explicit Choix(QString text="", QString cheminImg = "");
     virtual ~Choix() {}
 
     /**
      * @return false car les noeuds choix ne sont jamais affichés en tant que tels (seulement comme boutons en bas d'un autre noeud)
      */
     virtual bool AQuelqueChoseAAfficher();
-    std::shared_ptr<Effet> m_ParentEffet;
-    std::shared_ptr<LancerDe> m_ParentLancerDe;
 
     // gestion de la bdd :
     int m_BDD_ChoixId = -1;

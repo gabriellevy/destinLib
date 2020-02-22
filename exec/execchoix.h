@@ -16,15 +16,8 @@ class ExecChoix : public ExecNoeud,
     using my_enable_shared_from_this<ExecChoix>::shared_from_this;
 
     std::shared_ptr<Choix> m_Choix;
-    std::shared_ptr<ExecEffet> m_ExecEffet = nullptr;
-    std::shared_ptr<ExecLancerDe> m_ExecLancerDe = nullptr;
 
-    explicit ExecChoix(
-            std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
-    explicit ExecChoix(
-            std::shared_ptr<ExecEffet> ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
-    explicit ExecChoix(
-            std::shared_ptr<ExecLancerDe> ExecEffet, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
+    explicit ExecChoix(std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     explicit ExecChoix(
             std::shared_ptr<ExecNoeud> execNoeud, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     virtual ~ExecChoix();

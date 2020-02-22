@@ -20,7 +20,7 @@ class ExecEffet : public ExecNoeud,
     Q_OBJECT
 public:
     using my_enable_shared_from_this<ExecEffet>::shared_from_this;
-    ExecEffet(std::shared_ptr<ExecEvt> exec_evt, std::shared_ptr<Effet> effet, QWidget *parent = nullptr);
+    ExecEffet(std::shared_ptr<Effet> effet, QWidget *parent = nullptr);
     virtual ~ExecEffet();
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
@@ -38,7 +38,6 @@ public:
 
     void AfficherBoutonSuivant();
 
-    std::shared_ptr<ExecEvt> m_ExecEvt = nullptr;
     std::shared_ptr<ExecLancerDe> m_ExecLancerDe = nullptr;
 
 public slots:

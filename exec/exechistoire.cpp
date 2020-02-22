@@ -99,7 +99,7 @@ shared_ptr<ExecEvt> ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
         //return this->m_Histoire->m_Evts.at(0);
     }
 
-    if ( this->m_ExecEvtActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
+    if ( this->m_ExecEvtActuel->m_Noeud.lock()->m_TypeNoeud == TypeNoeud::etn_Evt)
         return std::static_pointer_cast<ExecEvt>(this->m_ExecEvtActuel);
 
     Q_ASSERT_X(true, "Pas d'événement actuel : bizarre", "Histoire::EvtActuel");
@@ -342,7 +342,7 @@ shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<
     if ( m_Histoire->m_PhaseDeroulement == PhaseDeroulement::epd_Fini)
         return nullptr;
 
-    std::shared_ptr<Noeud> noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud;
+    std::shared_ptr<Noeud> noeudPrecedent = this->m_ExecNoeudActuel->m_Noeud.lock();
     if ( noeudActuel != nullptr)
         this->m_ExecNoeudActuel = noeudActuel;
 
@@ -351,7 +351,7 @@ shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<
     bool noeud_suivant_trouve = false;
 
     // si le noeud actuel est un evt alors il faut lancer immédiatement automatquement son premier effet :
-    if ( noeudActuelEstValide && !noeud_suivant_trouve && this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud == TypeNoeud::etn_Evt)
+    if ( noeudActuelEstValide && !noeud_suivant_trouve && this->m_ExecNoeudActuel->m_Noeud.lock()->m_TypeNoeud == TypeNoeud::etn_Evt)
     {
         //this->m_ExecEvtActuel->SetEffetIndex(0);
         this->m_ExecNoeudActuel = this->m_ExecEvtActuel->GetExecEffetActuel();
@@ -365,7 +365,7 @@ shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<
     {
          if ( noeudActuelEstValide &&
               this->m_ExecNoeudActuel != nullptr
-             && AppliquerGoTo(this->m_ExecNoeudActuel->m_Noeud))
+             && AppliquerGoTo(this->m_ExecNoeudActuel->m_Noeud.lock()))
         {
             //evtActuel = EvtActuel();
 
@@ -399,11 +399,11 @@ shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<
     if ( this->m_ExecNoeudActuel == nullptr)
         this->m_ExecNoeudActuel = GetExecEffetActuel();
 
-    if ( this->m_ExecNoeudActuel != nullptr && noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud)
+    if ( this->m_ExecNoeudActuel != nullptr && noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud.lock())
         afficheNoeud = true;
 
     // on fait le test de condition une seule fois juste avant d'effectuer les effets :
-    if ( !this->m_ExecNoeudActuel->m_Noeud->TesterConditions())
+    if ( !this->m_ExecNoeudActuel->m_Noeud.lock()->TesterConditions())
     {
         afficheNoeud = false; // de toute façon le noeud actuel n'est pas lançable : on doit passer au suivant
     }
@@ -411,7 +411,7 @@ shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<
     // note : ce peut être un Effet au sens objet mais aussi un simple noeud, un else par exemple ou un Evt
     if ( afficheNoeud )
     {
-        Q_ASSERT_X(noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud,
+        Q_ASSERT_X(noeudPrecedent != this->m_ExecNoeudActuel->m_Noeud.lock(),
                    "On tourne en boucle : le noeud lancé l'était déjà !",
                    "ExecHistoire::DeterminerPuisLancerNoeudSuivant");
         this->m_ExecNoeudActuel->LancerNoeud();
@@ -420,7 +420,7 @@ shared_ptr<ExecNoeud> ExecHistoire::DeterminerPuisLancerNoeudSuivant(shared_ptr<
         return this->DeterminerPuisLancerNoeudSuivant(this->m_ExecNoeudActuel, false);
     }
 
-    switch (this->m_ExecNoeudActuel->m_Noeud->m_TypeNoeud) {
+    switch (this->m_ExecNoeudActuel->m_Noeud.lock()->m_TypeNoeud) {
     case TypeNoeud::etn_Evt: this->m_ExecEvtActuel = std::static_pointer_cast<ExecEvt>(this->m_ExecNoeudActuel);
         break;
     case TypeNoeud::etn_Effet: this->m_ExecEvtActuel->SetExecEffet(std::static_pointer_cast<ExecEffet>(this->m_ExecNoeudActuel));

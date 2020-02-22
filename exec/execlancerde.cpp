@@ -69,7 +69,7 @@ bool ExecLancerDe::GestionTransition()
     if ( m_ResExecution == nullptr || m_ResExecution->m_RestAffiche)
         return false;
 
-    this->m_ExecEffet->GestionTransition();
+    this->m_ExecEffet.lock()->GestionTransition();
 
     return true;
 }
@@ -108,7 +108,7 @@ void ExecLancerDe::AjouterAuxBoutonsVertic(shared_ptr<ExecNoeud> execNoeud)
 
 shared_ptr<ExecChoix> ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
 {
-    shared_ptr<Choix> choix = make_shared<Choix>(this->m_LancerDe, texte);
+    shared_ptr<Choix> choix = make_shared<Choix>(texte);
     choix->m_GoToEffetId = idDest;
     shared_ptr<ExecChoix> exec = make_shared<ExecChoix>(ExecNoeud::shared_from_this(), choix, this);
     this->m_ExecChoix.push_back(exec);

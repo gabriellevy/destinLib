@@ -30,7 +30,7 @@ void ExecNoeud::ExecuterActionsNoeud(shared_ptr<Noeud> noeudAExecuter)
 {
     bool executionNoeudNarratif = false; // si false il s'agit seulement de l'exécution d'un noeud de base qui change juste des caracs (par exemple)
     if ( noeudAExecuter == nullptr) {
-        noeudAExecuter = m_Noeud; // cas le plus courant
+        noeudAExecuter = m_Noeud.lock(); // cas le plus courant
         executionNoeudNarratif = true;
     }
 
@@ -44,12 +44,12 @@ void ExecNoeud::ExecuterActionsNoeud(shared_ptr<Noeud> noeudAExecuter)
     // si il y un champs de temps, il s'écoule :
     // pour le noeud courant
     if ( executionNoeudNarratif ) {
-        this->m_Noeud->AjouterDuree( m_Noeud->m_Duree );
+        this->m_Noeud.lock()->AjouterDuree( m_Noeud.lock()->m_Duree );
         // pour l'aventure complète
-        Univers::ME->AjouterDuree(m_Noeud->m_Duree);
+        Univers::ME->AjouterDuree(m_Noeud.lock()->m_Duree);
         // si on est en mode aléatoire, le temps s'écoule aussi pour le noeud histoire qui a fait appel à l'aléatoire
         if ( Univers::ME->GetTypeEvtActuel() == TE_Aleatoire)
-            Univers::ME->GetExecHistoire()->AjouterDureeAEffetHistoireCourant(m_Noeud->m_Duree);
+            Univers::ME->GetExecHistoire()->AjouterDureeAEffetHistoireCourant(m_Noeud.lock()->m_Duree);
     }
 
     // maj du perso :
@@ -94,13 +94,13 @@ void ExecNoeud::LancerNoeud()
 {
     this->ExecuterActionsNoeud();
 
-    if ( this->m_Noeud->AQuelqueChoseAAfficher() && this->m_Noeud->m_TypeNoeud != TypeNoeud::etn_Choix)
+    if ( this->m_Noeud.lock()->AQuelqueChoseAAfficher() && this->m_Noeud.lock()->m_TypeNoeud != TypeNoeud::etn_Choix)
         this->AfficherNoeud();
 
-    if ( m_Noeud->m_Son != QLatin1String("") )
+    if ( m_Noeud.lock()->m_Son != QLatin1String("") )
     {
        Univers::ME->m_Lecteur->stop();
-       Univers::ME->m_Lecteur->setMedia(QUrl(m_Noeud->m_Son));
+       Univers::ME->m_Lecteur->setMedia(QUrl(m_Noeud.lock()->m_Son));
        Univers::ME->m_Lecteur->setVolume(50);
        if ( Univers::ME->m_Reglages.m_SonOn )
            Univers::ME->m_Lecteur->play();
@@ -134,7 +134,7 @@ bool ExecNoeud::GestionTransition()
             m_ExecChoix[i]->GetExecNoeud()->hide();
             if ( m_ExecChoix[i]->m_Choix->TesterConditions())
             {
-                if ( m_Noeud->m_OrientationAffichageChoix == OrientationAffichageChoix::oac_vertical)
+                if ( m_Noeud.lock()->m_OrientationAffichageChoix == OrientationAffichageChoix::oac_vertical)
                     AjouterAuxBoutonsVertic(m_ExecChoix[i]->GetExecNoeud());
                 else
                     AjouterAuxBoutonsHoriz(m_ExecChoix[i]->GetExecNoeud());
@@ -157,9 +157,9 @@ void ExecNoeud::GenerationExecChoix()
 {
     // pas de choix en mode automatique :
     if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement != ModeDeroulement::Automatique) {
-        if ( this->m_Noeud->m_Choix.length() > 0 &&
-             this->m_ExecChoix.length() < this->m_Noeud->m_Choix.length() ) {
-            for (std::shared_ptr<Choix> choix: this->m_Noeud->m_Choix) {
+        if ( this->m_Noeud.lock()->m_Choix.length() > 0 &&
+             this->m_ExecChoix.length() < this->m_Noeud.lock()->m_Choix.length() ) {
+            for (std::shared_ptr<Choix> choix: this->m_Noeud.lock()->m_Choix) {
                 this->m_ExecChoix.push_back(make_shared<ExecChoix>(ExecNoeud::shared_from_this(), choix, this));
             }
         }

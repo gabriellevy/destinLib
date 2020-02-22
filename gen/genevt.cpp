@@ -159,7 +159,7 @@ std::shared_ptr<LancerDe> GenEvt::AjouterLancerDe(QString texte,
     if ( effetDest == nullptr)
         effetDest = m_DernierEffetGenere;
 
-    std::shared_ptr<LancerDe> lancerDe = make_shared<LancerDe>(effetDest, texte, nbDes, callback);
+    std::shared_ptr<LancerDe> lancerDe = make_shared<LancerDe>(texte, nbDes, callback);
     effetDest->m_LancerDe = lancerDe;
 
     return lancerDe;
@@ -225,14 +225,14 @@ std::shared_ptr<Choix> GenEvt::AjouterChoixVide(std::shared_ptr<Effet> effetDest
     if ( effetDest == nullptr)
         effetDest = m_DernierEffetGenere;
 
-    std::shared_ptr<Choix> choix = make_shared<Choix>(effetDest);
+    std::shared_ptr<Choix> choix = make_shared<Choix>();
     effetDest->m_Choix.push_back(choix);
     return choix;
 }
 
 std::shared_ptr<Choix> GenEvt::AjouterChoixVide(std::shared_ptr<LancerDe> lancerDe)
 {
-    std::shared_ptr<Choix> choix = make_shared<Choix>(lancerDe);
+    std::shared_ptr<Choix> choix = make_shared<Choix>();
     lancerDe->m_Choix.push_back(choix);
     return choix;
 }

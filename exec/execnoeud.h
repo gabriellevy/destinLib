@@ -77,7 +77,7 @@ public:
 
     virtual void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
-    std::shared_ptr<NoeudNarratif> m_Noeud = nullptr; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoie qui en a la charge)
+    std::weak_ptr<NoeudNarratif> m_Noeud; //  pointeur vers le noeud temporairement représenté via la classe Exec (il appartient à une structure Histoire qui en a la charge)
 
 protected:
     virtual void AjouterAuxBoutonsHoriz(std::shared_ptr<ExecNoeud> execNoeud);

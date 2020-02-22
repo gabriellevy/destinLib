@@ -53,7 +53,7 @@ shared_ptr<ExecEffet> ExecEvt::SetExecEffet(QString effetId)
 shared_ptr<ExecEffet> ExecEvt::SetExecEffet(shared_ptr<Effet> effet)
 {
    if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet)
-        return this->SetExecEffet(make_shared<ExecEffet>(ExecEvt::shared_from_this(), effet));
+        return this->SetExecEffet(make_shared<ExecEffet>(effet));
    return this->m_ExecEffetActuel;
 }
 
@@ -127,7 +127,7 @@ void ExecEvt::LancerNoeud()
 
 shared_ptr<Evt> ExecEvt::GetEvt()
 {
-    return std::static_pointer_cast<Evt>(m_Noeud);
+    return std::static_pointer_cast<Evt>(m_Noeud.lock());
 }
 
 

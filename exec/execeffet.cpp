@@ -12,9 +12,8 @@
 using std::shared_ptr;
 using std::make_shared;
 
-ExecEffet::ExecEffet(shared_ptr<ExecEvt> exec_evt, std::shared_ptr<Effet> effet, QWidget *parent):
+ExecEffet::ExecEffet(std::shared_ptr<Effet> effet, QWidget *parent):
     ExecNoeud(effet, parent),
-    m_ExecEvt(exec_evt),
     ui(new Ui::Effet)
 {
     m_Noeud = effet;
@@ -52,8 +51,8 @@ void ExecEffet::FinExecutionNoeud()
 
 std::shared_ptr<Effet> ExecEffet::GetEffet()
 {
-    if ( m_Noeud != nullptr)
-        return std::static_pointer_cast<Effet>(m_Noeud);
+    if ( m_Noeud.lock() != nullptr)
+        return std::static_pointer_cast<Effet>(m_Noeud.lock());
     else return nullptr;
 }
 

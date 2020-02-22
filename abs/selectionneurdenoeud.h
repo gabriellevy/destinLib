@@ -8,7 +8,7 @@ class Evt;
 class Condition;
 
 struct NoeudProbable {
-    std::shared_ptr<Noeud> m_Noeud;
+    std::weak_ptr<Noeud> m_Noeud;
     std::shared_ptr<Condition> m_PoidsProba;
 
     NoeudProbable(std::shared_ptr<Noeud> noeud, std::shared_ptr<Condition> poids):m_Noeud(noeud), m_PoidsProba(poids) {}
