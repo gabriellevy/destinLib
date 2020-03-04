@@ -8,18 +8,14 @@
 class ExecEffet;
 class LancerDe;
 
-class ExecChoix : public ExecNoeud,
-        my_enable_shared_from_this<ExecChoix>
+class ExecChoix : public ExecNoeud
 {
     Q_OBJECT
  public:
-    using my_enable_shared_from_this<ExecChoix>::shared_from_this;
 
     std::shared_ptr<Choix> m_Choix;
 
     explicit ExecChoix(std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
-    explicit ExecChoix(
-            std::shared_ptr<ExecNoeud> execNoeud, std::shared_ptr<Choix> choix, QWidget *parent = nullptr);
     virtual ~ExecChoix();
 
     void AfficherNoeud();
@@ -28,7 +24,7 @@ class ExecChoix : public ExecNoeud,
     //void LancerNoeud();
     bool GestionTransition();
 
-    std::shared_ptr<ExecNoeud> GetExecNoeud();
+    ExecNoeud* GetExecNoeud();
 
 private:
     Ui::Choix *ui;

@@ -27,7 +27,7 @@ void Univers::LancerHistoire(QString idHistoire, QWidget* /* parent*/, QString p
 {
     this->m_Histoire = this->GenererUneHistoire(idHistoire);
 
-    this->m_ExecHistoire = make_shared<ExecHistoire>(this->m_Histoire);
+    this->m_ExecHistoire = new ExecHistoire(this->m_Histoire);
 
     this->AfficherHistoire(ui->histoireWidget);
 
@@ -101,7 +101,7 @@ shared_ptr<Hist> Univers::GenererUneHistoire(QString histoireId)
 void Univers::AfficherHistoire(QWidget *parent)
 {
     this->setWindowTitle(m_ExecHistoire->GetTitre());
-    parent->layout()->addWidget(m_ExecHistoire.get());
+    parent->layout()->addWidget(m_ExecHistoire);
 }
 
 void Univers::AppliquerFond(QString urlImageFond)
@@ -156,7 +156,7 @@ void Univers::AjouterDuree(float duree)
     m_Duree += duree;
 }
 
-shared_ptr<ExecHistoire> Univers::GetExecHistoire()
+ExecHistoire* Univers::GetExecHistoire()
 {
     return m_ExecHistoire;
 }
@@ -184,8 +184,8 @@ void Univers::RafraichirAffichage()
 
 bool Univers::LancerEvtEtOuEffetCourant()
 {
-    shared_ptr<ExecEvt> evt_actuel = m_ExecHistoire->GetExecEvtActuel();
-    shared_ptr<ExecEffet> effet_actuel = m_ExecHistoire->GetExecEffetActuel();
+    ExecEvt* evt_actuel = m_ExecHistoire->GetExecEvtActuel();
+    ExecEffet* effet_actuel = m_ExecHistoire->GetExecEffetActuel();
     if ( evt_actuel == nullptr || evt_actuel == nullptr || effet_actuel == nullptr || effet_actuel == nullptr)
         return false;
 

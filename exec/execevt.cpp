@@ -23,7 +23,7 @@ ExecEvt::~ExecEvt()
     delete ui;
 }
 
-shared_ptr<ExecEffet> ExecEvt::GetExecEffetActuel()
+ExecEffet* ExecEvt::GetExecEffetActuel()
 {
     if ( this->m_ExecEffetActuel == nullptr)
         this->SetEffetIndex(0);
@@ -31,7 +31,7 @@ shared_ptr<ExecEffet> ExecEvt::GetExecEffetActuel()
     return this->m_ExecEffetActuel;
 }
 
-shared_ptr<ExecLancerDe> ExecEvt::GetExecLancerDeActuel()
+ExecLancerDe* ExecEvt::GetExecLancerDeActuel()
 {
     if ( this->m_ExecEffetActuel == nullptr)
         this->SetEffetIndex(0);
@@ -39,21 +39,21 @@ shared_ptr<ExecLancerDe> ExecEvt::GetExecLancerDeActuel()
     return this->m_ExecEffetActuel->m_ExecLancerDe;
 }
 
-shared_ptr<ExecEffet> ExecEvt::SetEffetIndex(int index)
+ExecEffet* ExecEvt::SetEffetIndex(int index)
 {
     return this->SetExecEffet(this->GetEvt()->m_Effets[index]);
 }
 
-shared_ptr<ExecEffet> ExecEvt::SetExecEffet(QString effetId)
+ExecEffet* ExecEvt::SetExecEffet(QString effetId)
 {
     std::shared_ptr<Effet> effet = this->GetEvt()->TrouverEffet(effetId);
     return SetExecEffet(effet);
 }
 
-shared_ptr<ExecEffet> ExecEvt::SetExecEffet(shared_ptr<Effet> effet)
+ExecEffet* ExecEvt::SetExecEffet(shared_ptr<Effet> effet)
 {
    if ( this->m_ExecEffetActuel == nullptr || this->m_ExecEffetActuel->GetEffet() != effet)
-        return this->SetExecEffet(make_shared<ExecEffet>(effet));
+        return this->SetExecEffet(new ExecEffet(effet));
    return this->m_ExecEffetActuel;
 }
 
@@ -122,7 +122,7 @@ void ExecEvt::LancerNoeud()
     this->ExecuterActionsNoeud();
 
     // un evt ne suffit pas à un affichage et une pause : il faut lancer l'effet suivant automatiquement
-    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(ExecNoeud::shared_from_this());
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
 }
 
 shared_ptr<Evt> ExecEvt::GetEvt()
@@ -130,21 +130,19 @@ shared_ptr<Evt> ExecEvt::GetEvt()
     return std::static_pointer_cast<Evt>(m_Noeud.lock());
 }
 
-
-
-shared_ptr<ExecEffet> ExecEvt::SetExecEffet(shared_ptr<ExecEffet> exec_effet)
+ExecEffet* ExecEvt::SetExecEffet(ExecEffet* exec_effet)
 {
     if ( this->m_ExecEffetActuel == nullptr ||  this->m_ExecEffetActuel != exec_effet) {
         if ( m_ExecEffetActuel != nullptr)
         {
             m_ExecEffetActuel->NettoyageAffichage();
             m_ExecEffetActuel->hide();
-            ui->effetsWidget->layout()->removeWidget(m_ExecEffetActuel.get());
+            ui->effetsWidget->layout()->removeWidget(m_ExecEffetActuel);
         }
         m_ExecEffetActuel = exec_effet;
         //m_EffetActuel->LancerNoeud();
 
-        ui->effetsWidget->layout()->addWidget(m_ExecEffetActuel.get());
+        ui->effetsWidget->layout()->addWidget(m_ExecEffetActuel);
 
         m_ExecEffetActuel->show();
         this->update();

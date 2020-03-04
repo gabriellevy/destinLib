@@ -26,12 +26,6 @@ ExecChoix::ExecChoix(std::shared_ptr<Choix> choix, QWidget *parent) :
     }
 }
 
-ExecChoix::ExecChoix(shared_ptr<ExecNoeud>, std::shared_ptr<Choix> choix, QWidget *parent):
-    ExecChoix(choix, parent)
-{
-
-}
-
 void ExecChoix::RafraichirAffichageLayouts(int largeur, int)
 {
     if( largeur != -1)
@@ -59,13 +53,13 @@ void ExecChoix::AfficherNoeud()
 
 bool ExecChoix::GestionTransition()
 {
-    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(ExecNoeud::shared_from_this());
+    Univers::ME->GetExecHistoire()->DeterminerPuisLancerNoeudSuivant(this);
     return true;
 }
 
-shared_ptr<ExecNoeud> ExecChoix::GetExecNoeud()
+ExecNoeud* ExecChoix::GetExecNoeud()
 {
-    return std::static_pointer_cast<ExecNoeud>(shared_from_this());
+    return static_cast<ExecNoeud*>(this);
 }
 
 void ExecChoix::ExecuterNoeudSlot(/*bool afficherNoeud, bool lancerNoeudSuivantSiRienAAfiicher*/)

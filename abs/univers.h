@@ -45,7 +45,7 @@ protected:
     std::shared_ptr<Hist> m_Histoire = nullptr;
 
     // interfaces/widgets
-    std::shared_ptr<ExecHistoire> m_ExecHistoire = nullptr;
+    ExecHistoire* m_ExecHistoire = nullptr;
     std::shared_ptr<IPerso> m_Perso;
     Ui::Univers *ui;
 
@@ -76,7 +76,7 @@ public:
 
     // getters setters
     std::shared_ptr<Hist> GetHistoire();
-    std::shared_ptr<ExecHistoire> GetExecHistoire();
+    ExecHistoire* GetExecHistoire();
     std::shared_ptr<GenHistoire> GetGenHistoire(QString histoireId);
     std::shared_ptr<IPerso> GetPersoInterface();
     void SetTypeEvt(TypeEvt typeEvt);

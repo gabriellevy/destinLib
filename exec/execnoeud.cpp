@@ -113,12 +113,12 @@ void ExecNoeud::LancerNoeud()
 }
 
 
-void ExecNoeud::AjouterAuxBoutonsHoriz(shared_ptr<ExecNoeud> )
+void ExecNoeud::AjouterAuxBoutonsHoriz(ExecNoeud* )
 {
     Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsHoriz");
 }
 
-void ExecNoeud::AjouterAuxBoutonsVertic(shared_ptr<ExecNoeud> )
+void ExecNoeud::AjouterAuxBoutonsVertic(ExecNoeud* )
 {
     Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsVertic");
 }
@@ -160,7 +160,7 @@ void ExecNoeud::GenerationExecChoix()
         if ( this->m_Noeud.lock()->m_Choix.length() > 0 &&
              this->m_ExecChoix.length() < this->m_Noeud.lock()->m_Choix.length() ) {
             for (std::shared_ptr<Choix> choix: this->m_Noeud.lock()->m_Choix) {
-                this->m_ExecChoix.push_back(make_shared<ExecChoix>(ExecNoeud::shared_from_this(), choix, this));
+                this->m_ExecChoix.push_back(new ExecChoix(choix, this));
             }
         }
 

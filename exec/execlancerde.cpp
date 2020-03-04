@@ -8,7 +8,7 @@
 using std::shared_ptr;
 using std::make_shared;
 
-ExecLancerDe::ExecLancerDe(shared_ptr<ExecEffet> execEffet, std::shared_ptr<LancerDe> lancerDe, QWidget *parent) :
+ExecLancerDe::ExecLancerDe(ExecEffet* execEffet, std::shared_ptr<LancerDe> lancerDe, QWidget *parent) :
     ExecNoeud(lancerDe, parent),
     m_LancerDe(lancerDe),
     m_ExecEffet(execEffet),
@@ -69,14 +69,14 @@ bool ExecLancerDe::GestionTransition()
     if ( m_ResExecution == nullptr || m_ResExecution->m_RestAffiche)
         return false;
 
-    this->m_ExecEffet.lock()->GestionTransition();
+    this->m_ExecEffet->GestionTransition();
 
     return true;
 }
 
-shared_ptr<ExecNoeud> ExecLancerDe::GetExecNoeud()
+ExecNoeud* ExecLancerDe::GetExecNoeud()
 {
-    return std::static_pointer_cast<ExecNoeud>(ExecLancerDe::shared_from_this());
+    return static_cast<ExecNoeud*>(this);
 }
 
 int ExecLancerDe::GetTotalRes()
@@ -90,27 +90,27 @@ int ExecLancerDe::GetTotalRes()
 
 void ExecLancerDe::NettoyageAffichage()
 {
-    for ( shared_ptr<ExecChoix> choix: this->m_ExecChoix ) {
-        this->layout()->removeWidget(choix.get());
+    for ( ExecChoix* choix: this->m_ExecChoix ) {
+        this->layout()->removeWidget(choix);
     }
 }
 
 
-void ExecLancerDe::AjouterAuxBoutonsHoriz(shared_ptr<ExecNoeud> execNoeud)
+void ExecLancerDe::AjouterAuxBoutonsHoriz(ExecNoeud* execNoeud)
 {
-    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud.get());
+    ui->horizontalLayoutBoutons->layout()->addWidget(execNoeud);
 }
 
-void ExecLancerDe::AjouterAuxBoutonsVertic(shared_ptr<ExecNoeud> execNoeud)
+void ExecLancerDe::AjouterAuxBoutonsVertic(ExecNoeud* execNoeud)
 {
-    ui->layoutBoutons->layout()->addWidget(execNoeud.get());
+    ui->layoutBoutons->layout()->addWidget(execNoeud);
 }
 
-shared_ptr<ExecChoix> ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
+ExecChoix* ExecLancerDe::AjoutChoixGoToEffet(QString texte, QString idDest)
 {
     shared_ptr<Choix> choix = make_shared<Choix>(texte);
     choix->m_GoToEffetId = idDest;
-    shared_ptr<ExecChoix> exec = make_shared<ExecChoix>(ExecNoeud::shared_from_this(), choix, this);
+    ExecChoix* exec =  new ExecChoix(choix, this);
     this->m_ExecChoix.push_back(exec);
     return exec;
 }

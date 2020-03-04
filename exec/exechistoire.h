@@ -46,8 +46,8 @@ protected:
     // repérage d'événement courant et effet courant en mode histoire normal
     //QString m_CurrentEvtId;
     //int m_EffetIndex; // index de l'effet actuel dans la liste des effets de l'événement actuel
-    std::shared_ptr<ExecNoeud> m_ExecNoeudActuel = nullptr; // 'curseur' pointant sur le noeud précisément exécuté à ce moment, que ce soit un événement, effet, choix
-    std::shared_ptr<ExecEvt> m_ExecEvtActuel = nullptr; // evt actuel (il doit toujours y en avoir un à partir de quand le destin est lancé
+    ExecNoeud* m_ExecNoeudActuel = nullptr; // 'curseur' pointant sur le noeud précisément exécuté à ce moment, que ce soit un événement, effet, choix
+    ExecEvt* m_ExecEvtActuel = nullptr; // evt actuel (il doit toujours y en avoir un à partir de quand le destin est lancé
 
 
     //QString m_CurrentConditionnelEvtId;
@@ -74,14 +74,14 @@ public:
      * @param forceHistoireMode : renvoie l'événement courant de l'histoire, excluant l'événement aléatoire secondaire même si on est en mode aléatoire
      * @return événement actuellement exécuté par le joueur
      */
-    std::shared_ptr<ExecEvt> GetExecEvtActuel(bool forceHistoireMode = false);
-    static std::shared_ptr<ExecEffet> GetExecEffetActuel(bool forceHistoireMode = false);
-    std::shared_ptr<ExecLancerDe> GetExecLancerDeActuel();
+    ExecEvt* GetExecEvtActuel(bool forceHistoireMode = false);
+    static ExecEffet* GetExecEffetActuel(bool forceHistoireMode = false);
+    ExecLancerDe* GetExecLancerDeActuel();
     std::shared_ptr<Evt> EvtActuel(bool forceHistoireMode = false);
     std::shared_ptr<Effet> EffetActuel(bool forceHistoireMode = false);
-    std::shared_ptr<ExecEvt> SetExecEvtActuel(std::shared_ptr<Evt> evt);
+    ExecEvt* SetExecEvtActuel(std::shared_ptr<Evt> evt);
 
-    std::shared_ptr<ExecNoeud> DeterminerPuisLancerNoeudSuivant(std::shared_ptr<ExecNoeud> noeudActuel = nullptr, bool noeudActuelEstValide = true);
+    ExecNoeud* DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel = nullptr, bool noeudActuelEstValide = true);
     std::shared_ptr<Noeud> GetEffetDindexSuivant(std::shared_ptr<Noeud> noeudActuel);
     std::shared_ptr<Noeud> TesterSiEffetEstLancableOuSonElse(std::shared_ptr<Noeud> noeudActuel);
     // si les événements sont issues de la bdd ils ont un id qui permet de les extraire :
