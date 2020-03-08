@@ -190,7 +190,7 @@ void DPerso::MajCheminImage(QString chemin)
             return;
         }
     }
-    Q_ASSERT_X(true, "chemin image de perso introuvable ! ", "DPerso::MajCheminImage");
+    Q_ASSERT_X(false, "chemin image de perso introuvable ! ", "DPerso::MajCheminImage");
 }
 
 QString DPerso::GetId()
@@ -199,7 +199,7 @@ QString DPerso::GetId()
         if ( m_SetCaracs[i]->m_CaracId == GestionnaireCarac::CARAC_PERSO_ID)
             return m_SetCaracs[i]->m_Valeur;
     }
-    Q_ASSERT_X(true, "id de perso introuvable ! ", "DPerso::GetId");
+    Q_ASSERT_X(false, "id de perso introuvable ! ", "DPerso::GetId");
     return "id introuvable !!";
 }
 

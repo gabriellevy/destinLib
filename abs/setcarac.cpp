@@ -68,7 +68,7 @@ ModifCaracType SetCarac::GetModifCaracTypeFromQString(QString str)
     } else if ( str == "RetireDeCarac") {
         return ModifCaracType::RetireDeCarac;
     }
-    Q_ASSERT_X(true, "SetCarac::GetModifCaracTypeFromQString", "type qui n'existe pas");
+    Q_ASSERT_X(false, "SetCarac::GetModifCaracTypeFromQString", "type qui n'existe pas");
     return ModifCaracType::SetCarac;
 }
 
@@ -81,7 +81,7 @@ QString SetCarac::GetQStringFromModifCaracType(ModifCaracType mct)
     } else if ( mct == ModifCaracType::RetireDeCarac) {
         return "RetireDeCarac";
     }
-    Q_ASSERT_X(true, "SetCarac::GetQStringFromModifCaracType", "type qui n'existe pas");
+    Q_ASSERT_X(false, "SetCarac::GetQStringFromModifCaracType", "type qui n'existe pas");
     return "";
 }
 

@@ -115,12 +115,12 @@ void ExecNoeud::LancerNoeud()
 
 void ExecNoeud::AjouterAuxBoutonsHoriz(ExecNoeud* )
 {
-    Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsHoriz");
+    Q_ASSERT_X(false, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsHoriz");
 }
 
 void ExecNoeud::AjouterAuxBoutonsVertic(ExecNoeud* )
 {
-    Q_ASSERT_X(true, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsVertic");
+    Q_ASSERT_X(false, "cette fonction doit être surclassée !", "ExecNoeud::AjouterAuxBoutonsVertic");
 }
 
 bool ExecNoeud::GestionTransition()

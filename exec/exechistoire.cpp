@@ -102,7 +102,7 @@ ExecEvt* ExecHistoire::GetExecEvtActuel(bool /*forceHistoireMode*/)
     if ( this->m_ExecEvtActuel->m_Noeud.lock()->m_TypeNoeud == TypeNoeud::etn_Evt)
         return static_cast<ExecEvt*>(this->m_ExecEvtActuel);
 
-    Q_ASSERT_X(true, "Pas d'événement actuel : bizarre", "Histoire::EvtActuel");
+    Q_ASSERT_X(false, "Pas d'événement actuel : bizarre", "Histoire::EvtActuel");
 
     return this->m_ExecEvtActuel;
 }
@@ -171,7 +171,7 @@ int ExecHistoire::CalculerIndex(std::shared_ptr<Evt> evtATrouver)
             return index;
         index++;
     }
-    Q_ASSERT_X(true, "Evt introuvable dans sa propre histoire !", "Evt::CalculerIndex");
+    Q_ASSERT_X(false, "Evt introuvable dans sa propre histoire !", "Evt::CalculerIndex");
     return -1;
 }
 
@@ -211,7 +211,7 @@ ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
         return evt->m_Effets[0];
     }*/
 
-    Q_ASSERT_X(true, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
+    Q_ASSERT_X(false, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
 
     return nullptr;
 
@@ -222,7 +222,7 @@ ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
             if ( m_EffetConditionnelIndex == -1 || m_EffetConditionnelIndex >= EvtActuel()->m_Effets.size() )
             {
                 QString msg = "m_EffetConditionnelIndex invalide : " + QString::number(m_EffetConditionnelIndex);
-                Q_ASSERT_X(true, "Histoire::EffetActuel", msg.toStdString().c_str());
+                Q_ASSERT_X(false, "Histoire::EffetActuel", msg.toStdString().c_str());
                 return nullptr;
             }
 
@@ -234,7 +234,7 @@ ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
         if ( m_EffetIndex == -1 || m_EffetIndex >= EvtActuel(forceHistoireMode)->m_Effets.size() )
         {
             QString msg = "m_EffetIndex invalide : " + QString::number(m_EffetIndex);
-            Q_ASSERT_X(true, "Histoire::EffetActuel", msg.toStdString().c_str());
+            Q_ASSERT_X(false, "Histoire::EffetActuel", msg.toStdString().c_str());
             return nullptr;
         }
 
@@ -452,7 +452,8 @@ void ExecHistoire::PasserAEvtIndexSuivant()
     int index = this->CalculerIndex(this->EvtActuel()) + 1;
 
     QString msg = "Impossible de passer à l'index d'effet suivant index : " + QString::number(index);
-    Q_ASSERT_X(index >= this->m_Histoire->m_Evts.length(), msg.toStdString().c_str(), "Histoire::PasserAEvtIndexSuivant");
+    int nbEvts = this->m_Histoire->m_Evts.length();
+    Q_ASSERT_X(index < nbEvts, msg.toStdString().c_str(), "Histoire::PasserAEvtIndexSuivant");
     this->SetExecEvtActuel( this->m_Histoire->m_Evts[index] );
 }
 
@@ -559,7 +560,7 @@ shared_ptr<Evt> ExecHistoire::GetEvtSelonBddId(int id)
     }
 
     QString msg = QString("evt introuvable pour cet id : " + QString::number(id));
-    Q_ASSERT_X(true, "GetEvtSelonBddId", msg.toStdString().c_str());
+    Q_ASSERT_X(false, "GetEvtSelonBddId", msg.toStdString().c_str());
 
     return nullptr;
 }

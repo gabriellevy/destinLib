@@ -30,7 +30,7 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
             if ( totalprobaParcouru > 1 )
             {
                 // interdit d'avoir une proba pure > 1 dans un mêm sélectionneur !
-                Q_ASSERT_X(true, "interdit d'avoir une proba pure > 1 dans un mêm sélectionneur !", "SelectionneurDeNoeud::DeterminerNoeudSuivant");
+                Q_ASSERT_X(false, "interdit d'avoir une proba pure > 1 dans un mêm sélectionneur !", "SelectionneurDeNoeud::DeterminerNoeudSuivant");
             }
             proba = static_cast <double> (distribution(generator)) / static_cast <double> (RAND_MAX);
             if ( proba <= m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale())

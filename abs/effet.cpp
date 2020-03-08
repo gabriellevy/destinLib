@@ -40,7 +40,7 @@ int Effet::CalculerIndex()
             return index;
         index++;
     }
-    Q_ASSERT_X(true, "Effet introuvable dans son propre evt !", "Effet::CalculerIndex");
+    Q_ASSERT_X(false, "Effet introuvable dans son propre evt !", "Effet::CalculerIndex");
     return -1;
 }
 
