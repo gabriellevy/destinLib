@@ -41,7 +41,7 @@ public:
 
     //void Rafraichir(QJsonArray persos);
     void ChangerPersoCourant(QString changePerso);
-    void InitialiserPerso();
+    virtual void InitialiserPerso();
     void RafraichirAffichage();
 
     // accesseur vers le perso courant (qui est toujours unique)

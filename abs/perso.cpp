@@ -88,9 +88,9 @@ void IPerso::RafraichirAffichage()
                 persoCourant->GetValeurCarac(GestionnaireCarac::CARAC_NOM));
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
-    QMap<QString, shared_ptr<Carac>> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();
+    QMap<QString, Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();
     // caracs
-    QMap<QString, shared_ptr<Carac>>::const_iterator i = caracs.constBegin();
+    QMap<QString, Carac*>::const_iterator i = caracs.constBegin();
     while (i != caracs.constEnd()) {
         Q_ASSERT_X( i.value() != nullptr,
                     "Carac Inconnue",
@@ -106,8 +106,8 @@ void IPerso::RafraichirAffichage()
             if ( i.value()->bAffichable())
             {
                 i.value()->Afficher();
-                ui->caracsLayout2->addWidget(i.value().get());
-                ui->caracsLayout2->setAlignment(i.value().get(), Qt::AlignLeft);
+                ui->caracsLayout2->addWidget(i.value());
+                ui->caracsLayout2->setAlignment(i.value(), Qt::AlignLeft);
                 i.value()->show();
             }
             ++i;

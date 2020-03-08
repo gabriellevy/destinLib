@@ -73,7 +73,7 @@ private:
     static GestionnaireCarac* ME;
 
     // caracs actuelles du joueur
-    QMap<QString, std::shared_ptr<Carac>> m_Caracs;
+    QMap<QString, Carac*> m_Caracs;
     static QString GetCaracValue(QString id);
     static int GetCaracValueAsInt(QString id);
     static void AppliquerSetCarac(const SetCarac& setCarac);
@@ -88,12 +88,12 @@ private:
 
 public:
 
-    std::shared_ptr<Carac> GetCarac(QString idCarac);
+    Carac* GetCarac(QString idCarac);
 
     // fonctions raccourcis de convénience :
     static GestionnaireCarac*  GetGestionnaireCarac();
 
-    QMap<QString, std::shared_ptr<Carac>> GetCaracs();
+    QMap<QString, Carac*> GetCaracs();
 
     static QString CARAC_NOM;
     static QString CARAC_PERSO_ID;
@@ -101,12 +101,12 @@ public:
     static QString CARAC_CHEMIN_PORTRAIT;
 
     // fonctions d'ajouts de caracs à l'aventure (essentiellement utile pour les paramétrer et déterminer sous quelle forme elles sont affichées)
-    void AjouterCarac(std::shared_ptr<Carac> carac);
+    void AjouterCarac(Carac* carac);
     /**
      * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
      */
-    std::shared_ptr<Carac> AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
-    std::shared_ptr<Carac> AjouterCaracString(QString idCarac, QString valeur = "");
+    Carac* AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
+    Carac* AjouterCaracString(QString idCarac, QString valeur = "");
 
     friend class DPerso;
     friend class MultiSetterDeCarac;

@@ -41,13 +41,13 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = this->CetteCaracExisteDeja(setCarac.m_CaracId);
 
-    shared_ptr<Carac> carac;
+    Carac* carac;
     if ( trouve )
     {
         carac = m_Caracs[setCarac.m_CaracId];
     }
     else {
-        carac = make_shared<Carac>();
+        carac =  new Carac();
         carac->m_DataCarac.m_Id = setCarac.m_CaracId;
         carac->m_DataCarac.SetValeur("0");
         m_Caracs[setCarac.m_CaracId] = carac;
@@ -77,23 +77,23 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
     }
 }
 
-void GestionnaireCarac::AjouterCarac(shared_ptr<Carac> carac)
+void GestionnaireCarac::AjouterCarac(Carac* carac)
 {
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
 }
 
-shared_ptr<Carac> GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
+Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
 {
-    shared_ptr<Carac> carac = make_shared<Carac>(idCarac, idCarac, QString::number(valeur),
+    Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
                              "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
                              QString::number(valMin), QString::number(valMax));
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     return carac;
 }
 
-shared_ptr<Carac> GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
+Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
 {
-    shared_ptr<Carac> carac = make_shared<Carac>(idCarac, idCarac, valeur,
+    Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     return carac;
@@ -145,7 +145,7 @@ QString GestionnaireCarac::EffacerValeurACaracId(const QString& idCarac)
     return SetValeurACaracId(idCarac, "");
 }
 
-shared_ptr<Carac> GestionnaireCarac::GetCarac(QString idCarac)
+Carac* GestionnaireCarac::GetCarac(QString idCarac)
 {
     return m_Caracs[idCarac];
 
@@ -203,7 +203,7 @@ QString DPerso::GetId()
     return "id introuvable !!";
 }
 
-QMap<QString, shared_ptr<Carac>> GestionnaireCarac::GetCaracs()
+QMap<QString, Carac*> GestionnaireCarac::GetCaracs()
 {
     return this->m_Caracs;
 }
