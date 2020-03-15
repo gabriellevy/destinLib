@@ -91,6 +91,14 @@ Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int va
     return carac;
 }
 
+Carac* GestionnaireCarac::AjouterCaracBinaire(QString idCarac, bool valeur)
+{
+    Carac* carac = new Carac(idCarac, idCarac, valeur?"1":"",
+                             "", idCarac, MODE_AFFICHAGE::ma_Binaire);
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    return carac;
+}
+
 Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
