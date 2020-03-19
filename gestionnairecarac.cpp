@@ -107,6 +107,14 @@ Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
     return carac;
 }
 
+Carac* GestionnaireCarac::AjouterCaracImageValeur(QString idCarac, QString valeur)
+{
+    Carac* carac = new Carac(idCarac, idCarac, valeur,
+                             "", idCarac, MODE_AFFICHAGE::ma_ImgValeur);
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    return carac;
+}
+
 int GestionnaireCarac::GetCaracValueAsInt(QString id)
 {
     return GestionnaireCarac::GetCaracValue(id).toInt();

@@ -69,7 +69,7 @@ public:
     DCarac m_DataCarac;
 
     QPixmap m_Img;
-    void SetImg(QString CheminImg);
+    bool SetImg(QString CheminImg);
 
 protected :
     Ui::Carac *ui;
