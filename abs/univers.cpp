@@ -12,6 +12,7 @@ using std::make_shared;
 
 const QFont* Univers::BASE_FONT = new QFont("Verdana", 10);
 const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
+QColor Univers::COULEUR_FOND(100, 90, 80);
 QString Univers::CHEMIN = "";
 Univers* Univers::ME;
 
@@ -111,6 +112,7 @@ void Univers::AppliquerFond(QString urlImageFond)
 
 void Univers::AppliquerTheme(QColor fond)
 {
+    Univers::COULEUR_FOND = fond;
     ui->Fond->setStyleSheet("QWidget#Fond { background-color: rgba(" +
                             QString::number(fond.red()) +
                             "," + QString::number(fond.green()) +

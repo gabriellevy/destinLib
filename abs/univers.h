@@ -70,6 +70,7 @@ public:
 
     const static QFont* BASE_FONT;
     const static QFont* TITRE_FONT;
+    static QColor COULEUR_FOND;
     static QString CHEMIN;
     static Univers* ME;
     ModeAffichage m_ModeAffichage = ModeAffichage::ema_Details;

@@ -24,6 +24,8 @@ public:
     virtual bool TesterConditions();
 
     QString m_Nom = "";
+    // utilisation : url sous le format qrc:[chemin dans le fichier ressource].
+    // marche avec les mp3 mais il faut parfois les "recréer par exemple en apsasnt le mp3 en wav puis en mp3 à nouveau
     QString m_Son = "";
     double m_Duree;
     QString m_Texte = "";

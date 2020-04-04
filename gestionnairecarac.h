@@ -4,6 +4,7 @@
 #include "abs/carac.h"
 #include <QString>
 #include <QMap>
+#include <QHash>
 #include <memory>
 
 class SetCarac;
@@ -73,7 +74,7 @@ private:
     static GestionnaireCarac* ME;
 
     // caracs actuelles du joueur
-    QMap<QString, Carac*> m_Caracs;
+    QHash<QString, Carac*> m_Caracs;
     static QString GetCaracValue(QString id);
     static int GetCaracValueAsInt(QString id);
     static void AppliquerSetCarac(const SetCarac& setCarac);
@@ -92,8 +93,9 @@ public:
 
     // fonctions raccourcis de convénience :
     static GestionnaireCarac*  GetGestionnaireCarac();
+    QVector<QString> m_CaracsAffichees; // id des Caracs affichées dans le profil joueur
 
-    QMap<QString, Carac*> GetCaracs();
+    QHash<QString, Carac*> GetCaracs();
 
     static QString CARAC_NOM;
     static QString CARAC_PERSO_ID;

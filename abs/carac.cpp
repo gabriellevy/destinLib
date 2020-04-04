@@ -99,6 +99,9 @@ void Carac::DeterminerModeAffichage(QString modeAffichage)
     else if( modeAffichage == "texte") {
         m_ModeAffichage = MODE_AFFICHAGE::ma_Texte;
     }
+    else if( modeAffichage == "texte avec intitulé") {
+        m_ModeAffichage = MODE_AFFICHAGE::ma_Texte_intitule;
+    }
     else if( modeAffichage == "nombre") {
         m_ModeAffichage = MODE_AFFICHAGE::ma_Nombre;
     }
@@ -117,6 +120,13 @@ void Jauge::SetValeursJauge(double Minimum, double Maximum)
 
 void Carac::Afficher()
 {
+    this->setStyleSheet("QWidget#Fond { background-color: rgba(" +
+                             QString::number(Univers::COULEUR_FOND.red()) +
+                             "," + QString::number(Univers::COULEUR_FOND.green()) +
+                             "," + QString::number(Univers::COULEUR_FOND.blue()) +
+                             "," + QString::number(Univers::COULEUR_FOND.alpha()) +
+                             ") }");
+
     // A FAIRE gérer ici les valeurs qui utilisent la jauge...
     ui->jaugeCarac->hide();
 
@@ -173,10 +183,17 @@ void Carac::Afficher()
         AfficherImage();
         }break;
 
-        case MODE_AFFICHAGE::ma_Texte:{
+        case MODE_AFFICHAGE::ma_Texte_intitule:{
+        ui->labelValeur->hide();
         AfficherIntitule();
         AfficherValeur();
         AfficherImage();
+        }break;
+
+        case MODE_AFFICHAGE::ma_Texte:{
+        ui->caracBox->hide();
+        AfficherValeur();
+        AfficherImage(); // ??
         }break;
 
         case MODE_AFFICHAGE::Ma_Cache:
@@ -201,10 +218,18 @@ bool Carac::AfficherIntitule()
 {
     if ( m_DataCarac.m_Intitule != "")
     {
-        ui->caracBox->show();
-        ui->caracBox->setFont( *Univers::BASE_FONT);
-        ui->caracBox->setTitle(m_DataCarac.m_Intitule);
-        ui->caracBox->setToolTip(this->GetCaracDescription());
+        if ( m_ModeAffichage == MODE_AFFICHAGE::ma_Binaire ){
+            ui->caracBox->hide();
+            ui->labelValeur->show();
+            ui->labelValeur->setFont( *Univers::BASE_FONT);
+            ui->labelValeur->setText(m_DataCarac.m_Intitule);
+            ui->labelValeur->setToolTip(this->GetCaracDescription());
+        } else {
+            ui->caracBox->show();
+            ui->caracBox->setFont( *Univers::BASE_FONT);
+            ui->caracBox->setTitle(m_DataCarac.m_Intitule);
+            ui->caracBox->setToolTip(this->GetCaracDescription());
+        }
         return true;
     }
     else
@@ -218,10 +243,19 @@ bool Carac::AfficherValeur()
 {
     if ( m_DataCarac.AUneValeur() )
     {
-        ui->labelValeur->show();
-        ui->labelValeur->setFont( *Univers::BASE_FONT);
-        ui->labelValeur->setText(m_DataCarac.GetValeur());
-        ui->labelValeur->setToolTip(this->GetCaracDescription());
+        if ( m_ModeAffichage == MODE_AFFICHAGE::ma_Texte_intitule ||
+             m_ModeAffichage == MODE_AFFICHAGE::ma_Nombre ||
+             m_ModeAffichage == MODE_AFFICHAGE::ma_NombreSupZero) {
+            ui->labelValeurDansBox->show();
+            ui->labelValeurDansBox->setFont( *Univers::BASE_FONT);
+            ui->labelValeurDansBox->setText(m_DataCarac.GetValeur());
+            ui->labelValeurDansBox->setToolTip(this->GetCaracDescription());
+        } else {
+            ui->labelValeur->show();
+            ui->labelValeur->setFont( *Univers::BASE_FONT);
+            ui->labelValeur->setText(m_DataCarac.GetValeur());
+            ui->labelValeur->setToolTip(this->GetCaracDescription());
+        }
         return true;
     }
     else

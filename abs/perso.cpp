@@ -88,9 +88,9 @@ void IPerso::RafraichirAffichage()
                 persoCourant->GetValeurCarac(GestionnaireCarac::CARAC_NOM));
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
-    QMap<QString, Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();
+    QHash<QString, Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();
     // caracs
-    QMap<QString, Carac*>::const_iterator i = caracs.constBegin();
+    QHash<QString, Carac*>::const_iterator i = caracs.constBegin();
     while (i != caracs.constEnd()) {
         Q_ASSERT_X( i.value() != nullptr,
                     "Carac Inconnue",
@@ -99,18 +99,18 @@ void IPerso::RafraichirAffichage()
         ++i;
     }
 
-    if ( caracs.size() > 0 )
+    QVector<QString> caracsAffichees = GestionnaireCarac::GetGestionnaireCarac()->m_CaracsAffichees;
+    if ( caracsAffichees.size() > 0 )
     {
-        i = caracs.constBegin();
-        while (i != caracs.constEnd()) {
-            if ( i.value()->bAffichable())
+        for ( QString idCarac: caracsAffichees) {
+            Carac* carac = caracs[idCarac];
+            if ( carac->bAffichable())
             {
-                i.value()->Afficher();
-                ui->caracsLayout2->addWidget(i.value());
-                ui->caracsLayout2->setAlignment(i.value(), Qt::AlignLeft);
-                i.value()->show();
+                carac->Afficher();
+                ui->caracsLayout2->addWidget(carac);
+                ui->caracsLayout2->setAlignment(carac, Qt::AlignLeft);
+                carac->show();
             }
-            ++i;
         }
     }
 

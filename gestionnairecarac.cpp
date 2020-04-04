@@ -80,6 +80,7 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
 void GestionnaireCarac::AjouterCarac(Carac* carac)
 {
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
 }
 
 Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
@@ -88,6 +89,7 @@ Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int va
                              "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
                              QString::number(valMin), QString::number(valMax));
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
     return carac;
 }
 
@@ -96,6 +98,7 @@ Carac* GestionnaireCarac::AjouterCaracBinaire(QString idCarac, bool valeur)
     Carac* carac = new Carac(idCarac, idCarac, valeur?"1":"",
                              "", idCarac, MODE_AFFICHAGE::ma_Binaire);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
     return carac;
 }
 
@@ -104,6 +107,7 @@ Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
     return carac;
 }
 
@@ -112,6 +116,7 @@ Carac* GestionnaireCarac::AjouterCaracImageValeur(QString idCarac, QString valeu
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_ImgValeur);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
     return carac;
 }
 
@@ -164,8 +169,6 @@ QString GestionnaireCarac::EffacerValeurACaracId(const QString& idCarac)
 Carac* GestionnaireCarac::GetCarac(QString idCarac)
 {
     return m_Caracs[idCarac];
-
-    return nullptr;
 }
 
 
@@ -219,7 +222,7 @@ QString DPerso::GetId()
     return "id introuvable !!";
 }
 
-QMap<QString, Carac*> GestionnaireCarac::GetCaracs()
+QHash<QString, Carac*> GestionnaireCarac::GetCaracs()
 {
     return this->m_Caracs;
 }
