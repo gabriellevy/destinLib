@@ -63,7 +63,7 @@ public:
 
     void DeterminerModeAffichage(QString modeAffichage);
     void Afficher();
-    bool bAffichable();
+    virtual bool bAffichable();
 
     virtual QString GetCaracDescription();
 
@@ -77,8 +77,8 @@ protected :
 
 private:
     virtual bool AfficherValeur();
-    bool AfficherImage();
-    bool AfficherIntitule();
+    virtual bool AfficherImage();
+    virtual bool AfficherIntitule();
 };
 
 class Jauge : public Carac
