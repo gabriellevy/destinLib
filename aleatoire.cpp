@@ -29,6 +29,11 @@ Aleatoire* Aleatoire::GetAl()
     return ME;
 }
 
+bool Aleatoire::GetBool()
+{
+    return EntierInferieurA(2) == 0;
+}
+
 int Aleatoire::EntierEntreAEtB(int A, int B)
 {
     if ( (B-A) <= 0)

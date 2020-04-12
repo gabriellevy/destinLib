@@ -28,6 +28,8 @@ public:
 
     int D6();
 
+    bool GetBool();
+
     double Entre0Et1();
     int GetIndexSelonPoids(QList<double> poids);
 };
