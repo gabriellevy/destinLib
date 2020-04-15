@@ -111,6 +111,7 @@ public:
     Carac* AjouterCaracString(QString idCarac, QString valeur = "");
     Carac* AjouterCaracBinaire(QString idCarac, bool valeur = false);
     Carac* AjouterCaracImageValeur(QString idCarac, QString valeur = "");
+    Carac* AjouterCaracImage(QString idCarac, QString valeur = "");
 
     friend class DPerso;
     friend class MultiSetterDeCarac;

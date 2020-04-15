@@ -142,6 +142,7 @@ void Carac::Afficher()
 
         }break;
         case MODE_AFFICHAGE::ma_Img:
+            ui->caracBox->hide();
         case MODE_AFFICHAGE::ma_ImgValeur:
         {
             if ( !AfficherImage() /*&& !SetImg(m_DataCarac.GetValeur())*/)

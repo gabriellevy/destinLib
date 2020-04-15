@@ -58,7 +58,7 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
     case ModifCaracType::SetCarac : {
         carac->m_DataCarac.SetValeur(setCarac.GetValeur());
 
-        if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
+        if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur || carac->m_ModeAffichage == MODE_AFFICHAGE::ma_Img ) {
             carac->m_Img.load(carac->m_DataCarac.GetValeur());
         }
     }break;
@@ -106,6 +106,15 @@ Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte);
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
+    return carac;
+}
+
+Carac* GestionnaireCarac::AjouterCaracImage(QString idCarac, QString valeur)
+{
+    Carac* carac = new Carac(idCarac, idCarac, valeur,
+                             "", idCarac, MODE_AFFICHAGE::ma_Img);
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
     return carac;
