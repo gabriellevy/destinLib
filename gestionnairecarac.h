@@ -109,6 +109,7 @@ public:
      */
     Carac* AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
     Carac* AjouterCaracString(QString idCarac, QString valeur = "");
+    Carac* AjouterCaracStringIntitule(QString idCarac, QString valeur = "");
     Carac* AjouterCaracBinaire(QString idCarac, bool valeur = false);
     Carac* AjouterCaracImageValeur(QString idCarac, QString valeur = "");
     Carac* AjouterCaracImage(QString idCarac, QString valeur = "");

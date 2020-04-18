@@ -129,6 +129,8 @@ void Carac::Afficher()
 
     // A FAIRE gérer ici les valeurs qui utilisent la jauge...
     ui->jaugeCarac->hide();
+    ui->labelValeur->hide();
+    ui->imageCarac->hide();
 
     if ( bAffichable() )
     {
