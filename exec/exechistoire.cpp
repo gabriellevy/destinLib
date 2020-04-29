@@ -29,6 +29,14 @@ ExecHistoire::ExecHistoire(shared_ptr<Hist> histoire, QWidget *parent) :
 
     if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details )
         ui->histoireScrollArea->setStyleSheet("background-color : rgb(0,255,0)");
+
+
+    if(Univers::LOG && Univers::FILE.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+      QTextStream stream(&Univers::FILE);
+      stream << " !!!!!!!!!!!!!!!!! \n";
+      Univers::FILE.close();
+    }
 }
 
 QString ExecHistoire::GetTitre()
@@ -193,59 +201,6 @@ ExecLancerDe* ExecHistoire::GetExecLancerDeActuel()
 ExecEffet* ExecHistoire::GetExecEffetActuel(bool /*forceHistoireMode*/)
 {
     return Univers::ME->GetExecHistoire()->m_ExecEvtActuel->GetExecEffetActuel();
-    /*if ( this->m_ExecEvtActuel->m_ExecEffetActuel->m_TypeNoeud == TypeNoeud::etn_Effet)
-    {
-        return static_cast<ExecEffet*>(this->m_ExecNoeudActuel);
-    }
-
-    if ( this->m_ExecNoeudActuel->m_TypeNoeud == TypeNoeud::etn_Choix)
-    {
-        Choix* choixActuel = static_cast<Choix*>(this->m_ExecNoeudActuel);
-        return choixActuel->m_ParentEffet;
-    }
-
-    if ( this->m_ExecNoeudActuel->m_TypeNoeud == TypeNoeud::etn_Evt)
-    {
-        Evt* evt = static_cast<Evt*>(this->m_ExecNoeudActuel);
-        qDebug()<<"Attention : GetEffet lancé alors qu'un Evt est le noeud actuel ! On a renvoyé le premier effet de ce noeud"<<endl;
-        return evt->m_Effets[0];
-    }*/
-
-    Q_ASSERT_X(false, "m_NoeudActuel n'est ni un choix ni un evt ni un effet : bizarre", "Histoire::EvtActuel");
-
-    return nullptr;
-
-    /*if ( !forceHistoireMode )
-    {
-        if ( Univers::ME->GetTypeEvtActuel() == TE_Conditionnel )
-        {
-            if ( m_EffetConditionnelIndex == -1 || m_EffetConditionnelIndex >= EvtActuel()->m_Effets.size() )
-            {
-                QString msg = "m_EffetConditionnelIndex invalide : " + QString::number(m_EffetConditionnelIndex);
-                Q_ASSERT_X(false, "Histoire::EffetActuel", msg.toStdString().c_str());
-                return nullptr;
-            }
-
-            return EvtActuel()->m_Effets[m_EffetConditionnelIndex];
-        }
-    }
-    else
-    {
-        if ( m_EffetIndex == -1 || m_EffetIndex >= EvtActuel(forceHistoireMode)->m_Effets.size() )
-        {
-            QString msg = "m_EffetIndex invalide : " + QString::number(m_EffetIndex);
-            Q_ASSERT_X(false, "Histoire::EffetActuel", msg.toStdString().c_str());
-            return nullptr;
-        }
-
-        return EvtActuel(forceHistoireMode)->m_Effets[m_EffetIndex];
-    }
-
-    Evt* evt = EvtActuel();
-    Q_ASSERT_X(m_EffetIndex < evt->m_Effets.size(), "Histoire::EffetActuel", "m_EffetIndex actuel ne fait pas partie de l'événement actuel => ratage de passage à l'événement suivant à priori...");
-
-    return EvtActuel()->m_Effets[m_EffetIndex];*/
-
 }
 
 void ExecHistoire::SetEffetIndex(int index)

@@ -108,6 +108,7 @@ public:
      * @brief ajoute une carac affichable de valeur nulle avec son intitulé égal à son id
      */
     Carac* AjouterCaracNombre(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
+    Carac* AjouterCaracNombreSupZero(QString idCarac, int valeur = 0, int valMin = -999999, int valMax = 999999);
     Carac* AjouterCaracString(QString idCarac, QString valeur = "");
     Carac* AjouterCaracStringIntitule(QString idCarac, QString valeur = "");
     Carac* AjouterCaracBinaire(QString idCarac, bool valeur = false);

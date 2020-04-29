@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <chrono>
 #include <random>
+#include "univers.h"
 
 QList<std::shared_ptr<SelectionneurDeNoeud>> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 
@@ -40,6 +41,17 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
                     return noeud;
                 }
             }
+        }
+
+        if(Univers::LOG && m_NoeudsProbables[i]->m_Noeud.lock()->TesterConditions() &&
+                m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale() > 0 &&
+                Univers::FILE.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+          QTextStream stream(&Univers::FILE);
+          stream << m_NoeudsProbables[i]->m_Noeud.lock()->m_Id
+                 << " (" <<m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale()
+                 << ((m_NoeudsProbables[i]->m_PoidsProba->IsProbaPure())?(" pure"):("")) << ")\n";
+          Univers::FILE.close();
         }
     }
 

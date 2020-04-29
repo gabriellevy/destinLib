@@ -172,6 +172,14 @@ void ExecEffet::AfficherNoeud()
             ui->texteEffet->setText(GetEffet()->TexteAAfficher());
         }
         ui->texteEffet->setWordWrap(true);
+
+        // log :
+        if(Univers::LOG && Univers::FILE.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+          QTextStream stream(&Univers::FILE);
+          stream << GetEffet()->TexteAAfficher() <<'\n' <<'\n';
+          Univers::FILE.close();
+        }
     }
 
     ui->imageLabel->hide();

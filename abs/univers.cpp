@@ -15,6 +15,8 @@ const QFont* Univers::TITRE_FONT = new QFont("Verdana", 20);
 QColor Univers::COULEUR_FOND(100, 90, 80);
 QString Univers::CHEMIN = "";
 Univers* Univers::ME;
+QFile Univers::FILE("D:\\Mathieu\\GitHub\\destinExtremis\\logs.txt");
+bool Univers::LOG = true;
 
 Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool persoAffiche):QMainWindow(parent),
     ui(new Ui::Univers), m_PersoAffiche(persoAffiche), m_ModeAffichage(modeAffichage)

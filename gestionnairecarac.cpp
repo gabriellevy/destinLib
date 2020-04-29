@@ -53,6 +53,14 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
         m_Caracs[setCarac.m_CaracId] = carac;
     }
 
+    // log :
+    if(Univers::LOG && Univers::FILE.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+      QTextStream stream(&Univers::FILE);
+      stream  <<setCarac.m_CaracId << " " << carac->m_DataCarac.GetValeur() << " -> ";
+      Univers::FILE.close();
+    }
+
     switch(setCarac.m_ModifCaracType)
     {
     case ModifCaracType::SetCarac : {
@@ -75,6 +83,14 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
 
     }break;
     }
+
+    // log :
+    if(Univers::LOG && Univers::FILE.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+      QTextStream stream(&Univers::FILE);
+      stream << setCarac.GetValeur()<< "\n";
+      Univers::FILE.close();
+    }
 }
 
 void GestionnaireCarac::AjouterCarac(Carac* carac)
@@ -87,6 +103,16 @@ Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int va
 {
     Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
                              "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
+                             QString::number(valMin), QString::number(valMax));
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
+    return carac;
+}
+
+Carac* GestionnaireCarac::AjouterCaracNombreSupZero(QString idCarac, int valeur, int valMin, int valMax)
+{
+    Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
+                             "", idCarac, MODE_AFFICHAGE::ma_NombreSupZero, nullptr,
                              QString::number(valMin), QString::number(valMax));
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);

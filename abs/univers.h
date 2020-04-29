@@ -105,6 +105,9 @@ public:
 
     void RafraichirAffichage();
 
+    static bool LOG;
+    static QFile FILE;
+
 public slots:
     // déclenche l'effet de base si aucun n'a été spécifiquement choisi par l'utilisateur (si n'y avait qu'un suivant potentiel)
     void DeclencherEffetSuivant();
