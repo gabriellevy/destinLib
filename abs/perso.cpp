@@ -3,7 +3,7 @@
 #include <QMessageBox>
 #include "univers.h"
 #include "../aspectratiolabel.h"
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -76,7 +76,7 @@ void IPerso::RafraichirAffichage()
     // portrait
     if ( myImageLabel == nullptr )
     {
-        QString cheminImg = persoCourant->GetValeurCarac(GestionnaireCarac::CARAC_CHEMIN_PORTRAIT);
+        QString cheminImg = persoCourant->GetValeurCarac(GestCarac::CARAC_CHEMIN_PORTRAIT);
         if ( cheminImg != "" )
         {
             persoCourant->m_ImagePortrait.load(cheminImg);
@@ -85,10 +85,10 @@ void IPerso::RafraichirAffichage()
     }
 
     ui->portraitLabel->setText(
-                persoCourant->GetValeurCarac(GestionnaireCarac::CARAC_NOM));
+                persoCourant->GetValeurCarac(GestCarac::CARAC_NOM));
 
     // TODO : nettoyer chaque fois les caracsaffichées ? MAJ ?
-    QHash<QString, Carac*> caracs = GestionnaireCarac::GetGestionnaireCarac()->GetCaracs();
+    QHash<QString, Carac*> caracs = GestCarac::GetGestionnaireCarac()->GetCaracs();
     // caracs
     QHash<QString, Carac*>::const_iterator i = caracs.constBegin();
     while (i != caracs.constEnd()) {
@@ -99,7 +99,7 @@ void IPerso::RafraichirAffichage()
         ++i;
     }
 
-    QVector<QString> caracsAffichees = GestionnaireCarac::GetGestionnaireCarac()->m_CaracsAffichees;
+    QVector<QString> caracsAffichees = GestCarac::GetGestionnaireCarac()->m_CaracsAffichees;
     if ( caracsAffichees.size() > 0 )
     {
         for ( QString idCarac: caracsAffichees) {
@@ -107,8 +107,23 @@ void IPerso::RafraichirAffichage()
             if ( carac->bAffichable())
             {
                 carac->Afficher();
-                ui->caracsLayout2->addWidget(carac);
-                ui->caracsLayout2->setAlignment(carac, Qt::AlignLeft);
+                switch(carac->m_EmplacementAffichage) {
+                case ea_Secondaire : {
+                    ui->caracsSecondaires->addWidget(carac);
+                    ui->caracsSecondaires->setAlignment(carac, Qt::AlignLeft);
+                }break;
+                case ea_Primaire : {
+                    ui->caracsPrimaires->addWidget(carac);
+                    ui->caracsPrimaires->setAlignment(carac, Qt::AlignCenter);
+                }break;
+                case ea_ImgEntete : {
+                    ui->imagesEnteteLayout->addWidget(carac);
+                }break;
+                case ea_ImgPrimaire : {
+                    ui->imgPrimaire->addWidget(carac);
+                    ui->imgPrimaire->setAlignment(carac, Qt::AlignLeft);
+                }break;
+                }
                 carac->show();
             }
         }

@@ -2,7 +2,7 @@
 #include "../abs/univers.h"
 #include <QMovie>
 #include "../abs/noeudnarratif.h"
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 #include "execchoix.h"
 
 using std::shared_ptr;

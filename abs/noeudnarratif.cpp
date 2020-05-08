@@ -1,7 +1,7 @@
 #include "noeudnarratif.h"
 #include "univers.h"
 #include <QSqlQuery>
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 #include "choix.h"
 
 using std::shared_ptr;

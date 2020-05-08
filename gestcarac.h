@@ -67,11 +67,11 @@ public:
     friend class IPerso;
 };
 
-class GestionnaireCarac
+class GestCarac
 {
 private:
-    GestionnaireCarac();
-    static GestionnaireCarac* ME;
+    GestCarac();
+    static GestCarac* ME;
 
     // caracs actuelles du joueur
     QHash<QString, Carac*> m_Caracs;
@@ -92,7 +92,7 @@ public:
     Carac* GetCarac(QString idCarac);
 
     // fonctions raccourcis de convénience :
-    static GestionnaireCarac*  GetGestionnaireCarac();
+    static GestCarac*  GetGestionnaireCarac();
     QVector<QString> m_CaracsAffichees; // id des Caracs affichées dans le profil joueur
 
     QHash<QString, Carac*> GetCaracs();
@@ -113,6 +113,7 @@ public:
     Carac* AjouterCaracStringIntitule(QString idCarac, QString valeur = "");
     Carac* AjouterCaracBinaire(QString idCarac, bool valeur = false);
     Carac* AjouterCaracImageValeur(QString idCarac, QString valeur = "");
+    Carac* AjouterCaracImagePrimaire(QString idCarac, QString valeur = "");
     Carac* AjouterCaracImage(QString idCarac, QString valeur = "");
 
     friend class DPerso;

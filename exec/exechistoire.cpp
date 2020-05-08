@@ -9,7 +9,7 @@
 #include "../abs/histoire.h"
 #include "execevt.h"
 #include "execeffet.h"
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 
 using std::shared_ptr;
 using std::make_shared;

@@ -21,6 +21,13 @@ enum MODE_AFFICHAGE {
     ma_Jauge // sous forme de jauge => possible seulement si on a défini une valeur maximum de cette valeur
 };
 
+enum EMPLACEMENT_AFFICH {
+    ea_Primaire,
+    ea_Secondaire,
+    ea_ImgEntete,
+    ea_ImgPrimaire // comme primaire amis sur la gauche des autres caracs primaires
+};
+
 /**
  * @brief DCarac signifie "data carac". C'est un contenant des données principales d'une carac indépendandemment du système d'interface qui est l'essentiel de ce fichier
  */
@@ -60,6 +67,7 @@ public:
     ~Carac();
 
     MODE_AFFICHAGE m_ModeAffichage; // de quelle manière est affichée cette carac dans l'interface personnage
+    EMPLACEMENT_AFFICH m_EmplacementAffichage = ea_Secondaire; // où est affichée cette carac
 
     void DeterminerModeAffichage(QString modeAffichage);
     void Afficher();

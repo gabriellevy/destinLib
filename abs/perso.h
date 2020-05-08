@@ -17,7 +17,7 @@ class Perso;
 
 class SetCarac;
 class ExecHistoire;
-class GestionnaireCarac;
+class GestCarac;
 class DPerso;
 
 /**
@@ -32,7 +32,7 @@ class IPerso : public QWidget
 
 protected:
 
-    std::shared_ptr<GestionnaireCarac> m_GestionnaireCarac = nullptr;
+    std::shared_ptr<GestCarac> m_GestionnaireCarac = nullptr;
     QHash<QString, std::shared_ptr<DPerso>> m_Persos;
 
 public:

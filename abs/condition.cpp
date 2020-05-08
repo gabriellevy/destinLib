@@ -3,7 +3,7 @@
 #include "univers.h"
 #include <QSqlQuery>
 #include <QtMath>
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 #include <chrono>
 #include <random>
 

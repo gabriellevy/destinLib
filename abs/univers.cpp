@@ -16,7 +16,7 @@ QColor Univers::COULEUR_FOND(100, 90, 80);
 QString Univers::CHEMIN = "";
 Univers* Univers::ME;
 QFile Univers::FILE("D:\\Mathieu\\GitHub\\destinExtremis\\logs.txt");
-bool Univers::LOG = true;
+bool Univers::LOG = false;
 
 Univers::Univers(QWidget *parent, ModeAffichage modeAffichage, bool persoAffiche):QMainWindow(parent),
     ui(new Ui::Univers), m_PersoAffiche(persoAffiche), m_ModeAffichage(modeAffichage)
@@ -122,21 +122,6 @@ void Univers::AppliquerTheme(QColor fond)
                             "," + QString::number(fond.alpha()) +
                             ") }");
 }
-
-/*Univers::Univers(QString cheminAventure, ModeAffichage modeAffichage, QString firstEvt, QString premierEffet, QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Aventure), m_ModeAffichage(modeAffichage)
-{
-    InstallerInterface();
-
-    m_Lecteur = new QMediaPlayer;
-
-    // lance réellement l'aventure
-    if ( ExtraireAventure(cheminAventure))
-    {
-        LancerAventure(firstEvt, premierEffet);
-    }
-}*/
 
 void Univers::InstallerInterface()
 {

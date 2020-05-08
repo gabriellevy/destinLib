@@ -5,7 +5,7 @@
 #include "../abs/univers.h"
 #include <QMovie>
 #include <QTimer>
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 #include "execlancerde.h"
 #include "../abs/lancerde.h"
 

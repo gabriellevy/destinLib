@@ -1,4 +1,4 @@
-#include "gestionnairecarac.h"
+#include "gestcarac.h"
 
 #include "abs/univers.h"
 #include "abs/setcarac.h"
@@ -6,38 +6,38 @@
 using std::make_shared;
 using std::shared_ptr;
 
-GestionnaireCarac::GestionnaireCarac()
+GestCarac::GestCarac()
 {
 
 }
 
-GestionnaireCarac* GestionnaireCarac::ME = nullptr;
+GestCarac* GestCarac::ME = nullptr;
 
-GestionnaireCarac* GestionnaireCarac::GetGestionnaireCarac()
+GestCarac* GestCarac::GetGestionnaireCarac()
 {
-    if ( GestionnaireCarac::ME == nullptr)
-        GestionnaireCarac::ME = new GestionnaireCarac();
+    if ( GestCarac::ME == nullptr)
+        GestCarac::ME = new GestCarac();
 
-    return GestionnaireCarac::ME;
+    return GestCarac::ME;
 }
 
 
-QString GestionnaireCarac::GetCaracValue(QString id)
+QString GestCarac::GetCaracValue(QString id)
 {
-    if ( !GestionnaireCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
+    if ( !GestCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
         return "";
-    return GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
+    return GestCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
 }
 
-bool GestionnaireCarac::IsCaracTrue(QString id)
+bool GestCarac::IsCaracTrue(QString id)
 {
-    if ( !GestionnaireCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
+    if ( !GestCarac::GetGestionnaireCarac()->CetteCaracExisteDeja(id) )
         return false;
-    QString val = GestionnaireCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
+    QString val = GestCarac::GetGestionnaireCarac()->GetCarac(id)->m_DataCarac.GetValeur();
     return val != "" && val != "0";
 }
 
-void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
+void GestCarac::AppliquerCarac(SetCarac setCarac)
 {
     bool trouve = this->CetteCaracExisteDeja(setCarac.m_CaracId);
 
@@ -93,13 +93,13 @@ void GestionnaireCarac::AppliquerCarac(SetCarac setCarac)
     }
 }
 
-void GestionnaireCarac::AjouterCarac(Carac* carac)
+void GestCarac::AjouterCarac(Carac* carac)
 {
     this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
     this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
 }
 
-Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
+Carac* GestCarac::AjouterCaracNombre(QString idCarac, int valeur, int valMin, int valMax)
 {
     Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
                              "", idCarac, MODE_AFFICHAGE::ma_Nombre, nullptr,
@@ -109,7 +109,7 @@ Carac* GestionnaireCarac::AjouterCaracNombre(QString idCarac, int valeur, int va
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracNombreSupZero(QString idCarac, int valeur, int valMin, int valMax)
+Carac* GestCarac::AjouterCaracNombreSupZero(QString idCarac, int valeur, int valMin, int valMax)
 {
     Carac* carac = new Carac(idCarac, idCarac, QString::number(valeur),
                              "", idCarac, MODE_AFFICHAGE::ma_NombreSupZero, nullptr,
@@ -119,7 +119,7 @@ Carac* GestionnaireCarac::AjouterCaracNombreSupZero(QString idCarac, int valeur,
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracBinaire(QString idCarac, bool valeur)
+Carac* GestCarac::AjouterCaracBinaire(QString idCarac, bool valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur?"1":"",
                              "", idCarac, MODE_AFFICHAGE::ma_Binaire);
@@ -128,7 +128,7 @@ Carac* GestionnaireCarac::AjouterCaracBinaire(QString idCarac, bool valeur)
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
+Carac* GestCarac::AjouterCaracString(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte);
@@ -137,7 +137,7 @@ Carac* GestionnaireCarac::AjouterCaracString(QString idCarac, QString valeur)
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracStringIntitule(QString idCarac, QString valeur)
+Carac* GestCarac::AjouterCaracStringIntitule(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Texte_intitule);
@@ -146,7 +146,17 @@ Carac* GestionnaireCarac::AjouterCaracStringIntitule(QString idCarac, QString va
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracImage(QString idCarac, QString valeur)
+Carac* GestCarac::AjouterCaracImagePrimaire(QString idCarac, QString valeur)
+{
+    Carac* carac = new Carac(idCarac, idCarac, valeur,
+                             "", idCarac, MODE_AFFICHAGE::ma_Img);
+    this->m_Caracs[carac->m_DataCarac.m_Id] = carac;
+    this->m_CaracsAffichees.push_back(carac->m_DataCarac.m_Id);
+    carac->m_EmplacementAffichage = ea_ImgPrimaire;
+    return carac;
+}
+
+Carac* GestCarac::AjouterCaracImage(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_Img);
@@ -155,7 +165,7 @@ Carac* GestionnaireCarac::AjouterCaracImage(QString idCarac, QString valeur)
     return carac;
 }
 
-Carac* GestionnaireCarac::AjouterCaracImageValeur(QString idCarac, QString valeur)
+Carac* GestCarac::AjouterCaracImageValeur(QString idCarac, QString valeur)
 {
     Carac* carac = new Carac(idCarac, idCarac, valeur,
                              "", idCarac, MODE_AFFICHAGE::ma_ImgValeur);
@@ -164,76 +174,76 @@ Carac* GestionnaireCarac::AjouterCaracImageValeur(QString idCarac, QString valeu
     return carac;
 }
 
-int GestionnaireCarac::GetCaracValueAsInt(QString id)
+int GestCarac::GetCaracValueAsInt(QString id)
 {
-    return GestionnaireCarac::GetCaracValue(id).toInt();
+    return GestCarac::GetCaracValue(id).toInt();
 }
 
-bool GestionnaireCarac::CetteCaracExisteDeja(QString id)
+bool GestCarac::CetteCaracExisteDeja(QString id)
 {
     return m_Caracs.contains(id);
 }
 
-void GestionnaireCarac::AppliquerSetCarac(const SetCarac& setCarac)
+void GestCarac::AppliquerSetCarac(const SetCarac& setCarac)
 {
-    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(setCarac);
+    GestCarac::GetGestionnaireCarac()->AppliquerCarac(setCarac);
 }
 
-int GestionnaireCarac::AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee)
+int GestCarac::AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee)
 {
-    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(
+    GestCarac::GetGestionnaireCarac()->AppliquerCarac(
                 SetCarac(ModifCaracType::AddToCarac, idCarac, QString::number(valeurAjoutee)));
-    return GestionnaireCarac::GetCaracValueAsInt(idCarac);
+    return GestCarac::GetCaracValueAsInt(idCarac);
 }
 
-int GestionnaireCarac::RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree)
+int GestCarac::RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree)
 {
-    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(
+    GestCarac::GetGestionnaireCarac()->AppliquerCarac(
                 SetCarac(ModifCaracType::RetireDeCarac, idCarac, QString::number(valeurRetiree)));
-    return GestionnaireCarac::GetCaracValueAsInt(idCarac);
+    return GestCarac::GetCaracValueAsInt(idCarac);
 }
 
-QString GestionnaireCarac::SetValeurACaracId(const QString& idCarac, const QString& valeurSet)
+QString GestCarac::SetValeurACaracId(const QString& idCarac, const QString& valeurSet)
 {
-    GestionnaireCarac::GetGestionnaireCarac()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
+    GestCarac::GetGestionnaireCarac()->AppliquerCarac(SetCarac(ModifCaracType::SetCarac, idCarac, valeurSet));
 
-    return GestionnaireCarac::GetCaracValue(idCarac);
+    return GestCarac::GetCaracValue(idCarac);
 }
 
-QString GestionnaireCarac::SetValeurACaracId(const QString& idCarac, const int& valeurSet)
+QString GestCarac::SetValeurACaracId(const QString& idCarac, const int& valeurSet)
 {
     return SetValeurACaracId(idCarac, QString::number(valeurSet));
 }
 
-QString GestionnaireCarac::EffacerValeurACaracId(const QString& idCarac)
+QString GestCarac::EffacerValeurACaracId(const QString& idCarac)
 {
     return SetValeurACaracId(idCarac, "");
 }
 
-Carac* GestionnaireCarac::GetCarac(QString idCarac)
+Carac* GestCarac::GetCarac(QString idCarac)
 {
     return m_Caracs[idCarac];
 }
 
 
-QString GestionnaireCarac::CARAC_NOM = "PersoNom";
-QString GestionnaireCarac::CARAC_PERSO_ID = "PersoId";
-QString GestionnaireCarac::CARAC_DESCRIPTION = "PersoDescription";
-QString GestionnaireCarac::CARAC_CHEMIN_PORTRAIT = "PersoCheminPortrait";
+QString GestCarac::CARAC_NOM = "PersoNom";
+QString GestCarac::CARAC_PERSO_ID = "PersoId";
+QString GestCarac::CARAC_DESCRIPTION = "PersoDescription";
+QString GestCarac::CARAC_CHEMIN_PORTRAIT = "PersoCheminPortrait";
 
 DPerso::DPerso(QString id, QString nom, QString description, QString CheminImagePortrait)
 {
-    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_PERSO_ID, id));
-    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_NOM, nom));
-    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_DESCRIPTION, description));
-    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestionnaireCarac::CARAC_CHEMIN_PORTRAIT, CheminImagePortrait));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestCarac::CARAC_PERSO_ID, id));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestCarac::CARAC_NOM, nom));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestCarac::CARAC_DESCRIPTION, description));
+    this->m_SetCaracs.push_back( make_shared<SetCarac>(ModifCaracType::SetCarac, GestCarac::CARAC_CHEMIN_PORTRAIT, CheminImagePortrait));
 }
 
 
 void DPerso::MajNom(QString nouveauNom)
 {
     for (int i = 0 ; i < this->m_SetCaracs.length() ; ++i ) {
-        if ( m_SetCaracs[i]->m_CaracId == GestionnaireCarac::CARAC_NOM)
+        if ( m_SetCaracs[i]->m_CaracId == GestCarac::CARAC_NOM)
             m_SetCaracs[i]->m_Valeur = nouveauNom;
     }
 }
@@ -247,7 +257,7 @@ shared_ptr<DPerso> DPerso::GetDPersoJoue()
 void DPerso::MajCheminImage(QString chemin)
 {
     for (int i = 0 ; i < this->m_SetCaracs.length() ; ++i ) {
-        if ( m_SetCaracs[i]->m_CaracId == GestionnaireCarac::CARAC_CHEMIN_PORTRAIT)
+        if ( m_SetCaracs[i]->m_CaracId == GestCarac::CARAC_CHEMIN_PORTRAIT)
         {
             m_SetCaracs[i]->m_Valeur = chemin;
             return;
@@ -259,14 +269,14 @@ void DPerso::MajCheminImage(QString chemin)
 QString DPerso::GetId()
 {
     for (int i = 0 ; i < this->m_SetCaracs.length() ; ++i ) {
-        if ( m_SetCaracs[i]->m_CaracId == GestionnaireCarac::CARAC_PERSO_ID)
+        if ( m_SetCaracs[i]->m_CaracId == GestCarac::CARAC_PERSO_ID)
             return m_SetCaracs[i]->m_Valeur;
     }
     Q_ASSERT_X(false, "id de perso introuvable ! ", "DPerso::GetId");
     return "id introuvable !!";
 }
 
-QHash<QString, Carac*> GestionnaireCarac::GetCaracs()
+QHash<QString, Carac*> GestCarac::GetCaracs()
 {
     return this->m_Caracs;
 }
@@ -279,12 +289,12 @@ void DPerso::RafraichirAffichage()
 
 QString DPerso::GetValeurCarac(QString id)
 {
-    return GestionnaireCarac::GetCaracValue(id);
+    return GestCarac::GetCaracValue(id);
 }
 
 int DPerso::GetValeurCaracAsInt(QString id)
 {
-    return GestionnaireCarac::GetCaracValueAsInt(id);
+    return GestCarac::GetCaracValueAsInt(id);
 }
 
 MultiSetterDeCarac::MultiSetterDeCarac()
@@ -295,21 +305,21 @@ MultiSetterDeCarac::MultiSetterDeCarac()
 void MultiSetterDeCarac::Appliquer()
 {
     for (int i = 0 ; i < this->m_SetCaracs.length() ; ++i ) {
-        GestionnaireCarac::AppliquerSetCarac(*m_SetCaracs[i]);
+        GestCarac::AppliquerSetCarac(*m_SetCaracs[i]);
     }
 }
 
 void DPerso::AppliquerSetCarac(const SetCarac& setCarac)
 {
     ExecutionPreChangeCarac();
-    GestionnaireCarac::AppliquerSetCarac(setCarac);
+    GestCarac::AppliquerSetCarac(setCarac);
     ExecutionPostChangeCarac();
 }
 
 int DPerso::AJouterValeurACaracId(const QString& idCarac, const int& valeurAjoutee)
 {
     ExecutionPreChangeCarac();
-    int res = GestionnaireCarac::AJouterValeurACaracId(idCarac, valeurAjoutee);
+    int res = GestCarac::AJouterValeurACaracId(idCarac, valeurAjoutee);
     ExecutionPostChangeCarac();
     return res;
 }
@@ -327,7 +337,7 @@ void DPerso::ExecutionPreChangeCarac()
 int DPerso::RetirerValeurACaracId(const QString& idCarac, const int& valeurRetiree)
 {
     ExecutionPreChangeCarac();
-    int res = GestionnaireCarac::RetirerValeurACaracId(idCarac, valeurRetiree);
+    int res = GestCarac::RetirerValeurACaracId(idCarac, valeurRetiree);
     ExecutionPostChangeCarac();
     return res;
 }
@@ -335,7 +345,7 @@ int DPerso::RetirerValeurACaracId(const QString& idCarac, const int& valeurRetir
 QString DPerso::SetValeurACaracId(const QString& idCarac,const  QString& valeurSet)
 {
     ExecutionPreChangeCarac();
-    QString res = GestionnaireCarac::SetValeurACaracId(idCarac, valeurSet);
+    QString res = GestCarac::SetValeurACaracId(idCarac, valeurSet);
     ExecutionPostChangeCarac();
     return res;
 }
@@ -343,7 +353,7 @@ QString DPerso::SetValeurACaracId(const QString& idCarac,const  QString& valeurS
 QString DPerso::SetValeurACaracId(const QString& idCarac,const int& valeurSet)
 {
     ExecutionPreChangeCarac();
-    QString res = GestionnaireCarac::SetValeurACaracId(idCarac, valeurSet);
+    QString res = GestCarac::SetValeurACaracId(idCarac, valeurSet);
     ExecutionPostChangeCarac();
     return res;
 }
@@ -351,12 +361,12 @@ QString DPerso::SetValeurACaracId(const QString& idCarac,const int& valeurSet)
 QString DPerso::EffacerValeurACaracId(const QString& idCarac)
 {
     ExecutionPreChangeCarac();
-    QString res = GestionnaireCarac::EffacerValeurACaracId(idCarac);
+    QString res = GestCarac::EffacerValeurACaracId(idCarac);
     ExecutionPostChangeCarac();
     return res;
 }
 
 bool DPerso::IsCaracTrue(QString id)
 {
-    return GestionnaireCarac::IsCaracTrue(id);
+    return GestCarac::IsCaracTrue(id);
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>150</width>
-    <height>600</height>
+    <height>562</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -136,7 +136,7 @@
           <x>0</x>
           <y>0</y>
           <width>146</width>
-          <height>536</height>
+          <height>498</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -161,6 +161,29 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <item>
+          <layout class="QHBoxLayout" name="imagesEnteteLayout"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <layout class="QVBoxLayout" name="imgPrimaire"/>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="caracsPrimaires"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="caracsSecondaires"/>
+         </item>
         </layout>
        </widget>
       </widget>

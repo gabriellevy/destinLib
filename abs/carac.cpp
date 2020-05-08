@@ -2,10 +2,11 @@
 #include "ui_carac.h"
 #include "univers.h"
 #include <QDebug>
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 
 DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description, QString valeurMin, QString valeurMax) :
-    m_Id(Id), m_Intitule(Intitule), m_Description(Description), m_ValeurMin(valeurMin), m_ValeurMax(valeurMax), m_Valeur(Valeur)
+    m_Id(Id), m_Intitule(Intitule), m_Description(Description), m_ValeurMin(valeurMin), m_ValeurMax(valeurMax),
+    m_Valeur(Valeur)
 {}
 
 
@@ -290,9 +291,9 @@ bool Carac::AfficherImage()
     }
     else {
         ui->imageCarac->hide();
-        QSize AdjustSize = QSize(0, 0);
+        /*QSize AdjustSize = QSize(0, 0);
         ui->imageCarac->setMinimumSize(AdjustSize);
-        ui->imageCarac->setMaximumSize(AdjustSize);
+        ui->imageCarac->setMaximumSize(AdjustSize);*/
         return false;
     }
 }

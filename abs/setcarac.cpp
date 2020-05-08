@@ -2,7 +2,7 @@
 #include "perso.h"
 #include "univers.h"
 #include <QDebug>
-#include "../gestionnairecarac.h"
+#include "../gestcarac.h"
 #include <chrono>
 #include <random>
 
