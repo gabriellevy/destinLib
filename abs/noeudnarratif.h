@@ -27,7 +27,7 @@ public:
     // utilisation : url sous le format qrc:[chemin dans le fichier ressource].
     // marche avec les mp3 mais il faut parfois les "recréer par exemple en apsasnt le mp3 en wav puis en mp3 à nouveau
     QString m_Son = "";
-    double m_Duree;
+    double m_Duree = 0;
     QString m_Texte = "";
     QString m_ImgPath = "";
     QString m_FilmPath = "";
@@ -58,13 +58,13 @@ public:
     // dans un effet contenant un choix, le chrono ne cache pas les boutons de choix mais, si il atteint son terme avant que le joueur n'ai choisi, un choix aléatoire est choisi.
     int m_MsChrono = -1;
     // temp écoulé durant l'exécution de ce noeud. Il s'agit de temps de jeu et ses unités sont à l'appréciation du créateur de l'aventure puisqu'il en détermine toutes les utilisations
-    double m_TempEcoule;
+    double m_TempEcoule = 0.0;
 
     double GetTempEcoule();
     void AjouterDuree(double duree);
 
     // gestion de la bdd :
-    int m_BDD_NoeudId;
+    int m_BDD_NoeudId = -1;
     void AppliquerValeurDeNoeudBDD(int bd_id);
     // charger une condition peut s'appliquer à plusieurs types de noeuds
     // donc l'id est celui de la partie noeud mais il peut correspondre par exemple à un effet, un evt, un choix...

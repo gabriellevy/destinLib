@@ -35,7 +35,7 @@ void ExecNoeud::ExecuterActionsNoeud(shared_ptr<Noeud> noeudAExecuter)
     }
 
     if ( noeudAExecuter->m_ChangeurModeDeroulement != ModeDeroulement::Aucun) {
-        Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement = noeudAExecuter->m_ChangeurModeDeroulement;
+        Univers::ME->GetExecHistoire()->m_Histoire->SetModeDeroulement(noeudAExecuter->m_ChangeurModeDeroulement);
     }
     if ( noeudAExecuter->m_ChangeurPhaseDeroulement != PhaseDeroulement::epd_Aucun) {
         Univers::ME->GetExecHistoire()->m_Histoire->m_PhaseDeroulement = noeudAExecuter->m_ChangeurPhaseDeroulement;
@@ -156,7 +156,7 @@ bool ExecNoeud::GestionTransition()
 void ExecNoeud::GenerationExecChoix()
 {
     // pas de choix en mode automatique :
-    if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement != ModeDeroulement::Automatique) {
+    if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() != ModeDeroulement::Automatique) {
         if ( this->m_Noeud.lock()->m_Choix.length() > 0 &&
              this->m_ExecChoix.length() < this->m_Noeud.lock()->m_Choix.length() ) {
             for (std::shared_ptr<Choix> choix: this->m_Noeud.lock()->m_Choix) {

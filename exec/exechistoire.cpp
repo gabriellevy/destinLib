@@ -265,7 +265,6 @@ bool ExecHistoire::AppliquerGoTo(std::shared_ptr<Noeud> noeud)
     if ( noeud->m_GoToEffetId != QLatin1String("") )
     {
         this->GoToEffetId(noeud->m_GoToEffetId);
-        //GetIndexEffetConcerne() = DeterminerIndexEffet(noeud->m_GoToEffetId);
         ilYAgoto = true;
     }
 
@@ -322,19 +321,12 @@ ExecNoeud* ExecHistoire::DeterminerPuisLancerNoeudSuivant(ExecNoeud* noeudActuel
               this->m_ExecNoeudActuel != nullptr
              && AppliquerGoTo(this->m_ExecNoeudActuel->m_Noeud.lock()))
         {
-            //evtActuel = EvtActuel();
-
-            //noeudActuel = EffetActuel();
-
-            //noeudActuel = TesterSiEffetEstLancableOuSonElse(noeudActuel);
-
             noeud_suivant_trouve = (this->m_ExecNoeudActuel != nullptr);
         }
         else
         {
             // dans ce cas on doit forcément tester l'effet suivant :
              this->PasserAEffetIndexSuivant();
-            //GetIndexEffetConcerne()++;
         }
     }
 
@@ -432,7 +424,7 @@ ExecEvt* ExecHistoire::SetExecEvtActuel(shared_ptr<Evt> evt)
     return this->m_ExecEvtActuel;
 }
 
-void ExecHistoire::AjouterDureeAEffetHistoireCourant(float duree)
+void ExecHistoire::AjouterDureeAEffetHistoireCourant(double duree)
 {
     std::shared_ptr<Effet> effet = EffetActuel(true);
     Q_ASSERT_X(effet!= nullptr, "effet == nullptr", "Effet actuel d'histoire introuvable ! ");
@@ -481,7 +473,7 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(shared_ptr<Evt> evt, std::sha
     }
 
     // en mode automatique on rafraîchit toujours tout :
-    if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement == ModeDeroulement::Automatique ) {
+    if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::Automatique ) {
         evtChangement = effetChangement = true;
     }
 

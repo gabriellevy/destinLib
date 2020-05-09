@@ -163,7 +163,7 @@ void ExecEffet::AfficherNoeud()
     {
         ui->texteEffet->show();
         ui->texteEffet->setFont( *Univers::BASE_FONT);
-        if ( Univers::ME->GetExecHistoire()->m_Histoire->m_ModeDeroulement == ModeDeroulement::Automatique ) {
+        if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::Automatique ) {
             Univers::ME->GetExecHistoire()->m_Historique.m_Textes.push_back(GetEffet()->TexteAAfficher());
             ui->texteEffet->setText(
                         Univers::ME->GetExecHistoire()->m_Historique.GetHistoriqueTotalAsStr());
@@ -226,9 +226,9 @@ void ExecEffet::AfficherNoeud()
     shared_ptr<Hist> hist = Univers::ME->GetExecHistoire()->m_Histoire;
     // déclenchement du chrono pour cet effet si il en a un :
     if ( GetEffet()->m_MsChrono == -1 &&
-         (hist->m_ModeDeroulement == ModeDeroulement::Automatique && hist->m_MsDureeDefilement != -1 ))
+         (hist->GetModeDeroulement() == ModeDeroulement::Automatique && hist->GetMsDureeDefilement() != -1 ))
     {
-        GetEffet()->m_MsChrono = hist->m_MsDureeDefilement;
+        GetEffet()->m_MsChrono = hist->GetMsDureeDefilement();
     }
     if ( GetEffet()->m_MsChrono != -1 )
     {

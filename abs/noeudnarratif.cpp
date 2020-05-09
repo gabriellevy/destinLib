@@ -41,7 +41,7 @@ void NoeudNarratif::AppliquerValeurDeNoeudBDD(int bd_id)
     while (query.next())
     {
        this->m_BDD_NoeudId = query.value("id").toInt();
-       this->m_Duree = query.value("m_Duree").toFloat();
+       this->m_Duree = query.value("m_Duree").toDouble();
        this->m_ChangePerso = query.value("m_ChangePerso").toString();
        this->m_Id = query.value("m_Id").toString();
        this->m_Nom = query.value("m_Nom").toString();

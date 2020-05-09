@@ -28,6 +28,8 @@ enum PhaseDeroulement : int {
  */
 class Hist
 {
+    int m_MsDureeDefilement = -1; // utilisé seulement en mode de déroulement automatique
+    ModeDeroulement m_ModeDeroulement = Normal;
 public:
     Hist(QString titre);
 
@@ -37,9 +39,11 @@ public:
     QVector<std::shared_ptr<Evt>> m_EvtsConditionnels; // événements déclenchés automatiquement dès qu'on remplit leurs conditions
     QVector<std::shared_ptr<Evt>> m_EvtsAleatoires; // événements qui peuvent être appelés par des effets particuliers nécessitant des événements aléatoires durant une certaine période
 
-    ModeDeroulement m_ModeDeroulement = Normal;
     PhaseDeroulement m_PhaseDeroulement = epd_Aucun;
-    int m_MsDureeDefilement = -1; // utilisé seulement en mode de déroulement automatique
+
+    void SetModeDeroulement(ModeDeroulement modeDeroulement, int msDureeDefilement = -1);
+    ModeDeroulement GetModeDeroulement(){return m_ModeDeroulement;}
+    int GetMsDureeDefilement(){return m_MsDureeDefilement;}
 
     /**
      * @brief fonctions spéciales associées à cette histoire et appellables par les noeuds au runtime

@@ -96,7 +96,7 @@ public:
      * @brief trouve l'événement correspondant à l'id en paramètre et en fait le noeud actuel
      */
     void SetCurrentEvtId(QString);
-    void AjouterDureeAEffetHistoireCourant(float duree);
+    void AjouterDureeAEffetHistoireCourant(double duree);
 
     void RafraichirAffichageLayouts(int largeur = -1, int hauteur = -1);
 
