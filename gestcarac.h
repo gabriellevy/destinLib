@@ -96,6 +96,7 @@ public:
     QVector<QString> m_CaracsAffichees; // id des Caracs affichées dans le profil joueur
 
     QHash<QString, Carac*> GetCaracs();
+    QMap<QString, QString> GetCaracsQHash();
 
     static QString CARAC_NOM;
     static QString CARAC_PERSO_ID;

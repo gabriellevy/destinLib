@@ -83,9 +83,8 @@ public:
 protected :
     Ui::Carac *ui;
 
-private:
     virtual bool AfficherValeur();
-    virtual bool AfficherImage();
+    virtual bool AfficherImage(bool dansBox = false);
     virtual bool AfficherIntitule();
 };
 

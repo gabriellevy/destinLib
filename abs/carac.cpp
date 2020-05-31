@@ -132,6 +132,7 @@ void Carac::Afficher()
     ui->jaugeCarac->hide();
     ui->labelValeur->hide();
     ui->imageCarac->hide();
+    ui->imageDansBox->hide();
 
     if ( bAffichable() )
     {
@@ -269,31 +270,50 @@ bool Carac::AfficherValeur()
     }
 }
 
-bool Carac::AfficherImage()
+bool Carac::AfficherImage(bool dansBox)
 {
     if ( !m_Img.isNull() )
     {
-        ui->imageCarac->show();
+        int hauteurImg = 0;
+        if ( dansBox) {
+            ui->imageCarac->hide();
+            ui->imageDansBox->show();
+            ui->imageDansBox->setPixmap(m_Img);
+            hauteurImg = 150;
+        }
+        else {
+            ui->imageDansBox->hide();
+            ui->imageCarac->show();
+            ui->imageCarac->setPixmap(m_Img);
+            hauteurImg = this->height() - 5;
+        }
 
-        ui->imageCarac->setPixmap(m_Img);
-
-        int hauteurImg = this->height() - 5;
         if ( m_Img.height() > hauteurImg )
         {
             int h = hauteurImg;
             int w = m_Img.width() * h / m_Img.height();
             QSize AdjustSize = QSize(w, h);
-            ui->imageCarac->setMinimumSize(AdjustSize);
-            ui->imageCarac->setMaximumSize(AdjustSize);
+
+            if ( dansBox) {
+                ui->imageDansBox->setMinimumSize(AdjustSize);
+                ui->imageDansBox->setMaximumSize(AdjustSize);
+            }
+            else {
+                ui->imageCarac->setMinimumSize(AdjustSize);
+                ui->imageCarac->setMaximumSize(AdjustSize);
+            }
         }
-        ui->imageCarac->setToolTip(this->GetCaracDescription());
+        if ( dansBox) {
+            ui->imageDansBox->setToolTip(this->GetCaracDescription());
+        }
+        else {
+            ui->imageCarac->setToolTip(this->GetCaracDescription());
+        }
         return true;
     }
     else {
         ui->imageCarac->hide();
-        /*QSize AdjustSize = QSize(0, 0);
-        ui->imageCarac->setMinimumSize(AdjustSize);
-        ui->imageCarac->setMaximumSize(AdjustSize);*/
+        ui->imageDansBox->hide();
         return false;
     }
 }

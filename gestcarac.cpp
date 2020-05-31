@@ -282,6 +282,18 @@ QHash<QString, Carac*> GestCarac::GetCaracs()
 }
 
 
+QMap<QString, QString> GestCarac::GetCaracsQHash()
+{
+    QMap<QString, QString> caracsStr;
+
+    QHash<QString, Carac*>::iterator it = m_Caracs.begin();
+    for (;it != m_Caracs.end();++it) {
+        caracsStr[it.key()] = it.value()->m_DataCarac.GetValeur();
+    }
+
+    return caracsStr;
+}
+
 void DPerso::RafraichirAffichage()
 {
     Appliquer();
