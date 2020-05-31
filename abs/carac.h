@@ -70,7 +70,7 @@ public:
     EMPLACEMENT_AFFICH m_EmplacementAffichage = ea_Secondaire; // où est affichée cette carac
 
     void DeterminerModeAffichage(QString modeAffichage);
-    void Afficher();
+    virtual void Afficher();
     virtual bool bAffichable();
 
     virtual QString GetCaracDescription();

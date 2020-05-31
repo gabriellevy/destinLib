@@ -279,13 +279,13 @@ bool Carac::AfficherImage(bool dansBox)
             ui->imageCarac->hide();
             ui->imageDansBox->show();
             ui->imageDansBox->setPixmap(m_Img);
-            hauteurImg = 150;
+            hauteurImg = 80;
         }
         else {
             ui->imageDansBox->hide();
             ui->imageCarac->show();
             ui->imageCarac->setPixmap(m_Img);
-            hauteurImg = this->height() - 5;
+            hauteurImg = this->height()/* - 5*/;
         }
 
         if ( m_Img.height() > hauteurImg )

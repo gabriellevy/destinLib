@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>170</width>
     <height>71</height>
    </rect>
   </property>
@@ -57,20 +57,20 @@
        <number>3</number>
       </property>
       <item>
-       <widget class="QLabel" name="imageDansBox">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="spacing">
          <number>2</number>
         </property>
+        <item>
+         <widget class="QLabel" name="imageDansBox">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <property name="spacing">
