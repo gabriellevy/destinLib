@@ -473,7 +473,9 @@ void ExecHistoire::RafraichirAffichageEvtEtOuEffet(shared_ptr<Evt> evt, std::sha
     }
 
     // en mode automatique on rafraîchit toujours tout :
-    if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::Automatique ) {
+    if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::Automatique ||
+        (Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::AutomatiqueSaufChoix && m_DernierEffetAffiche->m_Choix.size() <= 1)
+         ) {
         evtChangement = effetChangement = true;
     }
 

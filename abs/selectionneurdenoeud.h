@@ -5,6 +5,7 @@
 
 class Noeud;
 class Evt;
+class Effet;
 class Condition;
 
 struct NoeudProbable {
@@ -20,9 +21,16 @@ struct NoeudProbable {
  */
 class SelectionneurDeNoeud
 {
-
+    // valeurs liées au mode de choix qui peut remplacer le mode aléatoire si activé avec fonction "AppliquerModeCHoix"
+    static int COMPTEUR_CHOIX;
+    static int COMPTEUR_CHOIX_AUTO;
+    std::shared_ptr<Effet> m_EffetQuiRecoitChoix = nullptr;
+    int m_Frequence = -1;
+    int m_MaxChoix = 6;
 public:
     SelectionneurDeNoeud(QString intitule, int bdd_id = -1);
+
+    void AppliquerModeCHoix(std::shared_ptr<Effet> effetQuiRecoitChoix, int frequence = -1);
 
     /**
     *  liste des noeuds parmi lesquels un seul sera sélectionné par le sélectionneur

@@ -17,13 +17,20 @@ class NoeudNarratif : public Noeud
 protected:
     NoeudNarratif();
     explicit NoeudNarratif(QString id, QString nom, QString text);
+    QString m_Nom = "";
 
 public:
     virtual ~NoeudNarratif();
 
     virtual bool TesterConditions();
 
-    QString m_Nom = "";
+    QString GetNom() {
+        if ( m_Nom != "" )
+            return m_Nom;
+        return m_Texte;
+    }
+    void SetNom(QString nom) {m_Nom = nom;}
+
     // utilisation : url sous le format qrc:[chemin dans le fichier ressource].
     // marche avec les mp3 mais il faut parfois les "recréer par exemple en apsasnt le mp3 en wav puis en mp3 à nouveau
     QString m_Son = "";

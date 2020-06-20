@@ -149,11 +149,11 @@ void ExecEffet::AfficherNoeud()
 
     // cette fonction peut être appelée pour rafraichir un affichage donc on cache tout avant de le réafficher éventuellement
     ui->titreEffet->hide();
-    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && GetEffet()->m_Nom != "")
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && GetEffet()->GetNom() != "")
     {
         ui->titreEffet->show();
         ui->titreEffet->setFont( *Univers::TITRE_FONT);
-        ui->titreEffet->setText(GetEffet()->m_Nom);
+        ui->titreEffet->setText(GetEffet()->GetNom());
     }
 
     // affichage du texte
@@ -163,7 +163,8 @@ void ExecEffet::AfficherNoeud()
     {
         ui->texteEffet->show();
         ui->texteEffet->setFont( *Univers::BASE_FONT);
-        if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::Automatique ) {
+        if ( Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::Automatique /*||
+             Univers::ME->GetExecHistoire()->m_Histoire->GetModeDeroulement() == ModeDeroulement::AutomatiqueSaufChoix*/) {
             Univers::ME->GetExecHistoire()->m_Historique.m_Textes.push_back(GetEffet()->TexteAAfficher());
             ui->texteEffet->setText(
                         Univers::ME->GetExecHistoire()->m_Historique.GetHistoriqueTotalAsStr());
@@ -226,7 +227,9 @@ void ExecEffet::AfficherNoeud()
     shared_ptr<Hist> hist = Univers::ME->GetExecHistoire()->m_Histoire;
     // déclenchement du chrono pour cet effet si il en a un :
     if ( GetEffet()->m_MsChrono == -1 &&
-         (hist->GetModeDeroulement() == ModeDeroulement::Automatique && hist->GetMsDureeDefilement() != -1 ))
+         ((hist->GetModeDeroulement() == ModeDeroulement::Automatique && hist->GetMsDureeDefilement() != -1 ) ||
+         (hist->GetModeDeroulement() == ModeDeroulement::AutomatiqueSaufChoix && hist->GetMsDureeDefilement() != -1 && this->GetEffet()->m_Choix.size() <= 1)
+         ))
     {
         GetEffet()->m_MsChrono = hist->GetMsDureeDefilement();
     }

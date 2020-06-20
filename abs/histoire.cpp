@@ -12,7 +12,7 @@ void Hist::SetModeDeroulement(ModeDeroulement modeDeroulement, int msDureeDefile
 {
     if ( msDureeDefilement != -1 )
         m_MsDureeDefilement = msDureeDefilement;
-    Q_ASSERT_X(m_MsDureeDefilement > 0 || modeDeroulement != ModeDeroulement::Automatique,
+    Q_ASSERT_X(m_MsDureeDefilement > 0 || (modeDeroulement != ModeDeroulement::Automatique && modeDeroulement != ModeDeroulement::AutomatiqueSaufChoix),
                "Hist::SetModeDeroulement",
                "Impossible d'être en mode de déroulement automatique sans avoir une durée de défilement supérieure à 0");
     m_ModeDeroulement = modeDeroulement;

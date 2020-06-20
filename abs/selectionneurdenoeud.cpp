@@ -5,13 +5,27 @@
 #include <chrono>
 #include <random>
 #include "univers.h"
+#include "genviehumain.h"
+
+using std::shared_ptr;
+using std::make_shared;
 
 QList<std::shared_ptr<SelectionneurDeNoeud>> SelectionneurDeNoeud::s_TousLesSelectionneurs = {};
 
 SelectionneurDeNoeud::SelectionneurDeNoeud(QString intitule, int bdd_id):m_BddId(bdd_id), m_Intitule(intitule)
 {}
 
-std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi pas DeterminerNoeudSuivant en fait ?
+int SelectionneurDeNoeud::COMPTEUR_CHOIX = 0;
+int SelectionneurDeNoeud::COMPTEUR_CHOIX_AUTO = 0;
+
+
+void SelectionneurDeNoeud::AppliquerModeCHoix(std::shared_ptr<Effet> effetQuiRecoitChoix, int frequence)
+{
+    m_EffetQuiRecoitChoix = effetQuiRecoitChoix;
+    m_Frequence = frequence;
+}
+
+std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()
 {
     // mise en place système de nombre aléatoire
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -43,8 +57,9 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
             }
         }
 
-        if(Univers::LOG && m_NoeudsProbables[i]->m_Noeud.lock()->TesterConditions() &&
+        if( m_NoeudsProbables[i]->m_Noeud.lock()->TesterConditions() &&
                 m_NoeudsProbables[i]->m_PoidsProba->CalculerProbaFinale() > 0 &&
+                Univers::LOG &&
                 Univers::FILE.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
         {
           QTextStream stream(&Univers::FILE);
@@ -76,6 +91,34 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
         }
     }
 
+    // mode spécial : si AppliquerModeCHoix a été exécuté sur ce sélectionneur on peut avoir des moments réguliers ou au lieu d'être automatique
+    //  la sélection devient un choix classique (avec un nombre limité)
+    if ( m_EffetQuiRecoitChoix != nullptr && SelectionneurDeNoeud::COMPTEUR_CHOIX_AUTO >= m_Frequence)
+    {
+        // randomization de la liste (car seule une partie sera conservée)
+        std::random_shuffle(noeudsPossibles.begin(), noeudsPossibles.end());
+
+        m_EffetQuiRecoitChoix->SupprimerTousLesChoix();
+        if ( m_EffetQuiRecoitChoix->m_Texte == "" )
+            m_EffetQuiRecoitChoix->m_Texte = "Choisissez : ";
+
+        for ( int j = 0; j < noeudsPossibles.size() && j < m_MaxChoix; ++j )
+        {
+            shared_ptr<Effet> effet = std::dynamic_pointer_cast<Effet>(noeudsPossibles[j]->m_Noeud.lock());
+            if ( effet != nullptr) {
+                double pb = noeudsPossibles[j]->m_PoidsProba->CalculerProbaFinale();
+                QString txt = effet->GetNom() + " (proba : " + QString::number(pb) + ") ";
+                shared_ptr<Choix> choix = GenHistoire::GetGenHistoire()->AjouterChoixGoToEffet(
+                            txt, effet->m_Id, "", m_EffetQuiRecoitChoix);
+
+            }
+        }
+
+        SelectionneurDeNoeud::COMPTEUR_CHOIX_AUTO = 0;
+        return m_EffetQuiRecoitChoix;
+    }
+    else SelectionneurDeNoeud::COMPTEUR_CHOIX_AUTO++;
+
     QString txt = "Aucun evt trouvé dans le sélectionneur d'événement : " + this->m_Intitule;
     Q_ASSERT_X(  noeudsPossibles.size() > 0,
                  "DeterminerEvtAleatoire",
@@ -93,8 +136,7 @@ std::shared_ptr<Noeud> SelectionneurDeNoeud::DeterminerNoeudSuivant()// pourquoi
         if ( probaIndicator < totalCourantDesProbas)
         {
             // cet événement est sélectionné :
-            noeudChoisi = noeudsPossibles[j]->m_Noeud.lock();
-            break;
+            return noeudsPossibles[j]->m_Noeud.lock();
         }
     }
 

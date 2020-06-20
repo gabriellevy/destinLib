@@ -72,8 +72,8 @@ void ExecEvt::AfficherNoeud()
 {
     if ( GetEvt()->m_CheminImgFond != "")
         Univers::ME->AppliquerFond(GetEvt()->m_CheminImgFond);
-    ui->titreEvt->setText(GetEvt()->m_Nom);
-    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && GetEvt()->m_Nom != "")
+    ui->titreEvt->setText(GetEvt()->GetNom());
+    if ( Univers::ME->m_ModeAffichage == ModeAffichage::ema_Details && GetEvt()->GetNom() != "")
     {
         ui->titreEvt->show();
         ui->titreEvt->setFont( *Univers::TITRE_FONT);

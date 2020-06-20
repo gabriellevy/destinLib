@@ -9,10 +9,11 @@
 
 enum ModeDeroulement : int {
     Aucun,
-    Normal, // un bouton à cliquer pour apsser à l'effet suivant
+    Normal, // un bouton à cliquer pour passer à l'effet suivant
     // les effets défilent selon la valeur m_MsDuree qui leur est affectée (il faudrait leur en affecter une de base ?)
     // les boutons sont cachés
-    Automatique
+    Automatique,
+    AutomatiqueSaufChoix // seuls les choix provoquent une pause dans le déroulement auto
 };
 
 enum PhaseDeroulement : int {
