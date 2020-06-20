@@ -70,6 +70,11 @@ shared_ptr<DPerso> IPerso::GetPersoCourant()
 
 void IPerso::RafraichirAffichage()
 {
+    if ( !Carac::CHANGT_CARAC_CE_TOUR )
+        return;
+
+    Carac::CHANGT_CARAC_CE_TOUR = false;
+
     shared_ptr<DPerso> persoCourant = m_Persos[IPerso::s_IdPersoActif];
     persoCourant->RafraichirAffichage();
 

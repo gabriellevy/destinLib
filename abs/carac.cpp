@@ -4,12 +4,12 @@
 #include <QDebug>
 #include "../gestcarac.h"
 
+bool Carac::CHANGT_CARAC_CE_TOUR = true;
+
 DCarac::DCarac(QString Id, QString Intitule, QString Valeur, QString Description, QString valeurMin, QString valeurMax) :
     m_Id(Id), m_Intitule(Intitule), m_Description(Description), m_ValeurMin(valeurMin), m_ValeurMax(valeurMax),
     m_Valeur(Valeur)
 {}
-
-
 
 double DCarac::SetValeur(double nouvValeur)
 {
@@ -21,6 +21,7 @@ double DCarac::SetValeur(double nouvValeur)
 QString DCarac::SetValeur(QString nouvValeur)
 {
     m_Valeur = nouvValeur;
+    Carac::CHANGT_CARAC_CE_TOUR = true;
 
     // valeurs affectables limitées par valeur min et valeur max
     if ( m_ValeurMax != "" ) {

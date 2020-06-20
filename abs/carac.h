@@ -80,6 +80,8 @@ public:
     QPixmap m_Img;
     bool SetImg(QString CheminImg);
 
+    static bool CHANGT_CARAC_CE_TOUR; // utilisé si une carac a été changé et donc que ça vaut le coup de (tous) les recalculer/réafficher
+
 protected :
     Ui::Carac *ui;
 
