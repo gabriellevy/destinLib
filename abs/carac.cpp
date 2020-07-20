@@ -152,8 +152,8 @@ void Carac::Afficher()
         {
             if ( !AfficherImage() /*&& !SetImg(m_DataCarac.GetValeur())*/)
             {
-                 qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image. Id : " <<m_DataCarac.m_Id.toStdString().c_str()
-                        << " - Valeur : " << m_DataCarac.GetValeur().toStdString().c_str();
+                 qDebug()<<"La carac de cet id est censée avoir un affichage image mais n'a pas d'image. Id : '" <<m_DataCarac.m_Id.toStdString().c_str()
+                        << "' - Valeur : '" << m_DataCarac.GetValeur().toStdString().c_str() << "'";
             }
             //AfficherIntitule();
 

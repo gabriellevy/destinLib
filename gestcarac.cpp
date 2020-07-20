@@ -65,8 +65,10 @@ void GestCarac::AppliquerCarac(SetCarac setCarac)
     {
     case ModifCaracType::SetCarac : {
         carac->m_DataCarac.SetValeur(setCarac.GetValeur());
+        qDebug() << "ModifCaracType::SetCarac"<<endl;
+        qDebug() << carac->m_DataCarac.GetValeur()<<endl;
 
-        if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur || carac->m_ModeAffichage == MODE_AFFICHAGE::ma_Img ) {
+        if ( carac->m_ModeAffichage == MODE_AFFICHAGE::ma_ImgValeur ) {
             carac->m_Img.load(carac->m_DataCarac.GetValeur());
         }
     }break;
